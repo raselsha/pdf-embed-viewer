@@ -10,7 +10,7 @@
  * Author URI: https://shahadat.com.bd
  * License: GPL v2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain: news-letter
+ * Text Domain: newsletter-publisher
  * Domain Path: /languages
  */
 
@@ -28,7 +28,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with News letter publisher. If not, see https://www.gnu.org/licenses/gpl-2.0.html.
 */
-// newsletter
+// newsletter-publisher
 if( ! defined('ABSPATH') ) { die( "don't access directly" ); }
 
 if( ! class_exists( 'Newsletter_Publisher' ) ){
@@ -38,6 +38,7 @@ if( ! class_exists( 'Newsletter_Publisher' ) ){
             $this->define_contstants();
             add_action('wp_enqueue_scripts',array($this,'load_style'));
             // add_action('admin_enqueue_scripts',array($this,'load_style'));
+            add_action( 'init', array($this,'cpt_newsletter_publisher') );
         }
 
         public function define_contstants(){
@@ -62,6 +63,45 @@ if( ! class_exists( 'Newsletter_Publisher' ) ){
 
         public static function uninstall(){
             
+        }
+
+
+        public function cpt_newsletter_publisher() {
+
+            $labels = [
+                "name" => __( "Newsletter Publisher", "newsletter-publisher" ),
+                "singular_name" => __( "Newsletter Publisher", "newsletter-publisher" ),
+                "menu_name" => __( "Newsletter Publisher", "newsletter-publisher" ),
+                "all_items" => __( "All Newsletter Publisher", "newsletter-publisher" ),
+            ];
+
+            $args = [
+                "label" => __( "Newsletter Publisher", "newsletter-publisher" ),
+                "labels" => $labels,
+                "description" => "",
+                "public" => true,
+                "publicly_queryable" => true,
+                "show_ui" => true,
+                "show_in_rest" => true,
+                "rest_base" => "",
+                "rest_controller_class" => "WP_REST_Posts_Controller",
+                "has_archive" => true,
+                "show_in_menu" => true,
+                "show_in_nav_menus" => true,
+                "delete_with_user" => false,
+                "exclude_from_search" => false,
+                "capability_type" => "post",
+                "map_meta_cap" => true,
+                "hierarchical" => false,
+                "rewrite" => [ "slug" => "newsletter-publisher", "with_front" => true ],
+                "query_var" => true,
+                "menu_position" => 5,
+                "menu_icon" => NEWSLETTER_URL.'assets/images/newsletter-icon.png',
+                "supports" => [ "title", "editor", "thumbnail" ],
+                "show_in_graphql" => false,
+            ];
+
+            register_post_type( "newsletter-publisher", $args );
         }
     }
 
