@@ -22,7 +22,7 @@ get_header();
 				</div>
 				<div class="col-12 col-md-1 nav-tabs px-0">
 					<div class="nav d-block" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-					    <?php $years = get_posts_years_array('news-letter');//['2022','2021','2020'];
+					    <?php $years = ['2023','2022','2021','2020'];//get_posts_years_array('news-letter');//['2022','2021','2020'];
 					        
 							for($i=0;$i<count($years);$i++):
 
@@ -107,6 +107,6 @@ get_header();
 		</div>
 	<?php endif; ?>
 </main>
-<?php
+<?php 
 get_footer();
 ?>
