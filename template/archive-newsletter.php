@@ -21,11 +21,9 @@ get_header();
 					<h2 class="archive-title">Newsletter</h2>
 				</div>
 				<div class="col-12 col-md-1 nav-tabs px-0">
-					<div class="nav d-block" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-					    <?php $years = ['2023','2022','2021','2020'];//get_posts_years_array('news-letter');//['2022','2021','2020'];
-					        
+					<div class="nav " id="v-pills-tab" role="tablist" aria-orientation="vertical">
+					    <?php $years = ['2023','2022','2021','2020']; //$this->get_posts_years_array('news-letter');//['2022','2021','2020'];
 							for($i=0;$i<count($years);$i++):
-
 								if($years[$i]==$years[0]):?>
 									<h5 class=" active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#year-<?=$years[$i];?>" type="" role="tab"  aria-selected="true"><?=$years[$i];?></h5>
 								<?php else: ?>
@@ -33,7 +31,6 @@ get_header();
 					    		<?php endif; ?>
 					    <?php endfor; ?>
 					</div>
-
 				</div>
 				<div class="col-12 col-md-11">
 					
@@ -46,35 +43,32 @@ get_header();
                       		<?php endif; ?>
                       				<table class="table table-striped" width="100%">
 										<tr>         					    			
-											<th  width="15%">Month</th>
-											<th  width="80%">Title</th>
-											<th  width="5%" class="text-center">Download</th>
+											<th  width="">Month</th>
+											<th  width="">Title</th>
+											<th  width="" class="text-center">Download</th>
 										</tr>
 										<?php
 											$args = array(
-											'post_type'=>'news-letter',
+											'post_type'=>'newsletter',
 											'order' => 'ASC',
 											'posts_per_page'=> get_option( 'posts_per_page' ),
 										  	'date_query' => array(
-										      array(
-										          'year'  => $years[$i],
-										      ),
-										  	),
+												array(
+													'year'  => $years[$i],
+												),
+										 	),
 										);
-
 										$WpQuery = new WP_Query($args);    
 											while ( $WpQuery->have_posts() ) {
 												$WpQuery->the_post();
-												$post_link = get_permalink();
 												?>
-
 												<tr>
 													
 													<td width="80" class="news-title"><?php the_time('F'); ?></td>
 													<td><a class="news-title" href="<?php the_permalink(); ?>"><?php the_title();?></a></td>
 													<td class="text-center">
-														<?php if (get_field('download_pdf')) :?>
-															<a href="<?php the_field('download_pdf')?>" class="btn btn-primary btn-sm" download>Download</a>
+														<?php if (get_field('newsletter_file')) :?>
+															<a href="<?php the_field('newsletter_file')?>" class="btn btn-primary btn-sm" download>Download</a>
 														<?php endif; ?>
 													</td>
 												</tr>

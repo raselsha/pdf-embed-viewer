@@ -14,7 +14,7 @@
  * Domain Path: /languages
  */
 
- /*
+/*
 News letter publisher is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 2 of the License, or
@@ -38,7 +38,7 @@ if( ! class_exists( 'Newsletter_Publisher' ) ){
             $this->define_contstants();
             add_action('wp_enqueue_scripts',array($this,'frontend_style'));
             // add_action('admin_enqueue_scripts',array($this,'backend_style'));
-            require_once NEWSLETTER_PUB_PATH . 'inc/class.newsletter-publisher-cpt.php';
+            require_once NEWSLETTER_PUB_PATH . 'classes/class.newsletter-publisher-cpt.php';
             $newsletter_publisher_cpt = new Newsletter_Publisher_CPT();
         }
 
@@ -71,7 +71,6 @@ if( ! class_exists( 'Newsletter_Publisher' ) ){
         public static function uninstall(){
             
         }
-
     }
 
 }

@@ -8,7 +8,7 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
-
+get_header();
 ?>
 <?php
 while ( have_posts() ) :
@@ -40,5 +40,5 @@ while ( have_posts() ) :
 </main>
 	<?php
 endwhile;
-
+get_footer();
 ?>

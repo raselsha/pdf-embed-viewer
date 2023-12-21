@@ -9,7 +9,7 @@ if( ! class_exists('Newsletter_Publisher_CPT') ){
             add_filter( 'archive_template', array($this,'newsletter_archive_template') ) ;
             add_filter( 'single_template', array($this,'newsletter_single_template') ) ;
 
-            require_once NEWSLETTER_PUB_PATH . 'inc/class.newsletter-publisher-metabox.php';
+            require_once NEWSLETTER_PUB_PATH . 'classes/class.newsletter-publisher-metabox.php';
             $newsletter_publisher_metabox = new Newsletter_Publisher_Metabox();
         }
 
@@ -58,18 +58,18 @@ if( ! class_exists('Newsletter_Publisher_CPT') ){
 
         public function newsletter_archive_template( $archive_template ) {
             global $post;
-       
+
             if ( is_post_type_archive ( 'newsletter' ) ) {
-                 $archive_template = NEWSLETTER_PUB_URL . '/template/archive-newsletter.php';
+                $archive_template = NEWSLETTER_PUB_PATH . '/template/archive-newsletter.php';
             }
             return $archive_template;
             
-       }
-       
-       public function newsletter_single_template($single_template) {
+        }
+
+        public function newsletter_single_template($single_template) {
             global $wp_query, $post;
-            if ($post->post_type == 'newsletter'){   // Change 'medust_events' with your CPT
-                $single_template = NEWSLETTER_PUB_URL . '/template/single-newsletter.php';
+            if ($post->post_type == 'newsletter'){   
+                $single_template = NEWSLETTER_PUB_PATH . '/template/single-newsletter.php';
             }
             return $single_template;
         }
