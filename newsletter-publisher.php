@@ -37,12 +37,13 @@ if( ! class_exists( 'Newsletter_Publisher' ) ){
         function __construct() {
             $this->define_contstants();
             add_action('wp_enqueue_scripts',array($this,'frontend_style'));
-            // add_action('admin_enqueue_scripts',array($this,'backend_style'));
+            add_action('admin_enqueue_scripts',array($this,'backend_style'));
             require_once NEWSLETTER_PUB_PATH . 'classes/class.newsletter-publisher-cpt.php';
             $newsletter_publisher_cpt = new Newsletter_Publisher_CPT();
         }
 
         public function define_contstants(){
+            define( 'TEXTDOMAIN', 'newsletter-publisher' );
             define( 'NEWSLETTER_PUB_PATH', plugin_dir_path(__FILE__) );
             define( 'NEWSLETTER_PUB_URL', plugin_dir_url(__FILE__) );
             define( 'NEWSLETTER_PUB_VERSION', '1.0.0' );
@@ -54,8 +55,9 @@ if( ! class_exists( 'Newsletter_Publisher' ) ){
         }
 
         public function backend_style(){
-            wp_enqueue_style('backend-style',NEWSLETTER_PUB_URL.'assets/css/style.css','',time(),'all');
-            wp_enqueue_script('backend-js',NEWSLETTER_PUB_URL.'assets/js/bootstrap.bundle.min.js','',time(),true);
+            // wp_enqueue_style('backend-style',NEWSLETTER_PUB_URL.'assets/css/style.css','',time(),'all');
+            wp_enqueue_script('backend',NEWSLETTER_PUB_URL.'assets/js/bootstrap.bundle.min.js','',time(),true);
+            
         }
 
         public static function activate(){
