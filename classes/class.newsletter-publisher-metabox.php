@@ -13,7 +13,7 @@ if( ! class_exists('Newsletter_Publisher_Metabox') ){
         public function add_meta_boxes(){
             add_meta_box(
                 'newsletter-meta-box',
-                'Newsletter Options',
+                'Newsletter Upload',
                 array($this,'meta_box_inner'),
                 'newsletter',
                 'normal',
