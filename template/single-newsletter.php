@@ -20,10 +20,10 @@ while ( have_posts() ) :
 		<?php //if (get_field('download_pdf')) :?>
 			<!-- get file url -->
 			<h4><?php the_title();?></h4>
-			<p><a href="<?php the_field('download_pdf')?>" class="btn btn-primary btn-sm" download><?php the_time('F'); ?> | <?php the_time('Y'); ?> <i class="fas fa-cloud-download-alt"></i></a></p>
+			<p><a href="<?php echo get_post_meta( get_the_ID(), 'newsletter_file', true ); ?>" class="btn btn-primary btn-sm" download><?php the_time('F'); ?> | <?php the_time('Y'); ?> <i class="fas fa-cloud-download-alt"></i></a></p>
 		    <div class="row pdf-body">
             	<div class="col-12">
-            	    <?= do_shortcode('[pdf-embedder url="'.get_field('download_pdf').'"]'); ?>
+				<?php //echo do_shortcode('[pdf-embedder url="'.get_post_meta( get_the_ID(), 'newsletter_file', true ).'"]'); ?>
 				</div>
 			</div>
 			<?php // endif; ?>
