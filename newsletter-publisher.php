@@ -56,7 +56,7 @@ if( ! class_exists( 'Newsletter_Publisher' ) ){
 
         public function backend_style(){
             // wp_enqueue_style('backend-style',NEWSLETTER_PUB_URL.'assets/css/style.css','',time(),'all');
-            wp_enqueue_script('backend',NEWSLETTER_PUB_URL.'assets/js/bootstrap.bundle.min.js','',time(),true);
+            // wp_enqueue_script('backend',NEWSLETTER_PUB_URL.'assets/js/bootstrap.bundle.min.js','',time(),true);
             
         }
 

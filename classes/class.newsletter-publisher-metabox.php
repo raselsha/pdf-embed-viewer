@@ -34,8 +34,8 @@ if( ! class_exists('Newsletter_Publisher_Metabox') ){
                 wp_register_script('meta-box-image',NEWSLETTER_PUB_URL.'assets/js/media.js',array( 'jquery' ),time(),true);
                 wp_localize_script( 'meta-box-image', 'meta_image',
                     array(
-                        'title' => __( 'Choose or Upload Media', TEXTDOMAIN ),
-                        'button' => __( 'Use this media', TEXTDOMAIN ),
+                        'title' => __( 'Choose or Upload Newsletter', TEXTDOMAIN ),
+                        'button' => __( 'Use this newsletter', TEXTDOMAIN ),
                     )
                 );
                 wp_enqueue_script( 'meta-box-image' );
