@@ -1,24 +1,35 @@
+<?php if ( wp_is_block_theme() ) {  ?>
+<!DOCTYPE html>
+<html <?php language_attributes(); ?>>
+<head>
+	<meta charset="<?php bloginfo( 'charset' ); ?>">
+	<?php
+	$block_content = do_blocks( '
+		<!-- wp:group {"layout":{"type":"constrained"}} -->
+		<div class="wp-block-group">
+		<!-- wp:post-content /-->
+		</div>
+		<!-- /wp:group -->'
+ 	);
+    wp_head(); ?>
+</head>
+<body <?php body_class(); ?>>
+<?php wp_body_open(); ?>
+<div class="wp-site-blocks">
+<header class="wp-block-template-part site-header">
+    <?php block_header_area(); ?>
+</header>
+</div>
 <?php
-/**
- * The template for displaying archive pages.
- *
- * @package HelloElementor
- */
-
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly.
+} else {
+    get_header();	
 }
-
-get_header();
 ?>
-<main id="content" class="site-main" role="main">
 
-<div >
-	<article class="post">
-		
-		<div class="row my-4">
-			<div class="col-12 offset-md-1">
-				<h2 class="archive-title"><?php the_archive_title(); ?></h2>
+<div class="container">
+	<div class="row">
+			<div class="col-12">
+				<h2><?php the_archive_title(); ?></h2>
 			</div>
 			<div class="col-12 col-md-1 nav-tabs px-0">
 				<div class="nav " id="v-pills-tab" role="tablist" aria-orientation="vertical">
@@ -33,7 +44,6 @@ get_header();
 				</div>
 			</div>
 			<div class="col-12 col-md-11">
-				
 				<div class="tab-content" id="v-pills-tabContent">
 					  <?php for($i=0;$i<count($years);$i++): ?>
 						  <?php if($years[$i]==$years[0]): ?>
@@ -79,26 +89,34 @@ get_header();
 						</div>
 					  </div>
 			</div>
-		</div>
-	</article>
+	</div>
 </div>
 
-<?php wp_link_pages(); ?>
 
+<?php wp_link_pages(); ?>
 <?php
 global $wp_query;
 if ( $wp_query->max_num_pages > 1 ) :
 	?>
 	<div class="col-12">
-			<div class="pagination">
-		
+		<div class="pagination">
 				<?php /* Translators: HTML arrow */ ?>
 				<div class="nav-next me-auto"><?php// previous_posts_link( sprintf( __( '%s Previous', 'hello-elementor' ), '<span class="meta-nav">&#8592;</span>' ) ); ?></div>
 				<?php /* Translators: HTML arrow */ ?>
 				<div class="nav-previous ms-auto"><?php// next_posts_link( sprintf( __( 'Next %s', 'hello-elementor' ), '<span class="meta-nav">&#8594;</span>' ) ); ?></div>
 		</div>
-		
 	</div>
 <?php endif; ?>
-</main>							
-<?php wp_footer(); ?>
+
+<?php if ( wp_is_block_theme() ) : ?>
+	<footer class="wp-block-template-part">
+		<?php block_footer_area(); ?>
+	</footer>
+	<?php wp_footer(); ?>
+</body>  
+
+<?php
+	else:
+		get_footer();
+	endif;
+?>

@@ -1,0 +1,157 @@
+/*================body============*/
+body:not([class*="elementor-page-"]) .site-main {
+    padding-top: 40px;
+    padding-bottom:50px;
+ }
+ .page-content a{
+     text-decoration:none;
+ }
+ .post a{
+  text-decoration: none;
+  /*color: #c79f62 !important;*/
+  font-weight: 600;
+  }
+  .news-title{
+      color: #666 !important;
+      font-weight: 600 !important;
+      
+  }
+   .news-title:hover{
+      color: #c79f62 !important;
+  }
+
+  /*=====================next/prev==========*/
+.nav-previous a{
+    text-decoration: none;
+    color: #c79f62 !important;
+}
+.nav-next a{
+    text-decoration: none;
+    color: #c79f62 !important;
+}
+/*======================btn=================*/
+.btn-primary{
+    color: #fff !important;
+    background-color: #c79f62 !important;
+    border-color: #c79f62fa !important;
+    padding:0px 4px;
+} 
+.btn-primary:focus, .btn-primary:hover, .btn-primary:active,.btn-primary:active:focus{
+    
+    color: #fff !important;
+    background-color: #c79f62 !important;
+    border-color: #c79f62fa !important;
+    box-shadow: 0 0 0 .25rem #c79f625a !important;
+}
+/*==================tab===============*/
+  .archive-title{
+      color: #c79f62 !important;
+      padding-left:5px;
+      font-weight: 600 !important;
+      font-size:25px;
+  }
+.nav-tabs{
+    background:#dddddd;
+}
+.nav-tabs h5{
+    color: #666;
+    padding:10px 15px;
+    text-align: center;
+ }
+ .nav-tabs h5:hover{
+    color: #111;
+    cursor:pointer;
+ }
+  .nav-tabs h5.active{
+    color: #111;
+    cursor:pointer;
+ }
+/*====================pdf-header=================*/
+.pdf-body{
+    background:#d8d8d8;
+    padding:15px 5px;
+}
+div.pdfemb-viewer{
+    margin-top:10px;
+    
+    border: 1px solid #aaa !important;
+}
+.pdfemb-toolbar-hover{
+    display:block !important;
+}
+/*====================table=================*/
+
+table tbody > tr:nth-child(2n+1) > td, table tbody > tr:nth-child(2n+1) > th {
+    border:0px solid !important;
+}
+table tbody > tr:nth-child(2n+0) > td, table tbody > tr:nth-child(2n+0) > th {
+    border:0px solid !important;
+}
+table tbody > tr:nth-child(2n+1) > th {
+    border-bottom:2px solid #aaa !important;
+}
+table tbody tr:hover > td, table tbody tr:hover > th{
+    background-color: #fff !important;
+}
+/*==================contact form 7================*/
+.elementor-element.elementor-element-beeb9b6 .wpcf7-form .wpcf7-submit{
+    width: 100%;
+}
+.wpcf7-not-valid-tip {
+  color: #991717;
+  }
+ /*===================top menu============*/
+.top-menu ul{
+    margin:0;
+    padding:0;
+    list-style-type:none;
+    float: right;
+    margin-bottom: 5px;
+}
+.top-menu ul li{
+    float:start;
+    padding:0px 5px;
+    margin:0px 2px;
+    display:inline-block;
+    background-color:#c79f62 !important;
+}
+.top-menu ul li a{
+    color:#111;
+    font-size:12px;
+}
+ /*===================footer menu============*/
+.footer-menu{}
+.footer-menu ul{
+	width:100%;
+    margin:0 auto;
+    padding:0;
+    list-style-type:none;
+    margin-bottom: 5px;
+	text-align: center;
+	display:block;
+}
+.footer-menu ul li{
+    float:start;
+    padding:0px 5px;
+    margin:0px 2px;
+    display:inline-block;
+    color:#333 !important;
+}
+.footer-menu ul li a{
+    color:#111;
+	text-transform: uppercase;
+}
+@media(max-width="768px"){
+   .top-menu ul{
+        margin-bottom: 5px;
+    } 
+    .top-menu ul li{
+        padding:0px 2px;
+        margin:0px ;
+    }
+}
+
+
+.pagination {
+display:none !important;
+}
