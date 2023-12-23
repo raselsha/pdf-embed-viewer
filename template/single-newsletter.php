@@ -26,12 +26,12 @@
 }
 ?>
 <?php $newsletter_file = get_post_meta( get_the_ID(), 'newsletter_file', true ); ?>
-<div class="container">
+<div class="newsletter_publisher">
 	<h1><?php the_title();?></h1>
-	<p><a href="<?php esc_attr_e($newsletter_file); ?>" class="button" download><?php the_time('F'); ?> | <?php the_time('Y'); ?> <img src="<?php esc_attr_e(NEWSLETTER_PUB_URL.'assets/images/download.svg'); ?>" alt="download-icon"></a></p>
+	<p><a href="<?php esc_attr_e($newsletter_file); ?>" class="file_download" download><?php the_time('F'); ?> | <?php the_time('Y'); ?> <img src="<?php esc_attr_e(NEWSLETTER_PUB_URL.'assets/images/download.svg'); ?>" alt="download-icon"></a></p>
 	<div id='newsletter_file_viewer' height="100%"></div>
 
-	<div class="newsletter_pagination">
+	<div class="pagination">
 		<?php previous_post_link('%link','&#8592; Previous Month' ); ?>
 		<?php next_post_link('%link','Next Month &#8594;' ); ?>
 	</div>

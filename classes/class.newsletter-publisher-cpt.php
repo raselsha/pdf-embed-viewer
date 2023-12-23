@@ -74,7 +74,7 @@ if( ! class_exists('Newsletter_Publisher_CPT') ){
             return $single_template;
         }
 
-        public function get_posts_years_array($post_type) {
+        public static function get_posts_years_array($post_type) {
             global $wpdb;
             $result = array();
             $years = $wpdb->get_results(

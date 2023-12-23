@@ -26,72 +26,45 @@
 }
 ?>
 
-<div class="container">
-	<div class="row">
-			<div class="col-12">
-				<h2><?php the_archive_title(); ?></h2>
-			</div>
-			<div class="col-12 col-md-1 nav-tabs px-0">
-				<div class="nav " id="v-pills-tab" role="tablist" aria-orientation="vertical">
-					<?php $years = ['2023','2022','2021','2020']; //$this->get_posts_years_array('news-letter');//['2022','2021','2020'];
-						for($i=0;$i<count($years);$i++):
-							if($years[$i]==$years[0]):?>
-								<h5 class=" active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#year-<?=$years[$i];?>" type="" role="tab"  aria-selected="true"><?=$years[$i];?></h5>
-							<?php else: ?>
-								<h5 class="" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#year-<?=$years[$i];?>" type="" role="tab"  aria-selected="true"><?=$years[$i];?></h5>
-							<?php endif; ?>
-					<?php endfor; ?>
+<div class="newsletter_publisher">
+	<h2><?php the_archive_title(); ?></h2>
+	<div class="archive">
+		<div class="tabs">
+			<?php $years =  Newsletter_Publisher_CPT::get_posts_years_array('newsletter');//['2022','2021','2020'];
+				for($i=0;$i<count($years);$i++): ?>
+					<h5 class="" data-bs-target="#year-<?=$years[$i];?>" type="" role="tab"  aria-selected="true"><?=$years[$i];?></h5>
+			<?php endfor; ?>
+		</div>
+		<div class="tabs-content" >
+			<?php for($i=0;$i<count($years);$i++): ?>
+				<div class="" id="year-<?= $years[$i]; ?>">
+					<?php
+						$args = array(
+						'post_type'=>'newsletter',
+						'order' => 'ASC',
+						'posts_per_page'=> get_option( 'posts_per_page' ),
+							'date_query' => array(
+							array(
+								'year'  => $years[$i],
+							),
+							),
+					);
+					$WpQuery = new WP_Query($args);    
+						while ( $WpQuery->have_posts() ) {
+							$WpQuery->the_post();
+							?>
+							<div class="newsletter-list">
+								<p><?php the_time('F'); ?></p>
+								<h2><a href="<?php the_permalink(); ?>"><?php the_title();?></a></h2>
+								<a href="<?php esc_attr_e(get_post_meta( get_the_ID(), 'newsletter_file', true ))?>" class="file_download" download>Download</a>
+							</div>
+					<?php } ?>
+					
 				</div>
-			</div>
-			<div class="col-12 col-md-11">
-				<div class="tab-content" id="v-pills-tabContent">
-					  <?php for($i=0;$i<count($years);$i++): ?>
-						  <?php if($years[$i]==$years[0]): ?>
-							  <div class="tab-pane fade show active table-responsive" id="year-<?= $years[$i]; ?>" role="tabpanel" aria-labelledby="v-pills-home-tab"> 
-						  <?php else: ?>
-							  <div class="tab-pane fade show table-responsive" id="year-<?= $years[$i]; ?>" role="tabpanel" aria-labelledby="v-pills-home-tab"> 
-						  <?php endif; ?>
-								  <table class="table table-striped" width="100%">
-									<tr>         					    			
-										<th  width="">Month</th>
-										<th  width="">Title</th>
-										<th  width="" class="text-center">Download</th>
-									</tr>
-									<?php
-										$args = array(
-										'post_type'=>'newsletter',
-										'order' => 'ASC',
-										'posts_per_page'=> get_option( 'posts_per_page' ),
-										  'date_query' => array(
-											array(
-												'year'  => $years[$i],
-											),
-										 ),
-									);
-									$WpQuery = new WP_Query($args);    
-										while ( $WpQuery->have_posts() ) {
-											$WpQuery->the_post();
-											?>
-											<tr>
-												
-												<td width="80" class="news-title"><?php the_time('F'); ?></td>
-												<td><a class="news-title" href="<?php the_permalink(); ?>"><?php the_title();?></a></td>
-												<td class="text-center">
-													<?php if ( get_post_meta( get_the_ID(), 'newsletter_file', true ) ) :?>
-														<a href="<?php echo get_post_meta( get_the_ID(), 'newsletter_file', true )?>" class="btn btn-primary btn-sm" download>Download</a>
-													<?php endif; ?>
-												</td>
-											</tr>
-										<?php } ?>
-									</table>
-								</div>
-							  <?php endfor; ?>	
-						</div>
-					  </div>
-			</div>
+			<?php endfor; ?>	
+		</div>
 	</div>
 </div>
-
 
 <?php wp_link_pages(); ?>
 <?php
