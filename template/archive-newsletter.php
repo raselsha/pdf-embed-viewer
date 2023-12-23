@@ -29,15 +29,20 @@
 <div class="newsletter_publisher">
 	<h2><?php the_archive_title(); ?></h2>
 	<div class="archive">
-		<div class="tabs">
+		<ul class="tabs">
 			<?php $years =  Newsletter_Publisher_CPT::get_posts_years_array('newsletter');//['2022','2021','2020'];
 				for($i=0;$i<count($years);$i++): ?>
-					<h5 class="tab <?php echo ($i==0)?'active':''; ?>" data-tab-target="#year-<?=$years[$i];?>" type="" role="tab"  aria-selected="true"><?=$years[$i];?></h5>
+					<li class="tab <?php echo ($i==0)?'active':''; ?>" data-tab-target="#year-<?=$years[$i];?>" type="" role="tab"  aria-selected="true"><?=$years[$i];?></li>
 			<?php endfor; ?>
-		</div>
+		</ul>
 		<div class="tabs-content" >
 			<?php for($i=0;$i<count($years);$i++): ?>
-				<div class="<?php echo ($i==0)?'active':''; ?>" data-tab-content  id="year-<?= $years[$i]; ?>">
+				<table  class="<?php echo ($i==0)?'active':''; ?>" data-tab-content  id="year-<?= $years[$i]; ?>">
+					<tr>         					    			
+						<th width="15%">Month</th>
+						<th width="80%">Title</th>
+						<th width="5%" class="text-center">Download</th>
+					</tr>
 					<?php
 						$args = array(
 						'post_type'=>'newsletter',
@@ -53,14 +58,14 @@
 						while ( $WpQuery->have_posts() ) {
 							$WpQuery->the_post();
 							?>
-							<div class="newsletter-list">
-								<p><?php the_time('F'); ?></p>
-								<h2><a href="<?php the_permalink(); ?>"><?php the_title();?></a></h2>
-								<a href="<?php esc_attr_e(get_post_meta( get_the_ID(), 'newsletter_file', true ))?>" class="file_download" download>Download</a>
-							</div>
+							<tr>
+								<td><?php the_time('F'); ?></td>
+								<td><a href="<?php the_permalink(); ?>"><?php the_title();?></a></td>
+								<td><a href="<?php esc_attr_e(get_post_meta( get_the_ID(), 'newsletter_file', true ))?>" class="file_download" download>Download</a></td>
+							</tr>
 					<?php } ?>
 					
-				</div>
+				</table>
 			<?php endfor; ?>	
 		</div>
 	</div>
