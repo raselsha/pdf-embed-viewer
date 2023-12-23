@@ -29,6 +29,7 @@
 <div class="newsletter_publisher">
 	<h1><?php the_title();?></h1>
 	<p><a href="<?php esc_attr_e($newsletter_file); ?>" class="file_download" download><?php the_time('F'); ?> | <?php the_time('Y'); ?> <img src="<?php esc_attr_e(NEWSLETTER_PUB_URL.'assets/images/download.svg'); ?>" alt="download-icon"></a></p>
+	<?php the_content(); ?>
 	<div id='newsletter_file_viewer' height="100%"></div>
 
 	<div class="pagination">

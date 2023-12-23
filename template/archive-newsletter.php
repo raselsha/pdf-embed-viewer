@@ -49,21 +49,21 @@
 						'order' => 'ASC',
 						'posts_per_page'=> get_option( 'posts_per_page' ),
 							'date_query' => array(
-							array(
-								'year'  => $years[$i],
-							),
+								array(
+									'year'  => $years[$i],
+								),
 							),
 					);
 					$WpQuery = new WP_Query($args);    
-						while ( $WpQuery->have_posts() ) {
+						while ( $WpQuery->have_posts() ) :
 							$WpQuery->the_post();
 							?>
 							<tr>
 								<td><?php the_time('F'); ?></td>
 								<td><a href="<?php the_permalink(); ?>"><?php the_title();?></a></td>
-								<td><a href="<?php esc_attr_e(get_post_meta( get_the_ID(), 'newsletter_file', true ))?>" class="file_download" download>Download</a></td>
+								<td><a href="<?php esc_attr_e(get_post_meta( get_the_ID(), 'newsletter_file', true ))?>" class="file_download" download><?php esc_html_e('Download',TEXTDOMAIN); ?> <img src="<?php esc_attr_e(NEWSLETTER_PUB_URL.'assets/images/download.svg'); ?>" alt="Download icon"> </a></td>
 							</tr>
-					<?php } ?>
+					<?php endwhile; ?>
 					
 				</table>
 			<?php endfor; ?>	
