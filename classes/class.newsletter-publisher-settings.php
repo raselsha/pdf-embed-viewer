@@ -59,15 +59,23 @@ if( ! class_exists('Newsletter_Publisher_Settings') ){
 
             add_settings_section(
                 'main_secton',
-                __('Color Settings',TEXTDOMAIN),
-                null,
+                __('Basic Instruction',TEXTDOMAIN),
+                array($this,'main_secton'),
                 'page1'
             );
+
+            add_settings_section(
+                'main_secton',
+                __('Color Settings',TEXTDOMAIN),
+                null,
+                'page2'
+            );
+
             add_settings_field(
                 'primary_color',
                 __('Primary Color',TEXTDOMAIN),
                 array($this,'add_primary_color'),
-                'page1',
+                'page2',
                 'main_secton'
             );
 
@@ -75,7 +83,7 @@ if( ! class_exists('Newsletter_Publisher_Settings') ){
                 'secondary_color',
                 __('Secondary Color',TEXTDOMAIN),
                 array($this,'add_secondary_color'),
-                'page1',
+                'page2',
                 'main_secton'
             );
 
@@ -83,7 +91,7 @@ if( ! class_exists('Newsletter_Publisher_Settings') ){
                 'light_color',
                 __('Light Color',TEXTDOMAIN),
                 array($this,'add_light_color'),
-                'page1',
+                'page2',
                 'main_secton'
             );
 
@@ -91,9 +99,14 @@ if( ! class_exists('Newsletter_Publisher_Settings') ){
                 'dark_color',
                 __('Dark Color',TEXTDOMAIN),
                 array($this,'add_dark_color'),
-                'page1',
+                'page2',
                 'main_secton'
             );
+        }
+        public function main_secton(){
+            ?>
+            <p><?php _e('You can adjust color with your theme by adding hexa decimal value in <b>color settings</b> section.',TEXTDOMAIN); ?></p>
+            <?php
         }
         public function add_primary_color(){
             ?>
