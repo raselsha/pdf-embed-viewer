@@ -55,7 +55,7 @@ if( ! class_exists('Newsletter_Publisher_Settings') ){
 
         public function admin_init(){
             
-            register_setting('newsletter_publisher_group','newsletter_publisher_option');
+            register_setting('newsletter_publisher_group','newsletter_publisher_option',array($this,'sanitize'));
 
             add_settings_section(
                 'main_secton',
@@ -139,6 +139,15 @@ if( ! class_exists('Newsletter_Publisher_Settings') ){
             name="newsletter_publisher_option[dark_color]" 
             value="<?php echo (isset(self::$options['dark_color']) and self::$options['dark_color']!='') ? esc_attr(self::$options['dark_color']) : esc_attr('#333'); ?>">
             <?php
+        }
+
+        public function sanitize( $input ) {
+            $new_input = array();
+            foreach($input as $key => $value){
+                $new_input[$key] = sanitize_text_field($value);
+            }
+            return $new_input;
+        
         }
     }
 }
