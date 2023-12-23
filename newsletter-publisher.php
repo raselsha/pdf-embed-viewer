@@ -42,6 +42,7 @@ if( ! class_exists( 'Newsletter_Publisher' ) ){
             require_once NEWSLETTER_PUB_PATH . 'classes/class.newsletter-publisher-settings.php';
             $newsletter_publisher_cpt = new Newsletter_Publisher_CPT();
             $newsletter_publisher_settings = new Newsletter_Publisher_Settings();
+            
         }
 
         public function define_contstants(){
@@ -52,13 +53,27 @@ if( ! class_exists( 'Newsletter_Publisher' ) ){
         }
 
         public function frontend_style(){
-            wp_enqueue_style('newsletter-frontend',NEWSLETTER_PUB_URL.'assets/css/style.css',[],time(),'all');
+            wp_register_style('newsletter-frontend',NEWSLETTER_PUB_URL.'assets/css/style.css',[],time(),'all');
             wp_register_script( 'webviewer', NEWSLETTER_PUB_URL.'assets/js/pdfjs/lib/webviewer.min.js','','',true);
-            wp_register_script( 'newsletter-frontend', NEWSLETTER_PUB_URL.'assets/js/bootstrap.bundle.min.js','',time(),true);
             wp_register_script( 'newsletter-custom', NEWSLETTER_PUB_URL.'assets/js/script.js','',time(),true);
+            
+            wp_enqueue_style('newsletter-frontend');
             wp_enqueue_script('webviewer');
-            wp_enqueue_script('newsletter-frontend');
             wp_enqueue_script('newsletter-custom');
+            //settings value from database;
+            $options = get_option('newsletter_publisher_option');
+            $primary_color = $options['primary_color'];
+            $secondary_color = $options['secondary_color'];
+            $light_color = $options['light_color'];
+            $dark_color = $options['dark_color'];
+            $css = "
+                :root{
+                    --nws-promary-color:{$primary_color};        
+                    --nws-secondary-color:{$secondary_color}; 
+                    --nws-light-color:{$light_color};       
+                    --nws-dark-color:{$dark_color};     
+            ";
+            wp_add_inline_style('newsletter-frontend', $css);
         }
 
         public static function activate(){

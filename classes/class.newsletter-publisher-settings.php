@@ -3,9 +3,12 @@
 
 if( ! class_exists('Newsletter_Publisher_Settings') ){
     class Newsletter_Publisher_Settings{
+        public static $options;
         public function __construct() {
+            self::$options = get_option('newsletter_publisher_option');
             add_action( 'admin_menu', array($this,'create_admin_menu') );
-
+            add_action( 'admin_init', array($this,'admin_init') );
+            
         }
 
         public function create_admin_menu(){
@@ -20,7 +23,7 @@ if( ! class_exists('Newsletter_Publisher_Settings') ){
             );
             add_submenu_page(
                 'newsletter-index',
-                __('Dashboard',TEXTDOMAIN),
+                __('Newsletter Settings',TEXTDOMAIN),
                 __('Dashboard',TEXTDOMAIN),
                 'manage_options',
                 'newsletter-index',
@@ -47,7 +50,82 @@ if( ! class_exists('Newsletter_Publisher_Settings') ){
         }
 
         public function newsletter_settings_page(){
+            require_once NEWSLETTER_PUB_PATH . '/views/view.settings-page.php';
+        }
 
+        public function admin_init(){
+            
+            register_setting('newsletter_publisher_group','newsletter_publisher_option');
+
+            add_settings_section(
+                'main_secton',
+                __('Color Settings',TEXTDOMAIN),
+                null,
+                'page1'
+            );
+            add_settings_field(
+                'primary_color',
+                __('Primary Color',TEXTDOMAIN),
+                array($this,'add_primary_color'),
+                'page1',
+                'main_secton'
+            );
+
+            add_settings_field(
+                'secondary_color',
+                __('Secondary Color',TEXTDOMAIN),
+                array($this,'add_secondary_color'),
+                'page1',
+                'main_secton'
+            );
+
+            add_settings_field(
+                'light_color',
+                __('Light Color',TEXTDOMAIN),
+                array($this,'add_light_color'),
+                'page1',
+                'main_secton'
+            );
+
+            add_settings_field(
+                'dark_color',
+                __('Dark Color',TEXTDOMAIN),
+                array($this,'add_dark_color'),
+                'page1',
+                'main_secton'
+            );
+        }
+        public function add_primary_color(){
+            ?>
+            <input 
+            type="text" 
+            name="newsletter_publisher_option[primary_color]" 
+            value="<?php echo (isset(self::$options['primary_color']) and self::$options['primary_color']!='')  ? esc_attr(self::$options['primary_color']) : esc_attr('#c79f62'); ?>">
+            <?php
+        }
+        public function add_secondary_color(){
+            ?>
+            <input 
+            type="text" 
+            name="newsletter_publisher_option[secondary_color]" 
+            value="<?php echo (isset(self::$options['secondary_color']) and self::$options['secondary_color']!='') ? esc_attr(self::$options['secondary_color']) : esc_attr('#666'); ?>">
+            <?php
+        }
+        public function add_light_color(){
+            ?>
+            <input 
+            type="text" 
+            name="newsletter_publisher_option[light_color]" 
+            value="<?php echo (isset(self::$options['light_color']) and self::$options['light_color']!='') ? esc_attr(self::$options['light_color']) : esc_attr('#e5e5e5'); ?>">
+            <?php
+        }
+        public function add_dark_color(){
+            ?>
+            <input 
+            type="text" 
+            name="newsletter_publisher_option[dark_color]" 
+            value="<?php echo (isset(self::$options['dark_color']) and self::$options['dark_color']!='') ? esc_attr(self::$options['dark_color']) : esc_attr('#333'); ?>">
+            <?php
         }
     }
 }
