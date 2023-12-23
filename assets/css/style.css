@@ -28,8 +28,28 @@
   display: flex;
   justify-content: space-between;
 }
+.newsletter_publisher .archive [data-tab-content] {
+  display: none;
+}
+.newsletter_publisher .archive .active[data-tab-content] {
+  display: block;
+}
 .newsletter_publisher .archive .tabs {
   width: 10%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+.newsletter_publisher .archive .tabs .tab {
+  cursor: pointer;
+  margin: 0.5em;
+  padding: 0.5em;
+}
+.newsletter_publisher .archive .tabs .tab.active {
+  background-color: #CCC;
+}
+.newsletter_publisher .archive .tabs .tab:hover {
+  background-color: #AAA;
 }
 .newsletter_publisher .archive .tabs-content {
   width: 90%;
@@ -50,6 +70,11 @@
   margin: 0;
   font-size: 1rem;
   font-weight: bold;
+}
+
+.tab-content {
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
 /*==================footer pagination================*/

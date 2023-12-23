@@ -32,12 +32,12 @@
 		<div class="tabs">
 			<?php $years =  Newsletter_Publisher_CPT::get_posts_years_array('newsletter');//['2022','2021','2020'];
 				for($i=0;$i<count($years);$i++): ?>
-					<h5 class="" data-bs-target="#year-<?=$years[$i];?>" type="" role="tab"  aria-selected="true"><?=$years[$i];?></h5>
+					<h5 class="tab <?php echo ($i==0)?'active':''; ?>" data-tab-target="#year-<?=$years[$i];?>" type="" role="tab"  aria-selected="true"><?=$years[$i];?></h5>
 			<?php endfor; ?>
 		</div>
 		<div class="tabs-content" >
 			<?php for($i=0;$i<count($years);$i++): ?>
-				<div class="" id="year-<?= $years[$i]; ?>">
+				<div class="<?php echo ($i==0)?'active':''; ?>" data-tab-content  id="year-<?= $years[$i]; ?>">
 					<?php
 						$args = array(
 						'post_type'=>'newsletter',
