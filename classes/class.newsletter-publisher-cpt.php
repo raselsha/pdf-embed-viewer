@@ -19,7 +19,13 @@ if( ! class_exists('Newsletter_Publisher_CPT') ){
                 "singular_name" => __( "Newsletter", "newsletter-publisher" ),
                 "menu_name" => __( "Newsletters", "newsletter-publisher" ),
                 "all_items" => __( "All Newsletters", "newsletter-publisher" ),
-                "new_items" => __( "All Newsletters", "newsletter-publisher" ),
+                'add_new_item' => __('Add New '),
+                'new_item' => __('New Newsletter'),
+                'edit_item' => __('Edit Newsletter'),
+                'view_item' => __('View Newsletter'),
+                'all_items' => __('All Newsletters'),
+                'search_items' => __('Search Newsletters'),
+                'not_found' => __('No news found.'),
             ];
 
             $args = [
@@ -30,7 +36,7 @@ if( ! class_exists('Newsletter_Publisher_CPT') ){
                 "supports" => [ "title", "editor", "thumbnail" ], // post support ui elements
                 "hierarchical" => false, //parent chile relation post type
                 "show_ui" => true, // post type show ui to add, edit
-                "show_in_menu" => true, // show menu into admin sidebar
+                "show_in_menu" => false, // show menu into admin sidebar
                 "menu_position" => 5, // menu position into admin sidebar
                 "show_in_admin_bar" => true, // show into admin bar
                 "show_in_nav_menus" => true, // show in nav menu

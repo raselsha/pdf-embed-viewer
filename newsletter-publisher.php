@@ -39,7 +39,9 @@ if( ! class_exists( 'Newsletter_Publisher' ) ){
             add_action('wp_enqueue_scripts',array($this,'frontend_style'));
             // add_action('admin_enqueue_scripts',array($this,'backend_style'));
             require_once NEWSLETTER_PUB_PATH . 'classes/class.newsletter-publisher-cpt.php';
+            require_once NEWSLETTER_PUB_PATH . 'classes/class.newsletter-publisher-settings.php';
             $newsletter_publisher_cpt = new Newsletter_Publisher_CPT();
+            $newsletter_publisher_settings = new Newsletter_Publisher_Settings();
         }
 
         public function define_contstants(){
