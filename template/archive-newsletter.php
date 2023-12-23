@@ -27,7 +27,8 @@
 ?>
 
 <div class="newsletter_publisher">
-	<h2><?php the_archive_title(); ?></h2>
+	<?php $options = get_option('newsletter_publisher_option'); ?>
+	<h2><?php isset($options['archive_title']) ? esc_html_e($options['archive_title']) : the_archive_title(); ?></h2>
 	<div class="archive">
 		<ul class="tabs">
 			<?php $years =  Newsletter_Publisher_CPT::get_posts_years_array('newsletter');//['2022','2021','2020'];

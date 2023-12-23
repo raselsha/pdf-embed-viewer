@@ -64,12 +64,22 @@ if( ! class_exists('Newsletter_Publisher_Settings') ){
                 'page1'
             );
 
+            add_settings_field(
+                'archive_title',
+                __('Archive Title',TEXTDOMAIN),
+                array($this,'add_archive_title'),
+                'page1',
+                'main_secton'
+            );
+
             add_settings_section(
                 'main_secton',
                 __('Color Settings',TEXTDOMAIN),
                 null,
                 'page2'
             );
+
+            
 
             add_settings_field(
                 'primary_color',
@@ -108,6 +118,14 @@ if( ! class_exists('Newsletter_Publisher_Settings') ){
             <p><?php _e('You can adjust color with your theme by adding hexa decimal value in <b>color settings</b> section.',TEXTDOMAIN); ?></p>
             <?php
         }
+        public function add_archive_title(){
+            ?>
+            <input 
+            type="text" 
+            name="newsletter_publisher_option[archive_title]" 
+            value="<?php echo (isset(self::$options['archive_title']) and self::$options['archive_title']!='')  ? esc_attr(self::$options['archive_title']) : esc_attr__('Newsletter',TEXTDOMAIN); ?>">
+            <?php
+        }
         public function add_primary_color(){
             ?>
             <input 
@@ -141,13 +159,13 @@ if( ! class_exists('Newsletter_Publisher_Settings') ){
             <?php
         }
 
-        public function sanitize( $input ) {
-            $new_input = array();
-            foreach($input as $key => $value){
-                $new_input[$key] = sanitize_text_field($value);
-            }
-            return $new_input;
+        // public function sanitize( $input ) {
+        //     $new_input = array();
+        //     foreach($input as $key => $value){
+        //         $new_input[$key] = sanitize_text_field($value);
+        //     }
+        //     return $new_input;
         
-        }
+        // }
     }
 }

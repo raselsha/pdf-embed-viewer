@@ -62,10 +62,10 @@ if( ! class_exists( 'Newsletter_Publisher' ) ){
             wp_enqueue_script('newsletter-custom');
             //settings value from database;
             $options = get_option('newsletter_publisher_option');
-            $primary_color = $options['primary_color'];
-            $secondary_color = $options['secondary_color'];
-            $light_color = $options['light_color'];
-            $dark_color = $options['dark_color'];
+            $primary_color = isset($options['primary_color'])? $options['primary_color'] : '#c79f62';
+            $secondary_color = isset($options['secondary_color'])? $options['secondary_color'] : '#666';
+            $light_color = isset($options['light_color'])? $options['light_color'] : '#e5e5e5';
+            $dark_color = isset($options['dark_color'])?$options['dark_color'] : '#333';
             $css = "
                 :root{
                     --nws-promary-color:{$primary_color};        
