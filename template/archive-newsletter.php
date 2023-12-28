@@ -40,9 +40,9 @@
 			<?php for($i=0;$i<count($years);$i++): ?>
 				<table  class="<?php echo ($i==0)?'active':''; ?>" data-tab-content  id="year-<?= $years[$i]; ?>">
 					<tr>         					    			
-						<th width="15%">Month</th>
-						<th width="80%">Title</th>
-						<th width="5%" class="text-center">Download</th>
+						<th>Month</th>
+						<th>Title</th>
+						<th>Download</th>
 					</tr>
 					<?php
 						$args = array(
@@ -60,9 +60,9 @@
 							$WpQuery->the_post();
 							?>
 							<tr>
-								<td><?php the_time('F'); ?></td>
-								<td><a href="<?php the_permalink(); ?>"><?php the_title();?></a></td>
-								<td><a href="<?php esc_attr_e(get_post_meta( get_the_ID(), 'newsletter_file', true ))?>" class="file_download" download><?php esc_html_e('Download',TEXTDOMAIN); ?> <img src="<?php esc_attr_e(NEWSLETTER_PUB_URL.'assets/images/download.svg'); ?>" alt="Download icon"> </a></td>
+								<td width="10%"><?php the_time('F'); ?></td>
+								<td width="10%"><a href="<?php the_permalink(); ?>"><?php the_title();?></a></td>
+								<td width="10%"><a href="<?php esc_attr_e(get_post_meta( get_the_ID(), 'newsletter_file', true ))?>" class="file_download" download><?php esc_html_e('Download',TEXTDOMAIN); ?> <img src="<?php esc_attr_e(NEWSLETTER_PUB_URL.'assets/images/download.svg'); ?>" alt="Download icon"> </a></td>
 							</tr>
 					<?php endwhile; ?>
 					
