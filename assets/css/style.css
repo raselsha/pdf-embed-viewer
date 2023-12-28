@@ -11,6 +11,7 @@
 .newsletter_publisher {
   max-width: 1240px;
   margin: 0 auto;
+  width: 100%;
 }
 .newsletter_publisher a {
   text-decoration: none;
@@ -65,7 +66,6 @@
   cursor: pointer;
   padding: 0.5em;
   text-align: center;
-  font-size: 1.1rem;
   font-weight: bold;
   color: var(--nws-secondary-color);
   transition: all 0.5s;
@@ -83,10 +83,13 @@
   text-align: left;
   border-collapse: collapse;
   transition: all 0.5s;
+  border: 0;
+  width: 100%;
 }
 .newsletter_publisher .archive .tabs-content table th {
   background-color: var(--nws-light-color);
   padding: 0.5em;
+  border: 0;
   border-bottom: 1px solid var(--nws-secondary-color);
   color: var(--nws-dark-color);
 }
@@ -94,9 +97,11 @@
   padding: 0.5em;
   color: var(--nws-secondary-color);
   font-weight: bold;
+  border: 0;
 }
 .newsletter_publisher .archive .tabs-content table tr:nth-child(odd) {
   background-color: var(--nws-light-color);
+  border: 0;
 }
 
 .tab-content {
