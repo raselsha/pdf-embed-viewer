@@ -50,6 +50,13 @@ if( ! class_exists('Newsletter_Publisher_Settings') ){
         }
 
         public function newsletter_settings_page(){
+            if( ! current_user_can('manage_options')){
+                return;
+            }
+            if( isset($_GET['settings-updated']) ){
+                add_settings_error('newsletter_publisher_option','','Settings Saved!','success');
+            }
+            settings_errors('newsletter_publisher_option');
             require_once NEWSLETTER_PUB_PATH . '/views/view.settings-page.php';
         }
 
