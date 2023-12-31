@@ -37,7 +37,7 @@ if( ! class_exists( 'Newsletter_Publisher' ) ){
         function __construct() {
             $this->define_contstants();
             add_action('wp_enqueue_scripts',array($this,'frontend_style'));
-            // add_action('admin_enqueue_scripts',array($this,'backend_style'));
+            add_action('admin_enqueue_scripts',array($this,'backend_style'));
             require_once NEWSLETTER_PUB_PATH . 'classes/class.newsletter-publisher-cpt.php';
             require_once NEWSLETTER_PUB_PATH . 'classes/class.newsletter-publisher-settings.php';
             $newsletter_publisher_cpt = new Newsletter_Publisher_CPT();
@@ -53,27 +53,38 @@ if( ! class_exists( 'Newsletter_Publisher' ) ){
         }
 
         public function frontend_style(){
-            wp_register_style('newsletter-frontend',NEWSLETTER_PUB_URL.'assets/css/style.css',[],time(),'all');
+            wp_register_style('newsletter-frontend-style',NEWSLETTER_PUB_URL.'assets/css/style.css',[],time(),'all');
             wp_register_script( 'webviewer', NEWSLETTER_PUB_URL.'assets/js/pdfjs/lib/webviewer.min.js','','',true);
-            wp_register_script( 'newsletter-custom', NEWSLETTER_PUB_URL.'assets/js/script.js','',time(),true);
+            wp_register_script( 'newsletter-frontend-script', NEWSLETTER_PUB_URL.'assets/js/script.js','',time(),true);
             
-            wp_enqueue_style('newsletter-frontend');
+            wp_enqueue_style('newsletter-frontend-style');
             wp_enqueue_script('webviewer');
-            wp_enqueue_script('newsletter-custom');
+            wp_enqueue_script('newsletter-frontend-script');
             //settings value from database;
             $options = get_option('newsletter_publisher_option');
-            $primary_color = isset($options['primary_color'])? $options['primary_color'] : '#c79f62';
-            $secondary_color = isset($options['secondary_color'])? $options['secondary_color'] : '#666';
-            $light_color = isset($options['light_color'])? $options['light_color'] : '#e5e5e5';
-            $dark_color = isset($options['dark_color'])?$options['dark_color'] : '#333';
-            $css = "
-                :root{
-                    --nws-promary-color:{$primary_color};        
-                    --nws-secondary-color:{$secondary_color}; 
-                    --nws-light-color:{$light_color};       
-                    --nws-dark-color:{$dark_color};     
-            ";
-            wp_add_inline_style('newsletter-frontend', $css);
+            
+            if($options['primary_color']!=''){
+                $primary_color = $options['primary_color'];
+                $secondary_color = $options['secondary_color'];
+                $light_color = $options['light_color'];
+                $dark_color = $options['dark_color'];
+                $css = "
+                    :root{
+                        --nws-primary-color:{$primary_color};        
+                        --nws-secondary-color:{$secondary_color}; 
+                        --nws-light-color:{$light_color};       
+                        --nws-dark-color:{$dark_color};     
+                    ";
+                wp_add_inline_style('newsletter-frontend-style', $css);
+            }
+            
+        }
+
+        public function backend_style(){
+            if( is_admin() ) { 
+                wp_enqueue_style( 'wp-color-picker' ); 
+                wp_enqueue_script( 'custom-script-handle', NEWSLETTER_PUB_URL.'assets/js/script.js', array( 'wp-color-picker' ), false, true ); 
+            }
         }
 
         public static function activate(){

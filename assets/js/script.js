@@ -26,3 +26,10 @@ tabs.forEach(tab => {
     target.classList.add('active')
   })
 })
+
+
+// ============admin scripts===========
+
+jQuery(document).ready(function($){
+  $('.color-field').wpColorPicker();
+});
