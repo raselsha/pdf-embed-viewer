@@ -81,10 +81,8 @@ if( ! class_exists( 'Newsletter_Publisher' ) ){
         }
 
         public function backend_style(){
-            if( is_admin() ) { 
-                wp_enqueue_style( 'wp-color-picker' ); 
-                wp_enqueue_script( 'custom-script-handle', NEWSLETTER_PUB_URL.'assets/js/script.js', array( 'wp-color-picker' ), false, true ); 
-            }
+            wp_enqueue_style( 'wp-color-picker' ); 
+            wp_enqueue_script( 'newsletter-frontend-script', NEWSLETTER_PUB_URL.'assets/js/script.js', array( 'wp-color-picker' ), false, true ); 
         }
 
         public static function activate(){

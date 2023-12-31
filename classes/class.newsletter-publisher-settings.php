@@ -184,13 +184,13 @@ if( ! class_exists('Newsletter_Publisher_Settings') ){
             <?php
         }
 
-        // public function sanitize( $input ) {
-        //     $new_input = array();
-        //     foreach($input as $key => $value){
-        //         $new_input[$key] = sanitize_text_field($value);
-        //     }
-        //     return $new_input;
+        public function sanitize( $input ) {
+            $new_input = array();
+            foreach($input as $key => $value){
+                $new_input[$key] = sanitize_text_field($value);
+            }
+            return $new_input;
         
-        // }
+        }
     }
 }
