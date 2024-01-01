@@ -26,12 +26,12 @@
 }
 ?>
 
-<div class="newsletter_publisher">
-	<?php $options = get_option('newsletter_publisher_option'); ?>
+<div class="pdf-download">
+	<?php $options = get_option('pdf_download_option'); ?>
 	<h2><?php isset($options['archive_title']) ? esc_html_e($options['archive_title']) : the_archive_title(); ?></h2>
 	<div class="archive">
 		<ul class="tabs">
-			<?php $years =  Newsletter_Publisher_CPT::get_posts_years_array('newsletter');//['2022','2021','2020'];
+			<?php $years =  PDF_Download_CPT::get_posts_years_array('pdfdownload');//['2022','2021','2020'];
 				for($i=0;$i<count($years);$i++): ?>
 					<li class="tab <?php echo ($i==0)?'active':''; ?>" data-tab-target="#year-<?=$years[$i];?>" type="" role="tab"  aria-selected="true"><?=$years[$i];?></li>
 			<?php endfor; ?>
@@ -46,7 +46,7 @@
 					</tr>
 					<?php
 						$args = array(
-						'post_type'=>'newsletter',
+						'post_type'=>'pdfdownload',
 						'order' => 'ASC',
 						'posts_per_page'=> get_option( 'posts_per_page' ),
 							'date_query' => array(
@@ -62,7 +62,7 @@
 							<tr>
 								<td width="10%"><?php the_time('F'); ?></td>
 								<td width="10%"><a href="<?php the_permalink(); ?>"><?php the_title();?></a></td>
-								<td width="10%"><a href="<?php esc_attr_e(get_post_meta( get_the_ID(), 'newsletter_file', true ))?>" class="file_download" download><?php esc_html_e('Download',TEXTDOMAIN); ?> <img src="<?php esc_attr_e(NEWSLETTER_PUB_URL.'assets/images/download.svg'); ?>" alt="Download icon"> </a></td>
+								<td width="10%"><a href="<?php esc_attr_e(get_post_meta( get_the_ID(), 'pdfdownload_file', true ))?>" class="download-btn" download><?php esc_html_e('Download',TEXTDOMAIN); ?> <img src="<?php esc_attr_e(PDF_DOWNLOAD_URL.'assets/images/download.svg'); ?>" alt="Download icon"> </a></td>
 							</tr>
 					<?php endwhile; ?>
 					

@@ -8,7 +8,7 @@
     --pdfd-white-color:#fff;
 }
 /*================body============*/
-.newsletter_publisher{
+.pdf-download{
     max-width:1240px;
     margin: 0 auto;
     width: 100%;
@@ -27,13 +27,14 @@
         color: #fff;
         font-weight: normal;
     }
-    .file_download{
+    .download-btn{
         @extend .button;
         display: inline-flex;
         align-items: center;
         gap: .5em;
     }
-    #newsletter_file_viewer{
+    .pdf-viewer{
+        margin: .5em 0;
         width: 100%;
         height: 1024px;
     }

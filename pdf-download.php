@@ -41,7 +41,7 @@ if( ! class_exists( 'PDF_Download' ) ){
             require_once PDF_DOWNLOAD_PATH . 'classes/pdf-download-cpt.php';
             require_once PDF_DOWNLOAD_PATH . 'classes/pdf-download-settings.php';
             $pdf_download_cpt = new PDF_Download_CPT();
-            //$pdf_download_settings = new PDF_Download_Settings();
+            $pdf_download_settings = new PDF_Download_Settings();
             
         }
 

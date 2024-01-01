@@ -4,11 +4,11 @@
         <?php
             $active_tab = isset($_GET['tab']) ? $_GET['tab'] : 'settings' ;
         ?>
-        <a href="?page=newsletter-index&tab=settings" class="nav-tab <?php esc_attr_e(($active_tab=='settings') ? 'nav-tab-active' : '' ); ?>">Settings</a>
-        <a href="?page=newsletter-index&tab=support" class="nav-tab <?php esc_attr_e(($active_tab=='support') ? 'nav-tab-active' : '' ); ?>">Support</a>
+        <a href="?page=pdfdownload-index&tab=settings" class="nav-tab <?php esc_attr_e(($active_tab=='settings') ? 'nav-tab-active' : '' ); ?>">Settings</a>
+        <a href="?page=pdfdownload-index&tab=support" class="nav-tab <?php esc_attr_e(($active_tab=='support') ? 'nav-tab-active' : '' ); ?>">Support</a>
     </h2>
     <form action="options.php" method="post">
-        <?php settings_fields('newsletter_publisher_group'); ?>
+        <?php settings_fields('pdfdownload_group'); ?>
         <?php if($active_tab=='settings'): ?>
             <?php do_settings_sections('page1'); ?>
             <?php submit_button('Save'); ?>

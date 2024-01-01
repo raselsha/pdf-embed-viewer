@@ -1,66 +1,67 @@
 :root {
-  --nws-primary-color:#c79f62;
-  --nws-secondary-color:#666;
-  --nws-light-color:#e5e5e5;
-  --nws-dark-color:#333;
-  --nws-black-color:#000;
-  --nws-white-color:#fff;
+  --pdfd-primary-color:#c79f62;
+  --pdfd-secondary-color:#666;
+  --pdfd-light-color:#e5e5e5;
+  --pdfd-dark-color:#333;
+  --pdfd-black-color:#000;
+  --pdfd-white-color:#fff;
 }
 
 /*================body============*/
-.newsletter_publisher {
+.pdf-download {
   max-width: 1240px;
   margin: 0 auto;
   width: 100%;
 }
-.newsletter_publisher a {
+.pdf-download a {
   text-decoration: none;
-  color: var(--nws-primary-color);
+  color: var(--pdfd-primary-color);
   font-weight: bold;
 }
-.newsletter_publisher h1 {
-  color: var(--nws-dark-color);
+.pdf-download h1 {
+  color: var(--pdfd-dark-color);
 }
-.newsletter_publisher .button, .newsletter_publisher .file_download {
-  background-color: var(--nws-primary-color);
+.pdf-download .button, .pdf-download .download-btn {
+  background-color: var(--pdfd-primary-color);
   padding: 0.1em 0.5em;
   border-radius: 0.25em;
   color: #fff;
   font-weight: normal;
 }
-.newsletter_publisher .file_download {
+.pdf-download .download-btn {
   display: inline-flex;
   align-items: center;
   gap: 0.5em;
 }
-.newsletter_publisher #newsletter_file_viewer {
+.pdf-download .pdf-viewer {
+  margin: 0.5em 0;
   width: 100%;
   height: 1024px;
 }
-.newsletter_publisher .archive {
+.pdf-download .archive {
   display: flex;
   justify-content: space-between;
   flex-direction: column;
 }
 @media (min-width: 992px) {
-  .newsletter_publisher .archive {
+  .pdf-download .archive {
     flex-direction: row;
   }
 }
-.newsletter_publisher .archive [data-tab-content] {
+.pdf-download .archive [data-tab-content] {
   display: none;
   transition: all 0.5s;
 }
-.newsletter_publisher .archive .active[data-tab-content] {
+.pdf-download .archive .active[data-tab-content] {
   display: block;
   transition: all 0.5s;
 }
-.newsletter_publisher .archive .tabs {
+.pdf-download .archive .tabs {
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: start;
-  background-color: var(--nws-light-color);
+  background-color: var(--pdfd-light-color);
   list-style-type: none;
   margin: 0;
   padding: 0;
@@ -68,55 +69,55 @@
   overflow-y: scroll;
 }
 @media (min-width: 992px) {
-  .newsletter_publisher .archive .tabs {
+  .pdf-download .archive .tabs {
     width: 10%;
     height: 500px;
   }
 }
-.newsletter_publisher .archive .tabs .tab {
+.pdf-download .archive .tabs .tab {
   cursor: pointer;
   padding: 0.5em;
   text-align: center;
   font-weight: bold;
-  color: var(--nws-secondary-color);
+  color: var(--pdfd-secondary-color);
   transition: all 0.5s;
 }
-.newsletter_publisher .archive .tabs .tab.active {
-  color: var(--nws-primary-color);
+.pdf-download .archive .tabs .tab.active {
+  color: var(--pdfd-primary-color);
 }
-.newsletter_publisher .archive .tabs .tab:hover {
-  color: var(--nws-primary-color);
+.pdf-download .archive .tabs .tab:hover {
+  color: var(--pdfd-primary-color);
 }
-.newsletter_publisher .archive .tabs-content {
+.pdf-download .archive .tabs-content {
   width: 100%;
 }
 @media (min-width: 992px) {
-  .newsletter_publisher .archive .tabs-content {
+  .pdf-download .archive .tabs-content {
     width: 90%;
   }
 }
-.newsletter_publisher .archive .tabs-content table {
+.pdf-download .archive .tabs-content table {
   text-align: left;
   border-collapse: collapse;
   transition: all 0.5s;
   border: 0;
   width: 100%;
 }
-.newsletter_publisher .archive .tabs-content table th {
-  background-color: var(--nws-light-color);
+.pdf-download .archive .tabs-content table th {
+  background-color: var(--pdfd-light-color);
   padding: 0.5em;
   border: 0;
-  border-bottom: 1px solid var(--nws-secondary-color);
-  color: var(--nws-dark-color);
+  border-bottom: 1px solid var(--pdfd-secondary-color);
+  color: var(--pdfd-dark-color);
 }
-.newsletter_publisher .archive .tabs-content table td {
+.pdf-download .archive .tabs-content table td {
   padding: 0.5em;
-  color: var(--nws-secondary-color);
+  color: var(--pdfd-secondary-color);
   font-weight: bold;
   border: 0;
 }
-.newsletter_publisher .archive .tabs-content table tr:nth-child(odd) {
-  background-color: var(--nws-light-color);
+.pdf-download .archive .tabs-content table tr:nth-child(odd) {
+  background-color: var(--pdfd-light-color);
   border: 0;
 }
 

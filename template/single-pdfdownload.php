@@ -25,12 +25,12 @@
     get_header();	
 }
 ?>
-<?php $newsletter_file = get_post_meta( get_the_ID(), 'newsletter_file', true ); ?>
-<div class="newsletter_publisher">
+<?php $pdfdownload_file = get_post_meta( get_the_ID(), 'pdfdownload_file', true ); ?>
+<div class="pdf-download">
 	<h1><?php the_title();?></h1>
-	<p><a href="<?php esc_attr_e($newsletter_file); ?>" class="file_download" download><?php the_time('F'); ?> | <?php the_time('Y'); ?> <img src="<?php esc_attr_e(NEWSLETTER_PUB_URL.'assets/images/download.svg'); ?>" alt="download-icon"></a></p>
-	<?php the_content(); ?>
-	<div id='newsletter_file_viewer' height="100%"></div>
+	<p><a href="<?php esc_attr_e($pdfdownload_file); ?>" class="download-btn" download><?php the_time('F'); ?> | <?php the_time('Y'); ?> <img src="<?php esc_attr_e(PDF_DOWNLOAD_URL.'assets/images/download.svg'); ?>" alt="download-icon"></a></p>
+	
+	<iframe class="pdf-viewer" src="<?php esc_attr_e($pdfdownload_file); ?>" frameborder="0"></iframe>
 
 	<div class="pagination">
 		<?php previous_post_link('%link','&#8592; Previous Month' ); ?>
