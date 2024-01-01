@@ -53,8 +53,8 @@ if( ! class_exists( 'PDF_Download' ) ){
         }
 
         public function frontend_style(){
-            wp_register_style('pdf-download',PDF_DOWNLOAD_URL.'assets/css/style.css',[],time(),'all');
-            wp_register_script( 'pdf-download', PDF_DOWNLOAD_URL.'assets/js/script.js','',time(),true);
+            wp_register_style('pdf-download',PDF_DOWNLOAD_URL.'assets/css/style.css',[],'1.0.0','all');
+            wp_register_script( 'pdf-download', PDF_DOWNLOAD_URL.'assets/js/script.js',[],'1.0.0',true);
             
             wp_enqueue_style('pdf-download');
             wp_enqueue_script('pdf-download');
@@ -62,10 +62,10 @@ if( ! class_exists( 'PDF_Download' ) ){
             $options = get_option('pdf_download_option');
             
             if($options['primary_color']!=''){
-                $primary_color = $options['primary_color'];
-                $secondary_color = $options['secondary_color'];
-                $light_color = $options['light_color'];
-                $dark_color = $options['dark_color'];
+                $primary_color = est_attr($options['primary_color']);
+                $secondary_color = est_attr($options['secondary_color']);
+                $light_color = est_attr($options['light_color']);
+                $dark_color =est_attr( $options['dark_color']);
                 $css = "
                     :root{
                         --pdfd-primary-color:{$primary_color};        
