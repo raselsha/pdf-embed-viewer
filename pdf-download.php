@@ -31,37 +31,35 @@ along with PDF Download. If not, see https://www.gnu.org/licenses/gpl-2.0.html.
 
 if( ! defined('ABSPATH') ) { die( "don't access directly" ); }
 
-if( ! class_exists( 'Newsletter_Publisher' ) ){
-    class Newsletter_Publisher{
+if( ! class_exists( 'PDF_Download' ) ){
+    class PDF_Download{
 
         function __construct() {
             $this->define_contstants();
             add_action('wp_enqueue_scripts',array($this,'frontend_style'));
             add_action('admin_enqueue_scripts',array($this,'backend_style'));
-            require_once NEWSLETTER_PUB_PATH . 'classes/class.newsletter-publisher-cpt.php';
-            require_once NEWSLETTER_PUB_PATH . 'classes/class.newsletter-publisher-settings.php';
-            $newsletter_publisher_cpt = new Newsletter_Publisher_CPT();
-            $newsletter_publisher_settings = new Newsletter_Publisher_Settings();
+            require_once PDF_DOWNLOAD_PATH . 'classes/pdf-download-cpt.php';
+            require_once PDF_DOWNLOAD_PATH . 'classes/pdf-download-settings.php';
+            $pdf_download_cpt = new PDF_Download_CPT();
+            $pdf_download_settings = new PDF_Download_Settings();
             
         }
 
         public function define_contstants(){
-            define( 'TEXTDOMAIN', 'newsletter-publisher' );
-            define( 'NEWSLETTER_PUB_PATH', plugin_dir_path(__FILE__) );
-            define( 'NEWSLETTER_PUB_URL', plugin_dir_url(__FILE__) );
-            define( 'NEWSLETTER_PUB_VERSION', '1.0.0' );
+            define( 'TEXTDOMAIN', 'pdf-download' );
+            define( 'PDF_DOWNLOAD_PATH', plugin_dir_path(__FILE__) );
+            define( 'PDF_DOWNLOAD_URL', plugin_dir_url(__FILE__) );
+            define( 'PDF_DOWNLOAD_VERSION', '1.0.0' );
         }
 
         public function frontend_style(){
-            wp_register_style('newsletter-frontend-style',NEWSLETTER_PUB_URL.'assets/css/style.css',[],time(),'all');
-            wp_register_script( 'webviewer', NEWSLETTER_PUB_URL.'assets/js/pdfjs/lib/webviewer.min.js','','',true);
-            wp_register_script( 'newsletter-frontend-script', NEWSLETTER_PUB_URL.'assets/js/script.js','',time(),true);
+            wp_register_style('pdf-download',PDF_DOWNLOAD_URL.'assets/css/style.css',[],time(),'all');
+            wp_register_script( 'pdf-download', PDF_DOWNLOAD_URL.'assets/js/script.js','',time(),true);
             
-            wp_enqueue_style('newsletter-frontend-style');
-            wp_enqueue_script('webviewer');
-            wp_enqueue_script('newsletter-frontend-script');
-            //settings value from database;
-            $options = get_option('newsletter_publisher_option');
+            wp_enqueue_style('pdf-download');
+            wp_enqueue_script('pdf-download');
+
+            $options = get_option('pdf_download_option');
             
             if($options['primary_color']!=''){
                 $primary_color = $options['primary_color'];
@@ -70,19 +68,19 @@ if( ! class_exists( 'Newsletter_Publisher' ) ){
                 $dark_color = $options['dark_color'];
                 $css = "
                     :root{
-                        --nws-primary-color:{$primary_color};        
-                        --nws-secondary-color:{$secondary_color}; 
-                        --nws-light-color:{$light_color};       
-                        --nws-dark-color:{$dark_color};     
+                        --pdfd-primary-color:{$primary_color};        
+                        --pdfd-secondary-color:{$secondary_color}; 
+                        --pdfd-light-color:{$light_color};       
+                        --pdfd-dark-color:{$dark_color};     
                     ";
-                wp_add_inline_style('newsletter-frontend-style', $css);
+                wp_add_inline_style('pdf-download', $css);
             }
             
         }
 
         public function backend_style(){
             wp_enqueue_style( 'wp-color-picker' ); 
-            wp_enqueue_script( 'newsletter-frontend-script', NEWSLETTER_PUB_URL.'assets/js/script.js', array( 'wp-color-picker' ), false, true ); 
+            wp_enqueue_script( 'pdf-download', PDF_DOWNLOAD_URL.'assets/js/script.js', array( 'wp-color-picker' ), false, true ); 
         }
 
         public static function activate(){
@@ -92,7 +90,7 @@ if( ! class_exists( 'Newsletter_Publisher' ) ){
 
         public static function deactivate(){
             flush_rewrite_rules();
-            unregister_post_type('newsletter');
+            unregister_post_type('pdfdownload');
         }
 
         public static function uninstall(){
@@ -102,9 +100,9 @@ if( ! class_exists( 'Newsletter_Publisher' ) ){
 
 }
 
-if( class_exists( 'Newsletter_Publisher' ) ){
-    register_activation_hook( __FILE__, array( 'Newsletter_Publisher','activate' ) );
-    register_deactivation_hook( __FILE__, array( 'Newsletter_Publisher','deactivate' ) );
-    register_uninstall_hook( __FILE__, array( 'Newsletter_Publisher','uninstall' ) );
-    $newsletter_publisher = new Newsletter_Publisher();
+if( class_exists( 'PDF_Download' ) ){
+    register_activation_hook( __FILE__, array( 'PDF_Download','activate' ) );
+    register_deactivation_hook( __FILE__, array( 'PDF_Download','deactivate' ) );
+    register_uninstall_hook( __FILE__, array( 'PDF_Download','uninstall' ) );
+    $pdf_download = new PDF_Download();
 }
