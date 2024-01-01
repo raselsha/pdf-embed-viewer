@@ -48,6 +48,4 @@
 <?php else: ?>
 	<?php get_footer(); ?>
 <?php endif; ?>
-<script> view_pdf('<?php esc_attr_e(NEWSLETTER_PUB_URL."assets/js/pdfjs/lib/"); ?>','<?php esc_attr_e($newsletter_file); ?>')</script>
-
 
