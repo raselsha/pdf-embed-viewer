@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: PDF View | Download
+ * Plugin Name: PDF Download
  * Plugin URI: https://wordpress.org/plugins/pdf-download
  * Description: It helps you to view and download PDF Document, Newsletter, Report, for your visitor.
  * Version: 1.0.0
@@ -41,7 +41,7 @@ if( ! class_exists( 'PDF_Download' ) ){
             require_once PDF_DOWNLOAD_PATH . 'classes/pdf-download-cpt.php';
             require_once PDF_DOWNLOAD_PATH . 'classes/pdf-download-settings.php';
             $pdf_download_cpt = new PDF_Download_CPT();
-            $pdf_download_settings = new PDF_Download_Settings();
+            //$pdf_download_settings = new PDF_Download_Settings();
             
         }
 
