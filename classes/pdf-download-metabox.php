@@ -1,8 +1,8 @@
 <?php
 
-if( ! class_exists('Newsletter_Publisher_Metabox') ){
+if( ! class_exists('PDF_Download_Metabox') ){
     
-    class Newsletter_Publisher_Metabox{
+    class PDF_Download_Metabox{
         
         public function __construct() {
             add_action( 'add_meta_boxes' , array( $this, 'add_meta_boxes' ) );
@@ -12,10 +12,10 @@ if( ! class_exists('Newsletter_Publisher_Metabox') ){
 
         public function add_meta_boxes(){
             add_meta_box(
-                'newsletter-meta-box',
-                'Newsletter Upload',
+                'pdfdownload-metabox',
+                __('PDF Upload', 'pdf-download' ),
                 array($this,'meta_box_inner'),
-                'newsletter',
+                'pdfdownload',
                 'normal',
                 'high',
             );
@@ -23,19 +23,19 @@ if( ! class_exists('Newsletter_Publisher_Metabox') ){
 
         public function meta_box_inner($post){
 
-            require_once NEWSLETTER_PUB_PATH . 'views/view.metabox.php';
+            require_once PDF_DOWNLOAD_PATH . 'views/pdf-download-metabox.php';
         }
 
         
         public function load_admin_scripts( $hook ) {
             global $typenow;
-            if( $typenow == 'newsletter' ) {
+            if( $typenow == 'pdfdownload' ) {
                 wp_enqueue_media();
-                wp_register_script('meta-box-image',NEWSLETTER_PUB_URL.'assets/js/media.js',array( 'jquery' ),time(),true);
+                wp_register_script('meta-box-image',PDF_DOWNLOAD_URL.'assets/js/media.js',array( 'jquery' ),time(),true);
                 wp_localize_script( 'meta-box-image', 'meta_image',
                     array(
                         'title' => __( 'Choose or Upload Newsletter', TEXTDOMAIN ),
-                        'button' => __( 'Use this newsletter', TEXTDOMAIN ),
+                        'button' => __( 'Use this pdfdownload', TEXTDOMAIN ),
                     )
                 );
                 wp_enqueue_script( 'meta-box-image' );
@@ -44,8 +44,8 @@ if( ! class_exists('Newsletter_Publisher_Metabox') ){
 
         public function save_post($post_id){
 
-            if( isset( $_POST['newsletter_nonce'] ) ){
-                if( ! wp_verify_nonce( $_POST['newsletter_nonce'], 'newsletter_nonce' ) ){
+            if( isset( $_POST['pdfdownload_nonce'] ) ){
+                if( ! wp_verify_nonce( $_POST['pdfdownload_nonce'], 'pdfdownload_nonce' ) ){
                     return;
                 }
             }
@@ -54,7 +54,7 @@ if( ! class_exists('Newsletter_Publisher_Metabox') ){
                 return;
             }
 
-            if( isset($_POST['post_type']) && $_POST['post_type'] === 'newsletter' ){
+            if( isset($_POST['post_type']) && $_POST['post_type'] === 'pdfdownload' ){
                 if( ! current_user_can('edit_page',$post_id) ){
                     return;
                 }
@@ -64,10 +64,10 @@ if( ! class_exists('Newsletter_Publisher_Metabox') ){
             }   
 
             if( isset($_POST['action']) and $_POST['action']=='editpost' ){
-                $old_data = get_post_meta($post_id,'newsletter_file',true);
-                $new_data = $_POST['newsletter_file'];
+                $old_data = get_post_meta($post_id,'pdfdownload_file',true);
+                $new_data = $_POST['pdfdownload_file'];
 
-                update_post_meta($post_id,'newsletter_file',sanitize_url($new_data), $old_data);
+                update_post_meta($post_id,'pdfdownload_file',sanitize_url($new_data), $old_data);
             }
         }
         

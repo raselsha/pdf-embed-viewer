@@ -9,8 +9,8 @@ if( ! class_exists('PDF_Download_CPT') ){
             add_filter( 'archive_template', array($this,'pdfdownload_archive_template') ) ;
             add_filter( 'single_template', array($this,'pdfdownload_single_template') ) ;
 
-           // require_once PDF_DOWNLOAD_PATH . 'classes/class.pdfdownload-publisher-metabox.php';
-           // $pdfdownload_publisher_metabox = new PDF Download_Publisher_Metabox();
+           require_once PDF_DOWNLOAD_PATH . 'classes/pdf-download-metabox.php';
+           $pdf_download_metabox = new PDF_Download_Metabox();
         }
 
         public function create_post_type(){
