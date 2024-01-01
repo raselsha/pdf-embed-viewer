@@ -34,8 +34,8 @@ if( ! class_exists('PDF_Download_Metabox') ){
                 wp_register_script('meta-box-image',PDF_DOWNLOAD_URL.'assets/js/media.js',array( 'jquery' ),time(),true);
                 wp_localize_script( 'meta-box-image', 'meta_image',
                     array(
-                        'title' => __( 'Choose or Upload Newsletter', TEXTDOMAIN ),
-                        'button' => __( 'Use this pdfdownload', TEXTDOMAIN ),
+                        'title' => __( 'Choose or Upload', 'pdf-download' ),
+                        'button' => __( 'Use this file', 'pdf-download' ),
                     )
                 );
                 wp_enqueue_script( 'meta-box-image' );

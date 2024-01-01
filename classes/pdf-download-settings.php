@@ -13,8 +13,8 @@ if( ! class_exists('PDF_Download_Settings') ){
 
         public function create_admin_menu(){
             add_menu_page(
-                __('PDF Download Settings',TEXTDOMAIN),
-                __('PDF Download',TEXTDOMAIN),
+                __('PDF Download Settings','pdf-download'),
+                __('PDF Download','pdf-download'),
                 'manage_options',
                 'pdfdownload-index',
                 array($this,'pdfdownload_settings_page'),
@@ -23,24 +23,24 @@ if( ! class_exists('PDF_Download_Settings') ){
             );
             add_submenu_page(
                 'pdfdownload-index',
-                __('PDF Download Settings',TEXTDOMAIN),
-                __('Dashboard',TEXTDOMAIN),
+                __('PDF Download Settings','pdf-download'),
+                __('Dashboard','pdf-download'),
                 'manage_options',
                 'pdfdownload-index',
                 array($this,'pdfdownload_settings_page'),
             );
             add_submenu_page(
                 'pdfdownload-index',
-                __('All PDF',TEXTDOMAIN),
-                __('All PDF',TEXTDOMAIN),
+                __('All PDF','pdf-download'),
+                __('All PDF','pdf-download'),
                 'manage_options',
                 'edit.php?post_type=pdfdownload',
                 null,
             );
             add_submenu_page(
                 'pdfdownload-index',
-                __('Add New PDF',TEXTDOMAIN),
-                __('Add New PDF',TEXTDOMAIN),
+                __('Add New PDF','pdf-download'),
+                __('Add New PDF','pdf-download'),
                 'manage_options',
                 'post-new.php?post_type=pdfdownload',
                 null,
@@ -68,14 +68,14 @@ if( ! class_exists('PDF_Download_Settings') ){
 // ============tab 1 here======
             add_settings_section(
                 'page1_main_section',
-                __('Title Settings',TEXTDOMAIN),
+                __('Title Settings','pdf-download'),
                 array($this,'page1_main_section'),
                 'page1'
             );
 
             add_settings_field(
                 'archive_title',
-                __('Title',TEXTDOMAIN),
+                __('Title','pdf-download'),
                 array($this,'add_archive_title'),
                 'page1',
                 'page1_main_section'
@@ -83,21 +83,21 @@ if( ! class_exists('PDF_Download_Settings') ){
 
             add_settings_section(
                 'page1_second_section',
-                __('Color Settings',TEXTDOMAIN),
+                __('Color Settings','pdf-download'),
                 array($this,'page1_second_section'),
                 'page1'
             );
 
             add_settings_field(
                 'primary_color',
-                __('Primary Color',TEXTDOMAIN),
+                __('Primary Color','pdf-download'),
                 array($this,'add_primary_color'),
                 'page1',
                 'page1_second_section'
             );
             add_settings_field(
                 'secondary_color',
-                __('Secondary Color',TEXTDOMAIN),
+                __('Secondary Color','pdf-download'),
                 array($this,'add_secondary_color'),
                 'page1',
                 'page1_second_section'
@@ -105,7 +105,7 @@ if( ! class_exists('PDF_Download_Settings') ){
 
             add_settings_field(
                 'light_color',
-                __('Light Color',TEXTDOMAIN),
+                __('Light Color','pdf-download'),
                 array($this,'add_light_color'),
                 'page1',
                 'page1_second_section'
@@ -113,7 +113,7 @@ if( ! class_exists('PDF_Download_Settings') ){
 
             add_settings_field(
                 'dark_color',
-                __('Dark Color',TEXTDOMAIN),
+                __('Dark Color','pdf-download'),
                 array($this,'add_dark_color'),
                 'page1',
                 'page1_second_section'
@@ -122,7 +122,7 @@ if( ! class_exists('PDF_Download_Settings') ){
 
             add_settings_section(
                 'page2_main_section',
-                __('Support',TEXTDOMAIN),
+                __('Support','pdf-download'),
                 array($this,'page2_main_section'),
                 'page2'
             );
@@ -130,17 +130,17 @@ if( ! class_exists('PDF_Download_Settings') ){
         }
         public function page1_main_section(){
             ?>
-            <p><?php _e('You can modify <b>Archive Title</b> here. It will display top of your archive page.',TEXTDOMAIN); ?></p>
+            <p><?php _e('You can modify <b>Archive Title</b> here. It will display top of your archive page.','pdf-download'); ?></p>
             <?php
         }
         public function page1_second_section(){
             ?>
-            <p><?php _e('You can modify <b> Color</b> from here to adjust color with your theme.',TEXTDOMAIN); ?></p>
+            <p><?php _e('You can modify <b> Color</b> from here to adjust color with your theme.','pdf-download'); ?></p>
             <?php
         }
         public function page2_main_section(){
             ?>
-            <p><?php _e('For contact support send email to <a href="mailto:raselsha@gmail.com">raselsha@gmail.com</a>',TEXTDOMAIN); ?></p>
+            <p><?php _e('For contact support send email to <a href="mailto:raselsha@gmail.com">raselsha@gmail.com</a>','pdf-download'); ?></p>
             <?php
         }
         public function add_archive_title(){
