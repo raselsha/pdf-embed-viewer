@@ -12,6 +12,7 @@
     max-width:1240px;
     margin: 0 auto;
     width: 100%;
+
     a{
         text-decoration: none;
         color: var(--pdfd-primary-color);
@@ -24,7 +25,7 @@
         background-color: var(--pdfd-primary-color);
         padding: 0.1em 0.5em;
         border-radius: .25em;
-        color: #fff;
+        color: var(--pdfd-white-color);
         font-weight: normal;
     }
     .download-btn{

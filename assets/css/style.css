@@ -25,7 +25,7 @@
   background-color: var(--pdfd-primary-color);
   padding: 0.1em 0.5em;
   border-radius: 0.25em;
-  color: #fff;
+  color: var(--pdfd-white-color);
   font-weight: normal;
 }
 .pdf-download .download-btn {

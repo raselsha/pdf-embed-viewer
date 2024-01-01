@@ -15,28 +15,20 @@ if( ! class_exists('PDF_Download_CPT') ){
 
         public function create_post_type(){
             $labels = [
-                "name" => __( "PDF Downloads", 'pdf-download' ),
-                "singular_name" => __( "PDF Download", 'pdf-download' ),
-                "menu_name" => __( "PDF Downloads", 'pdf-download' ),
-                "all_items" => __( "All PDF Downloads", 'pdf-download' ),
-                'add_new_item' => __('Add New', 'pdf-download' ),
-                'new_item' => __('New PDF Download'),
-                'edit_item' => __('Edit PDF Download'),
-                'view_item' => __('View PDF Download'),
-                'all_items' => __('All PDF Downloads'),
-                'search_items' => __('Search PDF Downloads'),
-                'not_found' => __('No news found.'),
+                "name" => __( "All PDF", 'pdf-download' ),
+                "singular_name" => __( "PDF", 'pdf-download' ),
+                "menu_name" => __( "PDF Download", 'pdf-download' ),
             ];
 
             $args = [
                 "label" => __( "PDF Download", 'pdf-download' ),
-                "description" => __( "PDF Downloads", 'pdf-download' ),
+                "description" => __( "PDF Download", 'pdf-download' ),
                 "labels" => $labels, 
                 "public" => true,
-                "supports" => [ "title", "editor", "thumbnail" ], // post support ui elements
+                "supports" => [ "title", "thumbnail" ], // post support ui elements
                 "hierarchical" => false, //parent chile relation post type
                 "show_ui" => true, // post type show ui to add, edit
-                "show_in_menu" => true, // show menu into admin sidebar
+                "show_in_menu" => false, // show menu into admin sidebar
                 "menu_position" => 5, // menu position into admin sidebar
                 "show_in_admin_bar" => true, // show into admin bar
                 "show_in_nav_menus" => true, // show in nav menu

@@ -39,8 +39,8 @@ if( ! class_exists('PDF_Download_Settings') ){
             );
             add_submenu_page(
                 'pdfdownload-index',
-                __('New PDF',TEXTDOMAIN),
-                __('New PDF',TEXTDOMAIN),
+                __('Add New PDF',TEXTDOMAIN),
+                __('Add New PDF',TEXTDOMAIN),
                 'manage_options',
                 'post-new.php?post_type=pdfdownload',
                 null,
