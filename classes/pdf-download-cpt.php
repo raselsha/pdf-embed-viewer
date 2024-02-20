@@ -4,7 +4,7 @@ if( ! class_exists('PDF_Download_CPT') ){
 
     class PDF_Download_CPT{
        
-        public function __construct(Type $var = null) {
+        public function __construct() {
             add_action( 'init', array($this,'create_post_type') );
             add_filter( 'archive_template', array($this,'pdfdownload_archive_template') ) ;
             add_filter( 'single_template', array($this,'pdfdownload_single_template') ) ;

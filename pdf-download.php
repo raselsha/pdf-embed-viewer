@@ -60,12 +60,12 @@ if( ! class_exists( 'PDF_Download' ) ){
             wp_enqueue_script('pdf-download');
 
             $options = get_option('pdf_download_option');
-            
-            if($options['primary_color']!=''){
-                $primary_color = est_attr($options['primary_color']);
-                $secondary_color = est_attr($options['secondary_color']);
-                $light_color = est_attr($options['light_color']);
-                $dark_color =est_attr( $options['dark_color']);
+
+            if( isset($options['primary_color'])){
+                $primary_color = esc_attr($options['primary_color']);
+                $secondary_color = esc_attr($options['secondary_color']);
+                $light_color = esc_attr($options['light_color']);
+                $dark_color =esc_attr( $options['dark_color']);
                 $css = "
                     :root{
                         --pdfd-primary-color:{$primary_color};        
