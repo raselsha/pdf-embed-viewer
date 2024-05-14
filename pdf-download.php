@@ -1,8 +1,8 @@
 <?php
 /**
- * Plugin Name: PDF Download
+ * Plugin Name: PDF Embed - WordPress PDF Viewer plugin 
  * Plugin URI: https://wordpress.org/plugins/pdf-download
- * Description: It helps you to view and download PDF Document, Newsletter, Report, for your visitor.
+ * Description: Embaded your PDF files with ease with PDF Embaded, you will enjoy the simples and fastest adding of PDF files to your website. Let users view files and download theme seamlessly. For your convenience, there are three ways of integrating files: by uploading, by files URLs. .
  * Version: 1.0.0
  * Requires at least: 3.0
  * Requires PHP:      7.4
@@ -10,7 +10,7 @@
  * Author URI: https://shahadat.com.bd
  * License: GPL v2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain: pdf-download
+ * Text Domain: pdf-embed-viewer
  * Domain Path: /languages
  */
 
