@@ -39,9 +39,36 @@ if( ! class_exists('SH_PDF_Embed_Viewer_Admin_Settings') ){
                 add_settings_error('pdf_download_option','','Settings Saved!','success');
             }
             settings_errors('pdf_download_option');
-            require_once SH_PDF_EMBED_VIEWER . '/views/pdf-download-settings.php';
+            
+            $this->settings_html_layout();
         }
 
+        public function settings_html_layout(){
+            ?>
+            <div class="wrap">
+                <h2><?php esc_html_e(get_admin_page_title()); ?></h2>
+                <h2 class="nav-tab-wrapper">
+                    <?php
+                        $active_tab = isset($_GET['tab']) ? $_GET['tab'] : 'settings' ;
+                    ?>
+                    <a href="?post_type=pdf-embed-viewer&page=index&tab=settings" class="nav-tab <?php esc_attr_e(($active_tab=='settings') ? 'nav-tab-active' : '' ); ?>">Settings</a>
+                    <a href="?post_type=pdf-embed-viewer&page=index&tab=support" class="nav-tab <?php esc_attr_e(($active_tab=='support') ? 'nav-tab-active' : '' ); ?>">Support</a>
+                </h2>
+                <form action="options.php" method="post">
+                    <?php settings_fields('pdfdownload_group'); ?>
+                    <?php if($active_tab=='settings'): ?>
+                        <?php do_settings_sections('page1'); ?>
+                        <?php submit_button('Save'); ?>
+                    <?php else: ?> 
+                        <?php do_settings_sections('page2'); ?>  
+                        
+                    <?php endif; ?>    
+                    
+                </form>
+            </div>
+
+            <?php
+        }
         public function create_sttings_form(){
             
             register_setting('pdfdownload_group','pdf_download_option',array($this,'sanitize'));
