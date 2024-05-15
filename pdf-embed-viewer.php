@@ -49,8 +49,9 @@ if( ! class_exists( 'SH_PDF_Embed_Viewer' ) ){
             require_once SH_PDF_EMBED_VIEWER . 'classes/cpt-register.php';
             require_once SH_PDF_EMBED_VIEWER . 'classes/enque-style-script.php';
             require_once SH_PDF_EMBED_VIEWER . 'classes/metabox-register.php';
-            require_once SH_PDF_EMBED_VIEWER . 'classes/pdf-settings.php';
             require_once SH_PDF_EMBED_VIEWER . 'classes/metabox/general.php';
+            require_once SH_PDF_EMBED_VIEWER . 'classes/admin-settings.php';
+
         }
 
         public static function activate(){

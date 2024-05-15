@@ -1,8 +1,8 @@
 <?php
 
 
-if( ! class_exists('PDF_Download_Settings') ){
-    class PDF_Download_Settings{
+if( ! class_exists('SH_PDF_Embed_Viewer_Admin_Settings') ){
+    class SH_PDF_Embed_Viewer_Admin_Settings{
         public static $options;
         public function __construct() {
             self::$options = get_option('pdf_download_option');
@@ -183,5 +183,5 @@ if( ! class_exists('PDF_Download_Settings') ){
         }
     }
     
-    $pdf_download_settings = new PDF_Download_Settings();
+    $SH_PDF_Embed_Viewer_Admin_Settings = new SH_PDF_Embed_Viewer_Admin_Settings();
 }
