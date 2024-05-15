@@ -46,10 +46,11 @@ if( ! class_exists( 'SH_PDF_Embed_Viewer' ) ){
         }
 
         public static function include_plugin_files() {
-            require_once SH_PDF_EMBED_VIEWER . 'classes/pdf-cpt.php';
+            require_once SH_PDF_EMBED_VIEWER . 'classes/cpt-register.php';
+            require_once SH_PDF_EMBED_VIEWER . 'classes/enque-style-script.php';
+            require_once SH_PDF_EMBED_VIEWER . 'classes/metabox-register.php';
             require_once SH_PDF_EMBED_VIEWER . 'classes/pdf-settings.php';
-            require_once SH_PDF_EMBED_VIEWER . 'classes/enque.php';
-            require_once SH_PDF_EMBED_VIEWER . 'classes/metabox.php';
+            require_once SH_PDF_EMBED_VIEWER . 'classes/pdf-download-metabox.php';
         }
 
         public static function activate(){

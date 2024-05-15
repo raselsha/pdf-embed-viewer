@@ -12,44 +12,26 @@ if( ! class_exists('PDF_Download_Settings') ){
         }
 
         public function create_admin_menu(){
-            add_menu_page(
-                __('PDF Download Settings','pdf-download'),
-                __('PDF Download','pdf-download'),
-                'manage_options',
-                'pdfdownload-index',
-                array($this,'pdfdownload_settings_page'),
-                SH_PDF_EMBED_VIEWER_URL.'assets/images/pdf-download-icon.png',
-                5
-            );
+            // add_menu_page(
+            //     __('PDF Embed - Viewer','pdf-embed-viewer'),
+            //     __('PDF Embed','pdf-embed-viewer'),
+            //     'manage_options',
+            //     'pdf-embed-viewer-index',
+            //     array($this,'settings_index_page'),
+            //     SH_PDF_EMBED_VIEWER_URL.'assets/images/pdf-embed-viewer-icon.png',
+            //     5
+            // );
             add_submenu_page(
-                'pdfdownload-index',
-                __('PDF Download Settings','pdf-download'),
-                __('Dashboard','pdf-download'),
+                'edit.php?post_type=pdf-embed-viewer',
+                __('PDF Embed - Viewer','pdf-embed-viewer'),
+                __('Settings','pdf-embed-viewer'),
                 'manage_options',
-                'pdfdownload-index',
-                array($this,'pdfdownload_settings_page'),
-            );
-            add_submenu_page(
-                'pdfdownload-index',
-                __('All PDF','pdf-download'),
-                __('All PDF','pdf-download'),
-                'manage_options',
-                'edit.php?post_type=pdfdownload',
-                null,
-            );
-            add_submenu_page(
-                'pdfdownload-index',
-                __('Add New PDF','pdf-download'),
-                __('Add New PDF','pdf-download'),
-                'manage_options',
-                'post-new.php?post_type=pdfdownload',
-                null,
-            );
-            
-
+                'settings',
+                array($this,'settings_index_page'),
+            ); 
         }
 
-        public function pdfdownload_settings_page(){
+        public function settings_index_page(){
             if( ! current_user_can('manage_options')){
                 return;
             }
@@ -68,14 +50,14 @@ if( ! class_exists('PDF_Download_Settings') ){
 // ============tab 1 here======
             add_settings_section(
                 'page1_main_section',
-                __('Title Settings','pdf-download'),
+                __('Title Settings','pdf-embed-viewer'),
                 array($this,'page1_main_section'),
                 'page1'
             );
 
             add_settings_field(
                 'archive_title',
-                __('Title','pdf-download'),
+                __('Title','pdf-embed-viewer'),
                 array($this,'add_archive_title'),
                 'page1',
                 'page1_main_section'
@@ -83,21 +65,21 @@ if( ! class_exists('PDF_Download_Settings') ){
 
             add_settings_section(
                 'page1_second_section',
-                __('Color Settings','pdf-download'),
+                __('Color Settings','pdf-embed-viewer'),
                 array($this,'page1_second_section'),
                 'page1'
             );
 
             add_settings_field(
                 'primary_color',
-                __('Primary Color','pdf-download'),
+                __('Primary Color','pdf-embed-viewer'),
                 array($this,'add_primary_color'),
                 'page1',
                 'page1_second_section'
             );
             add_settings_field(
                 'secondary_color',
-                __('Secondary Color','pdf-download'),
+                __('Secondary Color','pdf-embed-viewer'),
                 array($this,'add_secondary_color'),
                 'page1',
                 'page1_second_section'
@@ -105,7 +87,7 @@ if( ! class_exists('PDF_Download_Settings') ){
 
             add_settings_field(
                 'light_color',
-                __('Light Color','pdf-download'),
+                __('Light Color','pdf-embed-viewer'),
                 array($this,'add_light_color'),
                 'page1',
                 'page1_second_section'
@@ -113,7 +95,7 @@ if( ! class_exists('PDF_Download_Settings') ){
 
             add_settings_field(
                 'dark_color',
-                __('Dark Color','pdf-download'),
+                __('Dark Color','pdf-embed-viewer'),
                 array($this,'add_dark_color'),
                 'page1',
                 'page1_second_section'
@@ -122,7 +104,7 @@ if( ! class_exists('PDF_Download_Settings') ){
 
             add_settings_section(
                 'page2_main_section',
-                __('Support','pdf-download'),
+                __('Support','pdf-embed-viewer'),
                 array($this,'page2_main_section'),
                 'page2'
             );
@@ -130,17 +112,17 @@ if( ! class_exists('PDF_Download_Settings') ){
         }
         public function page1_main_section(){
             ?>
-            <p><?php _e('You can modify <b>Archive Title</b> here. It will display top of your archive page.','pdf-download'); ?></p>
+            <p><?php _e('You can modify <b>Archive Title</b> here. It will display top of your archive page.','pdf-embed-viewer'); ?></p>
             <?php
         }
         public function page1_second_section(){
             ?>
-            <p><?php _e('You can modify <b> Color</b> from here to adjust color with your theme.','pdf-download'); ?></p>
+            <p><?php _e('You can modify <b> Color</b> from here to adjust color with your theme.','pdf-embed-viewer'); ?></p>
             <?php
         }
         public function page2_main_section(){
             ?>
-            <p><?php _e('For contact support send email to <a href="mailto:raselsha@gmail.com">raselsha@gmail.com</a>','pdf-download'); ?></p>
+            <p><?php _e('For contact support send email to <a href="mailto:raselsha@gmail.com">raselsha@gmail.com</a>','pdf-embed-viewer'); ?></p>
             <?php
         }
         public function add_archive_title(){

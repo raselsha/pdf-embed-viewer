@@ -1,34 +1,34 @@
 <?php
 
-if( ! class_exists('PDF_Download_CPT') ){
+if( ! class_exists('SH_PDF_Embed_Viewer_CPT') ){
 
-    class PDF_Download_CPT{
+    class SH_PDF_Embed_Viewer_CPT{
        
         public function __construct() {
             add_action( 'init', array($this,'create_post_type') );
-            add_filter( 'archive_template', array($this,'pdfdownload_archive_template') ) ;
-            add_filter( 'single_template', array($this,'pdfdownload_single_template') ) ;
-
-           require_once SH_PDF_EMBED_VIEWER . 'classes/pdf-download-metabox.php';
-           $pdf_download_metabox = new PDF_Download_Metabox();
+            add_filter( 'archive_template', array($this,'archive_template') ) ;
+            add_filter( 'single_template', array($this,'single_template') ) ;
         }
 
         public function create_post_type(){
             $labels = [
-                "name" => __( "All PDF", 'pdf-download' ),
-                "singular_name" => __( "PDF", 'pdf-download' ),
-                "menu_name" => __( "PDF Download", 'pdf-download' ),
+                "name" => __( "PDF Embed - Viewer", 'pdf-embed-viewer' ),
+                "singular_name" => __( "PDF Embed", 'pdf-embed-viewer' ),
+                "menu_name" => __( "PDF Embed", 'pdf-embed-viewer' ),
+                "all_items" => __( "All PDF", 'pdf-embed-viewer' ),
+                "add_new" => __( "Add New PDF", 'pdf-embed-viewer' ),
+                "add_new_item" => __( "Add New PDF", 'pdf-embed-viewer' ), 
             ];
 
             $args = [
-                "label" => __( "PDF Download", 'pdf-download' ),
-                "description" => __( "PDF Download", 'pdf-download' ),
+                "label" => __( "PDF Embed", 'pdf-embed-viewer' ),
+                "description" => __( "PDF Embed", 'pdf-embed-viewer' ),
                 "labels" => $labels, 
                 "public" => true,
                 "supports" => [ "title", "thumbnail" ], // post support ui elements
-                "hierarchical" => false, //parent chile relation post type
+                "hierarchical" => false, //parent child relation post type
                 "show_ui" => true, // post type show ui to add, edit
-                "show_in_menu" => false, // show menu into admin sidebar
+                "show_in_menu" => true, // show menu into admin sidebar
                 "menu_position" => 5, // menu position into admin sidebar
                 "show_in_admin_bar" => true, // show into admin bar
                 "show_in_nav_menus" => true, // show in nav menu
@@ -43,30 +43,31 @@ if( ! class_exists('PDF_Download_CPT') ){
                 "delete_with_user" => false,
                 "capability_type" => "post",
                 "map_meta_cap" => true,
-                "rewrite" => [ "slug" => "pdfdownload", "with_front" => true ],
+                "rewrite" => [ "slug" => "pdf-embed-viewer", "with_front" => true ],
                 "query_var" => true,
-                "menu_icon" => SH_PDF_EMBED_VIEWER_URL.'assets/images/pdf-download-icon.png',
+                "menu_icon" => SH_PDF_EMBED_VIEWER_URL.'assets/images/pdf-embed-viewer-icon.png',
                 "show_in_graphql" => false,
                 //"register_metabox_cb" => array($this,'add_meta_boxes'),
             ];
 
-            register_post_type( "pdfdownload", $args );
+            register_post_type( "pdf-embed-viewer", $args );
+            
         }
         
 
-        public function pdfdownload_archive_template( $archive_template ) {
+        public function archive_template( $archive_template ) {
             global $post;
 
-            if ( is_post_type_archive ( 'pdfdownload' ) ) {
+            if ( is_post_type_archive ( 'pdf-embed-viewer' ) ) {
                 $archive_template = SH_PDF_EMBED_VIEWER . '/template/archive-pdfdownload.php';
             }
             return $archive_template;
             
         }
 
-        public function pdfdownload_single_template($single_template) {
+        public function single_template($single_template) {
             global $wp_query, $post;
-            if ($post->post_type == 'pdfdownload'){   
+            if ($post->post_type == 'pdf-embed-viewer'){   
                 $single_template = SH_PDF_EMBED_VIEWER . '/template/single-pdfdownload.php';
             }
             return $single_template;
@@ -90,7 +91,7 @@ if( ! class_exists('PDF_Download_CPT') ){
         }
     }
 
-    $pdf_download_cpt = new PDF_Download_CPT();
+    $SH_PDF_Embed_Viewer_CPT = new SH_PDF_Embed_Viewer_CPT();
 
     
 }

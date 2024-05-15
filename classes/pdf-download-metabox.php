@@ -72,5 +72,5 @@ if( ! class_exists('PDF_Download_Metabox') ){
         }
         
     }
-
+    $pdf_download_metabox = new PDF_Download_Metabox();
 }
