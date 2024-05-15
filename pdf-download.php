@@ -1,7 +1,7 @@
 <?php
 /**
- * Plugin Name: PDF Embed - WordPress PDF Viewer plugin 
- * Plugin URI: https://wordpress.org/plugins/pdf-download
+ * Plugin Name: PDF Embed Viewer - WordPress PDF Viewer plugin 
+ * Plugin URI: https://wordpress.org/plugins/pdf-embed-viewer
  * Description: Embaded your PDF files with ease with PDF Embaded, you will enjoy the simples and fastest adding of PDF files to your website. Let users view files and download theme seamlessly. For your convenience, there are three ways of integrating files: by uploading, by files URLs. .
  * Version: 1.0.0
  * Requires at least: 3.0
@@ -15,18 +15,18 @@
  */
 
 /*
-PDF Download is free software: you can redistribute it and/or modify
+PDF Embed Viewer is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 2 of the License, or
 any later version.
 
-PDF Download is distributed in the hope that it will be useful,
+PDF Embed Viewer is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with PDF Download. If not, see https://www.gnu.org/licenses/gpl-2.0.html.
+along with PDF Embed Viewer. If not, see https://www.gnu.org/licenses/gpl-2.0.html.
 */
 
 if( ! defined('ABSPATH') ) { die( "don't access directly" ); }
