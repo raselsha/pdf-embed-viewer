@@ -26,7 +26,7 @@ if( ! class_exists('SH_PDF_Embed_Viewer_Admin_Settings') ){
                 __('PDF Embed - Viewer','pdf-embed-viewer'),
                 __('Settings','pdf-embed-viewer'),
                 'manage_options',
-                'settings',
+                'index',
                 array($this,'settings_index_page'),
             ); 
         }
