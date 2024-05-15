@@ -3,23 +3,20 @@
 
 if( ! defined('ABSPATH') ) { die( "don't access directly" ); }
 
-if( ! class_exists('SH_PDF_Embed_Viewer_Enque_Metabox')){
-        class SH_PDF_Embed_Viewer_Enque_Metabox{
+if( ! class_exists('SH_PDF_Embed_Viewer_Metabox')){
+        class SH_PDF_Embed_Viewer_Metabox{
             public function __construct(){
                 add_action('admin_init',[$this,'metabox']);
-                add_action('admin_init',[$this,'load_files']);
             }
 
             public function metabox(){
                 add_meta_box( 'cmb_meta', 'title', [$this, 'create_metabox'], 'post' );
+                add_meta_box('pdf-embed-viewer',__('PDF Embed Settings', 'pdf-embed-viewer' ),[$this,'meta_box_layout'],'pdf-embed-viewer','normal','high');
+            }
 
-            }
-            public function load_files(){
-                require_once SH_PDF_EMBED_VIEWER.'/classes/General.php';
-            }
-            public function create_metabox($post){
+            public function meta_box_layout($post){
                 $post_id = $post->ID;
-                ?>
+            ?>
                 <main class="metabox">
                     <div id="tabs">
                         <aside>
@@ -33,15 +30,12 @@ if( ! class_exists('SH_PDF_Embed_Viewer_Enque_Metabox')){
                     </div>
                 </main>
                 <script>
-                   
                    jQuery (document).ready(function($){
                         $( "#tabs" ).tabs({ orientation: "vertical" });
                     });
                 </script>
-                <?php
-            }
-
-            
+            <?php
+            }           
         }
-        $SH_PDF_Embed_Viewer_Enque_Metabox = new SH_PDF_Embed_Viewer_Enque_Metabox();
+        $SH_PDF_Embed_Viewer_Metabox = new SH_PDF_Embed_Viewer_Metabox();
     }

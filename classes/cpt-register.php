@@ -16,8 +16,8 @@ if( ! class_exists('SH_PDF_Embed_Viewer_CPT') ){
                 "singular_name" => __( "PDF Embed", 'pdf-embed-viewer' ),
                 "menu_name" => __( "PDF Embed", 'pdf-embed-viewer' ),
                 "all_items" => __( "All PDF", 'pdf-embed-viewer' ),
-                "add_new" => __( "Add New PDF", 'pdf-embed-viewer' ),
-                "add_new_item" => __( "Add New PDF", 'pdf-embed-viewer' ), 
+                "add_new" => __( "New PDF Embed", 'pdf-embed-viewer' ),
+                "add_new_item" => __("New PDF Embed", 'pdf-embed-viewer' ), 
             ];
 
             $args = [

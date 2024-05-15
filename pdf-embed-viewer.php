@@ -50,7 +50,7 @@ if( ! class_exists( 'SH_PDF_Embed_Viewer' ) ){
             require_once SH_PDF_EMBED_VIEWER . 'classes/enque-style-script.php';
             require_once SH_PDF_EMBED_VIEWER . 'classes/metabox-register.php';
             require_once SH_PDF_EMBED_VIEWER . 'classes/pdf-settings.php';
-            require_once SH_PDF_EMBED_VIEWER . 'classes/pdf-download-metabox.php';
+            require_once SH_PDF_EMBED_VIEWER . 'classes/metabox/general.php';
         }
 
         public static function activate(){
@@ -60,7 +60,7 @@ if( ! class_exists( 'SH_PDF_Embed_Viewer' ) ){
 
         public static function deactivate(){
             flush_rewrite_rules();
-            unregister_post_type('pdfdownload');
+            unregister_post_type('pdf-embed-viewer');
         }
 
         public static function uninstall(){
