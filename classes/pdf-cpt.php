@@ -9,7 +9,7 @@ if( ! class_exists('PDF_Download_CPT') ){
             add_filter( 'archive_template', array($this,'pdfdownload_archive_template') ) ;
             add_filter( 'single_template', array($this,'pdfdownload_single_template') ) ;
 
-           require_once PDF_DOWNLOAD_PATH . 'classes/pdf-download-metabox.php';
+           require_once SH_PDF_EMBED_VIEWER . 'classes/pdf-download-metabox.php';
            $pdf_download_metabox = new PDF_Download_Metabox();
         }
 
@@ -45,7 +45,7 @@ if( ! class_exists('PDF_Download_CPT') ){
                 "map_meta_cap" => true,
                 "rewrite" => [ "slug" => "pdfdownload", "with_front" => true ],
                 "query_var" => true,
-                "menu_icon" => PDF_DOWNLOAD_URL.'assets/images/pdf-download-icon.png',
+                "menu_icon" => SH_PDF_EMBED_VIEWER_URL.'assets/images/pdf-download-icon.png',
                 "show_in_graphql" => false,
                 //"register_metabox_cb" => array($this,'add_meta_boxes'),
             ];
@@ -58,7 +58,7 @@ if( ! class_exists('PDF_Download_CPT') ){
             global $post;
 
             if ( is_post_type_archive ( 'pdfdownload' ) ) {
-                $archive_template = PDF_DOWNLOAD_PATH . '/template/archive-pdfdownload.php';
+                $archive_template = SH_PDF_EMBED_VIEWER . '/template/archive-pdfdownload.php';
             }
             return $archive_template;
             
@@ -67,7 +67,7 @@ if( ! class_exists('PDF_Download_CPT') ){
         public function pdfdownload_single_template($single_template) {
             global $wp_query, $post;
             if ($post->post_type == 'pdfdownload'){   
-                $single_template = PDF_DOWNLOAD_PATH . '/template/single-pdfdownload.php';
+                $single_template = SH_PDF_EMBED_VIEWER . '/template/single-pdfdownload.php';
             }
             return $single_template;
         }
@@ -89,5 +89,8 @@ if( ! class_exists('PDF_Download_CPT') ){
             return $result;
         }
     }
+
+    $pdf_download_cpt = new PDF_Download_CPT();
+
     
 }

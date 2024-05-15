@@ -23,7 +23,7 @@ if( ! class_exists('PDF_Download_Metabox') ){
 
         public function meta_box_inner($post){
 
-            require_once PDF_DOWNLOAD_PATH . 'views/pdf-download-metabox.php';
+            require_once SH_PDF_EMBED_VIEWER . 'views/pdf-download-metabox.php';
         }
 
         
@@ -31,7 +31,7 @@ if( ! class_exists('PDF_Download_Metabox') ){
             global $typenow;
             if( $typenow == 'pdfdownload' ) {
                 wp_enqueue_media();
-                wp_register_script('meta-box-image',PDF_DOWNLOAD_URL.'assets/js/media.js',array( 'jquery' ),time(),true);
+                wp_register_script('meta-box-image',SH_PDF_EMBED_VIEWER_URL.'assets/js/media.js',array( 'jquery' ),time(),true);
                 wp_localize_script( 'meta-box-image', 'meta_image',
                     array(
                         'title' => __( 'Choose or Upload', 'pdf-download' ),

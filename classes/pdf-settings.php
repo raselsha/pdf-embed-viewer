@@ -18,7 +18,7 @@ if( ! class_exists('PDF_Download_Settings') ){
                 'manage_options',
                 'pdfdownload-index',
                 array($this,'pdfdownload_settings_page'),
-                PDF_DOWNLOAD_URL.'assets/images/pdf-download-icon.png',
+                SH_PDF_EMBED_VIEWER_URL.'assets/images/pdf-download-icon.png',
                 5
             );
             add_submenu_page(
@@ -57,7 +57,7 @@ if( ! class_exists('PDF_Download_Settings') ){
                 add_settings_error('pdf_download_option','','Settings Saved!','success');
             }
             settings_errors('pdf_download_option');
-            require_once PDF_DOWNLOAD_PATH . '/views/pdf-download-settings.php';
+            require_once SH_PDF_EMBED_VIEWER . '/views/pdf-download-settings.php';
         }
 
         public function create_sttings_form(){
@@ -200,4 +200,6 @@ if( ! class_exists('PDF_Download_Settings') ){
         
         }
     }
+    
+    $pdf_download_settings = new PDF_Download_Settings();
 }
