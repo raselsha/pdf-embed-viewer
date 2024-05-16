@@ -59,7 +59,7 @@ if( ! class_exists('SH_PDF_Embed_Viewer_CPT') ){
             global $post;
 
             if ( is_post_type_archive ( 'pdf-embed-viewer' ) ) {
-                $archive_template = SH_PDF_EMBED_VIEWER . '/template/archive-pdfdownload.php';
+                $archive_template = SH_PDF_EMBED_VIEWER . 'template/archive-pdfdownload.php';
             }
             return $archive_template;
             
@@ -68,7 +68,7 @@ if( ! class_exists('SH_PDF_Embed_Viewer_CPT') ){
         public function single_template($single_template) {
             global $wp_query, $post;
             if ($post->post_type == 'pdf-embed-viewer'){   
-                $single_template = SH_PDF_EMBED_VIEWER . '/template/single-pdfdownload.php';
+                $single_template = SH_PDF_EMBED_VIEWER . 'template/single-pdfdownload.php';
             }
             return $single_template;
         }
