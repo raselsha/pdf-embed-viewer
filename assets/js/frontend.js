@@ -24,3 +24,8 @@ tabs.forEach(tab => {
 jQuery(document).ready(function($){
   $('.color-field').wpColorPicker();
 });
+
+// ============metabox scripts========
+jQuery (document).ready(function($){
+    $( "#tabs" ).tabs({ orientation: "vertical" });
+});

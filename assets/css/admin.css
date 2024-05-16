@@ -1,0 +1,23 @@
+#pdf-embed-metabox-tabs {
+  display: flex;
+  justify-content: space-between;
+}
+#pdf-embed-metabox-tabs aside {
+  width: 15%;
+}
+#pdf-embed-metabox-tabs aside ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+#pdf-embed-metabox-tabs aside ul li {
+  margin: 0;
+  padding: 10px;
+  border-bottom: 1px solid #333;
+  background-color: rgba(221, 221, 221, 0.8666666667);
+}
+#pdf-embed-metabox-tabs .content {
+  width: 80%;
+}
+
+/*# sourceMappingURL=admin.css.map */

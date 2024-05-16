@@ -11,11 +11,11 @@ if( ! class_exists('SH_PDF_Embed_Viewer_Enque') ){
         }
 
         public function frontend_style(){
-            wp_register_style('pdf-download',SH_PDF_EMBED_VIEWER.'assets/css/style.css',[],'1.0.0','all');
-            wp_register_script( 'pdf-download', SH_PDF_EMBED_VIEWER.'assets/js/script.js',[],'1.0.0',true);
+            wp_register_style('pdf-frontend-style',SH_PDF_EMBED_VIEWER_URL.'assets/css/frontend.css',[],);
+            wp_register_script( 'pdf-frontend-script', SH_PDF_EMBED_VIEWER_URL.'assets/js/frontend.js',[],'',true);
             
-            wp_enqueue_style('pdf-download');
-            wp_enqueue_script('pdf-download');
+            wp_enqueue_style('pdf-frontend-style');
+            wp_enqueue_script('frontend-script');
 
             $options = get_option('pdf_download_option');
 
@@ -38,14 +38,12 @@ if( ! class_exists('SH_PDF_Embed_Viewer_Enque') ){
 
         public function backend_style(){
 
-            wp_register_style('main',SH_PDF_EMBED_VIEWER.'assets/css/style.css',[],'','all');
+            wp_register_style('main',SH_PDF_EMBED_VIEWER_URL.'assets/css/admin.css',['wp-color-picker'],'','all');
             wp_enqueue_style('main');
-
-            wp_register_script( 'jquery-ui', 'https://code.jquery.com/ui/1.12.1/jquery-ui.js', []);
-            wp_enqueue_script( 'jquery-ui' );
-            wp_enqueue_style( 'wp-color-picker' ); 
-
-            wp_register_script( 'pdf-embed-viewer', SH_PDF_EMBED_VIEWER_URL.'assets/js/script.js', ['wp-color-picker'], false, true );
+            
+            wp_register_script( 'jquery-ui', 'https://code.jquery.com/ui/1.13.3/jquery-ui.min.js');
+            
+            wp_register_script( 'pdf-embed-viewer', SH_PDF_EMBED_VIEWER_URL.'assets/js/admin.js', ['wp-color-picker','jquery-ui'], false, true );
             wp_enqueue_script( 'pdf-embed-viewer' );
 
         }

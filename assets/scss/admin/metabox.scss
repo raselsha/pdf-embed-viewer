@@ -1,0 +1,21 @@
+#pdf-embed-metabox-tabs{
+    display: flex;
+    justify-content: space-between;
+    aside{
+        width: 15%;
+        ul{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            li{
+                margin: 0;
+                padding: 10px;
+                border-bottom: 1px solid #333;
+                background-color: #dddd;
+            }
+        }
+    }
+    .content{
+        width: 80%;
+    }
+}
