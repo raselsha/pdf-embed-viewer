@@ -71,6 +71,9 @@ $white : var(--pdfv-white);
                     color: $secondary;
                     font-weight: bold;
                 }
+                input.sh_pdf_embed_file{
+                    width: 92%;
+                }
             }
         }
     }

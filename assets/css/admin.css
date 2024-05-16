@@ -63,5 +63,8 @@
   color: var(--pdfv-secondary);
   font-weight: bold;
 }
+#pdf-embed-viewer .inside #pdf-embed-metabox-tabs section input.sh_pdf_embed_file {
+  width: 92%;
+}
 
 /*# sourceMappingURL=admin.css.map */
