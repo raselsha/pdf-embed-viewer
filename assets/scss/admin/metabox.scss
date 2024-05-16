@@ -1,21 +1,77 @@
-#pdf-embed-metabox-tabs{
-    display: flex;
-    justify-content: space-between;
-    aside{
-        width: 15%;
-        ul{
-            margin: 0;
-            padding: 0;
-            list-style: none;
-            li{
-                margin: 0;
+:root{
+    --pdfv-primary:#c79f62;
+    --pdfv-secondary:#666;
+    --pdfv-gray:#ddd;
+    --pdfv-light:#e5e5e5;
+    --pdfv-dark:#333;
+    --pdfv-black:#000;
+    --pdfv-white:#fff;
+}
+$primary : var(--pdfv-primary);
+$secondary : var(--pdfv-secondary);
+$light : var(--pdfv-light);
+$gray : var(--pdfv-gray);
+$dark : var(--pdfv-dark);
+$black : var(--pdfv-black);
+$white : var(--pdfv-white);
+
+#pdf-embed-viewer{
+    .inside{
+        margin: 0;
+        padding: 0;
+        #pdf-embed-metabox-tabs{
+            display: flex;
+            justify-content: space-between;
+        
+            aside{
+                width: 20%;
+                background-color: $light;
+                ul{
+                    margin: 0;
+                    padding: 20px;
+                    padding-right: 0;
+                    list-style: none;
+                    li.tab{
+                        margin: 0;
+                        padding: 10px;
+                        border-bottom: 1px solid $gray;
+                        font-size: 16px;
+                        font-weight: normal;
+                        color: $primary;
+                        border-left: 2px solid transparent;
+                        &.active{
+                            background-color: $white;
+                            border-left: 2px solid $primary;
+                        }
+                        i{
+                            padding: 0 10px;
+                        }
+                    }
+                }
+            }
+            .content{
+                width: 80%;
+                padding: 2% 5%;
+                .tab-content {
+                    display: none;
+                }
+                .active {
+                    display: block;
+                }
+                
+            }
+
+            section{
+                border: 1px solid $light;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
                 padding: 10px;
-                border-bottom: 1px solid #333;
-                background-color: #dddd;
+                label{
+                    color: $secondary;
+                    font-weight: bold;
+                }
             }
         }
-    }
-    .content{
-        width: 80%;
     }
 }

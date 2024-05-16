@@ -1,23 +1,67 @@
-#pdf-embed-metabox-tabs {
+:root {
+  --pdfv-primary:#c79f62;
+  --pdfv-secondary:#666;
+  --pdfv-gray:#ddd;
+  --pdfv-light:#e5e5e5;
+  --pdfv-dark:#333;
+  --pdfv-black:#000;
+  --pdfv-white:#fff;
+}
+
+#pdf-embed-viewer .inside {
+  margin: 0;
+  padding: 0;
+}
+#pdf-embed-viewer .inside #pdf-embed-metabox-tabs {
   display: flex;
   justify-content: space-between;
 }
-#pdf-embed-metabox-tabs aside {
-  width: 15%;
+#pdf-embed-viewer .inside #pdf-embed-metabox-tabs aside {
+  width: 20%;
+  background-color: var(--pdfv-light);
 }
-#pdf-embed-metabox-tabs aside ul {
+#pdf-embed-viewer .inside #pdf-embed-metabox-tabs aside ul {
   margin: 0;
-  padding: 0;
+  padding: 20px;
+  padding-right: 0;
   list-style: none;
 }
-#pdf-embed-metabox-tabs aside ul li {
+#pdf-embed-viewer .inside #pdf-embed-metabox-tabs aside ul li.tab {
   margin: 0;
   padding: 10px;
-  border-bottom: 1px solid #333;
-  background-color: rgba(221, 221, 221, 0.8666666667);
+  border-bottom: 1px solid var(--pdfv-gray);
+  font-size: 16px;
+  font-weight: normal;
+  color: var(--pdfv-primary);
+  border-left: 2px solid transparent;
 }
-#pdf-embed-metabox-tabs .content {
+#pdf-embed-viewer .inside #pdf-embed-metabox-tabs aside ul li.tab.active {
+  background-color: var(--pdfv-white);
+  border-left: 2px solid var(--pdfv-primary);
+}
+#pdf-embed-viewer .inside #pdf-embed-metabox-tabs aside ul li.tab i {
+  padding: 0 10px;
+}
+#pdf-embed-viewer .inside #pdf-embed-metabox-tabs .content {
   width: 80%;
+  padding: 2% 5%;
+}
+#pdf-embed-viewer .inside #pdf-embed-metabox-tabs .content .tab-content {
+  display: none;
+}
+#pdf-embed-viewer .inside #pdf-embed-metabox-tabs .content .active {
+  display: block;
+}
+#pdf-embed-viewer .inside #pdf-embed-metabox-tabs section {
+  border: 1px solid var(--pdfv-light);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+#pdf-embed-viewer .inside #pdf-embed-metabox-tabs section label {
+  color: var(--pdfv-secondary);
+  font-weight: bold;
 }
 
 /*# sourceMappingURL=admin.css.map */
