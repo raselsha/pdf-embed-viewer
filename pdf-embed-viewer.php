@@ -1,8 +1,8 @@
 <?php
 /**
- * Plugin Name: PDF Embed Viewer - WordPress PDF Viewer plugin 
+ * Plugin Name: PDF Embed Viewer
  * Plugin URI: https://wordpress.org/plugins/pdf-embed-viewer
- * Description: Embaded your PDF files with ease with PDF Embaded, you will enjoy the simples and fastest adding of PDF files to your website. Let users view files and download theme seamlessly. For your convenience, there are three ways of integrating files: by uploading, by files URLs. .
+ * Description: The "PDF Embed Viewer" plugin is a versatile tool designed to seamlessly integrate PDF files into websites, enriching user experience by allowing easy access to documents directly within web pages. With its user-friendly interface and customizable features, this plugin offers a hassle-free solution for displaying PDFs without requiring users to download them separately.
  * Version: 1.0.0
  * Requires at least: 3.0
  * Requires PHP:      7.4

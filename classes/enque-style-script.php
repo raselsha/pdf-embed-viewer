@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * @author Shahadat Hossain <raselsha@gmail.com>
+ * @version 1.0.0
+ */
 if( ! defined('ABSPATH') ) { die( "don't access directly" ); }
 
 if( ! class_exists('SH_PDF_Embed_Viewer_Enque') ){
@@ -8,6 +11,20 @@ if( ! class_exists('SH_PDF_Embed_Viewer_Enque') ){
         {
             add_action('admin_enqueue_scripts',[$this,'backend_style']);
             add_action('wp_enqueue_scripts',[$this,'frontend_style']);
+           
+        }
+
+        public function backend_style(){
+            wp_register_style( 'font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css');
+            wp_register_style('main',SH_PDF_EMBED_VIEWER_URL.'assets/css/admin.css',['wp-color-picker','font-awesome'],'','all');
+            wp_enqueue_style('main');
+            
+            
+            wp_register_script( 'jquery-ui', 'https://code.jquery.com/ui/1.13.3/jquery-ui.min.js');
+            
+            wp_register_script( 'pdf-embed-viewer', SH_PDF_EMBED_VIEWER_URL.'assets/js/admin.js', ['wp-color-picker','jquery-ui'], false, true );
+            wp_enqueue_script( 'pdf-embed-viewer' );
+
         }
 
         public function frontend_style(){
@@ -17,8 +34,16 @@ if( ! class_exists('SH_PDF_Embed_Viewer_Enque') ){
             wp_enqueue_style('pdf-frontend-style');
             wp_enqueue_script('pdf-frontend-script');
 
-            $options = get_option('pdf_download_option');
-
+            add_option('sh_pdf_embed_opt_colors',[
+                'primary'=>'red',
+                'secondary'=>'#666',
+                'light'=>'#e5e5e5',
+                'dark'=>'#333',
+            ]);
+            $options = get_option('sh_pdf_embed_opt_colors');
+            
+            print_r($options);
+            exit;
             if( isset($options['primary_color'])){
                 $primary_color = esc_attr($options['primary_color']);
                 $secondary_color = esc_attr($options['secondary_color']);
@@ -36,18 +61,6 @@ if( ! class_exists('SH_PDF_Embed_Viewer_Enque') ){
             
         }
 
-        public function backend_style(){
-            wp_register_style( 'font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css');
-            wp_register_style('main',SH_PDF_EMBED_VIEWER_URL.'assets/css/admin.css',['wp-color-picker','font-awesome'],'','all');
-            wp_enqueue_style('main');
-            
-            
-            wp_register_script( 'jquery-ui', 'https://code.jquery.com/ui/1.13.3/jquery-ui.min.js');
-            
-            wp_register_script( 'pdf-embed-viewer', SH_PDF_EMBED_VIEWER_URL.'assets/js/admin.js', ['wp-color-picker','jquery-ui'], false, true );
-            wp_enqueue_script( 'pdf-embed-viewer' );
-
-        }
     }
     
     $SH_PDF_Embed_Viewer_Enque = new SH_PDF_Embed_Viewer_Enque();
