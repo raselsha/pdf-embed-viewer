@@ -15,7 +15,7 @@ if( ! class_exists('SH_PDF_Embed_Viewer_Enque') ){
             wp_register_script( 'pdf-frontend-script', SH_PDF_EMBED_VIEWER_URL.'assets/js/frontend.js',[],'',true);
                         
             wp_enqueue_style('pdf-frontend-style');
-            wp_enqueue_script('frontend-script');
+            wp_enqueue_script('pdf-frontend-script');
 
             $options = get_option('pdf_download_option');
 
