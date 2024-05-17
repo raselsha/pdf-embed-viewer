@@ -12,14 +12,32 @@ jQuery(document).ready(function($){
 
 // =================media upload========
 
-jQuery('.upload').click(function () {
-    wp.media.editor.send.attachment = function(props, attachment) {
-    // let attachment_id = attachment.id;
-    let attachment_url = attachment.url;
-    jQuery('.sh_pdf_embed_file').val(attachment_url);
-    }
-    wp.media.editor.open(jQuery(this));
-    return false;
+jQuery(document).ready(function($) {
+    $('.upload').click(function(e) {
+        e.preventDefault();
+        var mediaUploader = wp.media({
+            title: 'Upload PDF',
+            button: {
+                text: 'Embed PDF'
+          },
+          library: {
+                type: 'application/pdf'
+            },
+            multiple: false
+        });
+      mediaUploader.on('select', function () {
+          var attachment = mediaUploader.state().get('selection').first().toJSON();
+          // Check if the selected file is a PDF
+          if (attachment.mime === 'application/pdf') {
+              $('.sh_pdf_embed_file').val(attachment.url);
+          } else {
+            alert('Please select a PDF file only.');
+            $('.sh_pdf_embed_file').val('');
+            mediaUploader;
+          }
+        });
+        mediaUploader.open();
+    });
 });
 
 

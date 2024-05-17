@@ -26,10 +26,10 @@ if( ! class_exists('SH_PDF_Embed_Viewer_General') ){
                         <?php _e( 'Add PDF URL', 'pdf-embed-viewer' )?>
                     </label>
                     <div style="width: 90%;">
-                        <input type="url" class="sh_pdf_embed_file" name="sh_pdf_embed_file" value="<?php echo esc_attr( $embed_file ) ? esc_url($embed_file) : '#' ;  ?>" placeholder="https://example.com/file-name.pdf" required>
-                        <span class='button upload'>
-                            <?php echo __('Upload','pickplugins-options-framework');?>
-                        </span>
+                        <input type="url" class="sh_pdf_embed_file" name="sh_pdf_embed_file" value="<?php echo esc_attr( $embed_file ) ? esc_url($embed_file) : '#' ;  ?>" placeholder="https://example.com/filename.pdf" required>
+                        <button class='button upload'>
+                            <i class="fa fa-paperclip" aria-hidden="true"></i> <?php echo __('Upload','pickplugins-options-framework');?>
+                        </button>
                     </div>
                 </section>
             </div>
