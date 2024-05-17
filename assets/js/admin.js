@@ -33,7 +33,6 @@ jQuery(document).ready(function($) {
           } else {
             alert('Please select a PDF file only.');
             $('.sh_pdf_embed_file').val('');
-            mediaUploader;
           }
         });
         mediaUploader.open();

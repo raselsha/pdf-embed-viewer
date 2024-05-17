@@ -34,6 +34,7 @@
   font-weight: normal;
   color: var(--pdfv-primary);
   border-left: 2px solid transparent;
+  cursor: pointer;
 }
 #pdf-embed-viewer .inside #pdf-embed-metabox-tabs aside ul li.tab.active {
   background-color: var(--pdfv-white);

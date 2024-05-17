@@ -39,6 +39,7 @@ $white : var(--pdfv-white);
                         font-weight: normal;
                         color: $primary;
                         border-left: 2px solid transparent;
+                        cursor: pointer;
                         &.active{
                             background-color: $white;
                             border-left: 2px solid $primary;
