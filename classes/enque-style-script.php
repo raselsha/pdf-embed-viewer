@@ -13,9 +13,11 @@ if( ! class_exists('SH_PDF_Embed_Viewer_Enque') ){
         public function frontend_style(){
             wp_register_style('pdf-frontend-style',SH_PDF_EMBED_VIEWER_URL.'assets/css/frontend.css',[],);
             wp_register_script( 'pdf-frontend-script', SH_PDF_EMBED_VIEWER_URL.'assets/js/frontend.js',[],'',true);
+            wp_register_script( 'pdfobject','https://unpkg.com/pdfobject@2.3.0/pdfobject.min.js');
             
             wp_enqueue_style('pdf-frontend-style');
             wp_enqueue_script('frontend-script');
+            wp_enqueue_script('pdfobject');
 
             $options = get_option('pdf_download_option');
 
