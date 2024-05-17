@@ -75,16 +75,21 @@ if( ! class_exists('SH_PDF_Embed_Viewer_CPT') ){
 
         public static function get_posts_years_array($post_type) {
             global $wpdb;
+            
             $result = array();
-            $years = $wpdb->get_results(
-                $wpdb->prepare(
-                    "SELECT YEAR(post_date) FROM {$wpdb->posts} WHERE post_status = 'publish' AND post_type = %s GROUP BY YEAR(post_date) DESC",$post_type
-                ),
-                ARRAY_N
-            );
+            $query = $wpdb->prepare("
+                SELECT YEAR(post_date) AS post_year
+                FROM {$wpdb->posts}
+                WHERE post_status = 'publish'
+                AND post_type = %s
+                GROUP BY YEAR(post_date)
+                ORDER BY post_year DESC
+                ", $post_type);
+            $years = $wpdb->get_results($query);
+    
             if ( is_array( $years ) && count( $years ) > 0 ) {
                 foreach ( $years as $year ) {
-                    $result[] = $year[0];
+                    $result[] = $year->post_year;
                 }
             }
             return $result;

@@ -29,9 +29,10 @@
 <div class="pdf-download pdf-embed-viewer">
 	<?php $options = get_option('pdf_download_option'); ?>
 	<h2><?php isset($options['archive_title']) ? esc_html_e($options['archive_title']) : the_archive_title(); ?></h2>
+	<?php $years =  SH_PDF_Embed_Viewer_CPT::get_posts_years_array('pdf-embed-viewer');?>
 	<div class="archive">
 		<ul class="tabs">
-			<?php $years =  ['2022','2021','2020'];//SH_PDF_Embed_Viewer_CPT::get_posts_years_array('pdf-embed-viewer');//;
+			<?php $years =  SH_PDF_Embed_Viewer_CPT::get_posts_years_array('pdf-embed-viewer');
 				for($i=0;$i<count($years);$i++): ?>
 					<li class="tab <?php echo ($i==0)?'active':''; ?>" data-tab-target="#year-<?=$years[$i];?>" ><?=$years[$i];?></li>
 			<?php endfor; ?>
