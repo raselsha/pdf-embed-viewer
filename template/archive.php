@@ -29,17 +29,17 @@
 <div class="pdf-download pdf-embed-viewer">
 	<?php $options = get_option('pdf_download_option'); ?>
 	<h2><?php isset($options['archive_title']) ? esc_html_e($options['archive_title']) : the_archive_title(); ?></h2>
-	<?php $years =  SH_PDF_Embed_Viewer_CPT::get_posts_years_array('pdf-embed-viewer');?>
+
 	<div class="archive">
 		<ul class="tabs">
 			<?php $years =  SH_PDF_Embed_Viewer_CPT::get_posts_years_array('pdf-embed-viewer');
-				for($i=0;$i<count($years);$i++): ?>
-					<li class="tab <?php echo ($i==0)?'active':''; ?>" data-tab-target="#year-<?=$years[$i];?>" ><?=$years[$i];?></li>
-			<?php endfor; ?>
+				foreach($years as $year): ?>
+					<li class="tab <?php echo $year==date('Y')?'active':''; ?>" data-tab-target="#year-<?php echo $year;?>" ><?php echo $year;?></li>
+			<?php endforeach; ?>
 		</ul>
 		<div class="tabs-content" >
-			<?php for($i=0;$i<count($years);$i++): ?>
-				<table  class="<?php echo ($i==0)?'active':''; ?>" data-tab-content  id="year-<?= $years[$i]; ?>">
+			<?php foreach($years as $year): ?>
+				<table  class="<?php echo $year==date('Y')?'active':''; ?>" data-tab-content  id="year-<?php echo $year; ?>">
 					<tr>         					    			
 						<th>Month</th>
 						<th>Title</th>
@@ -47,12 +47,12 @@
 					</tr>
 					<?php
 						$args = array(
-						'post_type'=>'pdfdownload',
+						'post_type'=>'pdf-embed-viewer',
 						'order' => 'ASC',
 						'posts_per_page'=> get_option( 'posts_per_page' ),
 							'date_query' => array(
 								array(
-									'year'  => $years[$i],
+									'year'  => $year,
 								),
 							),
 					);
@@ -63,12 +63,12 @@
 							<tr>
 								<td width="10%"><?php the_time('F'); ?></td>
 								<td width="10%"><a href="<?php the_permalink(); ?>"><?php the_title();?></a></td>
-								<td width="10%"><a href="<?php esc_attr_e(get_post_meta( get_the_ID(), 'pdfdownload_file', true ))?>" class="download-btn" download><?php esc_html_e('Download','pdf-download'); ?> <img src="<?php esc_attr_e(PDF_DOWNLOAD_URL.'assets/images/download.svg'); ?>" alt="Download icon"> </a></td>
+								<td width="10%"><a href="<?php esc_attr_e(get_post_meta( get_the_ID(), 'sh_pdf_embed_file', true ))?>" class="download-btn" download><?php esc_html_e('Download','pdf-download'); ?> <img src="<?php esc_attr_e(SH_PDF_EMBED_VIEWER_URL.'assets/images/download.svg'); ?>" alt="Download icon"> </a></td>
 							</tr>
 					<?php endwhile; ?>
 					
 				</table>
-			<?php endfor; ?>	
+			<?php endforeach; ?>	
 		</div>
 	</div>
 </div>
