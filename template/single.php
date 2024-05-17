@@ -29,11 +29,7 @@
 <div class="pdf-download">
 	<h1><?php the_title();?></h1>
 	<p><a href="<?php esc_attr_e($pdfdownload_file); ?>" class="download-btn" download><?php the_time('F'); ?> | <?php the_time('Y'); ?> <img src="<?php esc_attr_e(SH_PDF_EMBED_VIEWER_URL.'assets/images/download.svg'); ?>" alt="download-icon"></a></p>
-	<div id="#my-pdf"></div>
-	<?php esc_attr_e($pdfdownload_file); ?>
-	<script>PDFObject.embed("<?php esc_attr_e($pdfdownload_file); ?>", "#my-pdf");</script>
-	<!-- <iframe class="pdf-viewer" src="<?php esc_attr_e($pdfdownload_file); ?>" frameborder="0"></iframe> -->
-
+	<iframe class="pdf-viewer" src="<?php esc_attr_e($pdfdownload_file); ?>" frameborder="0"></iframe>
 	<div class="pagination">
 		<?php previous_post_link('%link','&#8592; Previous Month' ); ?>
 		<?php next_post_link('%link','Next Month &#8594;' ); ?>
