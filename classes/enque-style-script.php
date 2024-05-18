@@ -25,11 +25,20 @@ if( ! class_exists('SH_PDF_Embed_Viewer_Enque') ){
             wp_enqueue_script( 'pdf-embed-viewer' );
 
             // update options color
-            update_option('sh_pdf_embed_options',['colors'=>[
-                'primary'=>'#c79f62',
-                'secondary'=>'#666',
-                'light'=>'#e5e5e5',
-                'dark'=>'#333',
+            $options =  get_option('sh_pdf_embed_options');           
+            $archive_title = isset($options['archive_title']) ? $options['archive_title']:'test';
+            $primary = $options['colors']['primary'] ? $options['colors']['primary']:'#333';
+            $secondary = $options['colors']['secondary'] ? $options['colors']['secondary']:'#666666';
+            $dark = $options['colors']['dark'] ? $options['colors']['dark']:'#333';
+            $light = $options['colors']['light'] ? $options['colors']['light']:'#e5e5e5';
+
+            update_option('sh_pdf_embed_options',[
+                'archive_title'=>$archive_title,
+                'colors'=>[
+                    'primary'=>'#c79f62',
+                    'secondary'=>'#666',
+                    'light'=>'#e5e5e5',
+                    'dark'=>'#333',
             ]]);
             
             
