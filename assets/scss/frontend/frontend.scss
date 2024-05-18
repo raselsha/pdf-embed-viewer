@@ -1,11 +1,11 @@
 
 :root{
-    --pdfd-primary-color:#c79f62;
-    --pdfd-secondary-color:#666;
-    --pdfd-light-color:#e5e5e5;
-    --pdfd-dark-color:#333;
-    --pdfd-black-color:#000;
-    --pdfd-white-color:#fff;
+    --pdf-emd-vwr-primary:#c79f62;
+    --pdf-emd-vwr-secondary:#666;
+    --pdf-emd-vwr-light:#e5e5e5;
+    --pdf-emd-vwr-dark:#333;
+    --pdf-emd-vwr-black:#000;
+    --pdf-emd-vwr-white:#fff;
 }
 /*================body============*/
 .pdf-download{
@@ -15,17 +15,17 @@
 
     a{
         text-decoration: none;
-        color: var(--pdfd-primary-color);
+        color: var(--pdf-emd-vwr-primary);
         font-weight: bold;
     }
     h1{
-        color:var(--pdfd-dark-color); ;
+        color:var(--pdf-emd-vwr-dark); ;
     }
     .button{
-        background-color: var(--pdfd-primary-color);
+        background: var(--pdf-emd-vwr-primary);
         padding: 0.1em 0.5em;
         border-radius: .25em;
-        color: var(--pdfd-white-color);
+        color: var(--pdf-emd-vwr-white);
         font-weight: normal;
     }
     .download-btn{
@@ -60,7 +60,7 @@
             display: flex;
             flex-direction: column;
             justify-content:start;
-            background-color: var(--pdfd-light-color);
+            background: var(--pdf-emd-vwr-light);
             list-style-type: none;
             margin: 0;
             padding: 0;
@@ -76,13 +76,13 @@
                 padding: .5em;
                 text-align: center;
                 font-weight: bold;
-                color: var(--pdfd-secondary-color);
+                color: var(--pdf-emd-vwr-secondary);
                 transition: all .5s;
                 &.active {
-                    color: var(--pdfd-primary-color);
+                    color: var(--pdf-emd-vwr-primary);
                 }
                 &:hover {
-                    color: var(--pdfd-primary-color);
+                    color: var(--pdf-emd-vwr-primary);
                 }
             }
             &-content{
@@ -98,20 +98,20 @@
                     width: 100%;
 
                     th{
-                        background-color: var(--pdfd-light-color);
+                        background: var(--pdf-emd-vwr-light);
                         padding: .5em;
                         border:0;
-                        border-bottom: 1px solid  var(--pdfd-secondary-color);
-                        color:var(--pdfd-dark-color);
+                        border-bottom: 1px solid  var(--pdf-emd-vwr-secondary);
+                        color:var(--pdf-emd-vwr-dark);
                     }
                     td{
                         padding: .5em;
-                        color: var(--pdfd-secondary-color);
+                        color: var(--pdf-emd-vwr-secondary);
                         font-weight: bold;
                         border:0;
                     }
                     tr:nth-child(odd){
-                        background-color: var(--pdfd-light-color);
+                        background: var(--pdf-emd-vwr-light);
                         border:0;
                     }
                 }
