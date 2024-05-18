@@ -25,12 +25,14 @@ if( ! class_exists('SH_PDF_Embed_Viewer_Enque') ){
             wp_enqueue_script( 'pdf-embed-viewer' );
 
             // update options color
-            update_option('sh_pdf_embed_opt_colors',[
+            update_option('sh_pdf_embed_options',['colors'=>[
                 'primary'=>'#c79f62',
                 'secondary'=>'#666',
                 'light'=>'#e5e5e5',
                 'dark'=>'#333',
-            ]);
+            ]]);
+            
+            
         }
 
         public function frontend_style(){
@@ -39,12 +41,13 @@ if( ! class_exists('SH_PDF_Embed_Viewer_Enque') ){
                         
             wp_enqueue_style('pdf-frontend-style');
             wp_enqueue_script('pdf-frontend-script');
-            $options = get_option('sh_pdf_embed_opt_colors');
+            $options = get_option('sh_pdf_embed_options');
+            $colors = $options['colors'];
             $css = ":root{
-                    --pdf-emd-vwr-primary:{$options['primary']};        
-                    --pdf-emd-vwr-secondary:{$options['secondary']}; 
-                    --pdf-emd-vwr-light:{$options['light']};       
-                    --pdf-emd-vwr-dark:{$options['dark']};     
+                    --pdf-emd-vwr-primary:{$colors['primary']};        
+                    --pdf-emd-vwr-secondary:{$colors['secondary']}; 
+                    --pdf-emd-vwr-light:{$colors['light']};       
+                    --pdf-emd-vwr-dark:{$colors['dark']};     
                 ";
             wp_add_inline_style('pdf-download', $css);
             

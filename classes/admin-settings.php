@@ -5,7 +5,7 @@ if( ! class_exists('SH_PDF_Embed_Viewer_Admin_Settings') ){
     class SH_PDF_Embed_Viewer_Admin_Settings{
         public static $options;
         public function __construct() {
-            self::$options = get_option('pdf_download_option');
+            self::$options = get_option('sh_pdf_embed_options');
             add_action( 'admin_menu', array($this,'create_admin_menu') );
             add_action( 'admin_init', array($this,'create_sttings_form') );
             
@@ -26,7 +26,7 @@ if( ! class_exists('SH_PDF_Embed_Viewer_Admin_Settings') ){
                 __('PDF Embed - Viewer','pdf-embed-viewer'),
                 __('Settings','pdf-embed-viewer'),
                 'manage_options',
-                'index',
+                'index', // page url 
                 array($this,'settings_index_page'),
             ); 
         }
@@ -36,9 +36,9 @@ if( ! class_exists('SH_PDF_Embed_Viewer_Admin_Settings') ){
                 return;
             }
             if( isset($_GET['settings-updated']) ){
-                add_settings_error('pdf_download_option','','Settings Saved!','success');
+                add_settings_error('sh_pdf_embed_options','','Settings Saved!','success');
             }
-            settings_errors('pdf_download_option');
+            settings_errors('sh_pdf_embed_options');
             
             $this->settings_html_layout();
         }
@@ -51,12 +51,13 @@ if( ! class_exists('SH_PDF_Embed_Viewer_Admin_Settings') ){
                     <?php
                         $active_tab = isset($_GET['tab']) ? $_GET['tab'] : 'settings' ;
                     ?>
-                    <a href="?post_type=pdf-embed-viewer&page=index&tab=settings" class="nav-tab <?php esc_attr_e(($active_tab=='settings') ? 'nav-tab-active' : '' ); ?>">Settings</a>
-                    <a href="?post_type=pdf-embed-viewer&page=index&tab=support" class="nav-tab <?php esc_attr_e(($active_tab=='support') ? 'nav-tab-active' : '' ); ?>">Support</a>
+                    <a href="?post_type=pdf-embed-viewer&page=index&tab=settings" class="nav-tab <?php esc_attr_e(($active_tab=='settings') ? 'nav-tab-active' : '' ); ?>"> <?php _e('Settings','pdf-embed-viewer'); ?> </a>
+                    <a href="?post_type=pdf-embed-viewer&page=index&tab=support" class="nav-tab <?php esc_attr_e(($active_tab=='support') ? 'nav-tab-active' : '' ); ?>"> <?php _e('Support','pdf-embed-viewer'); ?> </a>
                 </h2>
                 <form action="options.php" method="post">
-                    <?php settings_fields('pdfdownload_group'); ?>
+                    <?php settings_fields('sh_pdf_embed_opt_group'); ?>
                     <?php if($active_tab=='settings'): ?>
+                        <input type="text">
                         <?php do_settings_sections('page1'); ?>
                         <?php submit_button('Save'); ?>
                     <?php else: ?> 
@@ -71,21 +72,21 @@ if( ! class_exists('SH_PDF_Embed_Viewer_Admin_Settings') ){
         }
         public function create_sttings_form(){
             
-            register_setting('pdfdownload_group','pdf_download_option',array($this,'sanitize'));
+            register_setting('sh_pdf_embed_opt_group','sh_pdf_embed_options',[$this,'sanitize']);
 
             
 // ============tab 1 here======
             add_settings_section(
                 'page1_main_section',
                 __('Title Settings','pdf-embed-viewer'),
-                array($this,'page1_main_section'),
+                [$this,'page1_main_section'],
                 'page1'
             );
 
             add_settings_field(
                 'archive_title',
                 __('Title','pdf-embed-viewer'),
-                array($this,'add_archive_title'),
+                [$this,'add_archive_title'],
                 'page1',
                 'page1_main_section'
             );
@@ -156,9 +157,9 @@ if( ! class_exists('SH_PDF_Embed_Viewer_Admin_Settings') ){
             ?>
             <input 
             type="text" 
-            name="pdf_download_option[archive_title]" 
+            name="sh_pdf_embed_options[archive_title]" 
             placeholder="Newsletter"
-            value="<?php echo (isset(self::$options['archive_title']) and self::$options['archive_title']!='' ) ? esc_attr(self::$options['archive_title']) : ''; ?>">
+            value="<?php echo esc_attr(self::$options['archive_title'] ? self::$options['archive_title'] : ''); ?>">
             <?php
         }
         public function add_primary_color(){
@@ -166,8 +167,8 @@ if( ! class_exists('SH_PDF_Embed_Viewer_Admin_Settings') ){
             <input 
             class="color-field"
             type="text" 
-            name="pdf_download_option[primary_color]" 
-            value="<?php echo (isset(self::$options['primary_color']) and self::$options['primary_color']!='')  ? esc_attr(self::$options['primary_color']) : esc_attr('#c79f62'); ?>">
+            name="sh_pdf_embed_options['colors']['primary']" 
+            value="<?php echo esc_attr(self::$options['colors']['primary'] ? self::$options['colors']['primary'] : '#c79f62'); ?>">
             <?php
         }
         public function add_secondary_color(){
@@ -175,8 +176,8 @@ if( ! class_exists('SH_PDF_Embed_Viewer_Admin_Settings') ){
             <input 
             class="color-field"
             type="text" 
-            name="pdf_download_option[secondary_color]" 
-            value="<?php echo (isset(self::$options['secondary_color']) and self::$options['secondary_color']!='') ? esc_attr(self::$options['secondary_color']) : esc_attr('#666'); ?>">
+            name="sh_pdf_embed_options['colors']['secondary']" 
+            value="<?php echo esc_attr(self::$options['colors']['secondary']? self::$options['colors']['secondary'] :'#666'); ?>">
             <?php
         }
         
@@ -185,8 +186,8 @@ if( ! class_exists('SH_PDF_Embed_Viewer_Admin_Settings') ){
             <input 
             class="color-field"
             type="text" 
-            name="pdf_download_option[dark_color]" 
-            value="<?php echo (isset(self::$options['dark_color']) and self::$options['dark_color']!='') ? esc_attr(self::$options['dark_color']) : esc_attr('#333'); ?>">
+            name="sh_pdf_embed_options['colors']['dark']" 
+            value="<?php echo esc_attr(self::$options['colors']['dark'] ? self::$options['colors']['dark'] : '#333'); ?>">
             <?php
         }
 
@@ -195,15 +196,16 @@ if( ! class_exists('SH_PDF_Embed_Viewer_Admin_Settings') ){
             <input 
             class="color-field"
             type="text" 
-            name="pdf_download_option[light_color]" 
-            value="<?php echo (isset(self::$options['light_color']) and self::$options['light_color']!='') ? esc_attr(self::$options['light_color']) : esc_attr('#e5e5e5'); ?>">
+            name="sh_pdf_embed_options['colors']['light']" 
+            value="<?php echo esc_attr(self::$options['colors']['light'] ? self::$options['colors']['light']: '#e5e5e5'); ?>">
             <?php
         }
 
         public function sanitize( $input ) {
-            $new_input = array();
+            $new_input['colors'] = array();
+            $input= $input['colors'];
             foreach($input as $key => $value){
-                $new_input[$key] = sanitize_text_field($value);
+                $new_input['colors'][$key] = sanitize_text_field($value);
             }
             return $new_input;
         
