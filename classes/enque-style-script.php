@@ -41,10 +41,10 @@ if( ! class_exists('SH_PDF_Embed_Viewer_Enque') ){
             wp_enqueue_script('pdf-frontend-script');
             $options = get_option('sh_pdf_embed_opt_colors');
             $css = ":root{
-                    --pdfd-primary-color:{$options['primary']};        
-                    --pdfd-secondary-color:{$options['secondary']}; 
-                    --pdfd-light-color:{$options['light']};       
-                    --pdfd-dark-color:{$options['dark']};     
+                    --pdf-emd-vwr-primary:{$options['primary']};        
+                    --pdf-emd-vwr-secondary:{$options['secondary']}; 
+                    --pdf-emd-vwr-light:{$options['light']};       
+                    --pdf-emd-vwr-dark:{$options['dark']};     
                 ";
             wp_add_inline_style('pdf-download', $css);
             
