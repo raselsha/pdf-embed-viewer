@@ -28,11 +28,11 @@
 <?php $pdf_emd_vwr_file_url = get_post_meta( get_the_ID(), 'pdf_emd_vwr_file_url', true ); ?>
 <div class="pdf-embed-viewer">
 	<h1><?php the_title();?></h1>
-	<p><a href="<?php esc_attr_e($pdf_emd_vwr_file_url); ?>" class="download-btn" download><?php the_time('F'); ?> | <?php the_time('Y'); ?> <img src="<?php esc_attr_e(PDF_Emd_Vwr_URL.'assets/images/download.svg'); ?>" alt="download-icon"></a></p>
+	<p><a href="<?php esc_attr_e($pdf_emd_vwr_file_url); ?>" class="download-btn" download><?php the_time('F'); ?> | <?php the_time('Y'); ?> <img src="<?php esc_attr_e(PDF_Emd_Vwr_URL.'assets/images/download.svg'); ?>" alt="<?php _e('download-icon','pdf-embed-viewer'); ?>"></a></p>
 	<iframe class="pdf-viewer" src="<?php esc_attr_e($pdf_emd_vwr_file_url); ?>" frameborder="0"></iframe>
 	<div class="pagination">
-		<?php previous_post_link('%link','&#8592; Previous Month' ); ?>
-		<?php next_post_link('%link','Next Month &#8594;' ); ?>
+		<?php previous_post_link('%link','&#8592;'.__('Previous','pdf-embed-viewer') ); ?>
+		<?php next_post_link('%link',__('Next','pdf-embed-viewer').'&#8594;' ); ?>
 	</div>
 </div>
 

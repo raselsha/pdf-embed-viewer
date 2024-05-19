@@ -34,16 +34,16 @@
 		<ul class="tabs">
 			<?php $years =  PDF_Emd_Vwr_CPT::get_posts_years_array('pdf-embed-viewer');
 				foreach($years as $year): ?>
-					<li class="tab <?php echo $year==date('Y')?'active':''; ?>" data-tab-target="#year-<?php echo $year;?>" ><?php echo $year;?></li>
+					<li class="tab <?php esc_attr_e($year==date('Y')?'active':''); ?>" data-tab-target="#year-<?php esc_attr_e($year);?>" ><?php esc_attr_e($year);?></li>
 			<?php endforeach; ?>
 		</ul>
 		<div class="tabs-content" >
 			<?php foreach($years as $year): ?>
-				<table  class="<?php echo $year==date('Y')?'active':''; ?>" data-tab-content  id="year-<?php echo $year; ?>">
+				<table  class="<?php esc_attr_e($year==date('Y')?'active':''); ?>" data-tab-content  id="year-<?php esc_attr_e($year);?>">
 					<tr>         					    			
-						<th>Month</th>
-						<th>Title</th>
-						<th>Download</th>
+						<th><?php _e('Month','pdf-embed-viewer') ?></th>
+						<th><?php _e('Title','pdf-embed-viewer') ?></th>
+						<th><?php _e('Download','pdf-embed-viewer') ?></th>
 					</tr>
 					<?php
 						$args = array(
@@ -68,7 +68,7 @@
 										$pdf_emd_vwr_file_url=get_post_meta( get_the_ID(), 'pdf_emd_vwr_file_url', true );
 										if(isset($pdf_emd_vwr_file_url)):
 									?>
-									<a href="<?php esc_attr_e(get_post_meta( get_the_ID(), 'pdf_emd_vwr_file_url', true ))?>" class="download-btn" download><?php esc_html_e('Download','pdf-download'); ?> <img src="<?php esc_attr_e(PDF_Emd_Vwr_URL.'assets/images/download.svg'); ?>" alt="Download icon"> </a>
+									<a href="<?php esc_attr_e(get_post_meta( get_the_ID(), 'pdf_emd_vwr_file_url', true ))?>" class="download-btn" download><?php _e('Download','pdf-embed-viewer'); ?> <img src="<?php esc_attr_e(PDF_Emd_Vwr_URL.'assets/images/download.svg'); ?>" alt="<?php _e('Download icon','pdf-embed-viewer'); ?>"> </a>
 									<?php endif; ?>
 								</td>
 							</tr>
