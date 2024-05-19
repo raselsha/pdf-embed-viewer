@@ -68,4 +68,14 @@
   width: 90%;
 }
 
+.admin-wrap .nav-tab {
+  cursor: pointer;
+}
+.admin-wrap .tab-content {
+  display: none;
+}
+.admin-wrap .active {
+  display: block;
+}
+
 /*# sourceMappingURL=admin.css.map */

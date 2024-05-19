@@ -1,14 +1,27 @@
 
-// ============custom data tabs===========
+// ============custom metabox data tabs===========
+// jQuery(document).ready(function($){
+//   $('.tab').click(function () {
+//     var target = $(this).data('tab-target');
+//     $('.tab-content').removeClass('active');
+//     $('.tab').removeClass('active');
+//     $(this).addClass('active');
+//     $(target).addClass('active');
+//   });
+// });
+
+// ============admin tabs===========
 jQuery(document).ready(function($){
-  $('[data-tab-target]').click(function(){
+  $('.nav-tab').click(function () {
     var target = $(this).data('tab-target');
     $('.tab-content').removeClass('active');
-    $('.tab').removeClass('active');
-    $(this).addClass('active');
+    $('.nav-tab').removeClass('nav-tab-active');
+    $(this).addClass('nav-tab-active');
     $(target).addClass('active');
   });
 });
+// ============admin data tab=======
+
 
 // =================media upload========
 

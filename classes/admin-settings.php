@@ -61,31 +61,21 @@ if( ! class_exists('PDF_Emd_Vwr_Admin_Settings') ){
 
         public function settings_html_layout(){
             ?>
-            <div class="wrap">
+            <div class="wrap admin-wrap">
                 <h2><?php get_admin_page_title(); ?></h2>
                 <h2 class="nav-tab-wrapper">
-                    <?php
-                    if( isset( $_POST['pdf_emd_vwr_options_nonce'] ) ){
-                        if( ! wp_verify_nonce( $_POST['pdf_emd_vwr_options_nonce'], 'pdf_emd_vwr_options_nonce' ) ){
-                            return;
-                        }
-                        $active_tab = isset($_GET['tab']) ? $_GET['tab'] : 'settings' ;
-                    }
-                    ?>
-                    <a href="?post_type=pdf-embed-viewer&page=index&tab=settings" class="nav-tab <?php ($active_tab=='settings') ? esc_attr_e('nav-tab-active') : '' ; ?>"> <?php esc_html_e('Settings','pdf-embed-viewer'); ?> </a>
-                    <a href="?post_type=pdf-embed-viewer&page=index&tab=support" class="nav-tab <?php ($active_tab=='support') ? esc_attr_e('nav-tab-active') : '' ; ?>"> <?php esc_html_e('Support','pdf-embed-viewer'); ?> </a>
+                    <button class="nav-tab nav-tab-active" data-tab-target="#pdf_emd_vwr_admin_tabs1"> <?php esc_html_e('Settings','pdf-embed-viewer'); ?> </a>
+                    <button class="nav-tab" data-tab-target="#pdf_emd_vwr_admin_tabs2"> <?php esc_html_e('Support','pdf-embed-viewer'); ?> </a>
                 </h2>
                 <form action="" method="post">
                     <?php wp_nonce_field( 'pdf_emd_vwr_options_nonce', 'pdf_emd_vwr_options_nonce' ); ?>
-                    <?php if($active_tab=='settings'): ?>
+                    <div class="tab-content active" id="pdf_emd_vwr_admin_tabs1">
                         <?php $this->options_fields(); ?>
                         <?php submit_button('Save'); ?>
-                    <?php else: ?> 
-                        <div class="wrap">
-                            <p><?php esc_html_e('For Support send email to'); ?> <a href="mailto:raselsha@gmail.com"><?php esc_html_e('raselsha@gmail.com'); ?></a> </p>
-                             
-                         </div>                    
-                    <?php endif; ?>    
+                    </div> 
+                    <div class="tab-content" id="pdf_emd_vwr_admin_tabs2">
+                        <p><?php esc_html_e('For Support send email to'); ?> <a href="mailto:raselsha@gmail.com"><?php esc_html_e('raselsha@gmail.com'); ?></a> </p>    
+                    </div> 
                     
                 </form>
             </div>

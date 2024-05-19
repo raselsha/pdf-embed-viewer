@@ -12,14 +12,14 @@ if( ! class_exists('PDF_Emd_Vwr_General') ){
         }
         public function tabs($post_id){
             ?>
-                <li class="tab active" data-tab-target="#tabs-1"> <i class="fas fa-home"></i> Home</li>
+                <li class="tab active" data-tab-target="#pdf_emd_vwr_tabs1"> <i class="fas fa-home"></i> Home</li>
             <?php
         }
         public function tabs_content($post_id){
             $embed_file = get_post_meta($post_id,'pdf_emd_vwr_file_url',true);
             $embed_file =  $embed_file ? $embed_file :'';
             ?>
-            <div class="tab-content active" id="tabs-1">
+            <div class="tab-content active" id="#pdf_emd_vwr_tabs1">
                 <?php wp_nonce_field( 'pdf_emd_vwr_metabox_nonce', 'pdf_emd_vwr_metabox_nonce' ); ?>
                 <section>
                     <label >
