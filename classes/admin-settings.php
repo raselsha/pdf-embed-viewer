@@ -6,7 +6,8 @@ if( ! class_exists('PDF_Emd_Vwr_Admin_Settings') ){
         
         public function __construct() {
             add_action( 'admin_menu', array($this,'create_admin_menu') );
-            add_action( 'admin_init', array($this,'save_options_data') );            
+            add_action( 'admin_init', array($this,'save_options_data') ); 
+            add_filter( 'plugin_action_links_pdf-embed-viewer/pdf-embed-viewer.php',[$this,'add_settings_link']);           
         }
 
         public function create_admin_menu(){
@@ -29,6 +30,17 @@ if( ! class_exists('PDF_Emd_Vwr_Admin_Settings') ){
             ); 
         }
 
+        public function add_settings_link($links){
+            $url = esc_url( add_query_arg( array( 'post_type' => 'pdf-embed-viewer', 'page' => 'index', ), get_admin_url() . 'edit.php' ) );
+            
+            $settings_link = "<a href='$url'>" . __( 'Settings','pdf-embed-viewer') . '</a>';
+            // Adds the link to the end of the array.
+            array_push(
+                $links,
+                $settings_link
+            );
+            return $links;
+        }
         public function settings_index_page(){
             if( ! current_user_can('manage_options')){
                 return;
