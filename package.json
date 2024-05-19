@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "sass --watch assets/scss/admin/admin.scss assets/css/admin.css",
-    "frontend": "sass --watch assets/scss/frontend/frontend.scss assets/css/frontend.css"
+    "start": "sass --watch assets/scss/admin/main.scss assets/css/admin.css",
+    "frontend": "sass --watch assets/scss/frontend/main.scss assets/css/frontend.css"
   },
   "author": "",
   "license": "ISC",
