@@ -18,7 +18,7 @@ if( ! class_exists('PDF_Emd_Vwr_CPT') ){
 
         public function create_post_type(){
             $labels = [
-                "name" => __( "PDF Embed", 'pdf-embed-viewer' ),
+                "name" => __( "PDF Embed Viewer", 'pdf-embed-viewer' ),
                 "singular_name" => __( "PDF Embed", 'pdf-embed-viewer' ),
                 "menu_name" => __( "PDF Embed", 'pdf-embed-viewer' ),
                 "all_items" => __( "All PDF", 'pdf-embed-viewer' ),
