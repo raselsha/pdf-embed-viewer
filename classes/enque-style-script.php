@@ -22,25 +22,7 @@ if( ! class_exists('SH_PDF_Embed_Viewer_Enque') ){
             wp_register_script( 'jquery-ui', 'https://code.jquery.com/ui/1.13.3/jquery-ui.min.js');
             
             wp_register_script( 'pdf-embed-viewer', SH_PDF_EMBED_VIEWER_URL.'assets/js/admin.js', ['wp-color-picker','jquery-ui'], false, true );
-            wp_enqueue_script( 'pdf-embed-viewer' );
-
-            // update options color
-            $options =  get_option('sh_pdf_embed_options');           
-            $archive_title = isset($options['archive_title']) ? $options['archive_title']:'test';
-            $primary = $options['colors']['primary'] ? $options['colors']['primary']:'#333';
-            $secondary = $options['colors']['secondary'] ? $options['colors']['secondary']:'#666666';
-            $dark = $options['colors']['dark'] ? $options['colors']['dark']:'#333';
-            $light = $options['colors']['light'] ? $options['colors']['light']:'#e5e5e5';
-
-            update_option('sh_pdf_embed_options',[
-                'archive_title'=>$archive_title,
-                'colors'=>[
-                    'primary'=>'#c79f62',
-                    'secondary'=>'#666',
-                    'light'=>'#e5e5e5',
-                    'dark'=>'#333',
-            ]]);
-            
+            wp_enqueue_script( 'pdf-embed-viewer' );        
             
         }
 
@@ -52,13 +34,17 @@ if( ! class_exists('SH_PDF_Embed_Viewer_Enque') ){
             wp_enqueue_script('pdf-frontend-script');
             $options = get_option('sh_pdf_embed_options');
             $colors = $options['colors'];
-            $css = ":root{
-                    --pdf-emd-vwr-primary:{$colors['primary']};        
-                    --pdf-emd-vwr-secondary:{$colors['secondary']}; 
-                    --pdf-emd-vwr-light:{$colors['light']};       
-                    --pdf-emd-vwr-dark:{$colors['dark']};     
+            $primary        = isset($colors['primary'] ) ? $colors['primary']:'#c79f62';
+            $secondary      = isset($colors['secondary'] )? $colors['secondary']:'#666666';
+            $dark           = isset($colors['dark'] ) ? $colors['dark']:'#333';
+            $light          = isset($colors['light'] ) ? $colors['light']:'#e5e5e5';
+            $inline_css = ":root{
+                    --pdf-emd-vwr-primary:{$primary };        
+                    --pdf-emd-vwr-secondary:{$secondary}; 
+                    --pdf-emd-vwr-light:{$dark};       
+                    --pdf-emd-vwr-dark:{$light};     
                 ";
-            wp_add_inline_style('pdf-download', $css);
+            wp_add_inline_style('pdf-frontend-style', $inline_css);
             
         }
 
