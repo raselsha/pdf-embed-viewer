@@ -82,23 +82,23 @@ if( ! class_exists('PDF_Emd_Vwr_CPT') ){
         public static function get_posts_years_array($post_type) {
             global $wpdb;
             
-            $result = array();
-            $query = $wpdb->prepare("
-                SELECT YEAR(post_date) AS post_year
-                FROM {$wpdb->posts}
-                WHERE post_status = 'publish'
-                AND post_type = %s
-                GROUP BY YEAR(post_date)
-                ORDER BY post_year DESC
-                ", $post_type);
-            $years = $wpdb->get_results($query);
-    
-            if ( is_array( $years ) && count( $years ) > 0 ) {
-                foreach ( $years as $year ) {
-                    $result[] = $year->post_year;
-                }
-            }
-            return $result;
+            $terms_year = array(
+                'post_type'         => $post_type,
+            );
+
+            $years = array();
+            $query_year = new WP_Query( $terms_year );
+
+            if ( $query_year->have_posts() ) :
+                while ( $query_year->have_posts() ) : $query_year->the_post();
+                    $year = get_the_date('Y');
+                    if(!in_array($year, $years)){
+                        $years[] = $year;
+                    }
+                endwhile;
+                wp_reset_postdata();
+            endif;
+            return $years;
         }
     }
 
