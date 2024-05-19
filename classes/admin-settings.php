@@ -58,7 +58,10 @@ if( ! class_exists('PDF_Emd_Vwr_Admin_Settings') ){
                         <?php $this->options_fields(); ?>
                         <?php submit_button('Save'); ?>
                     <?php else: ?> 
-                        <?php echo 'test'; ?>                        
+                        <div class="wrap">
+                            <p><?php _e('For Support send email to'); ?> <a href="mailto:raselsha@gmail.com"><?php _e('raselsha@gmail.com'); ?></a> </p>
+                             
+                         </div>                    
                     <?php endif; ?>    
                     
                 </form>

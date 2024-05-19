@@ -26,7 +26,7 @@ if( ! class_exists('PDF_Emd_Vwr_General') ){
                         <?php _e( 'Add PDF URL', 'pdf-embed-viewer' )?>
                     </label>
                     <div style="width: 90%;">
-                        <input type="url" class="pdf_emd_vwr_file" name="pdf_emd_vwr_file_url" value="<?php echo esc_attr( $embed_file ) ? esc_url($embed_file) : '#' ;  ?>" placeholder="https://example.com/filename.pdf" required>
+                        <input type="url" class="pdf_emd_vwr_file" name="pdf_emd_vwr_file_url" value="<?php echo esc_attr( $embed_file ) ? esc_url($embed_file) : '' ;  ?>" placeholder="https://example.com/filename.pdf" required>
                         <button class='button upload'>
                             <i class="fa fa-paperclip" aria-hidden="true"></i> <?php _e('Upload','pdf-embed-viewer');?>
                         </button>
