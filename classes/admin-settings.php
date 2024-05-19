@@ -42,15 +42,21 @@ if( ! class_exists('PDF_Emd_Vwr_Admin_Settings') ){
             return $links;
         }
         public function settings_index_page(){
-            if( ! current_user_can('manage_options')){
-                return;
+            if( isset( $_POST['pdf_emd_vwr_options_nonce'] ) ){
+                if( ! wp_verify_nonce( $_POST['pdf_emd_vwr_options_nonce'], 'pdf_emd_vwr_options_nonce' ) ){
+                    return;
+                }
+                if( ! current_user_can('manage_options')){
+                    return;
+                }
+                if( isset($_POST['pdf_emd_vwr_options']) ){
+                    add_settings_error('pdf_emd_vwr_options','','Settings Saved!','success');
+                }
+                settings_errors('pdf_emd_vwr_options');
+                
             }
-            if( isset($_POST['pdf_emd_vwr_options']) ){
-                add_settings_error('pdf_emd_vwr_options','','Settings Saved!','success');
-            }
-            settings_errors('pdf_emd_vwr_options');
-            
             $this->settings_html_layout();
+        
         }
 
         public function settings_html_layout(){
@@ -59,7 +65,12 @@ if( ! class_exists('PDF_Emd_Vwr_Admin_Settings') ){
                 <h2><?php esc_html_e(get_admin_page_title()); ?></h2>
                 <h2 class="nav-tab-wrapper">
                     <?php
+                    if( isset( $_POST['pdf_emd_vwr_options_nonce'] ) ){
+                        if( ! wp_verify_nonce( $_POST['pdf_emd_vwr_options_nonce'], 'pdf_emd_vwr_options_nonce' ) ){
+                            return;
+                        }
                         $active_tab = isset($_GET['tab']) ? $_GET['tab'] : 'settings' ;
+                    }
                     ?>
                     <a href="?post_type=pdf-embed-viewer&page=index&tab=settings" class="nav-tab <?php esc_attr_e(($active_tab=='settings') ? 'nav-tab-active' : '' ); ?>"> <?php _e('Settings','pdf-embed-viewer'); ?> </a>
                     <a href="?post_type=pdf-embed-viewer&page=index&tab=support" class="nav-tab <?php esc_attr_e(($active_tab=='support') ? 'nav-tab-active' : '' ); ?>"> <?php _e('Support','pdf-embed-viewer'); ?> </a>
