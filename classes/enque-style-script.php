@@ -32,7 +32,7 @@ if( ! class_exists('PDF_Emd_Vwr_Enque') ){
                         
             wp_enqueue_style('pdf-frontend-style');
             wp_enqueue_script('pdf-frontend-script');
-            $options = get_option('sh_pdf_embed_options');
+            $options = get_option('pdf_emd_vwr_options');
             $colors = $options['colors'];
             $primary        = isset($colors['primary'] ) ? $colors['primary']:'#c79f62';
             $secondary      = isset($colors['secondary'] )? $colors['secondary']:'#666666';

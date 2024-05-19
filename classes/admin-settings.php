@@ -34,9 +34,9 @@ if( ! class_exists('PDF_Emd_Vwr_Admin_Settings') ){
                 return;
             }
             if( isset($_GET['settings-updated']) ){
-                add_settings_error('sh_pdf_embed_options','','Settings Saved!','success');
+                add_settings_error('pdf_emd_vwr_options','','Settings Saved!','success');
             }
-            settings_errors('sh_pdf_embed_options');
+            settings_errors('pdf_emd_vwr_options');
             
             $this->settings_html_layout();
         }
@@ -53,7 +53,7 @@ if( ! class_exists('PDF_Emd_Vwr_Admin_Settings') ){
                     <a href="?post_type=pdf-embed-viewer&page=index&tab=support" class="nav-tab <?php esc_attr_e(($active_tab=='support') ? 'nav-tab-active' : '' ); ?>"> <?php _e('Support','pdf-embed-viewer'); ?> </a>
                 </h2>
                 <form action="" method="post">
-                    <?php wp_nonce_field( 'sh_pdf_embed_options_nonce', 'sh_pdf_embed_options_nonce' ); ?>
+                    <?php wp_nonce_field( 'pdf_emd_vwr_options_nonce', 'pdf_emd_vwr_options_nonce' ); ?>
                     <?php if($active_tab=='settings'): ?>
                         <?php $this->options_fields(); ?>
                         <?php submit_button('Save'); ?>
@@ -68,7 +68,7 @@ if( ! class_exists('PDF_Emd_Vwr_Admin_Settings') ){
         }
 
         public function options_fields(){
-            $options =  get_option('sh_pdf_embed_options');         
+            $options =  get_option('pdf_emd_vwr_options');         
             $archive_title  = isset($options['archive_title']) ? $options['archive_title']:'Newsletter';
             $primary        = isset($options['colors']['primary'] ) ? $options['colors']['primary']:'#c79f62';
             $secondary      = isset($options['colors']['secondary'] )? $options['colors']['secondary']:'#666666';
@@ -82,31 +82,31 @@ if( ! class_exists('PDF_Emd_Vwr_Admin_Settings') ){
                         <th scope="row">Archive Title</th>
                         <td>
                             
-                            <input type="text" name="sh_pdf_embed_options[archive_title]" placeholder="Newsletter" value="<?php echo esc_attr($archive_title); ?>">
+                            <input type="text" name="pdf_emd_vwr_options[archive_title]" placeholder="Newsletter" value="<?php echo esc_attr($archive_title); ?>">
                         </td>
                     </tr>
                     <tr>
                         <th scope="row">Primary Color</th>
                         <td>
-                            <input class="color-field" type="text" name="sh_pdf_embed_options[colors][primary]" value="<?php echo esc_attr($primary); ?>">     
+                            <input class="color-field" type="text" name="pdf_emd_vwr_options[colors][primary]" value="<?php echo esc_attr($primary); ?>">     
                         </td>
                     </tr>
                     <tr>
                         <th scope="row">Secondary Color</th>
                         <td>
-                            <input class="color-field" type="text"  name="sh_pdf_embed_options[colors][secondary]"  value="<?php echo esc_attr($secondary); ?>">         
+                            <input class="color-field" type="text"  name="pdf_emd_vwr_options[colors][secondary]"  value="<?php echo esc_attr($secondary); ?>">         
                         </td>
                     </tr>
                     <tr>
                         <th scope="row">Dark Color</th>
                         <td>
-                            <input  class="color-field" type="text"  name="sh_pdf_embed_options[colors][dark]" value="<?php echo esc_attr($dark); ?>">
+                            <input  class="color-field" type="text"  name="pdf_emd_vwr_options[colors][dark]" value="<?php echo esc_attr($dark); ?>">
                                 
                         </td>
                     </tr>
                     <tr>
                         <th scope="row">Light Color</th>
-                        <td> <input class="color-field" type="text"  name="sh_pdf_embed_options[colors][light]" value="<?php echo esc_attr($light); ?>"></td>
+                        <td> <input class="color-field" type="text"  name="pdf_emd_vwr_options[colors][light]" value="<?php echo esc_attr($light); ?>"></td>
                     </tr>
                 </tbody>
                 </table>
@@ -118,20 +118,20 @@ if( ! class_exists('PDF_Emd_Vwr_Admin_Settings') ){
         public function save_options_data() {
 
 
-            if( isset( $_POST['sh_pdf_embed_options_nonce'] ) ){
-                if( ! wp_verify_nonce( $_POST['sh_pdf_embed_options_nonce'], 'sh_pdf_embed_options_nonce' ) ){
+            if( isset( $_POST['pdf_emd_vwr_options_nonce'] ) ){
+                if( ! wp_verify_nonce( $_POST['pdf_emd_vwr_options_nonce'], 'pdf_emd_vwr_options_nonce' ) ){
                     return;
                 }
                 
     
-                $archive_title = isset($_POST['sh_pdf_embed_options']['archive_title']) ? $_POST['sh_pdf_embed_options']['archive_title']: 'Newsletter';
-                $primary = $_POST['sh_pdf_embed_options']['colors']['primary'] ? $_POST['sh_pdf_embed_options']['colors']['primary'] : '#c79f62' ;
-                $secondary = $_POST['sh_pdf_embed_options']['colors']['secondary']? $_POST['sh_pdf_embed_options']['colors']['secondary']:'#666';
-                $dark = $_POST['sh_pdf_embed_options']['colors']['dark'] ? $_POST['sh_pdf_embed_options']['colors']['dark']:'#333';
-                $light = $_POST['sh_pdf_embed_options']['colors']['light'] ? $_POST['sh_pdf_embed_options']['colors']['light']:'#e5e5e5';
+                $archive_title = isset($_POST['pdf_emd_vwr_options']['archive_title']) ? $_POST['pdf_emd_vwr_options']['archive_title']: 'Newsletter';
+                $primary = $_POST['pdf_emd_vwr_options']['colors']['primary'] ? $_POST['pdf_emd_vwr_options']['colors']['primary'] : '#c79f62' ;
+                $secondary = $_POST['pdf_emd_vwr_options']['colors']['secondary']? $_POST['pdf_emd_vwr_options']['colors']['secondary']:'#666';
+                $dark = $_POST['pdf_emd_vwr_options']['colors']['dark'] ? $_POST['pdf_emd_vwr_options']['colors']['dark']:'#333';
+                $light = $_POST['pdf_emd_vwr_options']['colors']['light'] ? $_POST['pdf_emd_vwr_options']['colors']['light']:'#e5e5e5';
 
 
-                update_option('sh_pdf_embed_options',[
+                update_option('pdf_emd_vwr_options',[
                     'archive_title'=>sanitize_text_field($archive_title),
                     'colors'=>[
                         'primary'=>sanitize_text_field( $primary ),
