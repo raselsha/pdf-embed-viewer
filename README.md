@@ -4,19 +4,11 @@ The "PDF Embed Viewer" plugin is designed to view and download PDF files in your
 
 # Features
 
-**Stand Alon menu
-
-*Create new embed option
-*Standalon metabox option
-*Settings page to change defulat color
-*Yearly view in archive page
-*Download button in archive view
-*Read and view in single page
-*Download button in single view
-
-
-
-
-== Changelog ==
-= 1.0.0 =
-*Initial Release*
+* Stand Alon Pdf embed menu
+* Create new embed option
+* Standalon metabox option
+* Settings page to change defulat color
+* Yearly view in archive page
+* Download button in archive view
+* Read and view in single page
+* Download button in single view
