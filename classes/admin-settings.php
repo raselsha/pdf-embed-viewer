@@ -68,15 +68,12 @@ if( ! class_exists('SH_PDF_Embed_Viewer_Admin_Settings') ){
         }
 
         public function options_fields(){
-            $options =  get_option('sh_pdf_embed_options');
-           print_r( $options);
-
-           
-            $archive_title = isset($options['archive_title']) ? $options['archive_title']:'';
-            $primary = $options['colors']['primary'] ? $options['colors']['primary']:'#333';
-            $secondary = $options['colors']['secondary'] ? $options['colors']['secondary']:'#666666';
-            $dark = $options['colors']['dark'] ? $options['colors']['dark']:'#333';
-            $light = $options['colors']['light'] ? $options['colors']['light']:'#e5e5e5';
+            $options =  get_option('sh_pdf_embed_options');         
+            $archive_title  = isset($options['archive_title']) ? $options['archive_title']:'Newsletter';
+            $primary        = isset($options['colors']['primary'] ) ? $options['colors']['primary']:'#c79f62';
+            $secondary      = isset($options['colors']['secondary'] )? $options['colors']['secondary']:'#666666';
+            $dark           = isset($options['colors']['dark'] ) ? $options['colors']['dark']:'#333';
+            $light          = isset($options['colors']['light'] ) ? $options['colors']['light']:'#e5e5e5';
             
             ?>
                 <table class="form-table" role="presentation">
@@ -91,25 +88,25 @@ if( ! class_exists('SH_PDF_Embed_Viewer_Admin_Settings') ){
                     <tr>
                         <th scope="row">Primary Color</th>
                         <td>
-                            <input class="color-field" type="text" name="sh_pdf_embed_options['colors']['primary']" value="<?php echo esc_attr($primary); ?>">     
+                            <input class="color-field" type="text" name="sh_pdf_embed_options[colors][primary]" value="<?php echo esc_attr($primary); ?>">     
                         </td>
                     </tr>
                     <tr>
                         <th scope="row">Secondary Color</th>
                         <td>
-                            <input class="color-field" type="text"  name="sh_pdf_embed_options['colors']['secondary']"  value="<?php echo esc_attr($secondary); ?>">         
+                            <input class="color-field" type="text"  name="sh_pdf_embed_options[colors][secondary]"  value="<?php echo esc_attr($secondary); ?>">         
                         </td>
                     </tr>
                     <tr>
                         <th scope="row">Dark Color</th>
                         <td>
-                            <input  class="color-field" type="text"  name="sh_pdf_embed_options['colors']['dark']" value="<?php echo esc_attr($dark); ?>">
+                            <input  class="color-field" type="text"  name="sh_pdf_embed_options[colors][dark]" value="<?php echo esc_attr($dark); ?>">
                                 
                         </td>
                     </tr>
                     <tr>
                         <th scope="row">Light Color</th>
-                        <td> <input class="color-field" type="text"  name="sh_pdf_embed_options['colors']['light']" value="<?php echo esc_attr($light); ?>"></td>
+                        <td> <input class="color-field" type="text"  name="sh_pdf_embed_options[colors][light]" value="<?php echo esc_attr($light); ?>"></td>
                     </tr>
                 </tbody>
                 </table>
@@ -126,23 +123,22 @@ if( ! class_exists('SH_PDF_Embed_Viewer_Admin_Settings') ){
                     return;
                 }
                 
-                $options =  get_option('sh_pdf_embed_options');
-                $archive_title = isset($_POST['sh_pdf_embed_options']['archive_title']) ? $_POST['sh_pdf_embed_options']['archive_title']: $options['archive_title'];
-                // $primary = $_POST['sh_pdf_embed_options']['colors']['primary'] ? $_POST['sh_pdf_embed_options']['colors']['primary'] : $options['colors']['primary'] ;
-                // $secondary = $_POST['sh_pdf_embed_options']['colors']['secondary']? $_POST['sh_pdf_embed_options']['colors']['secondary']:$options['colors']['secondary'];
-                // $dark = $_POST['sh_pdf_embed_options']['colors']['dark'] ? $_POST['sh_pdf_embed_options']['colors']['dark']:$options['colors']['dark'];
-                // $light = $_POST['sh_pdf_embed_options']['colors']['light'] ? $_POST['sh_pdf_embed_options']['colors']['light']:$options['colors']['light'];
+    
+                $archive_title = isset($_POST['sh_pdf_embed_options']['archive_title']) ? $_POST['sh_pdf_embed_options']['archive_title']: 'Newsletter';
+                $primary = $_POST['sh_pdf_embed_options']['colors']['primary'] ? $_POST['sh_pdf_embed_options']['colors']['primary'] : '#c79f62' ;
+                $secondary = $_POST['sh_pdf_embed_options']['colors']['secondary']? $_POST['sh_pdf_embed_options']['colors']['secondary']:'#666';
+                $dark = $_POST['sh_pdf_embed_options']['colors']['dark'] ? $_POST['sh_pdf_embed_options']['colors']['dark']:'#333';
+                $light = $_POST['sh_pdf_embed_options']['colors']['light'] ? $_POST['sh_pdf_embed_options']['colors']['light']:'#e5e5e5';
 
 
                 update_option('sh_pdf_embed_options',[
-                    'archive_title'=>'otoe',
-                    // 'colors'=>[
-                    //     'primary'=>sanitize_text_field( $primary ),
-                    //     'secondary'=>sanitize_text_field( $secondary ),
-                    //     'light'=>sanitize_text_field( $dark ),
-                    //     'dark'=>sanitize_text_field( $light ),
-                    // ],
-                    
+                    'archive_title'=>sanitize_text_field($archive_title),
+                    'colors'=>[
+                        'primary'=>sanitize_text_field( $primary ),
+                        'secondary'=>sanitize_text_field( $secondary ),
+                        'light'=>sanitize_text_field( $dark ),
+                        'dark'=>sanitize_text_field( $light ),
+                    ],    
                 ]);
               
             }
