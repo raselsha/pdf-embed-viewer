@@ -1,4 +1,4 @@
-# PDF Embed Viewer
+=== PDF Embed Viewer ===
 
 Contributors:      raselsha
 Requires at least: 3.0
@@ -9,10 +9,10 @@ License:           GPLv2 or later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 Tags:              plugin best practices, testing, accessibility, performance, security
 
-# Description
+===Description===
 The "PDF Embed Viewer" plugin is designed to view and download PDF files in your wordpress website. Its allowing easy access to Documents, Newsletter, Ebook directly within web pages. With its user-friendly interface and customizable features, this plugin offers a hassle-free solution for displaying PDFs in webpage.
 
-# Features
+===Features===
 
 * Stand Alon Pdf embed menu
 * Create new embed option
@@ -23,7 +23,7 @@ The "PDF Embed Viewer" plugin is designed to view and download PDF files in your
 * Read and view in single page
 * Download button in single view
 
-# Lisence
+===Lisence===
 
 PDF Embed Viewer is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
