@@ -33,7 +33,7 @@ if( ! class_exists('PDF_Emd_Vwr_Admin_Settings') ){
             if( ! current_user_can('manage_options')){
                 return;
             }
-            if( isset($_GET['settings-updated']) ){
+            if( isset($_POST['pdf_emd_vwr_options']) ){
                 add_settings_error('pdf_emd_vwr_options','','Settings Saved!','success');
             }
             settings_errors('pdf_emd_vwr_options');
