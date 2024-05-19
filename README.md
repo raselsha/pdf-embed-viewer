@@ -1,10 +1,6 @@
-![banner](banner.jpg)
+# PDF Embed Viewer
 
-[![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage percentage][coveralls-image]][coveralls-url] [![Slack Chat](https://img.shields.io/badge/wordpress_slack-@codekraft--studio-blue.svg?style=flat)](https://wordpress.slack.com)
-
-# generator-wordpress-plugin
-
-> The best way to setup your WordPress custom plugins.
+> The "PDF Embed Viewer" plugin is a versatile tool designed to seamlessly integrate PDF files into websites, enriching user experience by allowing easy access to documents directly within web pages. With its user-friendly interface and customizable features, this plugin offers a hassle-free solution for displaying PDFs without requiring users to download them separately.
 
 ## Installation
 
