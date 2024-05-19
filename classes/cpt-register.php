@@ -18,7 +18,7 @@ if( ! class_exists('PDF_Emd_Vwr_CPT') ){
 
         public function create_post_type(){
             $labels = [
-                "name" => __( "PDF Embed Viewer", 'pdf-embed-viewer' ),
+                "name" => __( "PDF Embed", 'pdf-embed-viewer' ),
                 "singular_name" => __( "PDF Embed", 'pdf-embed-viewer' ),
                 "menu_name" => __( "PDF Embed", 'pdf-embed-viewer' ),
                 "all_items" => __( "All PDF", 'pdf-embed-viewer' ),
@@ -32,7 +32,7 @@ if( ! class_exists('PDF_Emd_Vwr_CPT') ){
                 "labels" => $labels, 
                 "public" => true,
                 "supports" => [ "title", "thumbnail" ], // post support ui elements
-                "hierarchical" => false, //parent child relation post type
+                "hierarchical" => true, //parent child relation post type
                 "show_ui" => true, // post type show ui to add, edit
                 "show_in_menu" => true, // show menu into admin sidebar
                 "menu_position" => 5, // menu position into admin sidebar
@@ -42,11 +42,11 @@ if( ! class_exists('PDF_Emd_Vwr_CPT') ){
                 "has_archive" => true, // show into archive page template
                 "exclude_from_search" => false, // exclude from search 
                 "publicly_queryable" => true, // query custom post into page
-                "show_in_rest" => true, // show into API
+                "show_in_rest" => false, // show into API
 
                 "rest_base" => "", // API base endpoint
                 "rest_controller_class" => "WP_REST_Posts_Controller",
-                "delete_with_user" => false,
+                "delete_with_user" => true,
                 "capability_type" => "post",
                 "map_meta_cap" => true,
                 "rewrite" => [ "slug" => "pdf-embed-viewer", "with_front" => true ],
