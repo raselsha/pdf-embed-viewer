@@ -28,7 +28,7 @@
 <?php $sh_pdf_embed_file = get_post_meta( get_the_ID(), 'sh_pdf_embed_file', true ); ?>
 <div class="pdf-download">
 	<h1><?php the_title();?></h1>
-	<p><a href="<?php esc_attr_e($sh_pdf_embed_file); ?>" class="download-btn" download><?php the_time('F'); ?> | <?php the_time('Y'); ?> <img src="<?php esc_attr_e(SH_PDF_EMBED_VIEWER_URL.'assets/images/download.svg'); ?>" alt="download-icon"></a></p>
+	<p><a href="<?php esc_attr_e($sh_pdf_embed_file); ?>" class="download-btn" download><?php the_time('F'); ?> | <?php the_time('Y'); ?> <img src="<?php esc_attr_e(PDF_Emd_Vwr_URL.'assets/images/download.svg'); ?>" alt="download-icon"></a></p>
 	<iframe class="pdf-viewer" src="<?php esc_attr_e($sh_pdf_embed_file); ?>" frameborder="0"></iframe>
 	<div class="pagination">
 		<?php previous_post_link('%link','&#8592; Previous Month' ); ?>

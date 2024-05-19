@@ -2,8 +2,8 @@
 
 if( ! defined('ABSPATH') ) { die( "don't access directly" ); }
 
-if( ! class_exists('SH_PDF_Embed_Viewer_General') ){
-    class SH_PDF_Embed_Viewer_General{
+if( ! class_exists('PDF_Emd_Vwr_General') ){
+    class PDF_Emd_Vwr_General{
         public function __construct()
         {
             add_action('nav_tabs',array($this,'tabs'));
@@ -67,5 +67,5 @@ if( ! class_exists('SH_PDF_Embed_Viewer_General') ){
             }
     }
     
-    $AB_Enque = new SH_PDF_Embed_Viewer_General();
+    $AB_Enque = new PDF_Emd_Vwr_General();
 }

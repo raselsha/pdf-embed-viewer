@@ -6,9 +6,9 @@
 
 if( ! defined('ABSPATH') ) { die( "don't access directly" ); }
 
-if( ! class_exists('SH_PDF_Embed_Viewer_CPT') ){
+if( ! class_exists('PDF_Emd_Vwr_CPT') ){
 
-    class SH_PDF_Embed_Viewer_CPT{
+    class PDF_Emd_Vwr_CPT{
        
         public function __construct() {
             add_action( 'init', array($this,'create_post_type') );
@@ -51,7 +51,7 @@ if( ! class_exists('SH_PDF_Embed_Viewer_CPT') ){
                 "map_meta_cap" => true,
                 "rewrite" => [ "slug" => "pdf-embed-viewer", "with_front" => true ],
                 "query_var" => true,
-                "menu_icon" => SH_PDF_EMBED_VIEWER_URL.'assets/images/pdf-embed-viewer-icon.png',
+                "menu_icon" => PDF_Emd_Vwr_URL.'assets/images/pdf-embed-viewer-icon.png',
                 "show_in_graphql" => false,
                 //"register_metabox_cb" => array($this,'add_meta_boxes'),
             ];
@@ -65,7 +65,7 @@ if( ! class_exists('SH_PDF_Embed_Viewer_CPT') ){
             global $post;
 
             if ( is_post_type_archive ( 'pdf-embed-viewer' ) ) {
-                $archive_template = SH_PDF_EMBED_VIEWER . 'template/archive.php';
+                $archive_template = PDF_Emd_Vwr . 'template/archive.php';
             }
             return $archive_template;
             
@@ -74,7 +74,7 @@ if( ! class_exists('SH_PDF_Embed_Viewer_CPT') ){
         public function single_template($single_template) {
             global $wp_query, $post;
             if ($post->post_type == 'pdf-embed-viewer'){   
-                $single_template = SH_PDF_EMBED_VIEWER . 'template/single.php';
+                $single_template = PDF_Emd_Vwr . 'template/single.php';
             }
             return $single_template;
         }
@@ -102,7 +102,7 @@ if( ! class_exists('SH_PDF_Embed_Viewer_CPT') ){
         }
     }
 
-    $SH_PDF_Embed_Viewer_CPT = new SH_PDF_Embed_Viewer_CPT();
+    $PDF_Emd_Vwr_CPT = new PDF_Emd_Vwr_CPT();
 
     
 }

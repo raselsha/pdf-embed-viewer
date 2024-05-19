@@ -1,8 +1,8 @@
 <?php
 
 
-if( ! class_exists('SH_PDF_Embed_Viewer_Admin_Settings') ){
-    class SH_PDF_Embed_Viewer_Admin_Settings{
+if( ! class_exists('PDF_Emd_Vwr_Admin_Settings') ){
+    class PDF_Emd_Vwr_Admin_Settings{
         
         public function __construct() {
             add_action( 'admin_menu', array($this,'create_admin_menu') );
@@ -16,7 +16,7 @@ if( ! class_exists('SH_PDF_Embed_Viewer_Admin_Settings') ){
             //     'manage_options',
             //     'pdf-embed-viewer-index',
             //     array($this,'settings_index_page'),
-            //     SH_PDF_EMBED_VIEWER_URL.'assets/images/pdf-embed-viewer-icon.png',
+            //     PDF_Emd_Vwr_URL.'assets/images/pdf-embed-viewer-icon.png',
             //     5
             // );
             add_submenu_page(
@@ -146,5 +146,5 @@ if( ! class_exists('SH_PDF_Embed_Viewer_Admin_Settings') ){
         }
     }
     
-    $SH_PDF_Embed_Viewer_Admin_Settings = new SH_PDF_Embed_Viewer_Admin_Settings();
+    $PDF_Emd_Vwr_Admin_Settings = new PDF_Emd_Vwr_Admin_Settings();
 }

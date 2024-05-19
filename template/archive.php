@@ -32,7 +32,7 @@
 
 	<div class="archive">
 		<ul class="tabs">
-			<?php $years =  SH_PDF_Embed_Viewer_CPT::get_posts_years_array('pdf-embed-viewer');
+			<?php $years =  PDF_Emd_Vwr_CPT::get_posts_years_array('pdf-embed-viewer');
 				foreach($years as $year): ?>
 					<li class="tab <?php echo $year==date('Y')?'active':''; ?>" data-tab-target="#year-<?php echo $year;?>" ><?php echo $year;?></li>
 			<?php endforeach; ?>
@@ -63,7 +63,7 @@
 							<tr>
 								<td width="10%"><?php the_time('F'); ?></td>
 								<td width="10%"><a href="<?php the_permalink(); ?>"><?php the_title();?></a></td>
-								<td width="10%"><a href="<?php esc_attr_e(get_post_meta( get_the_ID(), 'sh_pdf_embed_file', true ))?>" class="download-btn" download><?php esc_html_e('Download','pdf-download'); ?> <img src="<?php esc_attr_e(SH_PDF_EMBED_VIEWER_URL.'assets/images/download.svg'); ?>" alt="Download icon"> </a></td>
+								<td width="10%"><a href="<?php esc_attr_e(get_post_meta( get_the_ID(), 'sh_pdf_embed_file', true ))?>" class="download-btn" download><?php esc_html_e('Download','pdf-download'); ?> <img src="<?php esc_attr_e(PDF_Emd_Vwr_URL.'assets/images/download.svg'); ?>" alt="Download icon"> </a></td>
 							</tr>
 					<?php endwhile; ?>
 					
@@ -81,9 +81,9 @@ if ( $wp_query->max_num_pages > 1 ) :
 	<div class="col-12">
 		<div class="pagination">
 				<?php /* Translators: HTML arrow */ ?>
-				<div class="nav-next me-auto"><?php// previous_posts_link( sprintf( __( '%s Previous', 'hello-elementor' ), '<span class="meta-nav">&#8592;</span>' ) ); ?></div>
+				<div class="nav-next me-auto"><?php // previous_posts_link( sprintf( __( '%s Previous', 'hello-elementor' ), '<span class="meta-nav">&#8592;</span>' ) ); ?></div>
 				<?php /* Translators: HTML arrow */ ?>
-				<div class="nav-previous ms-auto"><?php// next_posts_link( sprintf( __( 'Next %s', 'hello-elementor' ), '<span class="meta-nav">&#8594;</span>' ) ); ?></div>
+				<div class="nav-previous ms-auto"><?php // next_posts_link( sprintf( __( 'Next %s', 'hello-elementor' ), '<span class="meta-nav">&#8594;</span>' ) ); ?></div>
 		</div>
 	</div>
 <?php endif; ?>

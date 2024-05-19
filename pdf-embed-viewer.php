@@ -31,8 +31,8 @@ along with PDF Embed Viewer. If not, see https://www.gnu.org/licenses/gpl-2.0.ht
 
 if( ! defined('ABSPATH') ) { die( "don't access directly" ); }
 
-if( ! class_exists( 'SH_PDF_Embed_Viewer' ) ){
-    class SH_PDF_Embed_Viewer{
+if( ! class_exists( 'PDF_Emd_Vwr' ) ){
+    class PDF_Emd_Vwr{
 
         function __construct() {
             $this->define_contstants();
@@ -40,17 +40,17 @@ if( ! class_exists( 'SH_PDF_Embed_Viewer' ) ){
         }
 
         public function define_contstants(){
-            define( 'SH_PDF_EMBED_VIEWER', plugin_dir_path(__FILE__) );
-            define( 'SH_PDF_EMBED_VIEWER_URL', plugin_dir_url(__FILE__) );
-            define( 'SH_PDF_EMBED_VIEWER_VERSION', '1.0.0' );
+            define( 'PDF_Emd_Vwr', plugin_dir_path(__FILE__) );
+            define( 'PDF_Emd_Vwr_URL', plugin_dir_url(__FILE__) );
+            define( 'PDF_Emd_Vwr_VERSION', '1.0.0' );
         }
 
         public static function include_plugin_files() {
-            require_once SH_PDF_EMBED_VIEWER . 'classes/cpt-register.php';
-            require_once SH_PDF_EMBED_VIEWER . 'classes/enque-style-script.php';
-            require_once SH_PDF_EMBED_VIEWER . 'classes/metabox-register.php';
-            require_once SH_PDF_EMBED_VIEWER . 'classes/metabox/general.php';
-            require_once SH_PDF_EMBED_VIEWER . 'classes/admin-settings.php';
+            require_once PDF_Emd_Vwr . 'classes/cpt-register.php';
+            require_once PDF_Emd_Vwr . 'classes/enque-style-script.php';
+            require_once PDF_Emd_Vwr . 'classes/metabox-register.php';
+            require_once PDF_Emd_Vwr . 'classes/metabox/general.php';
+            require_once PDF_Emd_Vwr . 'classes/admin-settings.php';
 
         }
 
@@ -71,9 +71,9 @@ if( ! class_exists( 'SH_PDF_Embed_Viewer' ) ){
 
 }
 
-if( class_exists( 'SH_PDF_Embed_Viewer' ) ){
-    register_activation_hook( __FILE__, array( 'SH_PDF_Embed_Viewer','activate' ) );
-    register_deactivation_hook( __FILE__, array( 'SH_PDF_Embed_Viewer','deactivate' ) );
-    register_uninstall_hook( __FILE__, array( 'SH_PDF_Embed_Viewer','uninstall' ) );
-    $pdf_download = new SH_PDF_Embed_Viewer();
+if( class_exists( 'PDF_Emd_Vwr' ) ){
+    register_activation_hook( __FILE__, array( 'PDF_Emd_Vwr','activate' ) );
+    register_deactivation_hook( __FILE__, array( 'PDF_Emd_Vwr','deactivate' ) );
+    register_uninstall_hook( __FILE__, array( 'PDF_Emd_Vwr','uninstall' ) );
+    $pdf_download = new PDF_Emd_Vwr();
 }

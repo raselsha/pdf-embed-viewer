@@ -3,8 +3,8 @@
 
 if( ! defined('ABSPATH') ) { die( "don't access directly" ); }
 
-if( ! class_exists('SH_PDF_Embed_Viewer_Metabox')){
-        class SH_PDF_Embed_Viewer_Metabox{
+if( ! class_exists('PDF_Emd_Vwr_Metabox')){
+        class PDF_Emd_Vwr_Metabox{
             public function __construct(){
                 add_action('admin_init',[$this,'metabox']);
             }
@@ -30,5 +30,5 @@ if( ! class_exists('SH_PDF_Embed_Viewer_Metabox')){
             <?php
             }           
         }
-        $SH_PDF_Embed_Viewer_Metabox = new SH_PDF_Embed_Viewer_Metabox();
+        $PDF_Emd_Vwr_Metabox = new PDF_Emd_Vwr_Metabox();
     }
