@@ -16,17 +16,17 @@ if( ! class_exists('PDF_Emd_Vwr_General') ){
             <?php
         }
         public function tabs_content($post_id){
-            $embed_file = get_post_meta($post_id,'sh_pdf_embed_file',true);
+            $embed_file = get_post_meta($post_id,'pdf_emd_vwr_file_url',true);
             $embed_file =  $embed_file ? $embed_file :'';
             ?>
             <div class="tab-content active" id="tabs-1">
-                <input type="hidden" name="sh_pdf_embed_nonce" value="<?php echo wp_create_nonce("sh_pdf_embed_nonce"); ?>">
+                <?php wp_nonce_field( 'pdf_emd_vwr_metabox_nonce', 'pdf_emd_vwr_metabox_nonce' ); ?>
                 <section>
                     <label >
                         <?php _e( 'Add PDF URL', 'pdf-embed-viewer' )?>
                     </label>
                     <div style="width: 90%;">
-                        <input type="url" class="sh_pdf_embed_file" name="sh_pdf_embed_file" value="<?php echo esc_attr( $embed_file ) ? esc_url($embed_file) : '#' ;  ?>" placeholder="https://example.com/filename.pdf" required>
+                        <input type="url" class="pdf_emd_vwr_file" name="pdf_emd_vwr_file_url" value="<?php echo esc_attr( $embed_file ) ? esc_url($embed_file) : '#' ;  ?>" placeholder="https://example.com/filename.pdf" required>
                         <button class='button upload'>
                             <i class="fa fa-paperclip" aria-hidden="true"></i> <?php echo __('Upload','pickplugins-options-framework');?>
                         </button>
@@ -39,8 +39,8 @@ if( ! class_exists('PDF_Emd_Vwr_General') ){
 
         public function save_post($post_id){
 
-                if( isset( $_POST['sh_pdf_embed_nonce'] ) ){
-                    if( ! wp_verify_nonce( $_POST['sh_pdf_embed_nonce'], 'sh_pdf_embed_nonce' ) ){
+                if( isset( $_POST['pdf_emd_vwr_metabox_nonce'] ) ){
+                    if( ! wp_verify_nonce( $_POST['pdf_emd_vwr_metabox_nonce'], 'pdf_emd_vwr_metabox_nonce' ) ){
                         return;
                     }
                 }
@@ -59,10 +59,10 @@ if( ! class_exists('PDF_Emd_Vwr_General') ){
                 }   
 
                 if( isset($_POST['action']) and $_POST['action']=='editpost' ){
-                    $old_data = get_post_meta($post_id,'sh_pdf_embed_file',true);
-                    $new_data = $_POST['sh_pdf_embed_file'];
+                    $old_data = get_post_meta($post_id,'pdf_emd_vwr_file_url',true);
+                    $new_data = $_POST['pdf_emd_vwr_file_url'];
 
-                    update_post_meta($post_id,'sh_pdf_embed_file',sanitize_url($new_data), $old_data);
+                    update_post_meta($post_id,'pdf_emd_vwr_file_url',sanitize_url($new_data), $old_data);
                 }
             }
     }

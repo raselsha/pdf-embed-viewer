@@ -63,7 +63,14 @@
 							<tr>
 								<td width="10%"><?php the_time('F'); ?></td>
 								<td width="10%"><a href="<?php the_permalink(); ?>"><?php the_title();?></a></td>
-								<td width="10%"><a href="<?php esc_attr_e(get_post_meta( get_the_ID(), 'sh_pdf_embed_file', true ))?>" class="download-btn" download><?php esc_html_e('Download','pdf-download'); ?> <img src="<?php esc_attr_e(PDF_Emd_Vwr_URL.'assets/images/download.svg'); ?>" alt="Download icon"> </a></td>
+								<td width="10%">
+									<?php
+										$pdf_emd_vwr_file_url=get_post_meta( get_the_ID(), 'pdf_emd_vwr_file_url', true );
+										if(isset($pdf_emd_vwr_file_url)):
+									?>
+									<a href="<?php esc_attr_e(get_post_meta( get_the_ID(), 'pdf_emd_vwr_file_url', true ))?>" class="download-btn" download><?php esc_html_e('Download','pdf-download'); ?> <img src="<?php esc_attr_e(PDF_Emd_Vwr_URL.'assets/images/download.svg'); ?>" alt="Download icon"> </a>
+									<?php endif; ?>
+								</td>
 							</tr>
 					<?php endwhile; ?>
 					

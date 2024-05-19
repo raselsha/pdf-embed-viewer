@@ -29,10 +29,10 @@ jQuery(document).ready(function($) {
           var attachment = mediaUploader.state().get('selection').first().toJSON();
           // Check if the selected file is a PDF
           if (attachment.mime === 'application/pdf') {
-              $('.sh_pdf_embed_file').val(attachment.url);
+              $('.pdf_emd_vwr_file').val(attachment.url);
           } else {
             alert('Please select a PDF file only.');
-            $('.sh_pdf_embed_file').val('');
+            $('.pdf_emd_vwr_file').val('');
           }
         });
         mediaUploader.open();
