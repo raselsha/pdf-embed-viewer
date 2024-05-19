@@ -4,7 +4,7 @@ The "PDF Embed Viewer" plugin is designed to view and download PDF files in your
 
 # Features
 
-*Stand Alon menu
+**Stand Alon menu
 
 *Create new embed option
 *Standalon metabox option
