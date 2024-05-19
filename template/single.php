@@ -28,8 +28,8 @@
 <?php $pdf_emd_vwr_file_url = get_post_meta( get_the_ID(), 'pdf_emd_vwr_file_url', true ); ?>
 <div class="pdf-embed-viewer">
 	<h1><?php the_title();?></h1>
-	<p><a href="<?php esc_attr_e($pdf_emd_vwr_file_url); ?>" class="download-btn" download><?php the_time('F'); ?> | <?php the_time('Y'); ?> <img src="<?php esc_attr_e(PDF_Emd_Vwr_URL.'assets/images/download.svg'); ?>" alt="<?php _e('download-icon','pdf-embed-viewer'); ?>"></a></p>
-	<iframe class="pdf-viewer" src="<?php esc_attr_e($pdf_emd_vwr_file_url); ?>" frameborder="0"></iframe>
+	<p><a href="<?php echo esc_attr($pdf_emd_vwr_file_url); ?>" class="download-btn" download><?php the_time('F'); ?> | <?php the_time('Y'); ?> <img src="<?php echo esc_attr(PDF_Emd_Vwr_URL.'assets/images/download.svg'); ?>" alt="<?php echo esc_attr('download-icon','pdf-embed-viewer'); ?>"></a></p>
+	<iframe class="pdf-viewer" src="<?php echo esc_attr($pdf_emd_vwr_file_url); ?>" frameborder="0"></iframe>
 	<div class="pagination">
 		<?php previous_post_link('%link','&#8592;'.__('Previous','pdf-embed-viewer') ); ?>
 		<?php next_post_link('%link',__('Next','pdf-embed-viewer').'&#8594;' ); ?>

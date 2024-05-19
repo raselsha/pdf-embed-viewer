@@ -62,7 +62,7 @@ if( ! class_exists('PDF_Emd_Vwr_Admin_Settings') ){
         public function settings_html_layout(){
             ?>
             <div class="wrap">
-                <h2><?php esc_html_e(get_admin_page_title()); ?></h2>
+                <h2><?php get_admin_page_title(); ?></h2>
                 <h2 class="nav-tab-wrapper">
                     <?php
                     if( isset( $_POST['pdf_emd_vwr_options_nonce'] ) ){
@@ -72,8 +72,8 @@ if( ! class_exists('PDF_Emd_Vwr_Admin_Settings') ){
                         $active_tab = isset($_GET['tab']) ? $_GET['tab'] : 'settings' ;
                     }
                     ?>
-                    <a href="?post_type=pdf-embed-viewer&page=index&tab=settings" class="nav-tab <?php esc_attr_e(($active_tab=='settings') ? 'nav-tab-active' : '' ); ?>"> <?php _e('Settings','pdf-embed-viewer'); ?> </a>
-                    <a href="?post_type=pdf-embed-viewer&page=index&tab=support" class="nav-tab <?php esc_attr_e(($active_tab=='support') ? 'nav-tab-active' : '' ); ?>"> <?php _e('Support','pdf-embed-viewer'); ?> </a>
+                    <a href="?post_type=pdf-embed-viewer&page=index&tab=settings" class="nav-tab <?php ($active_tab=='settings') ? esc_attr_e('nav-tab-active') : '' ; ?>"> <?php esc_html_e('Settings','pdf-embed-viewer'); ?> </a>
+                    <a href="?post_type=pdf-embed-viewer&page=index&tab=support" class="nav-tab <?php ($active_tab=='support') ? esc_attr_e('nav-tab-active') : '' ; ?>"> <?php esc_html_e('Support','pdf-embed-viewer'); ?> </a>
                 </h2>
                 <form action="" method="post">
                     <?php wp_nonce_field( 'pdf_emd_vwr_options_nonce', 'pdf_emd_vwr_options_nonce' ); ?>
@@ -82,7 +82,7 @@ if( ! class_exists('PDF_Emd_Vwr_Admin_Settings') ){
                         <?php submit_button('Save'); ?>
                     <?php else: ?> 
                         <div class="wrap">
-                            <p><?php _e('For Support send email to'); ?> <a href="mailto:raselsha@gmail.com"><?php _e('raselsha@gmail.com'); ?></a> </p>
+                            <p><?php esc_html_e('For Support send email to'); ?> <a href="mailto:raselsha@gmail.com"><?php esc_html_e('raselsha@gmail.com'); ?></a> </p>
                              
                          </div>                    
                     <?php endif; ?>    
@@ -105,33 +105,33 @@ if( ! class_exists('PDF_Emd_Vwr_Admin_Settings') ){
                 <table class="form-table" role="presentation">
                 <tbody>
                     <tr>
-                        <th scope="row"><?php _e('Archive Title','pdf-embed-viewer') ?></th>
+                        <th scope="row"><?php esc_html_e('Archive Title','pdf-embed-viewer') ?></th>
                         <td>
                             
                             <input type="text" name="pdf_emd_vwr_options[archive_title]" placeholder="Newsletter" value="<?php echo esc_attr($archive_title); ?>">
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row"><?php _e('Primary Color','pdf-embed-viewer') ?></th>
+                        <th scope="row"><?php esc_html_e('Primary Color','pdf-embed-viewer') ?></th>
                         <td>
                             <input class="color-field" type="text" name="pdf_emd_vwr_options[colors][primary]" value="<?php echo esc_attr($primary); ?>">     
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row"><?php _e('Secondary Color','pdf-embed-viewer') ?></th>
+                        <th scope="row"><?php esc_html_e('Secondary Color','pdf-embed-viewer') ?></th>
                         <td>
                             <input class="color-field" type="text"  name="pdf_emd_vwr_options[colors][secondary]"  value="<?php echo esc_attr($secondary); ?>">         
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row"><?php _e('Dark Color','pdf-embed-viewer') ?></th>
+                        <th scope="row"><?php esc_html_e('Dark Color','pdf-embed-viewer') ?></th>
                         <td>
                             <input  class="color-field" type="text"  name="pdf_emd_vwr_options[colors][dark]" value="<?php echo esc_attr($dark); ?>">
                                 
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row"><?php _e('Light Color','pdf-embed-viewer') ?></th>
+                        <th scope="row"><?php esc_html_e('Light Color','pdf-embed-viewer') ?></th>
                         <td> <input class="color-field" type="text"  name="pdf_emd_vwr_options[colors][light]" value="<?php echo esc_attr($light); ?>"></td>
                     </tr>
                 </tbody>
