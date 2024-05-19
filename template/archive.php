@@ -34,12 +34,12 @@
 		<ul class="tabs">
 			<?php $years =  PDF_Emd_Vwr_CPT::get_posts_years_array('pdf-embed-viewer');
 				foreach($years as $year): ?>
-					<li class="tab <?php esc_attr_e($year==date('Y')?'active':''); ?>" data-tab-target="#year-<?php esc_attr_e($year);?>" ><?php esc_attr_e($year);?></li>
+					<li class="tab <?php esc_attr_e($year==gmdate('Y')?'active':''); ?>" data-tab-target="#year-<?php esc_attr_e($year);?>" ><?php esc_attr_e($year);?></li>
 			<?php endforeach; ?>
 		</ul>
 		<div class="tabs-content" >
 			<?php foreach($years as $year): ?>
-				<table  class="<?php esc_attr_e($year==date('Y')?'active':''); ?>" data-tab-content  id="year-<?php esc_attr_e($year);?>">
+				<table  class="<?php esc_attr_e($year==gmdate('Y')?'active':''); ?>" data-tab-content  id="year-<?php esc_attr_e($year);?>">
 					<tr>         					    			
 						<th><?php _e('Month','pdf-embed-viewer') ?></th>
 						<th><?php _e('Title','pdf-embed-viewer') ?></th>
