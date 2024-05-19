@@ -40,9 +40,9 @@ if( ! class_exists('PDF_Emd_Vwr_Enque') ){
             $light          = isset($colors['light'] ) ? $colors['light']:'#e5e5e5';
             $inline_css = ":root{
                     --pdf-emd-vwr-primary:{$primary };        
-                    --pdf-emd-vwr-secondary:{$secondary}; 
-                    --pdf-emd-vwr-light:{$dark};       
-                    --pdf-emd-vwr-dark:{$light};     
+                    --pdf-emd-vwr-secondary:{$secondary};
+                    --pdf-emd-vwr-dark:{$dark}; 
+                    --pdf-emd-vwr-light:{$light};     
                 ";
             wp_add_inline_style('pdf-frontend-style', $inline_css);
             

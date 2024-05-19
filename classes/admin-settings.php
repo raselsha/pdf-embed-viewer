@@ -79,33 +79,33 @@ if( ! class_exists('PDF_Emd_Vwr_Admin_Settings') ){
                 <table class="form-table" role="presentation">
                 <tbody>
                     <tr>
-                        <th scope="row">Archive Title</th>
+                        <th scope="row"><?php _e('Archive Title','pdf-embed-viewer') ?></th>
                         <td>
                             
                             <input type="text" name="pdf_emd_vwr_options[archive_title]" placeholder="Newsletter" value="<?php echo esc_attr($archive_title); ?>">
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row">Primary Color</th>
+                        <th scope="row"><?php _e('Primary Color','pdf-embed-viewer') ?></th>
                         <td>
                             <input class="color-field" type="text" name="pdf_emd_vwr_options[colors][primary]" value="<?php echo esc_attr($primary); ?>">     
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row">Secondary Color</th>
+                        <th scope="row"><?php _e('Secondary Color','pdf-embed-viewer') ?></th>
                         <td>
                             <input class="color-field" type="text"  name="pdf_emd_vwr_options[colors][secondary]"  value="<?php echo esc_attr($secondary); ?>">         
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row">Dark Color</th>
+                        <th scope="row"><?php _e('Dark Color','pdf-embed-viewer') ?></th>
                         <td>
                             <input  class="color-field" type="text"  name="pdf_emd_vwr_options[colors][dark]" value="<?php echo esc_attr($dark); ?>">
                                 
                         </td>
                     </tr>
                     <tr>
-                        <th scope="row">Light Color</th>
+                        <th scope="row"><?php _e('Light Color','pdf-embed-viewer') ?></th>
                         <td> <input class="color-field" type="text"  name="pdf_emd_vwr_options[colors][light]" value="<?php echo esc_attr($light); ?>"></td>
                     </tr>
                 </tbody>
