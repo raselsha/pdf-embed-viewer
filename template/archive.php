@@ -26,8 +26,8 @@
 }
 ?>
 
-<div class="pdf-download pdf-embed-viewer">
-	<?php $options = get_option('pdf_download_option'); ?>
+<div class="pdf-embed-viewer">
+	<?php $options = get_option('pdf_emd_vwr_options'); ?>
 	<h2><?php isset($options['archive_title']) ? esc_html_e($options['archive_title']) : the_archive_title(); ?></h2>
 
 	<div class="archive">

@@ -71,7 +71,7 @@ if( ! class_exists('PDF_Emd_Vwr_Admin_Settings') ){
             $options =  get_option('pdf_emd_vwr_options');         
             $archive_title  = isset($options['archive_title']) ? $options['archive_title']:'Newsletter';
             $primary        = isset($options['colors']['primary'] ) ? $options['colors']['primary']:'#c79f62';
-            $secondary      = isset($options['colors']['secondary'] )? $options['colors']['secondary']:'#666666';
+            $secondary      = isset($options['colors']['secondary'] )? $options['colors']['secondary']:'#666';
             $dark           = isset($options['colors']['dark'] ) ? $options['colors']['dark']:'#333';
             $light          = isset($options['colors']['light'] ) ? $options['colors']['light']:'#e5e5e5';
             
@@ -136,8 +136,8 @@ if( ! class_exists('PDF_Emd_Vwr_Admin_Settings') ){
                     'colors'=>[
                         'primary'=>sanitize_text_field( $primary ),
                         'secondary'=>sanitize_text_field( $secondary ),
-                        'light'=>sanitize_text_field( $dark ),
-                        'dark'=>sanitize_text_field( $light ),
+                        'dark'=>sanitize_text_field( $dark ),
+                        'light'=>sanitize_text_field( $light ),
                     ],    
                 ]);
               

@@ -26,7 +26,7 @@
 }
 ?>
 <?php $pdf_emd_vwr_file_url = get_post_meta( get_the_ID(), 'pdf_emd_vwr_file_url', true ); ?>
-<div class="pdf-download">
+<div class="pdf-embed-viewer">
 	<h1><?php the_title();?></h1>
 	<p><a href="<?php esc_attr_e($pdf_emd_vwr_file_url); ?>" class="download-btn" download><?php the_time('F'); ?> | <?php the_time('Y'); ?> <img src="<?php esc_attr_e(PDF_Emd_Vwr_URL.'assets/images/download.svg'); ?>" alt="download-icon"></a></p>
 	<iframe class="pdf-viewer" src="<?php esc_attr_e($pdf_emd_vwr_file_url); ?>" frameborder="0"></iframe>
