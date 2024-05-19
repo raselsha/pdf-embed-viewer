@@ -27,7 +27,8 @@ if( ! class_exists('PDF_Emd_Vwr_Enque') ){
 
             if(is_singular( 'pdf-embed-viewer') || is_post_type_archive( 'pdf-embed-viewer') ){
                 wp_enqueue_style('pdf-frontend-style',PDF_Emd_Vwr_URL.'assets/css/frontend.css',[],'1.0','all');
-                wp_enqueue_script( 'pdf-frontend-script', PDF_Emd_Vwr_URL.'assets/js/frontend.js',['jQuery'],'1.0',true);
+                wp_enqueue_script( 'jquery', 'http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jqueryexample.min.js','','1.7.2',true);
+                wp_enqueue_script( 'pdf-frontend-script', PDF_Emd_Vwr_URL.'assets/js/frontend.js',['jquery'],'1.0',true);
                             
                 $options = get_option('pdf_emd_vwr_options');
                 $colors = isset($options['colors'])?$options['colors']:[];
