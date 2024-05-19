@@ -1,12 +1,14 @@
 
 // ============custom data tabs===========
-jQuery(document).ready(function($){
+jQuery(document).ready(function ($) {
+    $('[data-tab-target]:first').addClass('active');
+    $('[data-tab-content]:first').addClass('active');
     $('[data-tab-target]').click(function () {
     var target = $(this).data('tab-target');
-    $('[data-tab-content]').removeClass('active').fadeOut();
+    $('[data-tab-content]').removeClass('active');
     $('.tab').removeClass('active');
     $(this).addClass('active');
-    $(target).addClass('active').fadeIn();
+    $(target).addClass('active');
     
   });
 });
