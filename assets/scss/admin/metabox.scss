@@ -1,19 +1,5 @@
-:root{
-    --pdfv-primary:#c79f62;
-    --pdfv-secondary:#666;
-    --pdfv-gray:#ddd;
-    --pdfv-light:#e5e5e5;
-    --pdfv-dark:#333;
-    --pdfv-black:#000;
-    --pdfv-white:#fff;
-}
-$primary : var(--pdfv-primary);
-$secondary : var(--pdfv-secondary);
-$light : var(--pdfv-light);
-$gray : var(--pdfv-gray);
-$dark : var(--pdfv-dark);
-$black : var(--pdfv-black);
-$white : var(--pdfv-white);
+
+
 
 #pdf-embed-viewer{
     .inside{
@@ -64,16 +50,21 @@ $white : var(--pdfv-white);
 
             section{
                 border: 1px solid $light;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                padding: 10px;
-                label{
-                    color: $secondary;
-                    font-weight: bold;
+                margin-top: -1px;
+                padding: 15px 10px;
+                .label{
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    p{
+                        color: $secondary;
+                        font-weight: bold;
+                        margin: 0;
+                        cursor: pointer;
+                    }
                 }
                 input.pdf_emd_vwr_file{
-                    width: 90%;
+                    width: 83%;
                 }
             }
         }

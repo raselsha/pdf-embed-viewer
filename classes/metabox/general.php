@@ -17,21 +17,52 @@ if( ! class_exists('PDF_Emd_Vwr_General') ){
         }
         public function tabs_content($post_id){
             $embed_file = get_post_meta($post_id,'pdf_emd_vwr_file_url',true);
+            $check_download = get_post_meta($post_id,'pdf_emd_vwr_check_download',true);
             $embed_file =  $embed_file ? $embed_file :'';
+            $check_download =  $check_download ? $check_download :'yes';
             ?>
             <div class="tab-content active" id="#pdf_emd_vwr_tabs1">
                 <?php wp_nonce_field( 'pdf_emd_vwr_metabox_nonce', 'pdf_emd_vwr_metabox_nonce' ); ?>
                 <section>
-                    <label >
-                        <?php echo esc_html( 'Add PDF URL', 'pdf-embed-viewer' )?>
+                    <label class="label">
+                        <div>
+                            <p><?php echo esc_html( 'Add PDF URL', 'pdf-embed-viewer' )?></p>
+                            <span>info text</span>
+                        </div>
+                        <div style="width: 50%;">
+                            <input type="url" class="pdf_emd_vwr_file" name="pdf_emd_vwr_file_url" value="<?php echo esc_attr( $embed_file ) ? esc_attr($embed_file) : '' ;  ?>" placeholder="https://example.com/filename.pdf" required>
+                            <button class='button upload'>
+                                <i class="fa fa-paperclip" aria-hidden="true"></i> <?php esc_attr_e('Upload','pdf-embed-viewer');?>
+                            </button>
+                        </div>
                     </label>
-                    <div style="width: 90%;">
-                        <input type="url" class="pdf_emd_vwr_file" name="pdf_emd_vwr_file_url" value="<?php echo esc_attr( $embed_file ) ? esc_attr($embed_file) : '' ;  ?>" placeholder="https://example.com/filename.pdf" required>
-                        <button class='button upload'>
-                            <i class="fa fa-paperclip" aria-hidden="true"></i> <?php esc_attr_e('Upload','pdf-embed-viewer');?>
-                        </button>
-                    </div>
                 </section>
+                <section>
+                    <label class="label">
+                        <div>
+                            <p><?php echo esc_html( 'Show/Hide Download button', 'pdf-embed-viewer' )?></p>
+                            <span>Info</span>
+                        </div>
+                        <label class="switch"  >
+                            <input type="checkbox" name="pdf_emd_vwr_check_download" value="<?php echo esc_attr($check_download); ?>" <?php echo esc_attr(($check_download=='yes')?'checked':''); ?>>
+                            <span class="slider round"></span>
+                        </label>
+                    </label>
+                </section>
+                <script>
+                    function toggleButton(input){        
+                        var status = jQuery(this).find('input[type="checkbox"]').attr('name');           
+                         jQuery('input[name=pdf_emd_vwr_check_download]').click(function(){
+                            var status = jQuery(this).val();
+                            if(status == 'yes') {
+                                jQuery(this).val('no');
+                            }  
+                            if(status == 'no') {
+                                jQuery(this).val('yes');
+                            }
+                        });
+                    }
+			</script>
             </div>
 
             <?php
