@@ -55,7 +55,7 @@ if( ! class_exists('PDF_Emd_Vwr_CPT') ){
                 "description" => __( "PDF Embed", 'pdf-embed-viewer' ),
                 "labels" => $labels, 
                 "public" => true,
-                "supports" => [ "title", "thumbnail", 'author' ], // post support ui elements
+                "supports" => [ "title",], // post support ui elements
                 "hierarchical" => true, //parent child relation post type
                 "show_ui" => true, // post type show ui to add, edit
                 "show_in_menu" => true, // show menu into admin sidebar
