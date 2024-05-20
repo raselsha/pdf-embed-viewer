@@ -17,7 +17,7 @@ if( ! class_exists('PDF_Emd_Vwr_Metabox')){
             public function meta_box_layout($post){
                 $post_id = $post->ID;
             ?>
-                <main class="pdf-embed-metabox-tabs" id="pdf-embed-metabox-tabs">
+                <main class="pdf-embed-viewer" id="pdf-embed-metabox-tabs">
                     <aside>
                         <ul>
                             <?php do_action('nav_tabs',$post_id); ?>

@@ -45,7 +45,7 @@ if( ! class_exists('PDF_Emd_Vwr_General') ){
                         </div>
                         <label class="switch"  >
                             <input type="checkbox" name="pdf_emd_vwr_check_download" value="<?php echo esc_attr($check_download); ?>" <?php echo esc_attr(($check_download=='yes')?'checked':''); ?>>
-                            <span class="slider round"></span>
+                            <span class="slider"></span>
                         </label>
                     </label>
                 </section>
