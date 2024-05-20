@@ -14,7 +14,31 @@ if( ! class_exists('PDF_Emd_Vwr_CPT') ){
             add_action( 'init', array($this,'create_post_type') );
             add_filter( 'archive_template', array($this,'archive_template') ) ;
             add_filter( 'single_template', array($this,'single_template') ) ;
+            add_filter( 'manage_pdf-embed-viewer_posts_columns', array($this,'posts_columns') ) ;
+            add_action( 'manage_pdf-embed-viewer_posts_custom_column', array($this,'custom_column'),10,2 ) ;
+            add_filter( 'manage_edit-pdf-embed-viewer_sortable_columns', array($this,'sortable_columns') ) ;
+        }        
+
+        public function posts_columns($columns){
+            $columns['pdf_emd_vwr_file_url']=esc_html__('File Url','pdf-embed-viewer');
+            return $columns;
         }
+
+        public function custom_column($columns, $post_id){
+
+            switch($columns){
+                case 'pdf_emd_vwr_file_url':
+                     echo esc_url(get_post_meta($post_id,'pdf_emd_vwr_file_url',true));
+                break;
+            }
+        }
+
+        public function sortable_columns($columns){
+
+            $columns['pdf_emd_vwr_file_url']='pdf_emd_vwr_file_url';
+            return $columns;
+        }
+
 
         public function create_post_type(){
             $labels = [
@@ -31,7 +55,7 @@ if( ! class_exists('PDF_Emd_Vwr_CPT') ){
                 "description" => __( "PDF Embed", 'pdf-embed-viewer' ),
                 "labels" => $labels, 
                 "public" => true,
-                "supports" => [ "title", "thumbnail" ], // post support ui elements
+                "supports" => [ "title", "thumbnail", 'author' ], // post support ui elements
                 "hierarchical" => true, //parent child relation post type
                 "show_ui" => true, // post type show ui to add, edit
                 "show_in_menu" => true, // show menu into admin sidebar
