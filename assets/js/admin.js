@@ -12,16 +12,35 @@
 
 // ============admin tabs===========
 jQuery(document).ready(function($){
-  $('.nav-tab').click(function () {
-    var target = $(this).data('tab-target');
-    $('.tab-content').removeClass('active');
-    $('.nav-tab').removeClass('nav-tab-active');
-    $(this).addClass('nav-tab-active');
-    $(target).addClass('active');
-  });
+  
 });
 // ============admin data tab=======
+jQuery(document).ready(function ($) {
+  pdf_emd_vwr_toggle();
+  pdf_emd_vwr_tab();
 
+  function pdf_emd_vwr_tab(){
+    $('.nav-tab').click(function () {
+      var target = $(this).data('tab-target');
+      $('.tab-content').removeClass('active');
+      $('.nav-tab').removeClass('nav-tab-active');
+      $(this).addClass('nav-tab-active');
+      $(target).addClass('active');
+    });
+  }
+
+  function pdf_emd_vwr_toggle() {
+    $('.switch .slider').click(function() {
+        var checkbox = $(this).prev('input[type="checkbox"]');
+        if (checkbox.val() === 'yes') {
+            checkbox.val('no');
+        } else {
+            checkbox.val('yes');
+        }
+    });
+  }
+  
+});
 
 // =================media upload========
 

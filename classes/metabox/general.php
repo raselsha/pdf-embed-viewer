@@ -49,20 +49,6 @@ if( ! class_exists('PDF_Emd_Vwr_General') ){
                         </label>
                     </label>
                 </section>
-                <script>
-                    function toggleButton(input){        
-                        var status = jQuery(this).find('input[type="checkbox"]').attr('name');           
-                         jQuery('input[name=pdf_emd_vwr_check_download]').click(function(){
-                            var status = jQuery(this).val();
-                            if(status == 'yes') {
-                                jQuery(this).val('no');
-                            }  
-                            if(status == 'no') {
-                                jQuery(this).val('yes');
-                            }
-                        });
-                    }
-			</script>
             </div>
 
             <?php
