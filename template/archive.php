@@ -27,14 +27,16 @@
 ?>
 
 <div class="pdf-embed-viewer">
-	<?php $options = get_option('pdf_emd_vwr_options'); ?>
-	<h2><?php echo isset($options['archive_title']) ? esc_html($options['archive_title']) : esc_html(the_archive_title()); ?></h2>
 	<?php
+		$options = get_option('pdf_emd_vwr_options');
 		$check_download_archive  = get_post_meta( get_the_ID(), 'pdf_emd_vwr_check_download_archive', true );
+		$years =  PDF_Emd_Vwr_CPT::get_posts_years_array('pdf-embed-viewer');
+		if($years):
 	?>
+	<h2><?php echo isset($options['archive_title']) ? esc_html($options['archive_title']) : esc_html(the_archive_title()); ?></h2>
 	<div class="archive">
 		<ul class="tabs">
-			<?php $years =  PDF_Emd_Vwr_CPT::get_posts_years_array('pdf-embed-viewer');
+			<?php 
 				foreach($years as $year): ?>
 					<li class="tab <?php echo esc_attr($year==gmdate('Y')?'active':''); ?>" data-tab-target="#year-<?php echo esc_attr($year);?>" ><?php echo esc_attr($year);?></li>
 			<?php endforeach; ?>
@@ -85,6 +87,9 @@
 			<?php endforeach; ?>	
 		</div>
 	</div>
+	<?php else: ?>
+		<h2><?php echo esc_html('No data found','pdf-embed-viewer'); ?></h2>
+	<?php endif; ?>
 </div>
 
 <?php wp_link_pages(); ?>
