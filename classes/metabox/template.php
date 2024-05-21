@@ -43,6 +43,35 @@ if( ! class_exists('PDF_Emd_Vwr_Template') ){
             </div>
             <?php
         }
+
+        public function save_post($post_id){
+
+                if( isset( $_POST['pdf_emd_vwr_metabox_nonce'] ) ){
+                    if( ! wp_verify_nonce( $_POST['pdf_emd_vwr_metabox_nonce'], 'pdf_emd_vwr_metabox_nonce' ) ){
+                        return;
+                    }
+                }
+
+                if( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ){
+                    return;
+                }
+
+                if( isset($_POST['post_type']) && $_POST['post_type'] === 'pdf-embed-viewer' ){
+                    if( ! current_user_can('edit_page',$post_id) ){
+                        return;
+                    }
+                    elseif( ! current_user_can('edit_post',$post_id) ){
+                        return;
+                    }
+                }   
+
+                if( isset($_POST['action']) and $_POST['action']=='editpost' ){                    
+
+                    $template  = isset( $_POST['pdf_emd_vwr_template'] ) ? $_POST['pdf_emd_vwr_template'] : '';
+					update_post_meta( $post_id, 'pdf_emd_vwr_template', sanitize_url($template) );
+
+                }
+            }
     }
     $PDF_Emd_Vwr_Template = new PDF_Emd_Vwr_Template();
 }
