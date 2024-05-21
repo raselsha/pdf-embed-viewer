@@ -21,6 +21,9 @@ if( ! class_exists('PDF_Emd_Vwr_General') ){
             
             $check_download  = get_post_meta( $post_id, 'pdf_emd_vwr_check_download', true );
             $check_download  = $check_download ? $check_download : 'yes';
+
+            $check_download_archive  = get_post_meta( $post_id, 'pdf_emd_vwr_check_download_archive', true );
+            $check_download_archive  = $check_download_archive ? $check_download_archive : 'yes';
             ?>
             <div class="tab-content active" id="#pdf_emd_vwr_tabs1">
                 <?php wp_nonce_field( 'pdf_emd_vwr_metabox_nonce', 'pdf_emd_vwr_metabox_nonce' ); ?>
@@ -47,6 +50,19 @@ if( ! class_exists('PDF_Emd_Vwr_General') ){
                         </div>
                         <label class="switch">
                             <input type="checkbox" name="pdf_emd_vwr_check_download" value="<?php echo esc_attr($check_download); ?>" <?php echo esc_attr(($check_download=='yes')?'checked':''); ?>>
+                            <span class="slider"></span>
+                        </label>
+                    </label>
+                </section>
+                <section>
+                    <label class="label">
+                        <div>
+                            <p><?php echo esc_html( 'Archive Page Download ', 'pdf-embed-viewer' )?></p>
+                            <span><?php echo esc_html('Show/Hide download Button in archive page.','pdf-embed-viewer') ?></span>
+
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" name="pdf_emd_vwr_check_download_archive" value="<?php echo esc_attr($check_download_archive); ?>" <?php echo esc_attr(($check_download_archive=='yes')?'checked':''); ?>>
                             <span class="slider"></span>
                         </label>
                     </label>
@@ -84,6 +100,9 @@ if( ! class_exists('PDF_Emd_Vwr_General') ){
                     
                     $check_download  = isset( $_POST['pdf_emd_vwr_check_download'] ) ? $_POST['pdf_emd_vwr_check_download'] : 'no';
 					update_post_meta( $post_id, 'pdf_emd_vwr_check_download', sanitize_text_field($check_download) );
+                    
+                    $check_download_archive  = isset( $_POST['pdf_emd_vwr_check_download_archive'] ) ? $_POST['pdf_emd_vwr_check_download_archive'] : 'no';
+					update_post_meta( $post_id, 'pdf_emd_vwr_check_download_archive', sanitize_text_field($check_download_archive) );
 
                 }
             }

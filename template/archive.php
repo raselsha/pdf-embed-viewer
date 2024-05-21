@@ -29,7 +29,9 @@
 <div class="pdf-embed-viewer">
 	<?php $options = get_option('pdf_emd_vwr_options'); ?>
 	<h2><?php echo isset($options['archive_title']) ? esc_html($options['archive_title']) : esc_html(the_archive_title()); ?></h2>
-
+	<?php
+		$check_download_archive  = get_post_meta( get_the_ID(), 'pdf_emd_vwr_check_download_archive', true );
+	?>
 	<div class="archive">
 		<ul class="tabs">
 			<?php $years =  PDF_Emd_Vwr_CPT::get_posts_years_array('pdf-embed-viewer');
@@ -43,7 +45,9 @@
 					<tr>         					    			
 						<th><?php echo esc_html('Month','pdf-embed-viewer') ?></th>
 						<th><?php echo esc_html('Title','pdf-embed-viewer') ?></th>
+						<?php if($check_download_archive == 'yes'): ?>
 						<th><?php echo esc_html('Download','pdf-embed-viewer') ?></th>
+						<?php endif; ?>
 					</tr>
 					<?php
 						$args = array(
@@ -63,14 +67,17 @@
 							<tr>
 								<td width="10%"><?php the_time('F'); ?></td>
 								<td width="10%"><a href="<?php the_permalink(); ?>"><?php the_title();?></a></td>
-								<td width="10%">
-									<?php
-										$pdf_emd_vwr_file_url=get_post_meta( get_the_ID(), 'pdf_emd_vwr_file_url', true );
-										if(isset($pdf_emd_vwr_file_url)):
-									?>
-									<a href="<?php echo esc_attr(get_post_meta( get_the_ID(), 'pdf_emd_vwr_file_url', true ))?>" class="download-btn" download><?php echo esc_html('Download','pdf-embed-viewer'); ?> <img src="<?php echo esc_attr(PDF_Emd_Vwr_URL.'assets/images/download.svg'); ?>" alt="<?php echo esc_html('Download icon','pdf-embed-viewer'); ?>"> </a>
-									<?php endif; ?>
-								</td>
+								<?php if($check_download_archive == 'yes'): ?>
+									<td width="10%">
+										<?php
+											$pdf_emd_vwr_file_url=get_post_meta( get_the_ID(), 'pdf_emd_vwr_file_url', true );
+											if(isset($pdf_emd_vwr_file_url)):
+										?>
+										<a href="<?php echo esc_attr(get_post_meta( get_the_ID(), 'pdf_emd_vwr_file_url', true ))?>" class="download-btn" download><?php echo esc_html('Download','pdf-embed-viewer'); ?> <img src="<?php echo esc_attr(PDF_Emd_Vwr_URL.'assets/images/download.svg'); ?>" alt="<?php echo esc_html('Download icon','pdf-embed-viewer'); ?>"> </a>
+										<?php endif; ?>
+									</td>
+								<?php endif; ?>
+
 							</tr>
 					<?php endwhile; ?>
 					
