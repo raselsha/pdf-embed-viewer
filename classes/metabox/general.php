@@ -28,7 +28,7 @@ if( ! class_exists('PDF_Emd_Vwr_General') ){
                     <label class="label">
                         <div>
                             <p><?php echo esc_html( 'Add PDF URL', 'pdf-embed-viewer' )?></p>
-                            <span>info text</span>
+                            <span><?php echo esc_html('Add pdf file by upload button','pdf-embed-viewer') ?></span>
                         </div>
                         <div style="width: 50%;">
                             <input type="url" class="pdf_emd_vwr_file" name="pdf_emd_vwr_file_url" value="<?php echo esc_attr( $embed_file ) ? esc_attr($embed_file) : '' ;  ?>" placeholder="https://example.com/filename.pdf" required>
@@ -41,8 +41,9 @@ if( ! class_exists('PDF_Emd_Vwr_General') ){
                 <section>
                     <label class="label">
                         <div>
-                            <p><?php echo esc_html( 'Show/Hide Download button', 'pdf-embed-viewer' )?></p>
-                            <span>Info</span>
+                            <p><?php echo esc_html( 'Single Page Download', 'pdf-embed-viewer' )?></p>
+                            <span><?php echo esc_html('Show/Hide download Button in single page.','pdf-embed-viewer') ?></span>
+
                         </div>
                         <label class="switch">
                             <input type="checkbox" name="pdf_emd_vwr_check_download" value="<?php echo esc_attr($check_download); ?>" <?php echo esc_attr(($check_download=='yes')?'checked':''); ?>>
