@@ -17,13 +17,13 @@
                     padding: 20px;
                     padding-right: 0;
                     list-style: none;
-                    li.tab{
+                    li.pdf-emd-vwr-tab{
                         margin: 0;
                         padding: 10px;
                         border-bottom: 1px solid $gray;
                         font-size: 16px;
                         font-weight: normal;
-                        color: $primary;
+                        color: $dark;
                         border-left: 2px solid transparent;
                         cursor: pointer;
                         &.active{
@@ -32,6 +32,7 @@
                         }
                         i{
                             padding: 0 10px;
+                            color: $primary;
                         }
                     }
                 }
@@ -39,12 +40,13 @@
             .content{
                 width: 80%;
                 padding: 2% 5%;
-                .tab-content {
+                .pdf-emd-vwr-tab-content {
                     display: none;
+                    &.active {
+                        display: block;
+                    }
                 }
-                .active {
-                    display: block;
-                }
+                
                 
             }
 

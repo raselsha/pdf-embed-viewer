@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * @author Shahadat Hossain <raselsha@gmail.com>
+ * @package pdf-embed-viewer
+ * @version 1.0.0
+ */
+
 if( ! defined('ABSPATH') ) { die( "don't access directly" ); }
 
 if( ! class_exists('PDF_Emd_Vwr_General') ){
@@ -12,7 +18,7 @@ if( ! class_exists('PDF_Emd_Vwr_General') ){
         }
         public function tabs($post_id){
             ?>
-                <li class="tab active" data-tab-target="#pdf_emd_vwr_tabs1"> <i class="fas fa-home"></i> Home</li>
+                <li class="pdf-emd-vwr-tab" data-tab-target="#pdf-emd-vwr-tabs1"> <i class="fas fa-tools"></i> <?php echo esc_html('General','pdf-embed-viewer'); ?></li>
             <?php
         }
         public function tabs_content($post_id){
@@ -25,7 +31,7 @@ if( ! class_exists('PDF_Emd_Vwr_General') ){
             $check_download_archive  = get_post_meta( $post_id, 'pdf_emd_vwr_check_download_archive', true );
             $check_download_archive  = $check_download_archive ? $check_download_archive : 'yes';
             ?>
-            <div class="tab-content active" id="#pdf_emd_vwr_tabs1">
+            <div class="pdf-emd-vwr-tab-content" id="pdf-emd-vwr-tabs1">
                 <?php wp_nonce_field( 'pdf_emd_vwr_metabox_nonce', 'pdf_emd_vwr_metabox_nonce' ); ?>
                 <section>
                     <label class="label">

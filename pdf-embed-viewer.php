@@ -51,6 +51,7 @@ if( ! class_exists( 'PDF_Emd_Vwr' ) ){
             require_once PDF_Emd_Vwr . 'classes/enque-style-script.php';
             require_once PDF_Emd_Vwr . 'classes/metabox-register.php';
             require_once PDF_Emd_Vwr . 'classes/metabox/general.php';
+            require_once PDF_Emd_Vwr . 'classes/metabox/template.php';
             require_once PDF_Emd_Vwr . 'classes/admin-settings.php';
 
         }
