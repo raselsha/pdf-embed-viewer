@@ -41,7 +41,7 @@ if( ! class_exists('PDF_Emd_Vwr_General') ){
                         </div>
                         <div style="width: 50%;">
                             <input type="url" class="pdf_emd_vwr_file" name="pdf_emd_vwr_file_url" value="<?php echo esc_attr( $embed_file ) ? esc_attr($embed_file) : '' ;  ?>" placeholder="https://example.com/filename.pdf" required>
-                            <button class='button upload'>
+                            <button class='button pdf-emd-vwr-upload'>
                                 <i class="fa fa-paperclip" aria-hidden="true"></i> <?php esc_attr_e('Upload','pdf-embed-viewer');?>
                             </button>
                         </div>

@@ -54,7 +54,7 @@ jQuery(document).ready(function ($) {
 
   // =================media upload======== 
   function pdf_emd_vwr_upload() {
-    $('.upload').click(function(e) {
+    $('.pdf-emd-vwr-upload').click(function(e) {
         e.preventDefault();
         var mediaUploader = wp.media({
             title: 'Upload PDF',
@@ -70,7 +70,7 @@ jQuery(document).ready(function ($) {
           var attachment = mediaUploader.state().get('selection').first().toJSON();
           // Check if the selected file is a PDF
           if (attachment.mime === 'application/pdf') {
-              $('.pdf_emd_vwr_file').val(attachment.url);
+            $('.pdf_emd_vwr_file').val(attachment.url);
           } else {
             alert('Please select a PDF file only.');
             $('.pdf_emd_vwr_file').val('');
