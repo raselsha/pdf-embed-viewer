@@ -17,9 +17,10 @@ if( ! class_exists('PDF_Emd_Vwr_General') ){
         }
         public function tabs_content($post_id){
             $embed_file = get_post_meta($post_id,'pdf_emd_vwr_file_url',true);
-            $check_download = get_post_meta($post_id,'pdf_emd_vwr_check_download',true);
             $embed_file =  $embed_file ? $embed_file :'';
-            $check_download =  $check_download ? $check_download :'yes';
+            
+            $check_download  = get_post_meta( $post_id, 'pdf_emd_vwr_check_download', true );
+            $check_download  = $check_download ? $check_download : 'yes';
             ?>
             <div class="tab-content active" id="#pdf_emd_vwr_tabs1">
                 <?php wp_nonce_field( 'pdf_emd_vwr_metabox_nonce', 'pdf_emd_vwr_metabox_nonce' ); ?>
@@ -43,7 +44,7 @@ if( ! class_exists('PDF_Emd_Vwr_General') ){
                             <p><?php echo esc_html( 'Show/Hide Download button', 'pdf-embed-viewer' )?></p>
                             <span>Info</span>
                         </div>
-                        <label class="switch"  >
+                        <label class="switch">
                             <input type="checkbox" name="pdf_emd_vwr_check_download" value="<?php echo esc_attr($check_download); ?>" <?php echo esc_attr(($check_download=='yes')?'checked':''); ?>>
                             <span class="slider"></span>
                         </label>
@@ -75,11 +76,14 @@ if( ! class_exists('PDF_Emd_Vwr_General') ){
                     }
                 }   
 
-                if( isset($_POST['action']) and $_POST['action']=='editpost' ){
-                    $old_data = get_post_meta($post_id,'pdf_emd_vwr_file_url',true);
-                    $new_data = $_POST['pdf_emd_vwr_file_url'];
+                if( isset($_POST['action']) and $_POST['action']=='editpost' ){                    
 
-                    update_post_meta($post_id,'pdf_emd_vwr_file_url',sanitize_url($new_data), $old_data);
+                    $file_url  = isset( $_POST['pdf_emd_vwr_file_url'] ) ? $_POST['pdf_emd_vwr_file_url'] : '';
+					update_post_meta( $post_id, 'pdf_emd_vwr_file_url', sanitize_url($file_url) );
+                    
+                    $check_download  = isset( $_POST['pdf_emd_vwr_check_download'] ) ? $_POST['pdf_emd_vwr_check_download'] : 'no';
+					update_post_meta( $post_id, 'pdf_emd_vwr_check_download', sanitize_text_field($check_download) );
+
                 }
             }
     }
