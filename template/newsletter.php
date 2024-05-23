@@ -2,8 +2,8 @@
 /**
  * @package pdv-embed-viewer
  * @version 1.0.0
- * @template archive
- * To customize archive page template; you can copy this /template/archive.php file to your theme directory. 
+ * @template newsletter
+ * To customize archive page template; you can copy this /template/newsletter.php file to your theme directory. 
  * If you used child theme, put into parent direcotory first.
  */
 
