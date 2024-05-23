@@ -47,6 +47,7 @@ if( ! class_exists( 'PDF_Emd_Vwr' ) ){
         }
 
         public static function include_plugin_files() {
+            require_once PDF_Emd_Vwr . 'classes/options-setup.php';
             require_once PDF_Emd_Vwr . 'classes/cpt-register.php';
             require_once PDF_Emd_Vwr . 'classes/enque-style-script.php';
             require_once PDF_Emd_Vwr . 'classes/metabox-register.php';

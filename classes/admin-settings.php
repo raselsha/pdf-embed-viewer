@@ -156,9 +156,7 @@ if( ! class_exists('PDF_Emd_Vwr_Admin_Settings') ){
                         'light'=>sanitize_text_field( $light ),
                     ],    
                 ]);
-              
             }
-                   
         }
     }
     
