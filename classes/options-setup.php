@@ -15,6 +15,14 @@ if( ! class_exists('PDF_Emd_Vwr_Options_Setup') ){
             add_action('init',[$this,'set_options_value']);
         }
 
+        private function options_array_sanitize($data){
+            
+            foreach ( $data as $key => $value ) {
+                $data[ $key ] = sanitize_text_field( $value );
+            }
+            return $data;
+        }
+
         public function set_options_value(){
             $template = [
                 'grid'      => __('Grid Template','pdf-embed-viewer'),
@@ -22,7 +30,21 @@ if( ! class_exists('PDF_Emd_Vwr_Options_Setup') ){
                 'newsletter'=> __('Newsletter Template','pdf-embed-viewer'),
                 'ebook'     => __('Ebook Template','pdf-embed-viewer'),                
             ];
-            update_option('pdf_emd_vwr_opt_templates',$template);
+
+            $colors = [
+                'primary'   => '#c79f62',
+                'secondary' => '#666',
+                'dark'      => '#333',
+                'light'     => '#e5e5e5',                
+            ];
+            
+            $template       = $this->options_array_sanitize($template);
+            $archive_title  = sanitize_text_field('Pdf Embed Viewer');
+            $colors         = $this->options_array_sanitize($colors);
+            
+            add_option('pdf_emd_vwr_opt_templates',$template);
+            add_option('pdf_emd_vwr_opt_archive_title',$archive_title);
+            add_option('pdf_emd_vwr_opt_colors',$colors);
         }
     }
     

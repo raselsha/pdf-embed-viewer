@@ -29,13 +29,12 @@ if( ! class_exists('PDF_Emd_Vwr_Enque') ){
                 wp_enqueue_style('pdf-frontend-style',PDF_Emd_Vwr_URL.'assets/css/frontend.css',[],'1.0','all');
                 wp_enqueue_script( 'jquery', 'http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jqueryexample.min.js','','1.7.2',true);
                 wp_enqueue_script( 'pdf-frontend-script', PDF_Emd_Vwr_URL.'assets/js/frontend.js',['jquery'],'1.0',true);
-                            
-                $options = get_option('pdf_emd_vwr_options');
-                $colors = isset($options['colors'])?$options['colors']:[];
-                $primary        = isset($colors['primary'] ) ? $colors['primary']:'#c79f62';
-                $secondary      = isset($colors['secondary'] )? $colors['secondary']:'#666666';
-                $dark           = isset($colors['dark'] ) ? $colors['dark']:'#333';
-                $light          = isset($colors['light'] ) ? $colors['light']:'#e5e5e5';
+
+                $colors         = get_option('pdf_emd_vwr_opt_colors');         
+                $primary        = $colors['primary'];
+                $secondary      = $colors['secondary'];
+                $dark           = $colors['dark'];
+                $light          = $colors['light'];
                 $inline_css = ":root{
                         --pdf-emd-vwr-primary:{$primary };        
                         --pdf-emd-vwr-secondary:{$secondary};
