@@ -1,4 +1,12 @@
-<?php if ( wp_is_block_theme() ) {  ?>
+<?php 
+/**
+ * @package pdv-embed-viewer
+ * @version 1.0.0
+ * @template single page
+ * To customize single page tempalale; you can copy this template folder to your theme directory. 
+ * If you used child theme, put into parent direcotory first.
+ */
+if ( wp_is_block_theme() ) {  ?>
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
 <head>

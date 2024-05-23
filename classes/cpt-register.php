@@ -89,7 +89,12 @@ if( ! class_exists('PDF_Emd_Vwr_CPT') ){
             global $post;
 
             if ( is_post_type_archive ( 'pdf-embed-viewer' ) ) {
-                $archive_template = PDF_Emd_Vwr . 'template/archive.php';
+                
+                $archive_template = get_template_directory().'/template/archive.php';
+                if( ! file_exists($archive_template)){
+                    $archive_template = PDF_Emd_Vwr . 'template/archive.php';
+                }
+                
             }
             return $archive_template;
             
@@ -98,7 +103,10 @@ if( ! class_exists('PDF_Emd_Vwr_CPT') ){
         public function single_template($single_template) {
             global $wp_query, $post;
             if ($post->post_type == 'pdf-embed-viewer'){   
-                $single_template = PDF_Emd_Vwr . 'template/single.php';
+                $single_template = get_template_directory().'/template/single.php';
+                if( ! file_exists($single_template)){
+                    $single_template = PDF_Emd_Vwr . 'template/single.php';
+                }
             }
             return $single_template;
         }
