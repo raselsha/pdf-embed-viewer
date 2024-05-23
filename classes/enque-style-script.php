@@ -31,10 +31,10 @@ if( ! class_exists('PDF_Emd_Vwr_Enque') ){
                 wp_enqueue_script( 'pdf-frontend-script', PDF_Emd_Vwr_URL.'assets/js/frontend.js',['jquery'],'1.0',true);
 
                 $colors         = get_option('pdf_emd_vwr_opt_colors');         
-                $primary        = $colors['primary'];
-                $secondary      = $colors['secondary'];
-                $dark           = $colors['dark'];
-                $light          = $colors['light'];
+                $primary        = $colors['primary'] ? $colors['primary'] : '#c79f62';
+                $secondary      = $colors['secondary'] ? $colors['secondary'] : '#666';
+                $dark           = $colors['dark'] ? $colors['dark'] : '#333';
+                $light          = $colors['light'] ? $colors['light'] : '#e5e5e5';
                 $inline_css = ":root{
                         --pdf-emd-vwr-primary:{$primary };        
                         --pdf-emd-vwr-secondary:{$secondary};
