@@ -25,8 +25,8 @@ if( ! class_exists('PDF_Emd_Vwr_Options_Setup') ){
 
         public function set_options_value(){
             $template = [
-                'grid'      => __('Grid Template','pdf-embed-viewer'),
                 'list'      => __('List Template','pdf-embed-viewer'),
+                'grid'      => __('Grid Template','pdf-embed-viewer'),
                 'newsletter'=> __('Newsletter Template','pdf-embed-viewer'),
                 'ebook'     => __('Ebook Template','pdf-embed-viewer'),                
             ];

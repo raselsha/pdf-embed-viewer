@@ -41,14 +41,12 @@ if ( wp_is_block_theme() ) {  ?>
 		$check_download_archive  =  get_option('pdf_emd_vwr_opt_archive_download');
 	?>
 	<h2><?php echo isset($archive_title) ? esc_html($archive_title) : esc_html(the_archive_title()); ?></h2>
-	<div class="archive">
+	<div class="archive-list-style">
 		<table>
-			<tr>         					    			
-				<th><?php echo esc_html('Month','pdf-embed-viewer') ?></th>
+			<tr>
 				<th><?php echo esc_html('Title','pdf-embed-viewer') ?></th>
-				<?php if($check_download_archive == 'yes'): ?>
-				<th><?php echo esc_html('Download','pdf-embed-viewer') ?></th>
-				<?php endif; ?>
+				<th><?php echo esc_html('Month','pdf-embed-viewer') ?></th>
+				<th><?php echo esc_html('Action','pdf-embed-viewer') ?></th>
 			</tr>
 			<?php
 				$args = array(
@@ -61,18 +59,20 @@ if ( wp_is_block_theme() ) {  ?>
 					$WpQuery->the_post();
 					?>
 					<tr>
-						<td width="10%"><?php the_time('F'); ?></td>
-						<td width="10%"><a href="<?php the_permalink(); ?>"><?php the_title();?></a></td>
+						<td><a href="<?php the_permalink(); ?>"><?php the_title();?></a></td>
+						<td><?php the_time('d-M-Y'); ?></td>
+						<td>
+							<a href="<?php the_permalink(); ?>" class="download-btn"><i class="far fa-address-book"></i> <?php echo esc_html('Read','pdf-embed-viewer');?></a>
 						<?php if($check_download_archive == 'yes'): ?>
-							<td width="10%">
 								<?php
 									$pdf_emd_vwr_file_url=get_post_meta( get_the_ID(), 'pdf_emd_vwr_file_url', true );
 									if(isset($pdf_emd_vwr_file_url)):
 								?>
 								<a href="<?php echo esc_attr(get_post_meta( get_the_ID(), 'pdf_emd_vwr_file_url', true ))?>" class="download-btn" download><?php echo esc_html('Download','pdf-embed-viewer'); ?> <img src="<?php echo esc_attr(PDF_Emd_Vwr_URL.'assets/images/download.svg'); ?>" alt="<?php echo esc_html('Download icon','pdf-embed-viewer'); ?>"> </a>
 								<?php endif; ?>
-							</td>
+							
 						<?php endif; ?>
+						</td>
 
 					</tr>
 			<?php endwhile; ?>

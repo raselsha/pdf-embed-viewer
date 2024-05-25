@@ -65,6 +65,9 @@ if( ! class_exists( 'PDF_Emd_Vwr' ) ){
         public static function deactivate(){
             flush_rewrite_rules();
             unregister_post_type('pdf-embed-viewer');
+            delete_option('pdf_emd_vwr_opt_template_lists');
+            delete_option('pdf_emd_vwr_opt_archive_title');
+            delete_option('pdf_emd_vwr_opt_colors');
         }
 
         public static function uninstall(){
