@@ -46,43 +46,43 @@
   margin: 1rem 0;
 }
 
-.archive-list-style table {
+.pdf-embed-viewer .archive-list-style table {
   text-align: left;
   border-collapse: collapse;
   transition: all 0.5s;
   border: 1px solid var(--pdf-emd-vwr-secondary);
   width: 100%;
 }
-.archive-list-style table th {
+.pdf-embed-viewer .archive-list-style table th {
   background: var(--pdf-emd-vwr-light);
   padding: 0.5em;
   border: 0;
   border-bottom: 1px solid var(--pdf-emd-vwr-secondary);
   color: var(--pdf-emd-vwr-dark);
 }
-.archive-list-style table th:first-child {
+.pdf-embed-viewer .archive-list-style table th:first-child {
   text-align: start;
   width: 45%;
 }
-.archive-list-style table th:last-child {
+.pdf-embed-viewer .archive-list-style table th:last-child {
   text-align: end;
 }
-.archive-list-style table td {
+.pdf-embed-viewer .archive-list-style table td {
   padding: 0.5em;
   color: var(--pdf-emd-vwr-secondary);
   font-weight: normal;
   border: 0;
 }
-.archive-list-style table td:first-child {
+.pdf-embed-viewer .archive-list-style table td:first-child {
   font-weight: bold;
   text-align: start;
   width: 45%;
 }
-.archive-list-style table td:last-child {
+.pdf-embed-viewer .archive-list-style table td:last-child {
   text-align: end;
   font-weight: normal;
 }
-.archive-list-style table tr:nth-child(odd) {
+.pdf-embed-viewer .archive-list-style table tr:nth-child(odd) {
   background: var(--pdf-emd-vwr-light);
   border: 0;
 }
