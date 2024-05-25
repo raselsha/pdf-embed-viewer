@@ -86,7 +86,7 @@ if( ! class_exists('PDF_Emd_Vwr_CPT') ){
         
 
         public function archive_template( $archive_template ) {
-            global $post;
+
             $template = get_post_meta(get_the_ID(),'pdf_emd_vwr_template',true);
             $opt_templates = get_option('pdf_emd_vwr_opt_templates'); 
 
@@ -99,11 +99,11 @@ if( ! class_exists('PDF_Emd_Vwr_CPT') ){
             if ( is_post_type_archive ( 'pdf-embed-viewer' ) ) {                
                 $archive_template = get_template_directory().'/template/'. $inc_template;
                 if( ! file_exists($archive_template)){
-                    $archive_template = get_template_directory().'/template/archive.php';
+                    $archive_template = get_template_directory().'/template/list.php';
                     if( ! file_exists($archive_template)){
                         $archive_template = PDF_Emd_Vwr . 'template/'. $inc_template;
                         if( ! file_exists($archive_template)){
-                            $archive_template = PDF_Emd_Vwr . 'template/archive.php';
+                            $archive_template = PDF_Emd_Vwr . 'template/list.php';
                         }
                     }
                 }
@@ -125,15 +125,12 @@ if( ! class_exists('PDF_Emd_Vwr_CPT') ){
         }
 
         public static function get_posts_years_array($post_type) {
-            global $wpdb;
-            
+                        
             $terms_year = array(
                 'post_type'         => $post_type,
             );
-
             $years = array();
             $query_year = new WP_Query( $terms_year );
-
             if ( $query_year->have_posts() ) :
                 while ( $query_year->have_posts() ) : $query_year->the_post();
                     $year = get_the_date('Y');
