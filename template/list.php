@@ -38,7 +38,7 @@ if ( wp_is_block_theme() ) {  ?>
 <div class="pdf-embed-viewer">
 	<?php
 		$archive_title = get_option('pdf_emd_vwr_opt_archive_title');
-		$check_download_archive  = get_post_meta( get_the_ID(), 'pdf_emd_vwr_check_download_archive', true );
+		$check_download_archive  =  get_option('pdf_emd_vwr_opt_archive_download');
 	?>
 	<h2><?php echo isset($archive_title) ? esc_html($archive_title) : esc_html(the_archive_title()); ?></h2>
 	<div class="archive">

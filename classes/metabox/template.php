@@ -12,8 +12,8 @@ if( ! class_exists('PDF_Emd_Vwr_Template') ){
     class PDF_Emd_Vwr_Template{
         public function __construct()
         {
-            add_action('nav_tabs',array($this,'tabs'));
-            add_action('tabs_content',array($this,'tabs_content'));
+            // add_action('nav_tabs',array($this,'tabs'));
+            // add_action('tabs_content',array($this,'tabs_content'));
             add_action( 'save_post' , array( $this, 'save_post') );
         }
 

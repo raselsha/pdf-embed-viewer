@@ -38,7 +38,7 @@ if ( wp_is_block_theme() ) {  ?>
 <div class="pdf-embed-viewer">
 	<?php
 		$archive_title = get_option('pdf_emd_vwr_opt_archive_title');
-		$check_download_archive  = get_post_meta( get_the_ID(), 'pdf_emd_vwr_check_download_archive', true );
+		$check_download_archive  =  get_option('pdf_emd_vwr_opt_archive_download');
 		$years =  PDF_Emd_Vwr_CPT::get_posts_years_array('pdf-embed-viewer');
 		if($years):
 	?>
