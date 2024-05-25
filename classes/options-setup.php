@@ -42,7 +42,7 @@ if( ! class_exists('PDF_Emd_Vwr_Options_Setup') ){
             $archive_title  = sanitize_text_field('Pdf Embed Viewer');
             $colors         = $this->options_array_sanitize($colors);
             
-            add_option('pdf_emd_vwr_opt_templates',$template);
+            add_option('pdf_emd_vwr_opt_template_lists',$template);
             add_option('pdf_emd_vwr_opt_archive_title',$archive_title);
             add_option('pdf_emd_vwr_opt_colors',$colors);
         }

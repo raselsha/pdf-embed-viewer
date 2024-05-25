@@ -24,24 +24,9 @@ if( ! class_exists('PDF_Emd_Vwr_Template') ){
         }
 
         public function tabs_content($post_id){
-            $template = get_post_meta($post_id,'pdf_emd_vwr_template',true);
-            $options =  get_option('pdf_emd_vwr_opt_templates');
             ?>
             <div class="pdf-emd-vwr-tab-content" id="pdf-emd-vwr-tabs2">
-                <section>
-                    <label class="label">
-                        <div>
-                            <p><?php echo esc_html( 'Single Page Download', 'pdf-embed-viewer' )?></p>
-                            <span><?php echo esc_html('Show/Hide download Button in single page.','pdf-embed-viewer') ?></span>
-                        </div>
-
-                        <select name="pdf_emd_vwr_template">
-                            <?php foreach($options as $key => $value): ?>
-                            <option value="<?php echo esc_attr($key); ?>" <?php echo $key==$template? esc_attr('selected'):'' ?>><?php echo esc_attr($value); ?></option>
-                            <?php endforeach; ?>
-                        </select>
-                    </label>
-                </section>
+                
             </div>
             <?php
         }
@@ -69,8 +54,8 @@ if( ! class_exists('PDF_Emd_Vwr_Template') ){
 
                 if( isset($_POST['action']) and $_POST['action']=='editpost' ){                    
 
-                    $template  = isset( $_POST['pdf_emd_vwr_template'] ) ? $_POST['pdf_emd_vwr_template'] : '';
-					update_post_meta( $post_id, 'pdf_emd_vwr_template', sanitize_text_field($template) );
+                    // $template  = isset( $_POST['pdf_emd_vwr_template'] ) ? $_POST['pdf_emd_vwr_template'] : '';
+					// update_post_meta( $post_id, 'pdf_emd_vwr_template', sanitize_text_field($template) );
 
                 }
             }

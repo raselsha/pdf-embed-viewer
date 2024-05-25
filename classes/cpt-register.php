@@ -86,9 +86,8 @@ if( ! class_exists('PDF_Emd_Vwr_CPT') ){
         
 
         public function archive_template( $archive_template ) {
-
-            $template = get_post_meta(get_the_ID(),'pdf_emd_vwr_template',true);
-            $opt_templates = get_option('pdf_emd_vwr_opt_templates'); 
+            $template = get_option('pdf_emd_vwr_opt_archive_template'); 
+            $opt_templates = get_option('pdf_emd_vwr_opt_template_lists'); 
 
             foreach($opt_templates as $key => $value){
                 if($template == $key){

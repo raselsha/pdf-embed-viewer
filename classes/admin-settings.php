@@ -84,7 +84,12 @@ if( ! class_exists('PDF_Emd_Vwr_Admin_Settings') ){
         }
 
         public function options_fields(){
-            $archive_title  = get_option('pdf_emd_vwr_opt_archive_title');         
+            $archive_title  = get_option('pdf_emd_vwr_opt_archive_title'); 
+            
+            $template = get_option('pdf_emd_vwr_opt_archive_template');
+            $template = $template ? $template : 'list';
+            $options_template =  get_option('pdf_emd_vwr_opt_template_lists');
+
             $colors         = get_option('pdf_emd_vwr_opt_colors');         
             $primary        = $colors['primary'] ? $colors['primary'] : '#c79f62';
             $secondary      = $colors['secondary'] ? $colors['secondary'] : '#666';
@@ -99,6 +104,16 @@ if( ! class_exists('PDF_Emd_Vwr_Admin_Settings') ){
                         <td>
                             
                             <input type="text" name="pdf_emd_vwr_opt_archive_title" placeholder="Pdf Embed Viewer" value="<?php echo esc_attr($archive_title); ?>">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><?php echo esc_html( 'Archive Template', 'pdf-embed-viewer' )?></th>
+                        <td>
+                            <select name="pdf_emd_vwr_opt_archive_template">
+                                <?php foreach($options_template as $key => $value): ?>
+                                <option value="<?php echo esc_attr($key); ?>" <?php echo $key==$template? esc_attr('selected'):'' ?>><?php echo esc_attr($value); ?></option>
+                                <?php endforeach; ?>
+                            </select>
                         </td>
                     </tr>
                     <tr>
@@ -139,11 +154,12 @@ if( ! class_exists('PDF_Emd_Vwr_Admin_Settings') ){
                     return;
                 }
                 
-                $archive_title  = isset( $_POST['pdf_emd_vwr_opt_archive_title'] ) ? $_POST['pdf_emd_vwr_opt_archive_title']: 'Pdf Embed Viewer';
-                $primary        = isset( $_POST['pdf_emd_vwr_opt_colors']['primary'] ) ? $_POST['pdf_emd_vwr_opt_colors']['primary'] : '#c79f62' ;
-                $secondary      = isset( $_POST['pdf_emd_vwr_opt_colors']['secondary'] )? $_POST['pdf_emd_vwr_opt_colors']['secondary']: '#666';
-                $dark           = isset( $_POST['pdf_emd_vwr_opt_colors']['dark'] ) ? $_POST['pdf_emd_vwr_opt_colors']['dark']: '#333';
-                $light          = isset( $_POST['pdf_emd_vwr_opt_colors']['light'] ) ? $_POST['pdf_emd_vwr_opt_colors']['light']: '#e5e5e5';
+                $archive_title      = isset( $_POST['pdf_emd_vwr_opt_archive_title'] ) ? $_POST['pdf_emd_vwr_opt_archive_title']: 'Pdf Embed Viewer';
+                $archive_template   = isset( $_POST['pdf_emd_vwr_opt_archive_template'] ) ? $_POST['pdf_emd_vwr_opt_archive_template']: 'list';
+                $primary            = isset( $_POST['pdf_emd_vwr_opt_colors']['primary'] ) ? $_POST['pdf_emd_vwr_opt_colors']['primary'] : '#c79f62' ;
+                $secondary          = isset( $_POST['pdf_emd_vwr_opt_colors']['secondary'] )? $_POST['pdf_emd_vwr_opt_colors']['secondary']: '#666';
+                $dark               = isset( $_POST['pdf_emd_vwr_opt_colors']['dark'] ) ? $_POST['pdf_emd_vwr_opt_colors']['dark']: '#333';
+                $light              = isset( $_POST['pdf_emd_vwr_opt_colors']['light'] ) ? $_POST['pdf_emd_vwr_opt_colors']['light']: '#e5e5e5';
 
                 $colors = [
                     'primary'   => sanitize_text_field( $primary ),
@@ -153,6 +169,7 @@ if( ! class_exists('PDF_Emd_Vwr_Admin_Settings') ){
                 ];
 
                 update_option('pdf_emd_vwr_opt_archive_title',sanitize_text_field($archive_title));
+                update_option('pdf_emd_vwr_opt_archive_template',sanitize_text_field($archive_template));
                 update_option('pdf_emd_vwr_opt_colors',$colors );
 
             }
