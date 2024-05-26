@@ -1,4 +1,15 @@
-.news-letter-style{
+
+:root{
+    --pdf-emd-vwr-primary:#c79f62;
+    --pdf-emd-vwr-secondary:#666;
+    --pdf-emd-vwr-light:#e5e5e5;
+    --pdf-emd-vwr-dark:#333;
+    --pdf-emd-vwr-black:#000;
+    --pdf-emd-vwr-white:#fff;
+}
+/*================body============*/
+.pdf-embed-viewer{
+    .archive-newsletter-style{
         display:flex;
         justify-content: space-between;
         flex-direction: column;
@@ -78,3 +89,14 @@
         }
         
     }
+}
+
+
+
+/*==================footer pagination================*/
+
+.pagination {
+    display: flex;
+    justify-content: space-between;
+    margin: 1rem 0;
+}
