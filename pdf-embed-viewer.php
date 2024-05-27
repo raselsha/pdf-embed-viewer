@@ -60,6 +60,7 @@ if( ! class_exists( 'PDF_Emd_Vwr' ) ){
         public static function activate(){
             // update the option table that permalink didn't need reload
             update_option('rewrite_rules','');
+            PDF_Emd_Vwr_CPT::insert_demo_content();
         }
 
         public static function deactivate(){

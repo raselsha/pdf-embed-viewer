@@ -14,7 +14,6 @@ if( ! class_exists('PDF_Emd_Vwr_CPT') ){
             add_action( 'init', array($this,'create_post_type') );
             add_filter( 'archive_template', array($this,'archive_template') ) ;
             add_filter( 'single_template', array($this,'single_template') ) ;
-            // add_action( 'init', array($this,'insert_demo_content') ) ;
             add_filter( 'manage_pdf-embed-viewer_posts_columns', array($this,'posts_columns') ) ;
             add_action( 'manage_pdf-embed-viewer_posts_custom_column', array($this,'custom_column'),10,2 ) ;
             add_filter( 'manage_edit-pdf-embed-viewer_sortable_columns', array($this,'sortable_columns') ) ;
@@ -143,7 +142,7 @@ if( ! class_exists('PDF_Emd_Vwr_CPT') ){
             return $years;
         }
 
-        public function insert_demo_content() {
+        public static function insert_demo_content() {
             // Create an array of demo post data
             $demo_posts = array(
                 array(
@@ -183,10 +182,9 @@ if( ! class_exists('PDF_Emd_Vwr_CPT') ){
                 ),
                 // Add more demo posts as needed
             );
-
-            // Loop through the demo post data and insert posts
-            foreach ( $demo_posts as $post_data ) {
+            foreach ( $demo_posts as $key => $post_data ) {
                 wp_insert_post( $post_data );
+                
             }
         }
     }
