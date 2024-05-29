@@ -7,7 +7,12 @@ if( ! class_exists('PDF_Emd_Vwr_Admin_Settings') ){
         public function __construct() {
             add_action( 'admin_menu', array($this,'create_admin_menu') );
             add_action( 'admin_init', array($this,'save_options_data') ); 
-            add_filter( 'plugin_action_links_pdf-embed-viewer/pdf-embed-viewer.php',[$this,'add_settings_link']);           
+            add_filter( 'plugin_action_links_pdf-embed-viewer/pdf-embed-viewer.php',[$this,'add_settings_link']);
+            add_action( 'admin_init', [$this,'load_plugin_textdomain'] );           
+        }
+
+        public function load_plugin_textdomain() {
+            load_plugin_textdomain( 'pdf-embed-viewer', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
         }
 
         public function create_admin_menu(){
@@ -63,7 +68,7 @@ if( ! class_exists('PDF_Emd_Vwr_Admin_Settings') ){
                 <h2><?php get_admin_page_title(); ?></h2>
                 <h2 class="nav-tab-wrapper">
                     <button class="nav-tab nav-tab-active" data-tab-target="#pdf_emd_vwr_admin_tabs1"> <?php esc_html_e('Settings','pdf-embed-viewer'); ?> </a>
-                    <button class="nav-tab" data-tab-target="#pdf_emd_vwr_admin_tabs2"> <?php esc_html_e('Support','pdf-embed-viewer'); ?> </a>
+                    <button class="nav-tab" data-tab-target="#pdf_emd_vwr_admin_tabs2"> <?php echo esc_html__('Support','pdf-embed-viewer'); ?> </a>
                 </h2>
                 <form action="" method="post">
                     <?php wp_nonce_field( 'pdf_emd_vwr_options_nonce', 'pdf_emd_vwr_options_nonce' ); ?>

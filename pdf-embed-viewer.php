@@ -12,7 +12,7 @@
  * License: GPL v2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: pdf-embed-viewer
- * Domain Path: /languages
+ * Domain Path: /languages/
  */
 
 /*
@@ -35,7 +35,7 @@ if( ! defined('ABSPATH') ) { die( "don't access directly" ); }
 if( ! class_exists( 'PDF_Emd_Vwr' ) ){
     class PDF_Emd_Vwr{
 
-        function __construct() {
+        public function __construct() {
             $this->define_contstants();
             $this->include_plugin_files();            
         }
