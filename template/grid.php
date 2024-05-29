@@ -45,15 +45,12 @@ if ( wp_is_block_theme() ) {  ?>
 	<div class="archive-grid-style">
 
 		<?php
+			$paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
 			$args = array(
 			'post_type'=>'pdf-embed-viewer',
-			'order' => 'ASC',
+			'order' => 'DSC',
 			'posts_per_page'=> get_option( 'posts_per_page' ),
-				'date_query' => array(
-					array(
-						'year'  => $year,
-					),
-				),
+			'paged' => $paged
 		);
 		$WpQuery = new WP_Query($args);    
 			while ( $WpQuery->have_posts() ) :
@@ -74,6 +71,9 @@ if ( wp_is_block_theme() ) {  ?>
 					</div>
 				</div>
 		<?php endwhile; ?>
+	</div>
+	<div class="pagination">
+		<?php PDF_Emd_Vwr_CPT::pagination_bar( $WpQuery ); ?>
 	</div>
 </div>
 
