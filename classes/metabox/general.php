@@ -18,7 +18,7 @@ if( ! class_exists('PDF_Emd_Vwr_General') ){
         }
         public function tabs($post_id){
             ?>
-                <li class="pdf-emd-vwr-tab" data-tab-target="#pdf-emd-vwr-tabs1"> <i class="fas fa-tools"></i> <?php echo esc_html('General','pdf-embed-viewer'); ?></li>
+                <li class="pdf-emd-vwr-tab" data-tab-target="#pdf-emd-vwr-tabs1"> <i class="fas fa-tools"></i> <?php esc_html_e('General','pdf-embed-viewer'); ?></li>
             <?php
         }
         public function tabs_content($post_id){
@@ -40,7 +40,7 @@ if( ! class_exists('PDF_Emd_Vwr_General') ){
                             <span><?php echo esc_html('Add pdf file by upload button','pdf-embed-viewer') ?></span>
                         </div>
                         <div style="width: 50%;">
-                            <input type="url" class="pdf_emd_vwr_file" name="pdf_emd_vwr_file_url" value="<?php echo esc_attr( $embed_file ) ? esc_attr($embed_file) : '' ;  ?>" placeholder="https://example.com/filename.pdf" required>
+                            <input type="url" class="pdf_emd_vwr_file" name="pdf_emd_vwr_file_url" value="<?php echo $embed_file ? esc_attr($embed_file) : '' ;  ?>" placeholder="https://example.com/filename.pdf" required>
                             <button class='button pdf-emd-vwr-upload'>
                                 <i class="fa fa-paperclip" aria-hidden="true"></i> <?php esc_attr_e('Upload','pdf-embed-viewer');?>
                             </button>
@@ -50,25 +50,11 @@ if( ! class_exists('PDF_Emd_Vwr_General') ){
                 <section>
                     <label class="label">
                         <div>
-                            <p><?php echo esc_html( 'Single Page Download', 'pdf-embed-viewer' )?></p>
+                            <p><?php echo esc_html( 'Download Button', 'pdf-embed-viewer' )?></p>
                             <span><?php echo esc_html('Show/Hide download Button in single page.','pdf-embed-viewer') ?></span>
-
                         </div>
                         <label class="switch">
                             <input type="checkbox" name="pdf_emd_vwr_check_download" value="<?php echo esc_attr($check_download); ?>" <?php echo esc_attr(($check_download=='yes')?'checked':''); ?>>
-                            <span class="slider"></span>
-                        </label>
-                    </label>
-                </section>
-                <section>
-                    <label class="label">
-                        <div>
-                            <p><?php echo esc_html( 'Archive Page Download ', 'pdf-embed-viewer' )?></p>
-                            <span><?php echo esc_html('Show/Hide download Button in archive page.','pdf-embed-viewer') ?></span>
-
-                        </div>
-                        <label class="switch">
-                            <input type="checkbox" name="pdf_emd_vwr_check_download_archive" value="<?php echo esc_attr($check_download_archive); ?>" <?php echo esc_attr(($check_download_archive=='yes')?'checked':''); ?>>
                             <span class="slider"></span>
                         </label>
                     </label>

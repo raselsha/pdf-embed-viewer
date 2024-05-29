@@ -40,10 +40,12 @@ if( ! class_exists('PDF_Emd_Vwr_Options_Setup') ){
             
             $template       = $this->options_array_sanitize($template);
             $archive_title  = sanitize_text_field('Pdf Embed Viewer');
+            $archive_download_button  = sanitize_text_field('yes');
             $colors         = $this->options_array_sanitize($colors);
             
-            add_option('pdf_emd_vwr_opt_template_lists',$template);
             add_option('pdf_emd_vwr_opt_archive_title',$archive_title);
+            add_option('pdf_emd_vwr_opt_template_lists',$template);
+            add_option('pdf_emd_vwr_opt_archive_download',$archive_download_button);
             add_option('pdf_emd_vwr_opt_colors',$colors);
         }
     }

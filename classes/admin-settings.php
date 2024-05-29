@@ -49,10 +49,8 @@ if( ! class_exists('PDF_Emd_Vwr_Admin_Settings') ){
                 if( ! current_user_can('manage_options')){
                     return;
                 }
-                if( isset($_POST['pdf_emd_vwr_options']) ){
-                    add_settings_error('pdf_emd_vwr_options','','Settings Saved!','success');
-                }
-                settings_errors('pdf_emd_vwr_options');
+                add_settings_error('pdf_emd_vwr_options_nonce','89',__('Settings Saved!'),'success');
+                settings_errors('pdf_emd_vwr_options_nonce');
                 
             }
             $this->settings_html_layout();

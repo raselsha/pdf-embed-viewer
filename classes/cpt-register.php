@@ -55,7 +55,7 @@ if( ! class_exists('PDF_Emd_Vwr_CPT') ){
                 "description" => __( "PDF Embed", 'pdf-embed-viewer' ),
                 "labels" => $labels, 
                 "public" => true,
-                "supports" => [ "title",], // post support ui elements
+                "supports" => [ "title",'thumbnail'], // post support ui elements
                 "hierarchical" => true, //parent child relation post type
                 "show_ui" => true, // post type show ui to add, edit
                 "show_in_menu" => true, // show menu into admin sidebar
@@ -142,49 +142,17 @@ if( ! class_exists('PDF_Emd_Vwr_CPT') ){
             return $years;
         }
 
-        public static function insert_demo_content() {
+        public static function insert_demo_post() {
             // Create an array of demo post data
-            $demo_posts = array(
-                array(
-                    'post_title'    => 'Demo Post 1',
-                    'post_content'  => 'This is the content of demo post 1.',
+            for($i=0; $i<5;$i++){
+                $post_data = array(
+                    'post_title'    => 'Demo Post'.$i,
+                    'post_content'  => 'This is the content of demo post '.$i,
                     'post_status'   => 'publish',
                     'post_author'   => 1, // Change this to the author ID you want
                     'post_type'     => 'pdf-embed-viewer'
-                ),
-                array(
-                    'post_title'    => 'Demo Post 2',
-                    'post_content'  => 'This is the content of demo post 2.',
-                    'post_status'   => 'publish',
-                    'post_author'   => 1, // Change this to the author ID you want
-                    'post_type'     => 'post'
-                ),
-                array(
-                    'post_title'    => 'Demo Post 3',
-                    'post_content'  => 'This is the content of demo post 1.',
-                    'post_status'   => 'publish',
-                    'post_author'   => 1, // Change this to the author ID you want
-                    'post_type'     => 'pdf-embed-viewer'
-                ),
-                array(
-                    'post_title'    => 'Demo Post 4',
-                    'post_content'  => 'This is the content of demo post 4.',
-                    'post_status'   => 'publish',
-                    'post_author'   => 1, // Change this to the author ID you want
-                    'post_type'     => 'pdf-embed-viewer'
-                ),
-                array(
-                    'post_title'    => 'Demo Post 5',
-                    'post_content'  => 'This is the content of demo post 5.',
-                    'post_status'   => 'publish',
-                    'post_author'   => 1, // Change this to the author ID you want
-                    'post_type'     => 'pdf-embed-viewer'
-                ),
-                // Add more demo posts as needed
-            );
-            foreach ( $demo_posts as $key => $post_data ) {
+                );
                 wp_insert_post( $post_data );
-                
             }
         }
     }

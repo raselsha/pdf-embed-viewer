@@ -52,7 +52,6 @@ if( ! class_exists( 'PDF_Emd_Vwr' ) ){
             require_once PDF_Emd_Vwr . 'classes/enque-style-script.php';
             require_once PDF_Emd_Vwr . 'classes/metabox-register.php';
             require_once PDF_Emd_Vwr . 'classes/metabox/general.php';
-            require_once PDF_Emd_Vwr . 'classes/metabox/template.php';
             require_once PDF_Emd_Vwr . 'classes/admin-settings.php';
 
         }
@@ -60,19 +59,19 @@ if( ! class_exists( 'PDF_Emd_Vwr' ) ){
         public static function activate(){
             // update the option table that permalink didn't need reload
             update_option('rewrite_rules','');
-            PDF_Emd_Vwr_CPT::insert_demo_content();
+            PDF_Emd_Vwr_CPT::insert_demo_post();
         }
 
         public static function deactivate(){
             flush_rewrite_rules();
+            
+        }
+
+        public static function uninstall(){
             unregister_post_type('pdf-embed-viewer');
             delete_option('pdf_emd_vwr_opt_template_lists');
             delete_option('pdf_emd_vwr_opt_archive_title');
             delete_option('pdf_emd_vwr_opt_colors');
-        }
-
-        public static function uninstall(){
-            
         }
     }
 
