@@ -40,6 +40,7 @@ if ( wp_is_block_theme() ) {  ?>
 		$archive_title = get_option('pdf_emd_vwr_opt_archive_title');
 		$check_download_archive  =  get_option('pdf_emd_vwr_opt_archive_download');
 		$years =  PDF_Emd_Vwr_CPT::get_posts_years_array('pdf-embed-viewer');
+		
 		if($years):
 	?>
 	<h2><?php echo isset($archive_title) ? esc_html($archive_title) : esc_html(the_archive_title()); ?></h2>
@@ -61,15 +62,17 @@ if ( wp_is_block_theme() ) {  ?>
 						<?php endif; ?>
 					</tr>
 					<?php
+						$paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
 						$args = array(
 						'post_type'=>'pdf-embed-viewer',
 						'order' => 'ASC',
-						'posts_per_page'=> get_option( 'posts_per_page' ),
-							'date_query' => array(
-								array(
-									'year'  => $year,
-								),
+						'posts_per_page'=> -1,
+						'paged' => $paged,
+						'date_query' => array(
+							array(
+								'year'  => $year,
 							),
+						),
 					);
 					$WpQuery = new WP_Query($args);    
 						while ( $WpQuery->have_posts() ) :
@@ -93,28 +96,17 @@ if ( wp_is_block_theme() ) {  ?>
 					<?php endwhile; ?>
 					
 				</table>
-			<?php endforeach; ?>	
+				
+			<?php endforeach; ?>
+				
 		</div>
+		
 	</div>
 	<?php else: ?>
 		<h2><?php echo esc_html('No data found','pdf-embed-viewer'); ?></h2>
 	<?php endif; ?>
 </div>
 
-<?php wp_link_pages(); ?>
-<?php
-global $wp_query;
-if ( $wp_query->max_num_pages > 1 ) :
-	?>
-	<div class="col-12">
-		<div class="pagination">
-				<?php /* Translators: HTML arrow */ ?>
-				<div class="nav-next me-auto"><?php // previous_posts_link( sprintf( __( '%s Previous', 'hello-elementor' ), '<span class="meta-nav">&#8592;</span>' ) ); ?></div>
-				<?php /* Translators: HTML arrow */ ?>
-				<div class="nav-previous ms-auto"><?php // next_posts_link( sprintf( __( 'Next %s', 'hello-elementor' ), '<span class="meta-nav">&#8594;</span>' ) ); ?></div>
-		</div>
-	</div>
-<?php endif; ?>
 
 <?php if ( wp_is_block_theme() ) : ?>
 	<footer class="wp-block-template-part">

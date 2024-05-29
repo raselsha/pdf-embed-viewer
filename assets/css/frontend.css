@@ -258,7 +258,7 @@
 @media (min-width: 992px) {
   .pdf-embed-viewer .archive-newsletter-style .tabs {
     width: 10%;
-    height: 500px;
+    height: auto;
   }
 }
 .pdf-embed-viewer .archive-newsletter-style .tabs .tab {

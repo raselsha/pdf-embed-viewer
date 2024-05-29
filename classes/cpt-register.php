@@ -127,6 +127,7 @@ if( ! class_exists('PDF_Emd_Vwr_CPT') ){
                         
             $terms_year = array(
                 'post_type'         => $post_type,
+                'posts_per_page'    => -1,
             );
             $years = array();
             $query_year = new WP_Query( $terms_year );
