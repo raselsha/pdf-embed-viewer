@@ -49,10 +49,12 @@ if ( wp_is_block_theme() ) {  ?>
 				<th><?php echo esc_html('Action','pdf-embed-viewer') ?></th>
 			</tr>
 			<?php
+				$paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
 				$args = array(
 				'post_type'=>'pdf-embed-viewer',
-				'order' => 'ASC',
+				'order' => 'DSC',
 				'posts_per_page'=> get_option( 'posts_per_page' ),
+				'paged' => $paged
 			);
 			$WpQuery = new WP_Query($args);    
 				while ( $WpQuery->have_posts() ) :
@@ -80,20 +82,9 @@ if ( wp_is_block_theme() ) {  ?>
 		</table>
 </div>
 
-<?php wp_link_pages(); ?>
-<?php
-global $wp_query;
-if ( $wp_query->max_num_pages > 1 ) :
-	?>
-	<div class="col-12">
-		<div class="pagination">
-				<?php /* Translators: HTML arrow */ ?>
-				<div class="nav-next me-auto"><?php // previous_posts_link( sprintf( __( '%s Previous', 'hello-elementor' ), '<span class="meta-nav">&#8592;</span>' ) ); ?></div>
-				<?php /* Translators: HTML arrow */ ?>
-				<div class="nav-previous ms-auto"><?php // next_posts_link( sprintf( __( 'Next %s', 'hello-elementor' ), '<span class="meta-nav">&#8594;</span>' ) ); ?></div>
-		</div>
-	</div>
-<?php endif; ?>
+<div class="pagination">
+	<?php PDF_Emd_Vwr_CPT::pagination_bar( $WpQuery ); ?>
+</div>
 
 <?php if ( wp_is_block_theme() ) : ?>
 	<footer class="wp-block-template-part">

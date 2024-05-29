@@ -38,14 +38,24 @@
   width: 100%;
   height: 1024px;
 }
-
-/*==================footer pagination================*/
-.pagination {
-  display: flex;
-  justify-content: space-between;
-  margin: 1rem 0;
+.pdf-embed-viewer .pagination {
+  width: max-content;
+  margin: 1rem auto;
+}
+.pdf-embed-viewer .pagination .page-numbers {
+  display: inline-block;
+  padding: 5px 10px;
+  border: 1px solid var(--pdf-emd-vwr-secondary);
+}
+.pdf-embed-viewer .pagination .page-numbers.current {
+  background-color: var(--pdf-emd-vwr-primary);
+  color: var(--pdf-emd-vwr-white);
 }
 
+/*==================footer pagination================*/
+.pdf-embed-viewer .archive-list-style {
+  overflow-x: scroll;
+}
 .pdf-embed-viewer .archive-list-style table {
   text-align: left;
   border-collapse: collapse;
@@ -296,13 +306,6 @@
 .pdf-embed-viewer .archive-newsletter-style .tabs-content table tr:nth-child(odd) {
   background: var(--pdf-emd-vwr-light);
   border: 0;
-}
-
-/*==================footer pagination================*/
-.pagination {
-  display: flex;
-  justify-content: space-between;
-  margin: 1rem 0;
 }
 
 /*# sourceMappingURL=frontend.css.map */
