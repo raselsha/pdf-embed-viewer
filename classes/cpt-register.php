@@ -144,7 +144,7 @@ if( ! class_exists('PDF_Emd_Vwr_CPT') ){
 
         public static function insert_demo_post() {
             // Create an array of demo post data
-            for($i=0; $i<5;$i++){
+            for($i=1; $i<16;$i++){
                 $post_data = array(
                     'post_title'    => 'Demo Post'.$i,
                     'post_content'  => 'This is the content of demo post '.$i,
