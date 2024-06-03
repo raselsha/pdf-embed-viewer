@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PDF Embed Viewer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-29 14:36+0000\n"
+"POT-Creation-Date: 2024-06-03 11:40+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -20,12 +20,20 @@ msgstr ""
 msgid "All PDF"
 msgstr ""
 
-#: classes/admin-settings.php:109
+#: classes/admin-settings.php:112
+msgid "Archive Template"
+msgstr ""
+
+#: classes/admin-settings.php:105
 msgid "Archive Title"
 msgstr ""
 
-#: classes/admin-settings.php:147
+#: classes/admin-settings.php:143
 msgid "Dark Color"
+msgstr ""
+
+#: classes/admin-settings.php:122
+msgid "Download Button"
 msgstr ""
 
 #: classes/options-setup.php:31
@@ -52,7 +60,7 @@ msgstr ""
 msgid "https://wordpress.org/plugins/pdf-embed-viewer"
 msgstr ""
 
-#: classes/admin-settings.php:154
+#: classes/admin-settings.php:150
 msgid "Light Color"
 msgstr ""
 
@@ -77,7 +85,7 @@ msgstr ""
 msgid "PDF Embed"
 msgstr ""
 
-#: classes/admin-settings.php:30
+#: classes/admin-settings.php:26
 msgid "PDF Embed - Viewer"
 msgstr ""
 
@@ -94,16 +102,16 @@ msgstr ""
 msgid "Previous"
 msgstr ""
 
-#: classes/admin-settings.php:135
+#: classes/admin-settings.php:131
 msgid "Primary Color"
 msgstr ""
 
-#: classes/admin-settings.php:141
+#: classes/admin-settings.php:137
 msgid "Secondary Color"
 msgstr ""
 
-#: classes/admin-settings.php:31 classes/admin-settings.php:41
-#: classes/admin-settings.php:70
+#: classes/admin-settings.php:27 classes/admin-settings.php:37
+#: classes/admin-settings.php:66
 msgid "Settings"
 msgstr ""
 
@@ -111,7 +119,7 @@ msgstr ""
 msgid "Shahadat Hossain"
 msgstr ""
 
-#: classes/admin-settings.php:71
+#: classes/admin-settings.php:67
 msgid "Support"
 msgstr ""
 

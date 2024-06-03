@@ -5,14 +5,10 @@ if( ! class_exists('PDF_Emd_Vwr_Admin_Settings') ){
     class PDF_Emd_Vwr_Admin_Settings{
         
         public function __construct() {
+            
             add_action( 'admin_menu', array($this,'create_admin_menu') );
             add_action( 'admin_init', array($this,'save_options_data') ); 
             add_filter( 'plugin_action_links_pdf-embed-viewer/pdf-embed-viewer.php',[$this,'add_settings_link']);
-            add_action( 'admin_init', [$this,'load_plugin_textdomain'] );           
-        }
-
-        public function load_plugin_textdomain() {
-            load_plugin_textdomain( 'pdf-embed-viewer', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
         }
 
         public function create_admin_menu(){
@@ -67,7 +63,7 @@ if( ! class_exists('PDF_Emd_Vwr_Admin_Settings') ){
             <div class="wrap admin-wrap pdf-embed-viewer">
                 <h2><?php get_admin_page_title(); ?></h2>
                 <h2 class="nav-tab-wrapper">
-                    <button class="nav-tab nav-tab-active" data-tab-target="#pdf_emd_vwr_admin_tabs1"> <?php esc_html_e('Settings','pdf-embed-viewer'); ?> </a>
+                    <button class="nav-tab nav-tab-active" data-tab-target="#pdf_emd_vwr_admin_tabs1"> <?php echo esc_html__('Settings','pdf-embed-viewer'); ?> </a>
                     <button class="nav-tab" data-tab-target="#pdf_emd_vwr_admin_tabs2"> <?php echo esc_html__('Support','pdf-embed-viewer'); ?> </a>
                 </h2>
                 <form action="" method="post">
@@ -77,7 +73,7 @@ if( ! class_exists('PDF_Emd_Vwr_Admin_Settings') ){
                         <?php submit_button('Save'); ?>
                     </div> 
                     <div class="tab-content" id="pdf_emd_vwr_admin_tabs2">
-                        <p><?php esc_html_e('For Support send email to'); ?> <a href="mailto:raselsha@gmail.com"><?php esc_html_e('raselsha@gmail.com'); ?></a> </p>    
+                        <p><?php esc_html_e('For Support send email to','pdf-embed-viewer'); ?> <a href="mailto:raselsha@gmail.com"><?php esc_html_e('raselsha@gmail.com'); ?></a> </p>    
                     </div> 
                     
                 </form>
@@ -113,7 +109,7 @@ if( ! class_exists('PDF_Emd_Vwr_Admin_Settings') ){
                         </td>
                     </tr>
                     <tr>
-                        <th><?php echo esc_html( 'Archive Template', 'pdf-embed-viewer' )?></th>
+                        <th><?php echo esc_html__( 'Archive Template', 'pdf-embed-viewer' )?></th>
                         <td>
                             <select name="pdf_emd_vwr_opt_archive_template">
                                 <?php foreach($options_template as $key => $value): ?>
@@ -123,7 +119,7 @@ if( ! class_exists('PDF_Emd_Vwr_Admin_Settings') ){
                         </td>
                     </tr>
                     <tr>
-                        <th><?php echo esc_html( 'Download Button', 'pdf-embed-viewer' )?></th>
+                        <th><?php echo esc_html__( 'Download Button', 'pdf-embed-viewer' )?></th>
                         <td>
                             <label class="switch">
                                 <input type="checkbox" name="pdf_emd_vwr_opt_archive_download" value="<?php echo esc_attr($archive_download); ?>" <?php echo esc_attr(($archive_download=='yes')?'checked':''); ?>>
