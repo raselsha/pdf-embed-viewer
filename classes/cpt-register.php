@@ -164,12 +164,13 @@ if( ! class_exists('PDF_Emd_Vwr_CPT') ){
             if ($pages > 1)
             {
                 $page_current = max(1, get_query_var('paged'));
-                echo paginate_links(array(
-                    'base' => str_replace( $big, '%#%', esc_url( get_pagenum_link( $big ) ) ),
+                $links = paginate_links(array(
+                    'base' => str_replace( $big, '%#%', get_pagenum_link( $big ) ),
                     'format' => '?paged=%#%',
                     'current' => $page_current,
                     'total' => $pages,
                 ));
+                echo esc_url($links);
             }
         }
     }

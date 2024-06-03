@@ -59,7 +59,7 @@ if ( wp_is_block_theme() ) {  ?>
 				<div class="grid-item">
 					<div class="image"><img src="https://dummyimage.com/640x4:3" alt=""></div>					
 					<div class="content">
-						<h2><a href="<?php the_permalink(); ?>"><?php echo mb_strimwidth(get_the_title(), 0, 50, '...');?></a></h2>
+						<h2><a href="<?php the_permalink(); ?>"><?php echo esc_html(mb_strimwidth(get_the_title(), 0, 50, '...'));?></a></h2>
 						<div class="action">
 							<?php if($check_download_archive == 'yes' and  isset($pdf_emd_vwr_file_url)): ?>
 								<a href="<?php echo esc_attr($pdf_emd_vwr_file_ur); ?>" download><?php echo esc_html('Download','pdf-embed-viewer'); ?> <span class="download-icon" style="background-image: url(<?php echo esc_attr(PDF_Emd_Vwr_URL.'assets/images/download.svg'); ?>);"></span> </a>
