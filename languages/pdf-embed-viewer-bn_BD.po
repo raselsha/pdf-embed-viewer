@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PDF Embed Viewer\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-06-03 11:24+0000\n"
-"PO-Revision-Date: 2024-06-03 11:43+0000\n"
+"PO-Revision-Date: 2024-06-03 11:59+0000\n"
 "Last-Translator: \n"
 "Language-Team: বাংলা\n"
 "Language: bn_BD\n"
@@ -14,6 +14,14 @@ msgstr ""
 "X-Generator: Loco https://localise.biz/\n"
 "X-Loco-Version: 2.6.9; wp-6.5.3\n"
 "X-Domain: pdf-embed-viewer"
+
+#: classes/metabox/general.php:40
+msgid "Add pdf file by upload button"
+msgstr "আপলোড বাটন দ্বারা পিডিএফ ফাইল আপলোড করুন"
+
+#: classes/metabox/general.php:39
+msgid "Add PDF URL"
+msgstr "পিডিএফ ইউআরএল লিংক করুন"
 
 #: classes/cpt-register.php:48
 msgid "All PDF"
@@ -31,7 +39,7 @@ msgstr "আর্কাইভ শিরোনাম"
 msgid "Dark Color"
 msgstr "গাঢ় রঙ"
 
-#: classes/admin-settings.php:122
+#: classes/admin-settings.php:122 classes/metabox/general.php:53
 msgid "Download Button"
 msgstr "ডাউনলোড বাটন"
 
@@ -109,6 +117,10 @@ msgstr "আগে"
 msgid "Primary Color"
 msgstr "মৌলিক রঙ"
 
+#: classes/admin-settings.php:73
+msgid "Save"
+msgstr "সংরক্ষণ"
+
 #: classes/admin-settings.php:137
 msgid "Secondary Color"
 msgstr "সেকেন্ডারি কালার"
@@ -121,6 +133,10 @@ msgstr "সেটিংস"
 #. Author of the plugin
 msgid "Shahadat Hossain"
 msgstr "শাহাদাত হোসাইন"
+
+#: classes/metabox/general.php:54
+msgid "Show/Hide download Button in single page."
+msgstr "সিঙ্গেল পেজ এ ডাউনলোড বাটন দেখান অথবা বন্ধ রাখুন"
 
 #: classes/admin-settings.php:67
 msgid "Support"

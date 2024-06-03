@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PDF Embed Viewer\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-06-03 11:24+0000\n"
-"PO-Revision-Date: 2024-06-03 11:34+0000\n"
+"PO-Revision-Date: 2024-06-03 11:55+0000\n"
 "Last-Translator: \n"
 "Language-Team: বাংলা\n"
 "Language: bn_BD\n"
@@ -15,9 +15,21 @@ msgstr ""
 "X-Loco-Version: 2.6.9; wp-6.5.3\n"
 "X-Domain: pdf-embed-viewer"
 
+#: classes/metabox/general.php:40
+msgid "Add pdf file by upload button"
+msgstr "আপলোড বাটন দ্বারা পিডিএফ ফাইল আপলোড করুন"
+
+#: classes/metabox/general.php:39
+msgid "Add PDF URL"
+msgstr "পিডিএফ ইউআরএল লিংক করুন"
+
 #: classes/cpt-register.php:48
 msgid "All PDF"
 msgstr "সব পিডিএফ"
+
+#: classes/admin-settings.php:112
+msgid "Archive Template"
+msgstr "আর্কাইভ টেম্পলেট"
 
 #: classes/admin-settings.php:105
 msgid "Archive Title"
@@ -27,6 +39,10 @@ msgstr "আর্কাইভ শিরোনাম"
 msgid "Dark Color"
 msgstr "গাঢ় রঙ"
 
+#: classes/admin-settings.php:122 classes/metabox/general.php:53
+msgid "Download Button"
+msgstr "ডাউনলোড বাটন"
+
 #: classes/options-setup.php:31
 msgid "Ebook Template"
 msgstr "ইবুক টেমপ্লেট"
@@ -34,6 +50,10 @@ msgstr "ইবুক টেমপ্লেট"
 #: classes/cpt-register.php:23
 msgid "File Url"
 msgstr "ফাইল ইউআরএল"
+
+#: classes/admin-settings.php:76
+msgid "For Support send email to"
+msgstr "সাহায্যের প্রয়োজন হলে ইমেইল করুন"
 
 #: classes/metabox/general.php:21
 msgid "General"
@@ -110,6 +130,10 @@ msgstr "সেটিংস"
 msgid "Shahadat Hossain"
 msgstr "শাহাদাত হোসাইন"
 
+#: classes/metabox/general.php:54
+msgid "Show/Hide download Button in single page."
+msgstr "সিঙ্গেল পেজ এ ডাউনলোড বাটন দেখান অথবা বন্ধ রাখুন"
+
 #: classes/admin-settings.php:67
 msgid "Support"
 msgstr "সাপোর্ট"
@@ -122,7 +146,12 @@ msgid ""
 "customizable features, this plugin offers a hassle-free solution for "
 "displaying PDFs in webpage."
 msgstr ""
+"\"পিডিএফ এম্বেড ভিউয়ার\" প্লাগইনটি আপনার ওয়ার্ডপ্রেস ওয়েবসাইটে পিডিএফ "
+"ফাইলগুলি দেখতে এবং ডাউনলোড করার জন্য ডিজাইন করা হয়েছে। এটি সরাসরি ওয়েব "
+"পেজের মধ্যে ডকুমেন্ট, নিউজলেটার, ইবুকে সহজে অ্যাক্সেসের অনুমতি দেয়। এর "
+"ব্যবহারকারী-বান্ধব ইন্টারফেস এবং কাস্টমাইজযোগ্য বৈশিষ্ট্যগুলির সাথে, এই "
+"প্লাগইনটি ওয়েবপেজে PDF প্রদর্শনের জন্য একটি ঝামেলা-মুক্ত সমাধান অফার করে।"
 
 #: classes/metabox/general.php:45
 msgid "Upload"
-msgstr ""
+msgstr "আপলোড করুন"

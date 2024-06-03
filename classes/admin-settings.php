@@ -70,7 +70,7 @@ if( ! class_exists('PDF_Emd_Vwr_Admin_Settings') ){
                     <?php wp_nonce_field( 'pdf_emd_vwr_options_nonce', 'pdf_emd_vwr_options_nonce' ); ?>
                     <div class="tab-content active" id="pdf_emd_vwr_admin_tabs1">
                         <?php $this->options_fields(); ?>
-                        <?php submit_button('Save'); ?>
+                        <?php submit_button(); ?>
                     </div> 
                     <div class="tab-content" id="pdf_emd_vwr_admin_tabs2">
                         <p><?php esc_html_e('For Support send email to','pdf-embed-viewer'); ?> <a href="mailto:raselsha@gmail.com"><?php esc_html_e('raselsha@gmail.com'); ?></a> </p>    
