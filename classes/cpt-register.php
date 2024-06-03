@@ -20,7 +20,9 @@ if( ! class_exists('PDF_Emd_Vwr_CPT') ){
         }        
 
         public function posts_columns($columns){
-            $columns['pdf_emd_vwr_file_url']=esc_html__('File Url','pdf-embed-viewer');
+            unset($columns['date']);
+            $columns['pdf_emd_vwr_file_url'] = esc_html__('File Url','pdf-embed-viewer');
+            $columns['date'] = esc_html__('Date','pdf-embed-viewer');
             return $columns;
         }
 
