@@ -10,7 +10,7 @@ jQuery(document).ready(function ($) {
   pdfev_emd_vwr_toggle();
   pdf_emd_vwr_tab();
   pdf_emd_vwr_settings_tab();
-  pdf_emd_vwr_upload();
+  pdfev_emd_vwr_upload();
   $('.color-field').wpColorPicker();
 
 // ============admin tabs===========
@@ -53,8 +53,8 @@ jQuery(document).ready(function ($) {
 
 
   // =================media upload======== 
-  function pdf_emd_vwr_upload() {
-    $('.pdf-emd-vwr-upload').click(function(e) {
+  function pdfev_emd_vwr_upload() {
+    $('.pdfev-emd-vwr-upload').click(function(e) {
         e.preventDefault();
         var mediaUploader = wp.media({
             title: 'Upload PDF',
@@ -70,10 +70,11 @@ jQuery(document).ready(function ($) {
           var attachment = mediaUploader.state().get('selection').first().toJSON();
           // Check if the selected file is a PDF
           if (attachment.mime === 'application/pdf') {
-            $('.pdfev_emd_vwr_file').val(attachment.url);
+            $('.pdfev-emd-vwr-file').val(attachment.url);
+            console.log(attachment.url);
           } else {
             alert('Please select a PDF file only.');
-            $('.pdfev_emd_vwr_file').val('');
+            $('.pdfev-emd-vwr-file').val('');
           }
         });
         mediaUploader.open();

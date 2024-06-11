@@ -1,14 +1,11 @@
 
-
-
 #pdfev-embed-viewer{
     .inside{
         margin: 0;
         padding: 0;
-        #pdf-embed-metabox-tabs{
+        #pdfev-embed-metabox-tabs{
             display: flex;
             justify-content: space-between;
-        
             aside{
                 width: 20%;
                 background-color: $light;
@@ -17,7 +14,7 @@
                     padding: 20px;
                     padding-right: 0;
                     list-style: none;
-                    li.pdf-emd-vwr-tab{
+                    li.pdfev-emd-vwr-tab{
                         margin: 0;
                         padding: 10px;
                         border-bottom: 1px solid $gray;
@@ -65,7 +62,7 @@
                         cursor: pointer;
                     }
                 }
-                input.pdf_emd_vwr_file{
+                input.pdfev-emd-vwr-file{
                     width: 83%;
                 }
             }
