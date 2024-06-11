@@ -8,17 +8,17 @@
 
 if( ! defined('ABSPATH') ) { die( "don't access directly" ); }
 
-if( ! class_exists('PDF_Emd_Vwr_General') ){
-    class PDF_Emd_Vwr_General{
+if( ! class_exists('PDFEV_Embed_Viewer_General') ){
+    class PDFEV_Embed_Viewer_General{
         public function __construct()
         {
-            add_action('nav_tabs',array($this,'tabs'));
-            add_action('tabs_content',array($this,'tabs_content'));
+            add_action('pdfev_emd_vwr_actn_nav_tabs',array($this,'tabs'));
+            add_action('pdfev_emd_vwr_actn_tabs_content',array($this,'tabs_content'));
             add_action( 'save_post' , array( $this, 'save_post') );
         }
         public function tabs($post_id){
             ?>
-                <li class="pdf-emd-vwr-tab" data-tab-target="#pdf-emd-vwr-tabs1"> <i class="fas fa-tools"></i> <?php esc_html_e('General','pdf-embed-viewer'); ?></li>
+                <li class="pdfev-emd-vwr-tab" data-tab-target="#pdfev-emd-vwr-tabs-general"> <i class="fas fa-tools"></i> <?php esc_html_e('General','pdf-embed-viewer'); ?></li>
             <?php
         }
         public function tabs_content($post_id){
@@ -31,8 +31,8 @@ if( ! class_exists('PDF_Emd_Vwr_General') ){
             $check_download_archive  = get_post_meta( $post_id, 'pdf_emd_vwr_check_download_archive', true );
             $check_download_archive  = $check_download_archive ? $check_download_archive : 'yes';
             ?>
-            <div class="pdf-emd-vwr-tab-content" id="pdf-emd-vwr-tabs1">
-                <?php wp_nonce_field( 'pdf_emd_vwr_metabox_nonce', 'pdf_emd_vwr_metabox_nonce' ); ?>
+            <div class="pdfev-emd-vwr-tab-content" id="pdfev-emd-vwr-tabs-general">
+                <?php wp_nonce_field( 'pdfev_emd_vwr_metabox_nonce', 'pdfev_emd_vwr_metabox_nonce' ); ?>
                 <section>
                     <label class="label">
                         <div>
@@ -40,8 +40,8 @@ if( ! class_exists('PDF_Emd_Vwr_General') ){
                             <span><?php echo esc_html__('Add pdf file by upload button','pdf-embed-viewer') ?></span>
                         </div>
                         <div style="width: 50%;">
-                            <input type="url" class="pdf_emd_vwr_file" name="pdf_emd_vwr_file_url" value="<?php echo $embed_file ? esc_attr($embed_file) : '' ;  ?>" placeholder="https://example.com/filename.pdf" required>
-                            <button class='button pdf-emd-vwr-upload'>
+                            <input type="url" class="pdfev_emd_vwr_file" name="pdfev_emd_vwr_file_url" value="<?php echo $embed_file ? esc_attr($embed_file) : '' ;  ?>" placeholder="https://example.com/filename.pdf" required>
+                            <button class='button pdfev-emd-vwr-upload'>
                                 <i class="fa fa-paperclip" aria-hidden="true"></i> <?php esc_attr_e('Upload','pdf-embed-viewer');?>
                             </button>
                         </div>
@@ -54,7 +54,7 @@ if( ! class_exists('PDF_Emd_Vwr_General') ){
                             <span><?php echo esc_html__('Show/Hide download Button in single page.','pdf-embed-viewer') ?></span>
                         </div>
                         <label class="switch">
-                            <input type="checkbox" name="pdf_emd_vwr_check_download" value="<?php echo esc_attr($check_download); ?>" <?php echo esc_attr(($check_download=='yes')?'checked':''); ?>>
+                            <input type="checkbox" name="pdfev_emd_vwr_check_download" value="<?php echo esc_attr($check_download); ?>" <?php echo esc_attr(($check_download=='yes')?'checked':''); ?>>
                             <span class="slider"></span>
                         </label>
                     </label>
@@ -66,8 +66,8 @@ if( ! class_exists('PDF_Emd_Vwr_General') ){
 
         public function save_post($post_id){
 
-                if( isset( $_POST['pdf_emd_vwr_metabox_nonce'] ) ){
-                    if( ! wp_verify_nonce( $_POST['pdf_emd_vwr_metabox_nonce'], 'pdf_emd_vwr_metabox_nonce' ) ){
+                if( isset( $_POST['pdfev_emd_vwr_metabox_nonce'] ) ){
+                    if( ! wp_verify_nonce( sanitize_text_field( wp_unslash ( $_POST['pdfev_emd_vwr_metabox_nonce'] ) ) , 'pdfev_emd_vwr_metabox_nonce' ) ){
                         return;
                     }
                 }
@@ -76,7 +76,7 @@ if( ! class_exists('PDF_Emd_Vwr_General') ){
                     return;
                 }
 
-                if( isset($_POST['post_type']) && $_POST['post_type'] === 'pdf-embed-viewer' ){
+                if( isset($_POST['post_type']) && $_POST['post_type'] === 'PDFEV_Embed_Viewer' ){
                     if( ! current_user_can('edit_page',$post_id) ){
                         return;
                     }
@@ -87,18 +87,18 @@ if( ! class_exists('PDF_Emd_Vwr_General') ){
 
                 if( isset($_POST['action']) and $_POST['action']=='editpost' ){                    
 
-                    $file_url  = isset( $_POST['pdf_emd_vwr_file_url'] ) ? $_POST['pdf_emd_vwr_file_url'] : '';
-					update_post_meta( $post_id, 'pdf_emd_vwr_file_url', sanitize_url($file_url) );
+                    $file_url  = isset( $_POST['pdf_emd_vwr_file_url'] ) ? sanitize_url($_POST['pdf_emd_vwr_file_url']) : sanitize_text_field('');
+					update_post_meta( $post_id, 'pdf_emd_vwr_file_url', $file_url );
                     
-                    $check_download  = isset( $_POST['pdf_emd_vwr_check_download'] ) ? $_POST['pdf_emd_vwr_check_download'] : 'no';
-					update_post_meta( $post_id, 'pdf_emd_vwr_check_download', sanitize_text_field($check_download) );
+                    $check_download  = isset( $_POST['pdf_emd_vwr_check_download'] ) ? sanitize_text_field($_POST['pdf_emd_vwr_check_download']) : sanitize_text_field('no');
+					update_post_meta( $post_id, 'pdf_emd_vwr_check_download', $check_download );
                     
-                    $check_download_archive  = isset( $_POST['pdf_emd_vwr_check_download_archive'] ) ? $_POST['pdf_emd_vwr_check_download_archive'] : 'no';
-					update_post_meta( $post_id, 'pdf_emd_vwr_check_download_archive', sanitize_text_field($check_download_archive) );
+                    $check_download_archive  = isset( $_POST['pdf_emd_vwr_check_download_archive'] ) ? sanitize_text_field($_POST['pdf_emd_vwr_check_download_archive']) : sanitize_text_field('no');
+					update_post_meta( $post_id, 'pdf_emd_vwr_check_download_archive', $check_download_archive );
 
                 }
             }
     }
     
-    $AB_Enque = new PDF_Emd_Vwr_General();
+    $PDFEV_Embed_Viewer_General = new PDFEV_Embed_Viewer_General();
 }

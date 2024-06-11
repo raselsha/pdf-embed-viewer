@@ -58,13 +58,12 @@ if( ! class_exists( 'PDFEV_Embed_Viewer' ) ){
             require_once PDFEV_Embed_Viewer_Path . 'classes/metabox-register.php';
             require_once PDFEV_Embed_Viewer_Path . 'classes/metabox/general.php';
             require_once PDFEV_Embed_Viewer_Path . 'classes/admin-settings.php';
-
         }
 
         public static function activate(){
             // update the option table that permalink didn't need reload
             update_option('rewrite_rules','');
-            PDF_Emd_Vwr_CPT::insert_demo_post();
+            PDFEV_Embed_Viewer_CPT::insert_demo_post();
         }
 
         public static function deactivate(){
@@ -73,10 +72,10 @@ if( ! class_exists( 'PDFEV_Embed_Viewer' ) ){
         }
 
         public static function uninstall(){
-            unregister_post_type('pdf-embed-viewer');
-            delete_option('pdf_emd_vwr_opt_template_lists');
-            delete_option('pdf_emd_vwr_opt_archive_title');
-            delete_option('pdf_emd_vwr_opt_colors');
+            unregister_post_type('PDFEV_Embed_Viewer');
+            delete_option('pdfev_emd_vwr_opt_template_lists');
+            delete_option('pdfev_emd_vwr_opt_archive_title');
+            delete_option('pdfev_emd_vwr_opt_colors');
         }
     }
 
@@ -86,5 +85,5 @@ if( class_exists( 'PDFEV_Embed_Viewer' ) ){
     register_activation_hook( __FILE__, array( 'PDFEV_Embed_Viewer','activate' ) );
     register_deactivation_hook( __FILE__, array( 'PDFEV_Embed_Viewer','deactivate' ) );
     register_uninstall_hook( __FILE__, array( 'PDFEV_Embed_Viewer','uninstall' ) );
-    $pdf_download = new PDFEV_Embed_Viewer();
+    $PDFEV_Embed_Viewer = new PDFEV_Embed_Viewer();
 }

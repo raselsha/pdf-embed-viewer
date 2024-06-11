@@ -6,22 +6,22 @@
 
 if( ! defined('ABSPATH') ) { die( "don't access directly" ); }
 
-if( ! class_exists('PDF_Emd_Vwr_CPT') ){
+if( ! class_exists('PDFEV_Embed_Viewer_CPT') ){
 
-    class PDF_Emd_Vwr_CPT{
+    class PDFEV_Embed_Viewer_CPT{
        
         public function __construct() {
             add_action( 'init', array($this,'create_post_type') );
             add_filter( 'archive_template', array($this,'archive_template') ) ;
             add_filter( 'single_template', array($this,'single_template') ) ;
-            add_filter( 'manage_pdf-embed-viewer_posts_columns', array($this,'posts_columns') ) ;
-            add_action( 'manage_pdf-embed-viewer_posts_custom_column', array($this,'custom_column'),10,2 ) ;
-            add_filter( 'manage_edit-pdf-embed-viewer_sortable_columns', array($this,'sortable_columns') ) ;
+            add_filter( 'manage_PDFEV_Embed_Viewer_posts_columns', array($this,'posts_columns') ) ;
+            add_action( 'manage_PDFEV_Embed_Viewer_posts_custom_column', array($this,'custom_column'),10,2 ) ;
+            add_filter( 'manage_edit-PDFEV_Embed_Viewer_sortable_columns', array($this,'sortable_columns') ) ;
         }        
 
         public function posts_columns($columns){
             unset($columns['date']);
-            $columns['pdf_emd_vwr_file_url'] = esc_html__('File Url','pdf-embed-viewer');
+            $columns['pdfev_emd_vwr_file_url'] = esc_html__('File Url','pdf-embed-viewer');
             $columns['date'] = esc_html__('Date','pdf-embed-viewer');
             return $columns;
         }
@@ -29,15 +29,15 @@ if( ! class_exists('PDF_Emd_Vwr_CPT') ){
         public function custom_column($columns, $post_id){
 
             switch($columns){
-                case 'pdf_emd_vwr_file_url':
-                     echo esc_url(get_post_meta($post_id,'pdf_emd_vwr_file_url',true));
+                case 'pdfev_emd_vwr_file_url':
+                     echo esc_url(get_post_meta($post_id,'pdfev_emd_vwr_file_url',true));
                 break;
             }
         }
 
         public function sortable_columns($columns){
 
-            $columns['pdf_emd_vwr_file_url']='pdf_emd_vwr_file_url';
+            $columns['pdfev_emd_vwr_file_url']='pdfev_emd_vwr_file_url';
             return $columns;
         }
 
@@ -77,34 +77,35 @@ if( ! class_exists('PDF_Emd_Vwr_CPT') ){
                 "map_meta_cap" => true,
                 "rewrite" => [ "slug" => "pdf-embed-viewer", "with_front" => true ],
                 "query_var" => true,
-                "menu_icon" => PDF_Emd_Vwr_URL.'assets/images/pdf-embed-viewer-icon.png',
+                "menu_icon" => PDFEV_Embed_Viewer_URL.'assets/images/pdf-embed-viewer-icon.png',
                 "show_in_graphql" => false,
                 //"register_metabox_cb" => array($this,'add_meta_boxes'),
             ];
 
-            register_post_type( "pdf-embed-viewer", $args );
+            register_post_type( "PDFEV_Embed_Viewer", $args );
             
         }
         
 
         public function archive_template( $archive_template ) {
-            $template = get_option('pdf_emd_vwr_opt_archive_template'); 
-            $opt_templates = get_option('pdf_emd_vwr_opt_template_lists'); 
+            $template = get_option('pdfev_emd_vwr_opt_archive_template'); 
+            $opt_templates = get_option('pdfev_emd_vwr_opt_template_lists'); 
 
             foreach($opt_templates as $key => $value){
                 if($template == $key){
+                    $value = $value;
                     $inc_template = $key.'.php';
                 }
             }
 
-            if ( is_post_type_archive ( 'pdf-embed-viewer' ) ) {                
+            if ( is_post_type_archive ( 'PDFEV_Embed_Viewer' ) ) {                
                 $archive_template = get_template_directory().'/template/'. $inc_template;
                 if( ! file_exists($archive_template)){
                     $archive_template = get_template_directory().'/template/list.php';
                     if( ! file_exists($archive_template)){
-                        $archive_template = PDF_Emd_Vwr . 'template/'. $inc_template;
+                        $archive_template = PDFEV_Embed_Viewer_Path . 'template/'. $inc_template;
                         if( ! file_exists($archive_template)){
-                            $archive_template = PDF_Emd_Vwr . 'template/list.php';
+                            $archive_template = PDFEV_Embed_Viewer_Path . 'template/list.php';
                         }
                     }
                 }
@@ -115,11 +116,11 @@ if( ! class_exists('PDF_Emd_Vwr_CPT') ){
         }
 
         public function single_template($single_template) {
-            global $wp_query, $post;
-            if ($post->post_type == 'pdf-embed-viewer'){   
+            global $post;
+            if ($post->post_type == 'PDFEV_Embed_Viewer'){   
                 $single_template = get_template_directory().'/template/single.php';
                 if( ! file_exists($single_template)){
-                    $single_template = PDF_Emd_Vwr . 'template/single.php';
+                    $single_template = PDFEV_Embed_Viewer_Path . 'template/single.php';
                 }
             }
             return $single_template;
@@ -149,11 +150,11 @@ if( ! class_exists('PDF_Emd_Vwr_CPT') ){
             // Create an array of demo post data
             for($i=1; $i<16;$i++){
                 $post_data = array(
-                    'post_title'    => 'Demo Post'.$i,
+                    'post_title'    => 'Demo Post '.$i,
                     'post_content'  => 'This is the content of demo post '.$i,
                     'post_status'   => 'publish',
                     'post_author'   => 1, // Change this to the author ID you want
-                    'post_type'     => 'pdf-embed-viewer'
+                    'post_type'     => 'PDFEV_Embed_Viewer'
                 );
                 wp_insert_post( $post_data );
             }
@@ -179,7 +180,7 @@ if( ! class_exists('PDF_Emd_Vwr_CPT') ){
 
     
 
-    $PDF_Emd_Vwr_CPT = new PDF_Emd_Vwr_CPT();
+    $PDFEV_Embed_Viewer_CPT = new PDFEV_Embed_Viewer_CPT();
 
     
 }

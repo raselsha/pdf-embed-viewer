@@ -8,19 +8,19 @@
   --pdfv-white:#fff;
 }
 
-.pdf-embed-viewer .switch {
+.pdfev-embed-viewer .switch {
   position: relative;
   display: inline-block;
   width: 48px;
   height: 20px;
   margin: 0;
 }
-.pdf-embed-viewer .switch input {
+.pdfev-embed-viewer .switch input {
   opacity: 0;
   width: 0;
   height: 0;
 }
-.pdf-embed-viewer .switch .slider {
+.pdfev-embed-viewer .switch .slider {
   position: absolute;
   cursor: pointer;
   top: 0;
@@ -31,7 +31,7 @@
   background-color: var(--pdfv-gray);
   transition: 0.5s;
 }
-.pdf-embed-viewer .switch .slider:before {
+.pdfev-embed-viewer .switch .slider:before {
   position: absolute;
   content: "";
   height: 16px;
@@ -43,35 +43,35 @@
   background-color: var(--pdfv-white);
   transition: 0.4s;
 }
-.pdf-embed-viewer .switch input:checked + .slider {
+.pdfev-embed-viewer .switch input:checked + .slider {
   background-color: var(--pdfv-primary);
 }
-.pdf-embed-viewer .switch input:checked + .slider:before {
+.pdfev-embed-viewer .switch input:checked + .slider:before {
   transform: translateX(27px);
 }
-.pdf-embed-viewer .switch input:focus + .slider {
+.pdfev-embed-viewer .switch input:focus + .slider {
   box-shadow: inset 0 0 1px var(--pdfv-dark);
 }
 
-#pdf-embed-viewer .inside {
+#pdfev-embed-viewer .inside {
   margin: 0;
   padding: 0;
 }
-#pdf-embed-viewer .inside #pdf-embed-metabox-tabs {
+#pdfev-embed-viewer .inside #pdf-embed-metabox-tabs {
   display: flex;
   justify-content: space-between;
 }
-#pdf-embed-viewer .inside #pdf-embed-metabox-tabs aside {
+#pdfev-embed-viewer .inside #pdf-embed-metabox-tabs aside {
   width: 20%;
   background-color: var(--pdfv-light);
 }
-#pdf-embed-viewer .inside #pdf-embed-metabox-tabs aside ul {
+#pdfev-embed-viewer .inside #pdf-embed-metabox-tabs aside ul {
   margin: 0;
   padding: 20px;
   padding-right: 0;
   list-style: none;
 }
-#pdf-embed-viewer .inside #pdf-embed-metabox-tabs aside ul li.pdf-emd-vwr-tab {
+#pdfev-embed-viewer .inside #pdf-embed-metabox-tabs aside ul li.pdf-emd-vwr-tab {
   margin: 0;
   padding: 10px;
   border-bottom: 1px solid var(--pdfv-gray);
@@ -81,41 +81,41 @@
   border-left: 2px solid transparent;
   cursor: pointer;
 }
-#pdf-embed-viewer .inside #pdf-embed-metabox-tabs aside ul li.pdf-emd-vwr-tab.active {
+#pdfev-embed-viewer .inside #pdf-embed-metabox-tabs aside ul li.pdf-emd-vwr-tab.active {
   background-color: var(--pdfv-white);
   border-left: 2px solid var(--pdfv-primary);
 }
-#pdf-embed-viewer .inside #pdf-embed-metabox-tabs aside ul li.pdf-emd-vwr-tab i {
+#pdfev-embed-viewer .inside #pdf-embed-metabox-tabs aside ul li.pdf-emd-vwr-tab i {
   padding: 0 10px;
   color: var(--pdfv-primary);
 }
-#pdf-embed-viewer .inside #pdf-embed-metabox-tabs .content {
+#pdfev-embed-viewer .inside #pdf-embed-metabox-tabs .content {
   width: 80%;
   padding: 2% 5%;
 }
-#pdf-embed-viewer .inside #pdf-embed-metabox-tabs .content .pdf-emd-vwr-tab-content {
+#pdfev-embed-viewer .inside #pdf-embed-metabox-tabs .content .pdf-emd-vwr-tab-content {
   display: none;
 }
-#pdf-embed-viewer .inside #pdf-embed-metabox-tabs .content .pdf-emd-vwr-tab-content.active {
+#pdfev-embed-viewer .inside #pdf-embed-metabox-tabs .content .pdf-emd-vwr-tab-content.active {
   display: block;
 }
-#pdf-embed-viewer .inside #pdf-embed-metabox-tabs section {
+#pdfev-embed-viewer .inside #pdf-embed-metabox-tabs section {
   border: 1px solid var(--pdfv-light);
   margin-top: -1px;
   padding: 15px 10px;
 }
-#pdf-embed-viewer .inside #pdf-embed-metabox-tabs section .label {
+#pdfev-embed-viewer .inside #pdf-embed-metabox-tabs section .label {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-#pdf-embed-viewer .inside #pdf-embed-metabox-tabs section .label p {
+#pdfev-embed-viewer .inside #pdf-embed-metabox-tabs section .label p {
   color: var(--pdfv-secondary);
   font-weight: bold;
   margin: 0;
   cursor: pointer;
 }
-#pdf-embed-viewer .inside #pdf-embed-metabox-tabs section input.pdf_emd_vwr_file {
+#pdfev-embed-viewer .inside #pdf-embed-metabox-tabs section input.pdf_emd_vwr_file {
   width: 83%;
 }
 
