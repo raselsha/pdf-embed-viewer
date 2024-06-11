@@ -5,11 +5,11 @@
  * @version 1.0.0
  */
 
-if( ! defined('ABSPATH') ){die('Don\'t access derectly');}
+if( ! defined('ABSPATH') ) { die( "Don't access directly" ); }
 
-if( ! class_exists('PDF_Emd_Vwr_Options_Setup') ){
+if( ! class_exists('PDFEV_Embed_Viewer_Options_Setup') ){
 
-    class PDF_Emd_Vwr_Options_Setup{
+    class PDFEV_Embed_Viewer_Options_Setup{
 
         public function __construct(){
             add_action('init',[$this,'set_options_value']);
@@ -43,12 +43,12 @@ if( ! class_exists('PDF_Emd_Vwr_Options_Setup') ){
             $archive_download_button  = sanitize_text_field('yes');
             $colors         = $this->options_array_sanitize($colors);
             
-            add_option('pdf_emd_vwr_opt_archive_title',$archive_title);
-            add_option('pdf_emd_vwr_opt_template_lists',$template);
-            add_option('pdf_emd_vwr_opt_archive_download',$archive_download_button);
-            add_option('pdf_emd_vwr_opt_colors',$colors);
+            add_option('pdfev_emd_vwr_opt_archive_title',$archive_title);
+            add_option('pdfev_emd_vwr_opt_template_lists',$template);
+            add_option('pdfev_emd_vwr_opt_archive_download',$archive_download_button);
+            add_option('pdfev_emd_vwr_opt_colors',$colors);
         }
     }
     
-    $PDF_Emd_Vwr_Options_Setup = new PDF_Emd_Vwr_Options_Setup();
+    $PDFEV_Embed_Viewer_Options_Setup = new PDFEV_Embed_Viewer_Options_Setup();
 }

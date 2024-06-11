@@ -30,10 +30,10 @@ You should have received a copy of the GNU General Public License
 along with PDF Embed Viewer. If not, see https://www.gnu.org/licenses/gpl-2.0.html.
 */
 
-if( ! defined('ABSPATH') ) { die( "don't access directly" ); }
+if( ! defined('ABSPATH') ) { die( "Don't access directly" ); }
 
-if( ! class_exists( 'PDF_Emd_Vwr' ) ){
-    class PDF_Emd_Vwr{
+if( ! class_exists( 'PDFEV_Embed_Viewer' ) ){
+    class PDFEV_Embed_Viewer{
 
         public function __construct() {
             $this->define_contstants();
@@ -44,19 +44,20 @@ if( ! class_exists( 'PDF_Emd_Vwr' ) ){
         public function load_plugin_textdomain() {
             load_plugin_textdomain( 'pdf-embed-viewer', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
         }
+
         public function define_contstants(){
-            define( 'PDF_Emd_Vwr', plugin_dir_path(__FILE__) );
-            define( 'PDF_Emd_Vwr_URL', plugin_dir_url(__FILE__) );
-            define( 'PDF_Emd_Vwr_VERSION', '1.0.0' );
+            define( 'PDFEV_Embed_Viewer_Path', plugin_dir_path(__FILE__) );
+            define( 'PDFEV_Embed_Viewer_URL', plugin_dir_url(__FILE__) );
+            define( 'PDFEV_Embed_Viewer_VERSION', '1.0.0' );
         }
 
         public static function include_plugin_files() {
-            require_once PDF_Emd_Vwr . 'classes/options-setup.php';
-            require_once PDF_Emd_Vwr . 'classes/cpt-register.php';
-            require_once PDF_Emd_Vwr . 'classes/enque-style-script.php';
-            require_once PDF_Emd_Vwr . 'classes/metabox-register.php';
-            require_once PDF_Emd_Vwr . 'classes/metabox/general.php';
-            require_once PDF_Emd_Vwr . 'classes/admin-settings.php';
+            require_once PDFEV_Embed_Viewer_Path . 'classes/options-setup.php';
+            require_once PDFEV_Embed_Viewer_Path . 'classes/cpt-register.php';
+            require_once PDFEV_Embed_Viewer_Path . 'classes/enque-style-script.php';
+            require_once PDFEV_Embed_Viewer_Path . 'classes/metabox-register.php';
+            require_once PDFEV_Embed_Viewer_Path . 'classes/metabox/general.php';
+            require_once PDFEV_Embed_Viewer_Path . 'classes/admin-settings.php';
 
         }
 
@@ -81,9 +82,9 @@ if( ! class_exists( 'PDF_Emd_Vwr' ) ){
 
 }
 
-if( class_exists( 'PDF_Emd_Vwr' ) ){
-    register_activation_hook( __FILE__, array( 'PDF_Emd_Vwr','activate' ) );
-    register_deactivation_hook( __FILE__, array( 'PDF_Emd_Vwr','deactivate' ) );
-    register_uninstall_hook( __FILE__, array( 'PDF_Emd_Vwr','uninstall' ) );
-    $pdf_download = new PDF_Emd_Vwr();
+if( class_exists( 'PDFEV_Embed_Viewer' ) ){
+    register_activation_hook( __FILE__, array( 'PDFEV_Embed_Viewer','activate' ) );
+    register_deactivation_hook( __FILE__, array( 'PDFEV_Embed_Viewer','deactivate' ) );
+    register_uninstall_hook( __FILE__, array( 'PDFEV_Embed_Viewer','uninstall' ) );
+    $pdf_download = new PDFEV_Embed_Viewer();
 }
