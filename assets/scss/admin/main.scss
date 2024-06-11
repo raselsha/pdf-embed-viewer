@@ -1,20 +1,20 @@
 :root{
-    --pdfv-primary:#c79f62;
-    --pdfv-secondary:#666;
-    --pdfv-gray:#ddd;
-    --pdfv-light:#e5e5e5;
-    --pdfv-dark:#333;
-    --pdfv-black:#000;
-    --pdfv-white:#fff;
+    --pdfev-primary:#c79f62;
+    --pdfev-secondary:#666;
+    --pdfev-gray:#ddd;
+    --pdfev-light:#e5e5e5;
+    --pdfev-dark:#333;
+    --pdfev-black:#000;
+    --pdfev-white:#fff;
 }
 
-$primary : var(--pdfv-primary);
-$secondary : var(--pdfv-secondary);
-$light : var(--pdfv-light);
-$gray : var(--pdfv-gray);
-$dark : var(--pdfv-dark);
-$black : var(--pdfv-black);
-$white : var(--pdfv-white);
+$primary : var(--pdfev-primary);
+$secondary : var(--pdfev-secondary);
+$light : var(--pdfev-light);
+$gray : var(--pdfev-gray);
+$dark : var(--pdfev-dark);
+$black : var(--pdfev-black);
+$white : var(--pdfev-white);
 
 @import 'component';
 @import 'metabox';

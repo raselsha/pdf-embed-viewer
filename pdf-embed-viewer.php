@@ -52,29 +52,31 @@ if( ! class_exists( 'PDFEV_Embed_Viewer' ) ){
         }
 
         public static function include_plugin_files() {
-            require_once PDFEV_Embed_Viewer_Path . 'classes/options-setup.php';
             require_once PDFEV_Embed_Viewer_Path . 'classes/cpt-register.php';
+            require_once PDFEV_Embed_Viewer_Path . 'classes/options-setup.php';
+            require_once PDFEV_Embed_Viewer_Path . 'classes/admin-settings.php';
             require_once PDFEV_Embed_Viewer_Path . 'classes/enque-style-script.php';
             require_once PDFEV_Embed_Viewer_Path . 'classes/metabox-register.php';
             require_once PDFEV_Embed_Viewer_Path . 'classes/metabox/general.php';
-            require_once PDFEV_Embed_Viewer_Path . 'classes/admin-settings.php';
+            
         }
 
         public static function activate(){
             // update the option table that permalink didn't need reload
             update_option('rewrite_rules','');
-            PDFEV_Embed_Viewer_CPT::insert_demo_post();
+            //PDFEV_Embed_Viewer_CPT::insert_demo_post();
         }
 
         public static function deactivate(){
             flush_rewrite_rules();
-            
         }
 
         public static function uninstall(){
-            unregister_post_type('PDFEV_Embed_Viewer');
+            unregister_post_type('pdfev_embed_viewer');
             delete_option('pdfev_emd_vwr_opt_template_lists');
             delete_option('pdfev_emd_vwr_opt_archive_title');
+            delete_option('pdfev_emd_vwr_opt_archive_template');
+            delete_option('pdfev_emd_vwr_opt_archive_download');
             delete_option('pdfev_emd_vwr_opt_colors');
         }
     }

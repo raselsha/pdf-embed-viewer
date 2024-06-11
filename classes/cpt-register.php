@@ -12,11 +12,11 @@ if( ! class_exists('PDFEV_Embed_Viewer_CPT') ){
        
         public function __construct() {
             add_action( 'init', array($this,'create_post_type') );
+            add_filter( 'manage_pdfev_embed_viewer_posts_columns', array($this,'posts_columns') ) ;
+            add_action( 'manage_pdfev_embed_viewer_posts_custom_column', array($this,'custom_column'),10,2 ) ;
+            add_filter( 'manage_edit-pdfev_embed_viewer_sortable_columns', array($this,'sortable_columns') ) ;
             add_filter( 'archive_template', array($this,'archive_template') ) ;
             add_filter( 'single_template', array($this,'single_template') ) ;
-            add_filter( 'manage_PDFEV_Embed_Viewer_posts_columns', array($this,'posts_columns') ) ;
-            add_action( 'manage_PDFEV_Embed_Viewer_posts_custom_column', array($this,'custom_column'),10,2 ) ;
-            add_filter( 'manage_edit-PDFEV_Embed_Viewer_sortable_columns', array($this,'sortable_columns') ) ;
         }        
 
         public function posts_columns($columns){
@@ -82,7 +82,7 @@ if( ! class_exists('PDFEV_Embed_Viewer_CPT') ){
                 //"register_metabox_cb" => array($this,'add_meta_boxes'),
             ];
 
-            register_post_type( "PDFEV_Embed_Viewer", $args );
+            register_post_type( "pdfev_embed_viewer", $args );
             
         }
         
@@ -98,7 +98,7 @@ if( ! class_exists('PDFEV_Embed_Viewer_CPT') ){
                 }
             }
 
-            if ( is_post_type_archive ( 'PDFEV_Embed_Viewer' ) ) {                
+            if ( is_post_type_archive ( 'pdfev_embed_viewer' ) ) {                
                 $archive_template = get_template_directory().'/template/'. $inc_template;
                 if( ! file_exists($archive_template)){
                     $archive_template = get_template_directory().'/template/list.php';
@@ -117,7 +117,7 @@ if( ! class_exists('PDFEV_Embed_Viewer_CPT') ){
 
         public function single_template($single_template) {
             global $post;
-            if ($post->post_type == 'PDFEV_Embed_Viewer'){   
+            if ($post->post_type == 'pdfev_embed_viewer'){   
                 $single_template = get_template_directory().'/template/single.php';
                 if( ! file_exists($single_template)){
                     $single_template = PDFEV_Embed_Viewer_Path . 'template/single.php';
@@ -154,7 +154,7 @@ if( ! class_exists('PDFEV_Embed_Viewer_CPT') ){
                     'post_content'  => 'This is the content of demo post '.$i,
                     'post_status'   => 'publish',
                     'post_author'   => 1, // Change this to the author ID you want
-                    'post_type'     => 'PDFEV_Embed_Viewer'
+                    'post_type'     => 'pdfev_embed_viewer'
                 );
                 wp_insert_post( $post_data );
             }

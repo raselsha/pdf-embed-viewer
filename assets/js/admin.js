@@ -7,7 +7,7 @@ jQuery(document).ready(function ($) {
 
 
 jQuery(document).ready(function ($) {
-  pdf_emd_vwr_toggle();
+  pdfev_emd_vwr_toggle();
   pdf_emd_vwr_tab();
   pdf_emd_vwr_settings_tab();
   pdf_emd_vwr_upload();
@@ -40,7 +40,7 @@ jQuery(document).ready(function ($) {
 
   // ============toggle switch=======
   
-  function pdf_emd_vwr_toggle() {
+  function pdfev_emd_vwr_toggle() {
     $('.switch .slider').click(function() {
         var checkbox = $(this).prev('input[type="checkbox"]');
         if (checkbox.val() === 'yes') {
@@ -70,10 +70,10 @@ jQuery(document).ready(function ($) {
           var attachment = mediaUploader.state().get('selection').first().toJSON();
           // Check if the selected file is a PDF
           if (attachment.mime === 'application/pdf') {
-            $('.pdf_emd_vwr_file').val(attachment.url);
+            $('.pdfev_emd_vwr_file').val(attachment.url);
           } else {
             alert('Please select a PDF file only.');
-            $('.pdf_emd_vwr_file').val('');
+            $('.pdfev_emd_vwr_file').val('');
           }
         });
         mediaUploader.open();

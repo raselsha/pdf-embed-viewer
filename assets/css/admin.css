@@ -1,18 +1,18 @@
 :root {
-  --pdfv-primary:#c79f62;
-  --pdfv-secondary:#666;
-  --pdfv-gray:#ddd;
-  --pdfv-light:#e5e5e5;
-  --pdfv-dark:#333;
-  --pdfv-black:#000;
-  --pdfv-white:#fff;
+  --pdfev-primary:#c79f62;
+  --pdfev-secondary:#666;
+  --pdfev-gray:#ddd;
+  --pdfev-light:#e5e5e5;
+  --pdfev-dark:#333;
+  --pdfev-black:#000;
+  --pdfev-white:#fff;
 }
 
 .pdfev-embed-viewer .switch {
   position: relative;
   display: inline-block;
   width: 48px;
-  height: 20px;
+  height: 22px;
   margin: 0;
 }
 .pdfev-embed-viewer .switch input {
@@ -28,7 +28,8 @@
   right: 0;
   bottom: 0;
   border-radius: 50px;
-  background-color: var(--pdfv-gray);
+  background-color: var(--pdfev-gray);
+  border: 1px solid var(--pdfev-secondary);
   transition: 0.5s;
 }
 .pdfev-embed-viewer .switch .slider:before {
@@ -39,18 +40,18 @@
   left: 1px;
   bottom: 1px;
   border-radius: 50%;
-  border: 1px solid var(--pdfv-gray);
-  background-color: var(--pdfv-white);
+  border: 1px solid var(--pdfev-gray);
+  background-color: var(--pdfev-white);
   transition: 0.4s;
 }
 .pdfev-embed-viewer .switch input:checked + .slider {
-  background-color: var(--pdfv-primary);
+  background-color: var(--pdfev-primary);
 }
 .pdfev-embed-viewer .switch input:checked + .slider:before {
   transform: translateX(27px);
 }
 .pdfev-embed-viewer .switch input:focus + .slider {
-  box-shadow: inset 0 0 1px var(--pdfv-dark);
+  box-shadow: inset 0 0 1px var(--pdfev-dark);
 }
 
 #pdfev-embed-viewer .inside {
@@ -63,7 +64,7 @@
 }
 #pdfev-embed-viewer .inside #pdf-embed-metabox-tabs aside {
   width: 20%;
-  background-color: var(--pdfv-light);
+  background-color: var(--pdfev-light);
 }
 #pdfev-embed-viewer .inside #pdf-embed-metabox-tabs aside ul {
   margin: 0;
@@ -74,20 +75,20 @@
 #pdfev-embed-viewer .inside #pdf-embed-metabox-tabs aside ul li.pdf-emd-vwr-tab {
   margin: 0;
   padding: 10px;
-  border-bottom: 1px solid var(--pdfv-gray);
+  border-bottom: 1px solid var(--pdfev-gray);
   font-size: 16px;
   font-weight: normal;
-  color: var(--pdfv-dark);
+  color: var(--pdfev-dark);
   border-left: 2px solid transparent;
   cursor: pointer;
 }
 #pdfev-embed-viewer .inside #pdf-embed-metabox-tabs aside ul li.pdf-emd-vwr-tab.active {
-  background-color: var(--pdfv-white);
-  border-left: 2px solid var(--pdfv-primary);
+  background-color: var(--pdfev-white);
+  border-left: 2px solid var(--pdfev-primary);
 }
 #pdfev-embed-viewer .inside #pdf-embed-metabox-tabs aside ul li.pdf-emd-vwr-tab i {
   padding: 0 10px;
-  color: var(--pdfv-primary);
+  color: var(--pdfev-primary);
 }
 #pdfev-embed-viewer .inside #pdf-embed-metabox-tabs .content {
   width: 80%;
@@ -100,7 +101,7 @@
   display: block;
 }
 #pdfev-embed-viewer .inside #pdf-embed-metabox-tabs section {
-  border: 1px solid var(--pdfv-light);
+  border: 1px solid var(--pdfev-light);
   margin-top: -1px;
   padding: 15px 10px;
 }
@@ -110,7 +111,7 @@
   align-items: center;
 }
 #pdfev-embed-viewer .inside #pdf-embed-metabox-tabs section .label p {
-  color: var(--pdfv-secondary);
+  color: var(--pdfev-secondary);
   font-weight: bold;
   margin: 0;
   cursor: pointer;
