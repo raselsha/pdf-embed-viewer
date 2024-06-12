@@ -16,6 +16,7 @@ $dark : var(--pdfev-dark);
 $black : var(--pdfev-black);
 $white : var(--pdfev-white);
 
+@import '../font-awesome/fontawesome.scss';
 @import 'component';
 @import 'metabox';
 @import 'settings';

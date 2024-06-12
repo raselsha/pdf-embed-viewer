@@ -14,26 +14,23 @@ if( ! class_exists('PDFEV_Embed_Viewer_Enque') ){
         }
 
         public function backend_style(){
-            wp_enqueue_style( 'font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css','','5.9.0');
-            wp_enqueue_style('main',PDFEV_Embed_Viewer_URL.'assets/css/admin.css',['wp-color-picker','font-awesome'],PDFEV_Embed_Viewer_VERSION,'all');
-            wp_enqueue_media();        
-            wp_enqueue_script( 'jquery-ui', 'https://code.jquery.com/ui/1.13.3/jquery-ui.min.js','','1.13.3',true);
-            wp_enqueue_script( 'pdf-embed-viewer', PDFEV_Embed_Viewer_URL.'assets/js/admin.js', ['wp-color-picker','jquery-ui'], PDFEV_Embed_Viewer_VERSION, true );
+            wp_enqueue_style('main',PDFEV_Embed_Viewer_URL.'assets/css/admin.css',['wp-color-picker'],PDFEV_Embed_Viewer_VERSION,'all');
+            wp_enqueue_media();       
+            wp_enqueue_script( 'pdf-embed-viewer', PDFEV_Embed_Viewer_URL.'assets/js/admin.js', ['jquery','wp-color-picker','jquery-ui-core'], PDFEV_Embed_Viewer_VERSION, true );
         }
 
         public function frontend_style(){
 
-            if(is_singular( 'pdf-embed-viewer') || is_post_type_archive( 'pdf-embed-viewer') ){
-                wp_enqueue_style( 'font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css','','5.9.0');
+            if(is_singular( 'pdfev_embed_viewer') || is_post_type_archive( 'pdfev_embed_viewer') ){
                 wp_enqueue_style('pdf-frontend-style',PDFEV_Embed_Viewer_URL.'assets/css/frontend.css',[],PDFEV_Embed_Viewer_VERSION,'all');
-                wp_enqueue_script( 'jquery', 'http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jqueryexample.min.js','','1.7.2',true);
+                
                 wp_enqueue_script( 'pdf-frontend-script', PDFEV_Embed_Viewer_URL.'assets/js/frontend.js',['jquery'],PDFEV_Embed_Viewer_VERSION,true);
 
                 $colors         = get_option('pdf_emd_vwr_opt_colors');         
-                $primary        = $colors['primary'] ? $colors['primary'] : '#c79f62';
-                $secondary      = $colors['secondary'] ? $colors['secondary'] : '#666';
-                $dark           = $colors['dark'] ? $colors['dark'] : '#333';
-                $light          = $colors['light'] ? $colors['light'] : '#e5e5e5';
+                $primary        = esc_html($colors['primary'] ? $colors['primary'] : '#c79f62');
+                $secondary      = esc_html($colors['secondary'] ? $colors['secondary'] : '#666');
+                $dark           = esc_html($colors['dark'] ? $colors['dark'] : '#333');
+                $light          = esc_html($colors['light'] ? $colors['light'] : '#e5e5e5');
                 $inline_css = ":root{
                         --pdf-emd-vwr-primary:{$primary };        
                         --pdf-emd-vwr-secondary:{$secondary};
