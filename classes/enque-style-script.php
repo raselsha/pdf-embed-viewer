@@ -32,10 +32,10 @@ if( ! class_exists('PDFEV_Embed_Viewer_Enque') ){
                 $dark           = esc_html($colors['dark'] ? $colors['dark'] : '#333');
                 $light          = esc_html($colors['light'] ? $colors['light'] : '#e5e5e5');
                 $inline_css = ":root{
-                        --pdf-emd-vwr-primary:{$primary };        
-                        --pdf-emd-vwr-secondary:{$secondary};
-                        --pdf-emd-vwr-dark:{$dark}; 
-                        --pdf-emd-vwr-light:{$light};     
+                        --pdfev-emd-vwr-primary:{$primary };        
+                        --pdfev-emd-vwr-secondary:{$secondary};
+                        --pdfev-emd-vwr-dark:{$dark}; 
+                        --pdfev-emd-vwr-light:{$light};     
                     ";
                 wp_add_inline_style('pdf-frontend-style', $inline_css);
             }
