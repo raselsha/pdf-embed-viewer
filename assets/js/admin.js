@@ -8,14 +8,14 @@ jQuery(document).ready(function ($) {
 
 jQuery(document).ready(function ($) {
   pdfev_emd_vwr_toggle();
-  pdf_emd_vwr_tab();
-  pdf_emd_vwr_settings_tab();
+  pdfev_emd_vwr_tab();
+  pdfev_emd_vwr_settings_tab();
   pdfev_emd_vwr_upload();
   $('.color-field').wpColorPicker();
 
 // ============admin tabs===========
 
-  function pdf_emd_vwr_settings_tab(){
+  function pdfev_emd_vwr_settings_tab(){
     $('.nav-tab').click(function () {
       var target = $(this).data('tab-target');
       $('.tab-content').removeClass('active');
@@ -25,7 +25,7 @@ jQuery(document).ready(function ($) {
     });
   }
 
-  function pdf_emd_vwr_tab() {
+  function pdfev_emd_vwr_tab() {
       $('.pdf-emd-vwr-tab-content:first').addClass('active');
       $('.pdf-emd-vwr-tab:first').addClass('active');
       
