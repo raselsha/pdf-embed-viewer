@@ -117,7 +117,8 @@ if( ! class_exists('PDFEV_Embed_Viewer_CPT') ){
 
         public function single_template($single_template) {
             global $post;
-            if ($post->post_type == 'pdfev_embed_viewer'){   
+            if ($post->post_type == 'pdfev_embed_viewer'){  
+                 
                 $single_template = get_template_directory().'/template/single.php';
                 if( ! file_exists($single_template)){
                     $single_template = PDFEV_Embed_Viewer_Path . 'template/single.php';

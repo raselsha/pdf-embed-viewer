@@ -87,7 +87,7 @@ if( ! class_exists('PDFEV_Embed_Viewer_General') ){
                     $file_url  = isset( $_POST['pdfev_emd_vwr_file_url'] ) ? sanitize_url($_POST['pdfev_emd_vwr_file_url']) : '';
 					update_post_meta( $post_id, 'pdfev_emd_vwr_file_url', $file_url );
                     
-                    $check_download  = isset( $_POST['pdfev_emd_vwr_check_download'] ) ? sanitize_text_field($_POST['pdf_emd_vwr_check_download']) : 'no';
+                    $check_download  = isset( $_POST['pdfev_emd_vwr_check_download'] ) ? sanitize_text_field($_POST['pdfev_emd_vwr_check_download']) : 'no';
 					update_post_meta( $post_id, 'pdfev_emd_vwr_check_download', $check_download );
                 }
             }
