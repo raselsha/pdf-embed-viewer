@@ -58,12 +58,14 @@ if ( wp_is_block_theme() ) {  ?>
 				$WpQuery->the_post();
 				?>
 				<div class="grid-item">
-					<div class="image"><img src="<?php echo esc_attr(PDFEV_Embed_Viewer_URL.'assets/images/ebook.png'); ?>" alt="<?php echo esc_html__('No image found','pdf-embed-viewer'); ?>"></div>					
+					<div class="image">
+						<?php the_post_thumbnail() ?>
+					</div>					
 					<div class="content">
 						<h2><a href="<?php the_permalink(); ?>"><?php echo esc_html(mb_strimwidth(get_the_title(), 0, 50, '...'));?></a></h2>
 						<div class="action">
 							<?php if($check_download_archive == 'yes' and  isset($pdf_emd_vwr_file_url)): ?>
-								<a href="<?php echo esc_attr($pdf_emd_vwr_file_url); ?>" download><?php echo esc_html('Download','pdf-embed-viewer'); ?> <span class="download-icon" style="background-image: url(<?php echo esc_attr(PDFEV_Embed_Viewer_URL.'assets/images/download.svg'); ?>);"></span> </a>
+								<a href="<?php echo esc_attr($pdf_emd_vwr_file_url); ?>" class="download-btn"  download><?php echo esc_html('Download','pdf-embed-viewer'); ?></a>
 							<?php endif; ?>
 						</div>
 					</div>

@@ -1,3 +1,12 @@
+:root {
+  --pdfev-emd--vwr-primary:#c79f62;
+  --pdfev-emd--vwr-secondary:#666;
+  --pdfev-emd--vwr-light:#e5e5e5;
+  --pdfev-emd--vwr-dark:#333;
+  --pdfev-emd--vwr-black:#000;
+  --pdfev-emd--vwr-white:#fff;
+}
+
 /*!
  * Font Awesome Free 5.1.0-9 by @fontawesome - https://fontawesome.com
  * License - https://fontawesome.com/license (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
@@ -3890,16 +3899,6 @@ readers do not read off random characters that represent icons */
   font-weight: 900;
 }
 
-:root {
-  --pdf-emd-vwr-primary:#c79f62;
-  --pdf-emd-vwr-secondary:#666;
-  --pdf-emd-vwr-light:#e5e5e5;
-  --pdf-emd-vwr-dark:#333;
-  --pdf-emd-vwr-black:#000;
-  --pdf-emd-vwr-white:#fff;
-}
-
-/*================body============*/
 .pdfev-embed-viewer {
   max-width: 1240px;
   margin: 0 auto;
@@ -3907,17 +3906,17 @@ readers do not read off random characters that represent icons */
 }
 .pdfev-embed-viewer a {
   text-decoration: none;
-  color: var(--pdf-emd-vwr-primary);
+  color: var(--pdfev-emd--vwr-primary);
   font-weight: bold;
 }
 .pdfev-embed-viewer h1 {
-  color: var(--pdf-emd-vwr-dark);
+  color: var(--pdfev-emd--vwr-dark);
 }
 .pdfev-embed-viewer .button, .pdfev-embed-viewer .download-btn {
-  background: var(--pdf-emd-vwr-primary);
+  background: var(--pdfev-emd--vwr-primary);
   padding: 0.1em 0.5em;
   border-radius: 0.25em;
-  color: var(--pdf-emd-vwr-white);
+  color: var(--pdfev-emd--vwr-white);
   font-weight: normal;
 }
 .pdfev-embed-viewer .download-btn {
@@ -3937,11 +3936,11 @@ readers do not read off random characters that represent icons */
 .pdfev-embed-viewer .pagination .page-numbers {
   display: inline-block;
   padding: 5px 10px;
-  border: 1px solid var(--pdf-emd-vwr-secondary);
+  border: 1px solid var(--pdfev-emd--vwr-secondary);
 }
 .pdfev-embed-viewer .pagination .page-numbers.current {
-  background-color: var(--pdf-emd-vwr-primary);
-  color: var(--pdf-emd-vwr-white);
+  background-color: var(--pdfev-emd--vwr-primary);
+  color: var(--pdfev-emd--vwr-white);
 }
 
 /*==================footer pagination================*/
@@ -3952,15 +3951,15 @@ readers do not read off random characters that represent icons */
   text-align: left;
   border-collapse: collapse;
   transition: all 0.5s;
-  border: 1px solid var(--pdf-emd-vwr-secondary);
+  border: 1px solid var(--pdfev-emd-vwr-secondary);
   width: 100%;
 }
 .pdfev-embed-viewer .archive-list-style table th {
-  background: var(--pdf-emd-vwr-light);
+  background: var(--pdfev-emd-vwr-light);
   padding: 0.5em;
   border: 0;
-  border-bottom: 1px solid var(--pdf-emd-vwr-secondary);
-  color: var(--pdf-emd-vwr-dark);
+  border-bottom: 1px solid var(--pdfev-emd-vwr-secondary);
+  color: var(--pdfev-emd-vwr-dark);
 }
 .pdfev-embed-viewer .archive-list-style table th:first-child {
   text-align: start;
@@ -3971,7 +3970,7 @@ readers do not read off random characters that represent icons */
 }
 .pdfev-embed-viewer .archive-list-style table td {
   padding: 0.5em;
-  color: var(--pdf-emd-vwr-secondary);
+  color: var(--pdfev-emd-vwr-secondary);
   font-weight: normal;
   border: 0;
 }
@@ -3985,7 +3984,7 @@ readers do not read off random characters that represent icons */
   font-weight: normal;
 }
 .pdfev-embed-viewer .archive-list-style table tr:nth-child(odd) {
-  background: var(--pdf-emd-vwr-light);
+  background: var(--pdfev-emd-vwr-light);
   border: 0;
 }
 
@@ -3997,7 +3996,7 @@ readers do not read off random characters that represent icons */
 }
 .pdfev-embed-viewer .archive-grid-style .grid-item {
   width: 24%;
-  border: 1px solid var(--pdf-emd-vwr-light);
+  border: 1px solid var(--pdfev-emd-vwr-light);
   margin: 5px;
   position: relative;
 }
@@ -4008,8 +4007,8 @@ readers do not read off random characters that represent icons */
   padding: 2px 5px;
   border-radius: 4px;
   font-size: 12px;
-  color: var(--pdf-emd-vwr-white);
-  background-color: var(--pdf-emd-vwr-primary);
+  color: var(--pdfev-emd-vwr-white);
+  background-color: var(--pdfev-emd-vwr-primary);
   margin: 0;
   z-index: 2;
 }
@@ -4075,12 +4074,12 @@ readers do not read off random characters that represent icons */
 .pdfev-embed-viewer .archive-ebook-style .grid-item .content h2 {
   margin: 0;
   padding: 0;
-  line-height: 1.2em;
+  line-height: 2.5em;
   font-size: 1rem;
   font-weight: bold;
 }
 .pdfev-embed-viewer .archive-ebook-style .grid-item .content h2 a {
-  color: var(--pdf-emd-vwr-dark);
+  color: var(--pdfev-emd-vwr-dark);
 }
 .pdfev-embed-viewer .archive-ebook-style .grid-item .content .action {
   display: flex;
@@ -4114,7 +4113,7 @@ readers do not read off random characters that represent icons */
   display: flex;
   flex-direction: column;
   justify-content: start;
-  background: var(--pdf-emd-vwr-light);
+  background: var(--pdfev-emd-vwr-light);
   list-style-type: none;
   margin: 0;
   padding: 0;
@@ -4132,14 +4131,14 @@ readers do not read off random characters that represent icons */
   padding: 0.5em;
   text-align: center;
   font-weight: bold;
-  color: var(--pdf-emd-vwr-secondary);
+  color: var(--pdfev-emd-vwr-secondary);
   transition: all 0.5s;
 }
 .pdfev-embed-viewer .archive-newsletter-style .tabs .tab.active {
-  color: var(--pdf-emd-vwr-primary);
+  color: var(--pdfev-emd-vwr-primary);
 }
 .pdfev-embed-viewer .archive-newsletter-style .tabs .tab:hover {
-  color: var(--pdf-emd-vwr-primary);
+  color: var(--pdfev-emd-vwr-primary);
 }
 .pdfev-embed-viewer .archive-newsletter-style .tabs-content {
   width: 100%;
@@ -4157,20 +4156,20 @@ readers do not read off random characters that represent icons */
   width: 100%;
 }
 .pdfev-embed-viewer .archive-newsletter-style .tabs-content table th {
-  background: var(--pdf-emd-vwr-light);
+  background: var(--pdfev-emd-vwr-light);
   padding: 0.5em;
   border: 0;
-  border-bottom: 1px solid var(--pdf-emd-vwr-secondary);
-  color: var(--pdf-emd-vwr-dark);
+  border-bottom: 1px solid var(--pdfev-emd-vwr-secondary);
+  color: var(--pdfev-emd-vwr-dark);
 }
 .pdfev-embed-viewer .archive-newsletter-style .tabs-content table td {
   padding: 0.5em;
-  color: var(--pdf-emd-vwr-secondary);
+  color: var(--pdfev-emd-vwr-secondary);
   font-weight: bold;
   border: 0;
 }
 .pdfev-embed-viewer .archive-newsletter-style .tabs-content table tr:nth-child(odd) {
-  background: var(--pdf-emd-vwr-light);
+  background: var(--pdfev-emd-vwr-light);
   border: 0;
 }
 

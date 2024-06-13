@@ -7,7 +7,7 @@
         flex-wrap: wrap;
         .grid-item{
             width: 24%;
-            border: 1px solid var(--pdf-emd-vwr-light);
+            border: 1px solid var(--pdfev-emd-vwr-light);
             margin: 5px;
             position: relative;
             .date{
@@ -17,8 +17,8 @@
                 padding:2px 5px;
                 border-radius: 4px;
                 font-size: 12px;
-                color: var(--pdf-emd-vwr-white);
-                background-color: var(--pdf-emd-vwr-primary);
+                color: var(--pdfev-emd-vwr-white);
+                background-color: var(--pdfev-emd-vwr-primary);
                 margin: 0;
                 z-index: 2;
             }
