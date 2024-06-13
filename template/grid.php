@@ -35,11 +35,11 @@ if ( wp_is_block_theme() ) {  ?>
 }
 ?>
 
-<div class="pdf-embed-viewer">
+<div class="pdfev-embed-viewer">
 	<?php
-		$archive_title = get_option('pdf_emd_vwr_opt_archive_title');
-		$check_download_archive  =  get_option('pdf_emd_vwr_opt_archive_download');
-		$pdf_emd_vwr_file_url=get_post_meta( get_the_ID(), 'pdf_emd_vwr_file_url', true );
+		$archive_title = get_option('pdfev_emd_vwr_opt_archive_title');
+		$check_download_archive  =  get_option('pdfev_emd_vwr_opt_archive_download');
+		$pdf_emd_vwr_file_url=get_post_meta( get_the_ID(), 'pdfev_emd_vwr_file_url', true );
 	?>
 	<h2><?php echo isset($archive_title) ? esc_html($archive_title) : esc_html(the_archive_title()); ?></h2>
 	<div class="archive-grid-style">
@@ -47,8 +47,9 @@ if ( wp_is_block_theme() ) {  ?>
 		<?php
 			$paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
 			$args = array(
-			'post_type'=>'pdf-embed-viewer',
+			'post_type'=>'pdfev_embed_viewer',
 			'order' => 'DSC',
+			'post_status' => 'publish',
 			'posts_per_page'=> get_option( 'posts_per_page' ),
 			'paged' => $paged
 		);
@@ -57,7 +58,7 @@ if ( wp_is_block_theme() ) {  ?>
 				$WpQuery->the_post();
 				?>
 				<div class="grid-item">
-					<div class="image"><img src="https://dummyimage.com/640x4:3" alt=""></div>
+					<div class="image"><img src="" alt=""></div>
 					<span class="date"><?php the_time('d-m-Y'); ?></span>
 					
 					<div class="content">
@@ -65,7 +66,7 @@ if ( wp_is_block_theme() ) {  ?>
 						<div class="action">
 							<a href="<?php the_permalink(); ?>" class="download-btn"><i class="far fa-address-book"></i> <?php echo esc_html('Read','pdf-embed-viewer');?></a>
 							<?php if($check_download_archive == 'yes' and  isset($pdf_emd_vwr_file_url)): ?>
-								<a href="<?php echo esc_attr($pdf_emd_vwr_file_ur); ?>" class="download-btn" download><?php echo esc_html('Download','pdf-embed-viewer'); ?> <span class="download-icon" style="background-image: url(<?php echo esc_attr(PDF_Emd_Vwr_URL.'assets/images/download.svg'); ?>);"></span> </a>
+								<a href="<?php echo esc_attr($pdf_emd_vwr_file_ur); ?>" class="download-btn" download><?php echo esc_html('Download','pdf-embed-viewer'); ?> <span class="download-icon" style="background-image: url(<?php echo esc_attr(PDFEV_Embed_Viewer_URL.'assets/images/download.svg'); ?>);"></span> </a>
 							<?php endif; ?>
 						</div>
 					</div>
@@ -73,24 +74,9 @@ if ( wp_is_block_theme() ) {  ?>
 		<?php endwhile; ?>
 	</div>
 	<div class="pagination">
-		<?php PDF_Emd_Vwr_CPT::pagination_bar( $WpQuery ); ?>
+		<?php PDFEV_Embed_Viewer_CPT::pagination_bar( $WpQuery ); ?>
 	</div>
 </div>
-
-<?php wp_link_pages(); ?>
-<?php
-global $wp_query;
-if ( $wp_query->max_num_pages > 1 ) :
-	?>
-	<div class="col-12">
-		<div class="pagination">
-				<?php /* Translators: HTML arrow */ ?>
-				<div class="nav-next me-auto"><?php // previous_posts_link( sprintf( __( '%s Previous', 'hello-elementor' ), '<span class="meta-nav">&#8592;</span>' ) ); ?></div>
-				<?php /* Translators: HTML arrow */ ?>
-				<div class="nav-previous ms-auto"><?php // next_posts_link( sprintf( __( 'Next %s', 'hello-elementor' ), '<span class="meta-nav">&#8594;</span>' ) ); ?></div>
-		</div>
-	</div>
-<?php endif; ?>
 
 <?php if ( wp_is_block_theme() ) : ?>
 	<footer class="wp-block-template-part">

@@ -35,10 +35,10 @@ if ( wp_is_block_theme() ) {  ?>
 }
 ?>
 
-<div class="pdf-embed-viewer">
+<div class="pdfev-embed-viewer">
 	<?php
-		$archive_title = get_option('pdf_emd_vwr_opt_archive_title');
-		$check_download_archive  =  get_option('pdf_emd_vwr_opt_archive_download');
+		$archive_title = get_option('pdfev_emd_vwr_opt_archive_title');
+		$check_download_archive  =  get_option('pdfev_emd_vwr_opt_archive_download');
 	?>
 	<h2><?php echo isset($archive_title) ? esc_html($archive_title) : esc_html(the_archive_title()); ?></h2>
 	<div class="archive-list-style">
@@ -51,7 +51,8 @@ if ( wp_is_block_theme() ) {  ?>
 			<?php
 				$paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
 				$args = array(
-				'post_type'=>'pdf-embed-viewer',
+				'post_type'=>'pdfev_embed_viewer',
+				'post_status' => 'publish',
 				'order' => 'DSC',
 				'posts_per_page'=> get_option( 'posts_per_page' ),
 				'paged' => $paged
@@ -67,10 +68,10 @@ if ( wp_is_block_theme() ) {  ?>
 							<a href="<?php the_permalink(); ?>" class="download-btn"><i class="far fa-address-book"></i> <?php echo esc_html('Read','pdf-embed-viewer');?></a>
 						<?php if($check_download_archive == 'yes'): ?>
 								<?php
-									$pdf_emd_vwr_file_url=get_post_meta( get_the_ID(), 'pdf_emd_vwr_file_url', true );
+									$pdf_emd_vwr_file_url=get_post_meta( get_the_ID(), 'pdfev_emd_vwr_file_url', true );
 									if(isset($pdf_emd_vwr_file_url)):
 								?>
-								<a href="<?php echo esc_attr(get_post_meta( get_the_ID(), 'pdf_emd_vwr_file_url', true ))?>" class="download-btn" download><?php echo esc_html('Download','pdf-embed-viewer'); ?> <img src="<?php echo esc_attr(PDF_Emd_Vwr_URL.'assets/images/download.svg'); ?>" alt="<?php echo esc_html('Download icon','pdf-embed-viewer'); ?>"> </a>
+								<a href="<?php echo esc_attr(get_post_meta( get_the_ID(), 'pdfev_emd_vwr_file_url', true ))?>" class="download-btn" download><?php echo esc_html('Download','pdf-embed-viewer'); ?> <img src="<?php echo esc_attr(PDFEV_Embed_Viewer_URL.'assets/images/download.svg'); ?>" alt="<?php echo esc_html('Download icon','pdf-embed-viewer'); ?>"> </a>
 								<?php endif; ?>
 							
 						<?php endif; ?>
@@ -83,7 +84,7 @@ if ( wp_is_block_theme() ) {  ?>
 </div>
 
 <div class="pagination">
-	<?php PDF_Emd_Vwr_CPT::pagination_bar( $WpQuery ); ?>
+	<?php PDFEV_Embed_Viewer_CPT::pagination_bar( $WpQuery ); ?>
 </div>
 
 <?php if ( wp_is_block_theme() ) : ?>

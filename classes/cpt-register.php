@@ -127,10 +127,10 @@ if( ! class_exists('PDFEV_Embed_Viewer_CPT') ){
             return $single_template;
         }
 
-        public static function get_posts_years_array($post_type) {
+        public static function get_posts_years_array() {
                         
             $terms_year = array(
-                'post_type'         => $post_type,
+                'post_type'         => 'pdfev_embed_viewer',
                 'posts_per_page'    => -1,
             );
             $years = array();
@@ -174,7 +174,7 @@ if( ! class_exists('PDFEV_Embed_Viewer_CPT') ){
                     'current' => $page_current,
                     'total' => $pages,
                 ));
-                echo esc_url($links);
+                echo wp_kses_post($links);
             }
         }
     }

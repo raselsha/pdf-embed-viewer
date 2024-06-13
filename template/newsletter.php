@@ -35,11 +35,11 @@ if ( wp_is_block_theme() ) {  ?>
 }
 ?>
 
-<div class="pdf-embed-viewer">
+<div class="pdfev-embed-viewer">
 	<?php
-		$archive_title = get_option('pdf_emd_vwr_opt_archive_title');
-		$check_download_archive  =  get_option('pdf_emd_vwr_opt_archive_download');
-		$years =  PDF_Emd_Vwr_CPT::get_posts_years_array('pdf-embed-viewer');
+		$archive_title = get_option('pdfev_emd_vwr_opt_archive_title');
+		$check_download_archive  =  get_option('pdfev_emd_vwr_opt_archive_download');
+		$years =  PDFEV_Embed_Viewer_CPT::get_posts_years_array();
 		
 		if($years):
 	?>
@@ -64,8 +64,9 @@ if ( wp_is_block_theme() ) {  ?>
 					<?php
 						$paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
 						$args = array(
-						'post_type'=>'pdf-embed-viewer',
+						'post_type'=>'pdfev_embed_viewer',
 						'order' => 'ASC',
+						'post_status' => 'publish',
 						'posts_per_page'=> -1,
 						'paged' => $paged,
 						'date_query' => array(
@@ -80,17 +81,19 @@ if ( wp_is_block_theme() ) {  ?>
 							?>
 							<tr>
 								<td width="10%"><?php the_time('F'); ?></td>
-								<td width="10%"><a href="<?php the_permalink(); ?>"><?php the_title();?></a></td>
-								<?php if($check_download_archive == 'yes'): ?>
-									<td width="10%">
-										<?php
-											$pdf_emd_vwr_file_url=get_post_meta( get_the_ID(), 'pdf_emd_vwr_file_url', true );
-											if(isset($pdf_emd_vwr_file_url)):
-										?>
-										<a href="<?php echo esc_attr(get_post_meta( get_the_ID(), 'pdf_emd_vwr_file_url', true ))?>" class="download-btn" download><?php echo esc_html('Download','pdf-embed-viewer'); ?> <img src="<?php echo esc_attr(PDF_Emd_Vwr_URL.'assets/images/download.svg'); ?>" alt="<?php echo esc_html('Download icon','pdf-embed-viewer'); ?>"> </a>
-										<?php endif; ?>
-									</td>
-								<?php endif; ?>
+								<td width="60%"><a href="<?php the_permalink(); ?>"><?php the_title();?></a></td>
+								<td width="20%">
+									<a href="<?php the_permalink(); ?>" class="download-btn"><i class="far fa-address-book"></i> <?php echo esc_html('Read','pdf-embed-viewer');?></a>
+									<?php if($check_download_archive == 'yes'): ?>
+											<?php
+												$pdf_emd_vwr_file_url=get_post_meta( get_the_ID(), 'pdfev_emd_vwr_file_url', true );
+												if(isset($pdf_emd_vwr_file_url)):
+											?>
+											<a href="<?php echo esc_attr(get_post_meta( get_the_ID(), 'pdfev_emd_vwr_file_url', true ))?>" class="download-btn" download><?php echo esc_html('Download','pdf-embed-viewer'); ?> <img src="<?php echo esc_attr(PDFEV_Embed_Viewer_URL.'assets/images/download.svg'); ?>" alt="<?php echo esc_html('Download icon','pdf-embed-viewer'); ?>"> </a>
+											<?php endif; ?>
+										
+									<?php endif; ?>
+								</td>
 
 							</tr>
 					<?php endwhile; ?>
