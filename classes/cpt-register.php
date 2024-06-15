@@ -4,7 +4,7 @@
  * @version 1.0.0
  */
 
-if( ! defined('ABSPATH') ) { die( "don't access directly" ); }
+if( ! defined('ABSPATH') ) { die( "Don't access directly" ); }
 
 if( ! class_exists('PDFEV_Embed_Viewer_CPT') ){
 

@@ -6,6 +6,8 @@
  * To customize single page tempalale; you can copy this template folder to your theme directory. 
  * If you used child theme, put into parent direcotory first.
  */
+if( ! defined('ABSPATH') ) { die( "Don't access directly" ); }
+
 if ( wp_is_block_theme() ) {  ?>
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
