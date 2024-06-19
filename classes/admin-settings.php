@@ -49,7 +49,7 @@ if( ! class_exists('PDFEV_Embed_Viewer_Admin_Settings') ){
                 if( ! current_user_can('manage_options')){
                     return;
                 }
-                add_settings_error('pdfev_emd_vwr_options_nonce','save-data',__('Settings Saved!'),'success');
+                add_settings_error('pdfev_emd_vwr_options_nonce','save-data',__('Settings Saved!','pdf-embed-viewer'),'success');
                 settings_errors('pdfev_emd_vwr_options_nonce');
                 
             }
