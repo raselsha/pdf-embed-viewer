@@ -72,7 +72,9 @@ if( ! class_exists('PDFEV_Embed_Viewer_Admin_Settings') ){
                         <?php submit_button(); ?>
                     </div> 
                     <div class="tab-content" id="pdfev_emd_vwr_admin_tabs_support">
-                        <p><?php esc_html_e('For Support send email to','pdf-embed-viewer'); ?> <a href="<?php echo esc_url('mailto:raselsha@gmail.com'); ?>"><?php esc_html_e('raselsha@gmail.com','pdf-embed-viewer'); ?></a> </p>    
+                        <h2><?php esc_html_e('Give a review for your feedback','pdf-embed-viewer'); ?> <a target="_blank" href="<?php echo esc_url('https://wordpress.org/support/plugin/pdf-embed-viewer/reviews/'); ?>"><?php esc_html_e('Add Review','pdf-embed-viewer'); ?></a> </h2>    
+                        <h2><?php esc_html_e('Create a support ticket','pdf-embed-viewer'); ?> <a target="_blank" href="<?php echo esc_url('https://wordpress.org/support/plugin/pdf-embed-viewer/'); ?>"><?php esc_html_e('support','pdf-embed-viewer'); ?></a> </h2>    
+                        <h2><?php esc_html_e('Send email','pdf-embed-viewer'); ?> <a href="<?php echo esc_url('mailto:raselsha@gmail.com'); ?>"><?php esc_html_e('raselsha@gmail.com','pdf-embed-viewer'); ?></a> </h2>    
                     </div> 
                     
                 </form>
