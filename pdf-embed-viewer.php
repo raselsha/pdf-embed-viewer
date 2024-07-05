@@ -38,7 +38,8 @@ if( ! class_exists( 'PDFEV_Embed_Viewer' ) ){
         public function __construct() {
             $this->define_contstants();
             $this->include_plugin_files();
-            add_action( 'plugins_loaded', [$this,'load_plugin_textdomain'] );           
+            add_action( 'plugins_loaded', [$this,'load_plugin_textdomain'] );  
+            add_action( 'init', [$this,'appsero_init_tracker_pdf_embed_viewer'] );          
         }
 
         public function load_plugin_textdomain() {
@@ -79,6 +80,20 @@ if( ! class_exists( 'PDFEV_Embed_Viewer' ) ){
             delete_option('pdfev_emd_vwr_opt_archive_download');
             delete_option('pdfev_emd_vwr_opt_colors');
         }
+
+        public function appsero_init_tracker_pdf_embed_viewer() {
+
+            if ( ! class_exists( 'Appsero\Client' ) ) {
+            require_once __DIR__ . '/vendor/appsero/src/Client.php';
+            }
+
+            $client = new Appsero\Client( 'efdff7cb-2ab8-4e9a-a19f-9ca95f4a5b42', 'PDF Embed Viewer', __FILE__ );
+
+            // Active insights
+            $client->insights()->init();
+
+        }
+
     }
 
 }
