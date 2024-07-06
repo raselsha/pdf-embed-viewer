@@ -52,6 +52,6 @@ Learn more about how [Appsero collects and uses this data](https://appsero.com/p
 * 1.0.2
     * Appsero analytics setup
 * 1.0.1
-    * Admin support info
+    * Admin support info added
 * 1.0.0
     * Initial Release
