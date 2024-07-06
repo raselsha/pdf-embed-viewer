@@ -38,3 +38,22 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with PDF Embed Viewer. If not, see https://www.gnu.org/licenses/gpl-2.0.html.
 
+# Privacy Policy
+PDF Embed Viewer uses [Appsero](https://appsero.com) SDK to collect some telemetry data upon user's confirmation. This helps us to troubleshoot problems faster & make product improvements.
+
+Appsero SDK **does not gather any data by default.** The SDK only starts gathering basic telemetry data **when a user allows it via the admin notice**. We collect the data to ensure a great user experience for all our users.
+
+Integrating Appsero SDK **DOES NOT IMMEDIATELY** start gathering data, **without confirmation from users in any case.**
+
+Learn more about how [Appsero collects and uses this data](https://appsero.com/privacy-policy/).
+
+# Changelog
+
+* 1.0.2
+*Appsero analytics setup*
+
+* 1.0.1
+*Admin support info*
+
+* 1.0.0
+*Initial Release*

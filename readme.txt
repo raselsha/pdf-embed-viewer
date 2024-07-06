@@ -56,6 +56,9 @@ Learn more about how [Appsero collects and uses this data](https://appsero.com/p
 
 == Changelog ==
 
+= 1.0.2 =
+*Appsero analytics setup*
+
 = 1.0.1 =
 *Admin support info*
 
