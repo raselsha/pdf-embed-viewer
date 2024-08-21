@@ -149,15 +149,30 @@ if( ! class_exists('PDFEV_Embed_Viewer_CPT') ){
 
         public static function insert_demo_post() {
             // Create an array of demo post data
-            for($i=1; $i<16;$i++){
+            for($i=1; $i<6;$i++){
                 $post_data = array(
-                    'post_title'    => 'Demo Post '.$i,
+                    'post_title'    => 'Demo Pdf '.$i,
                     'post_content'  => 'This is the content of demo post '.$i,
                     'post_status'   => 'publish',
                     'post_author'   => 1, // Change this to the author ID you want
-                    'post_type'     => 'pdfev_embed_viewer'
+                    'post_type'     => 'pdfev_embed_viewer',
+                    'post_name'    => 'demo-pdf-'.$i
                 );
-                wp_insert_post( $post_data );
+                
+                if ( ! get_page_by_path( 'demo-pdf-'.$i, OBJECT, 'pdfev_embed_viewer' ) ) {
+                    $post_id = wp_insert_post( $post_data );
+                    if (!is_wp_error($post_id)) {
+                        $meta_data = array(
+                            'pdfev_emd_vwr_file_url' => PDFEV_Embed_Viewer_URL.'assets/images/sample.pdf',
+                        );
+
+                        foreach ($meta_data as $meta_key => $meta_value) {
+                            update_post_meta($post_id, $meta_key, $meta_value);
+                        }
+                    } else {
+                        echo 'Error inserting post: ' . $post_id->get_error_message();
+                    }
+                }
             }
         }
 

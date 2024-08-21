@@ -64,7 +64,7 @@ if( ! class_exists( 'PDFEV_Embed_Viewer' ) ){
 
         public static function activate(){
             update_option('rewrite_rules','');
-            // PDFEV_Embed_Viewer_CPT::insert_demo_post();
+            PDFEV_Embed_Viewer_CPT::insert_demo_post();
         }
 
         public static function deactivate(){
