@@ -56,10 +56,10 @@ if ( wp_is_block_theme() ) {  ?>
 			<?php foreach($years as $year): ?>
 				<table  class="<?php echo esc_attr($year==gmdate('Y')?'active':''); ?>" data-tab-content  id="year-<?php echo esc_attr($year);?>">
 					<tr>         					    			
-						<th><?php echo esc_html('Month','pdf-embed-viewer') ?></th>
-						<th><?php echo esc_html('Title','pdf-embed-viewer') ?></th>
+						<th><?php echo esc_html__('Month','pdf-embed-viewer') ?></th>
+						<th><?php echo esc_html__('Title','pdf-embed-viewer') ?></th>
 						<?php if($check_download_archive == 'yes'): ?>
-						<th><?php echo esc_html('Download','pdf-embed-viewer') ?></th>
+						<th><?php echo esc_html__('Download','pdf-embed-viewer') ?></th>
 						<?php endif; ?>
 					</tr>
 					<?php

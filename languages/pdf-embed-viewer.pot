@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PDF Embed Viewer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-03 11:57+0000\n"
+"POT-Creation-Date: 2024-08-21 16:52+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -16,31 +16,47 @@ msgstr ""
 "X-Loco-Version: 2.6.9; wp-6.5.3\n"
 "X-Domain: pdf-embed-viewer"
 
-#: classes/metabox/general.php:40
+#: classes/metabox/general.php:37
 msgid "Add pdf file by upload button"
 msgstr ""
 
-#: classes/metabox/general.php:39
+#: classes/metabox/general.php:36
 msgid "Add PDF URL"
 msgstr ""
 
-#: classes/cpt-register.php:48
+#: classes/admin-settings.php:75
+msgid "Add Review"
+msgstr ""
+
+#: classes/cpt-register.php:50
 msgid "All PDF"
 msgstr ""
 
-#: classes/admin-settings.php:112
+#: classes/admin-settings.php:111
 msgid "Archive Template"
 msgstr ""
 
-#: classes/admin-settings.php:105
+#: classes/admin-settings.php:104
 msgid "Archive Title"
 msgstr ""
 
-#: classes/admin-settings.php:143
+#: classes/admin-settings.php:76
+msgid "Create a support ticket"
+msgstr ""
+
+#: classes/admin-settings.php:142
 msgid "Dark Color"
 msgstr ""
 
-#: classes/admin-settings.php:122 classes/metabox/general.php:53
+#: classes/cpt-register.php:25
+msgid "Date"
+msgstr ""
+
+#: template/newsletter.php:62
+msgid "Download"
+msgstr ""
+
+#: classes/admin-settings.php:121 classes/metabox/general.php:50
 msgid "Download Button"
 msgstr ""
 
@@ -48,16 +64,16 @@ msgstr ""
 msgid "Ebook Template"
 msgstr ""
 
-#: classes/cpt-register.php:23
+#: classes/cpt-register.php:24
 msgid "File Url"
-msgstr ""
-
-#: classes/admin-settings.php:76
-msgid "For Support send email to"
 msgstr ""
 
 #: classes/metabox/general.php:21
 msgid "General"
+msgstr ""
+
+#: classes/admin-settings.php:75
+msgid "Give a review for your feedback"
 msgstr ""
 
 #: classes/options-setup.php:29
@@ -72,7 +88,7 @@ msgstr ""
 msgid "https://wordpress.org/plugins/pdf-embed-viewer"
 msgstr ""
 
-#: classes/admin-settings.php:150
+#: classes/admin-settings.php:149
 msgid "Light Color"
 msgstr ""
 
@@ -80,7 +96,11 @@ msgstr ""
 msgid "List Template"
 msgstr ""
 
-#: classes/cpt-register.php:49 classes/cpt-register.php:50
+#: template/newsletter.php:59
+msgid "Month"
+msgstr ""
+
+#: classes/cpt-register.php:51 classes/cpt-register.php:52
 msgid "New PDF Embed"
 msgstr ""
 
@@ -88,16 +108,16 @@ msgstr ""
 msgid "Newsletter Template"
 msgstr ""
 
-#: template/single.php:48
+#: template/single.php:50
 msgid "Next"
 msgstr ""
 
-#: classes/cpt-register.php:46 classes/cpt-register.php:47
-#: classes/cpt-register.php:54 classes/cpt-register.php:55
+#: classes/cpt-register.php:48 classes/cpt-register.php:49
+#: classes/cpt-register.php:56 classes/cpt-register.php:57
 msgid "PDF Embed"
 msgstr ""
 
-#: classes/admin-settings.php:26
+#: classes/admin-settings.php:25
 msgid "PDF Embed - Viewer"
 msgstr ""
 
@@ -106,41 +126,53 @@ msgid "PDF Embed Settings"
 msgstr ""
 
 #. Name of the plugin
-#: classes/cpt-register.php:45
+#: classes/cpt-register.php:47
 msgid "PDF Embed Viewer"
 msgstr ""
 
-#: template/single.php:47
+#: template/single.php:49
 msgid "Previous"
 msgstr ""
 
-#: classes/admin-settings.php:131
+#: classes/admin-settings.php:130
 msgid "Primary Color"
 msgstr ""
 
-#: classes/admin-settings.php:73
-msgid "Save"
+#: classes/admin-settings.php:77
+msgid "raselsha@gmail.com"
 msgstr ""
 
-#: classes/admin-settings.php:137
+#: classes/admin-settings.php:136
 msgid "Secondary Color"
 msgstr ""
 
-#: classes/admin-settings.php:27 classes/admin-settings.php:37
-#: classes/admin-settings.php:66
+#: classes/admin-settings.php:77
+msgid "Send email"
+msgstr ""
+
+#: classes/admin-settings.php:26 classes/admin-settings.php:36
+#: classes/admin-settings.php:65
 msgid "Settings"
+msgstr ""
+
+#: classes/admin-settings.php:52
+msgid "Settings Saved!"
 msgstr ""
 
 #. Author of the plugin
 msgid "Shahadat Hossain"
 msgstr ""
 
-#: classes/metabox/general.php:54
+#: classes/metabox/general.php:51
 msgid "Show/Hide download Button in single page."
 msgstr ""
 
-#: classes/admin-settings.php:67
+#: classes/admin-settings.php:66
 msgid "Support"
+msgstr ""
+
+#: classes/admin-settings.php:76
+msgid "support"
 msgstr ""
 
 #. Description of the plugin
@@ -152,6 +184,10 @@ msgid ""
 "displaying PDFs in webpage."
 msgstr ""
 
-#: classes/metabox/general.php:45
+#: template/newsletter.php:60
+msgid "Title"
+msgstr ""
+
+#: classes/metabox/general.php:42
 msgid "Upload"
 msgstr ""
