@@ -56,7 +56,7 @@ Learn more about how [Appsero collects and uses this data](https://appsero.com/p
 
 == Changelog ==
 = 1.0.3 =
-*Color issue fix in frontend*
+*Color changing issue fix*
 *Newsletter table title translation fix*
 
 = 1.0.2 =
