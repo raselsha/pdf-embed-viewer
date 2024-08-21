@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PDF Embed Viewer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-21 16:52+0000\n"
+"POT-Creation-Date: 2024-08-21 17:03+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -92,6 +92,10 @@ msgstr ""
 msgid "Light Color"
 msgstr ""
 
+#: classes/options-setup.php:41
+msgid "List"
+msgstr ""
+
 #: classes/options-setup.php:28
 msgid "List Template"
 msgstr ""
@@ -128,6 +132,10 @@ msgstr ""
 #. Name of the plugin
 #: classes/cpt-register.php:47
 msgid "PDF Embed Viewer"
+msgstr ""
+
+#: classes/options-setup.php:40
+msgid "Pdf Embed Viewer"
 msgstr ""
 
 #: template/single.php:49
