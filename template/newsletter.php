@@ -44,7 +44,7 @@ if ( wp_is_block_theme() ) {  ?>
 		
 		if($years):
 	?>
-	<h2><?php echo isset($archive_title) ? esc_html($archive_title) : esc_html(the_archive_title()); ?></h2>
+	<h2><?php echo isset($archive_title) ? esc_html__($archive_title) : esc_html(the_archive_title()); ?></h2>
 	<div class="archive-newsletter-style">
 		<ul class="tabs">
 			<?php 
