@@ -161,9 +161,12 @@ if( ! class_exists('PDFEV_Embed_Viewer_CPT') ){
                 
                 if ( ! get_page_by_path( 'demo-pdf-'.$i, OBJECT, 'pdfev_embed_viewer' ) ) {
                     $post_id = wp_insert_post( $post_data );
+                    
                     if (!is_wp_error($post_id)) {
+                        
                         $meta_data = array(
                             'pdfev_emd_vwr_file_url' => PDFEV_Embed_Viewer_URL.'assets/images/sample.pdf',
+                            'pdfev_emd_vwr_check_download' => 'yes',
                         );
 
                         foreach ($meta_data as $meta_key => $meta_value) {
@@ -176,6 +179,7 @@ if( ! class_exists('PDFEV_Embed_Viewer_CPT') ){
             }
         }
 
+        
         public static  function pagination_bar( $query_wp ) 
         {
             $pages = $query_wp->max_num_pages;
