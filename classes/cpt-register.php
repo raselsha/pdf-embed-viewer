@@ -148,7 +148,7 @@ if( ! class_exists('PDFEV_Embed_Viewer_CPT') ){
         }
 
         public static function insert_demo_post() {
-            $featured_image = PDFEV_Embed_Viewer_URL.'assets/images/pdf-book.png';
+            $featured_image = PDFEV_Embed_Viewer_Path.'assets/images/pdf-book.png';
             $attachment_id = PDFEV_Embed_Viewer_CPT::insert_media($featured_image);
             
             // Create an array of demo post data
@@ -186,7 +186,7 @@ if( ! class_exists('PDFEV_Embed_Viewer_CPT') ){
             }
         }
 
-        public static function insert_media($file_path) {;
+        public static function insert_media($file_path) {
             require_once(ABSPATH . 'wp-admin/includes/file.php');
             require_once(ABSPATH . 'wp-admin/includes/image.php');
             require_once(ABSPATH . 'wp-admin/includes/media.php');
