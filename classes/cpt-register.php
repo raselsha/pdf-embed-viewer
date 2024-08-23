@@ -148,6 +148,10 @@ if( ! class_exists('PDFEV_Embed_Viewer_CPT') ){
         }
 
         public static function insert_demo_post() {
+            $featured_image = PDFEV_Embed_Viewer_URL.'https://picsum.photos/200/300';
+            $pdf_file = PDFEV_Embed_Viewer_URL.'assets/images/sample.pdf';
+            $image_attached_id = PDFEV_Embed_Viewer_CPT::insert_media($featured_image);
+            $pdf_attached_id = PDFEV_Embed_Viewer_CPT::insert_media($pdf_file);
             // Create an array of demo post data
             for($i=1; $i<6;$i++){
                 $post_data = array(
@@ -161,17 +165,20 @@ if( ! class_exists('PDFEV_Embed_Viewer_CPT') ){
                 
                 if ( ! get_page_by_path( 'demo-pdf-'.$i, OBJECT, 'pdfev_embed_viewer' ) ) {
                     $post_id = wp_insert_post( $post_data );
-                    
                     if (!is_wp_error($post_id)) {
                         
                         $meta_data = array(
-                            'pdfev_emd_vwr_file_url' => PDFEV_Embed_Viewer_URL.'assets/images/sample.pdf',
+                            'pdfev_emd_vwr_file_url' => wp_get_attachment_url($pdf_attached_id),
                             'pdfev_emd_vwr_check_download' => 'yes',
                         );
 
                         foreach ($meta_data as $meta_key => $meta_value) {
                             update_post_meta($post_id, $meta_key, $meta_value);
                         }
+
+                        require_once(ABSPATH . "wp-admin" . '/includes/image.php');
+                        set_post_thumbnail( $post_id, $image_attached_id );
+
                     } else {
                         echo 'Error inserting post: ' . $post_id->get_error_message();
                     }
@@ -179,6 +186,34 @@ if( ! class_exists('PDFEV_Embed_Viewer_CPT') ){
             }
         }
 
+        public static function insert_media($file_path) {;
+            require_once(ABSPATH . 'wp-admin/includes/file.php');
+            require_once(ABSPATH . 'wp-admin/includes/image.php');
+            require_once(ABSPATH . 'wp-admin/includes/media.php');
+        
+            $wp_filetype = wp_check_filetype($file_path, null);
+            $attachment = array(
+                'post_mime_type' => $wp_filetype['type'],
+                'post_title'     => sanitize_file_name(pathinfo($file_path, PATHINFO_FILENAME)),
+                'post_content'   => '',
+                'post_status'    => 'inherit'
+            );
+        
+            // Insert the attachment
+            $attachment_id = wp_insert_attachment($attachment, $file_path);
+        
+            if (!is_wp_error($attachment_id)) {
+                // Generate metadata for the attachment and update the database record
+                $attachment_data = wp_generate_attachment_metadata($attachment_id, $file_path);
+                wp_update_attachment_metadata($attachment_id, $attachment_data);
+        
+                // Optionally, you can log success
+                return $attachment_id;
+            } else {
+                // Log the error
+                error_log('Error inserting media: ' . $attachment_id->get_error_message());
+            }
+        }
         
         public static  function pagination_bar( $query_wp ) 
         {
