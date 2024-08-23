@@ -148,10 +148,9 @@ if( ! class_exists('PDFEV_Embed_Viewer_CPT') ){
         }
 
         public static function insert_demo_post() {
-            $featured_image = PDFEV_Embed_Viewer_URL.'https://picsum.photos/200/300';
-            $pdf_file = PDFEV_Embed_Viewer_URL.'assets/images/sample.pdf';
-            $image_attached_id = PDFEV_Embed_Viewer_CPT::insert_media($featured_image);
-            $pdf_attached_id = PDFEV_Embed_Viewer_CPT::insert_media($pdf_file);
+            $featured_image = PDFEV_Embed_Viewer_URL.'assets/images/pdf-book.png';
+            $attachment_id = PDFEV_Embed_Viewer_CPT::insert_media($featured_image);
+            
             // Create an array of demo post data
             for($i=1; $i<6;$i++){
                 $post_data = array(
@@ -168,7 +167,7 @@ if( ! class_exists('PDFEV_Embed_Viewer_CPT') ){
                     if (!is_wp_error($post_id)) {
                         
                         $meta_data = array(
-                            'pdfev_emd_vwr_file_url' => wp_get_attachment_url($pdf_attached_id),
+                            'pdfev_emd_vwr_file_url' => PDFEV_Embed_Viewer_URL.'assets/images/sample.pdf',
                             'pdfev_emd_vwr_check_download' => 'yes',
                         );
 
@@ -177,7 +176,8 @@ if( ! class_exists('PDFEV_Embed_Viewer_CPT') ){
                         }
 
                         require_once(ABSPATH . "wp-admin" . '/includes/image.php');
-                        set_post_thumbnail( $post_id, $image_attached_id );
+
+                        set_post_thumbnail( $post_id, $attachment_id );
 
                     } else {
                         echo 'Error inserting post: ' . $post_id->get_error_message();
