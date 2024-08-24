@@ -35,8 +35,10 @@ if( ! class_exists('PDFEV_Functions') ){
 
 
         public static function insert_demo_post() {
-            $file_path = PDFEV_Embed_Viewer_Path.'assets/images/pdf-book.png';
-            $attachment = PDFEV_Functions::insert_media($file_path);
+            $image = PDFEV_Embed_Viewer_Path.'assets/images/pdf-book.png';
+            $pdf = PDFEV_Embed_Viewer_Path.'assets/images/sample.pdf';
+            $image_attached = PDFEV_Functions::insert_media($image);
+            $pdf_attached = PDFEV_Functions::insert_media($pdf);
             // Create an array of demo post data
             for($i=1; $i<6;$i++){
                 $post_data = array(
@@ -53,7 +55,7 @@ if( ! class_exists('PDFEV_Functions') ){
                     if (!is_wp_error($post_id)) {
                         
                         $meta_data = array(
-                            'pdfev_emd_vwr_file_url' => PDFEV_Embed_Viewer_URL.'assets/images/sample.pdf',
+                            'pdfev_emd_vwr_file_url' => $pdf_attached['url'],
                             'pdfev_emd_vwr_check_download' => 'yes',
                         );
 
@@ -63,7 +65,7 @@ if( ! class_exists('PDFEV_Functions') ){
 
                         require_once(ABSPATH . "wp-admin" . '/includes/image.php');
 
-                        set_post_thumbnail( $post_id, $attachment['id'] );
+                        set_post_thumbnail( $post_id, $image_attached['id'] );
 
                     } else {
                         echo 'Error inserting post: ' . $post_id->get_error_message();
