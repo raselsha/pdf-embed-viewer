@@ -35,11 +35,11 @@ if ( wp_is_block_theme() ) {  ?>
     get_header();	
 }
 ?>
-<?php $pdf_emd_vwr_file_url = get_post_meta( get_the_ID(), 'pdfev_emd_vwr_file_url', true ); ?>
+<?php $pdf_emd_vwr_file_url = get_post_meta( get_the_ID(), 'pdfev_meta_pdf_url', true ); ?>
 <div class="pdfev-embed-viewer">
 	<h1><?php the_title();?></h1>
 	<?php
-		$check_download  = get_post_meta( get_the_ID(), 'pdfev_emd_vwr_check_download', true );
+		$check_download  = get_post_meta( get_the_ID(), 'pdfev_meta_download', true );
 		if($check_download == 'yes'):
 	?>
 	<p><a href="<?php echo esc_attr($pdf_emd_vwr_file_url); ?>" class="download-btn" download><?php the_time('F'); ?> | <?php the_time('Y'); ?> <img src="<?php echo esc_attr(PDFEV_Embed_Viewer_URL.'assets/images/download.svg'); ?>" alt="<?php echo esc_attr('download-icon','pdf-embed-viewer'); ?>"></a></p>

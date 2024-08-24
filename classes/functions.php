@@ -55,8 +55,8 @@ if( ! class_exists('PDFEV_Functions') ){
                     if (!is_wp_error($post_id)) {
                         
                         $meta_data = array(
-                            'pdfev_emd_vwr_file_url' => $pdf_attached['url']??'',
-                            'pdfev_emd_vwr_check_download' => 'yes',
+                            'pdfev_meta_pdf_url' => $pdf_attached['url']??'',
+                            'pdfev_meta_download' => 'yes',
                         );
 
                         foreach ($meta_data as $meta_key => $meta_value) {

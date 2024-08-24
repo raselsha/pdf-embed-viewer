@@ -21,7 +21,7 @@ if( ! class_exists('PDFEV_CPT') ){
 
         public function posts_columns($columns){
             unset($columns['date']);
-            $columns['pdfev_emd_vwr_file_url'] = esc_html__('File Url','pdf-embed-viewer');
+            $columns['pdfev_meta_pdf_url'] = esc_html__('File Url','pdf-embed-viewer');
             $columns['date'] = esc_html__('Date','pdf-embed-viewer');
             return $columns;
         }
@@ -29,15 +29,15 @@ if( ! class_exists('PDFEV_CPT') ){
         public function custom_column($columns, $post_id){
 
             switch($columns){
-                case 'pdfev_emd_vwr_file_url':
-                     echo esc_url(get_post_meta($post_id,'pdfev_emd_vwr_file_url',true));
+                case 'pdfev_meta_pdf_url':
+                     echo esc_url(get_post_meta($post_id,'pdfev_meta_pdf_url',true));
                 break;
             }
         }
 
         public function sortable_columns($columns){
 
-            $columns['pdfev_emd_vwr_file_url']='pdfev_emd_vwr_file_url';
+            $columns['pdfev_meta_pdf_url']='pdfev_meta_pdf_url';
             return $columns;
         }
 

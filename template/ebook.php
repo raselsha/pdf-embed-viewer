@@ -40,7 +40,7 @@ if ( wp_is_block_theme() ) {  ?>
 	<?php
 		$archive_title = get_option('pdfev_archive_title');
 		$check_download_archive  =  get_option('pdfev_archive_download');
-		$pdf_emd_vwr_file_url=get_post_meta( get_the_ID(), 'pdfev_emd_vwr_file_url', true );
+		$pdf_emd_vwr_file_url=get_post_meta( get_the_ID(), 'pdfev_meta_pdf_url', true );
 	?>
 	<h2><?php echo isset($archive_title) ? esc_html($archive_title) : esc_html(the_archive_title()); ?></h2>
 	<div class="archive-ebook-style">
