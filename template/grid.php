@@ -76,7 +76,7 @@ if ( wp_is_block_theme() ) {  ?>
 		<?php endwhile; ?>
 	</div>
 	<div class="pagination">
-		<?php PDFEV_Embed_Viewer_CPT::pagination_bar( $WpQuery ); ?>
+		<?php PDFEV_CPT::pagination_bar( $WpQuery ); ?>
 	</div>
 </div>
 

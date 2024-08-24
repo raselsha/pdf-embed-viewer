@@ -85,7 +85,7 @@ if ( wp_is_block_theme() ) {  ?>
 </div>
 
 <div class="pagination">
-	<?php PDFEV_Embed_Viewer_CPT::pagination_bar( $WpQuery ); ?>
+	<?php PDFEV_CPT::pagination_bar( $WpQuery ); ?>
 </div>
 
 <?php if ( wp_is_block_theme() ) : ?>

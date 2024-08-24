@@ -8,8 +8,8 @@
 
 if( ! defined('ABSPATH') ) { die( "Don't access directly" ); }
 
-if( ! class_exists('PDFEV_Embed_Viewer_General') ){
-    class PDFEV_Embed_Viewer_General{
+if( ! class_exists('PDFEV_Metabox_General') ){
+    class PDFEV_Metabox_General{
         public function __construct()
         {
             add_action('pdfev_emd_vwr_actn_nav_tabs',array($this,'tabs'));
@@ -93,5 +93,5 @@ if( ! class_exists('PDFEV_Embed_Viewer_General') ){
             }
     }
     
-    $PDFEV_Embed_Viewer_General = new PDFEV_Embed_Viewer_General();
+    $PDFEV_Metabox_General = new PDFEV_Metabox_General();
 }

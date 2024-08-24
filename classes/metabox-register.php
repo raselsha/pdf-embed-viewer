@@ -3,8 +3,8 @@
 
 if( ! defined('ABSPATH') ) { die( "Don't access directly" ); }
 
-if( ! class_exists('PDFEV_Embed_Viewer_Metabox')){
-        class PDFEV_Embed_Viewer_Metabox{
+if( ! class_exists('PDFEV_Metabox')){
+        class PDFEV_Metabox{
             public function __construct(){
                 add_action('admin_init',[$this,'metabox']);
             }
@@ -30,5 +30,5 @@ if( ! class_exists('PDFEV_Embed_Viewer_Metabox')){
             <?php
             }           
         }
-        $PDFEV_Embed_Viewer_Metabox = new PDFEV_Embed_Viewer_Metabox();
+        $PDFEV_Metabox = new PDFEV_Metabox();
     }

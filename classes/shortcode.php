@@ -7,9 +7,9 @@
 
  if( ! defined('ABSPATH') ) { die( "Don't access directly" ); }
 
-if( ! class_exists('PDFEV_Embed_Viewer_Shortcode') ){
+if( ! class_exists('PDFEV_Shortcode') ){
     
-    class PDFEV_Embed_Viewer_Shortcode{
+    class PDFEV_Shortcode{
         public function __construct() {
             add_action('init', [$this,'register_shortcode']);
         } 
@@ -59,5 +59,5 @@ if( ! class_exists('PDFEV_Embed_Viewer_Shortcode') ){
         }
         
     }
-    new PDFEV_Embed_Viewer_Shortcode();
+    new PDFEV_Shortcode();
 }

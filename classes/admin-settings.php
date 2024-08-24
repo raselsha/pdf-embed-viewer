@@ -8,8 +8,8 @@
 
 if( ! defined('ABSPATH') ) { die( "Don't access directly" ); }
 
-if( ! class_exists('PDFEV_Embed_Viewer_Admin_Settings') ){
-    class PDFEV_Embed_Viewer_Admin_Settings{
+if( ! class_exists('PDFEV_Admin_Settings') ){
+    class PDFEV_Admin_Settings{
         
         public function __construct() {
             
@@ -195,5 +195,5 @@ if( ! class_exists('PDFEV_Embed_Viewer_Admin_Settings') ){
         }
     }
     
-    $PDFEV_Embed_Viewer_Admin_Settings = new PDFEV_Embed_Viewer_Admin_Settings();
+    $PDFEV_Admin_Settings = new PDFEV_Admin_Settings();
 }

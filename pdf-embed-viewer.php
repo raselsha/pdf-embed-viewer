@@ -47,8 +47,8 @@ if( ! class_exists( 'PDFEV_Embed_Viewer' ) ){
         }
 
         public static function include_plugin_files() {
-            require_once PDFEV_Embed_Viewer_Path . 'classes/functions.php';
             require_once PDFEV_Embed_Viewer_Path . 'classes/cpt-register.php';
+            require_once PDFEV_Embed_Viewer_Path . 'classes/functions.php';
             require_once PDFEV_Embed_Viewer_Path . 'classes/options-setup.php';
             require_once PDFEV_Embed_Viewer_Path . 'classes/admin-settings.php';
             require_once PDFEV_Embed_Viewer_Path . 'classes/enque-style-script.php';

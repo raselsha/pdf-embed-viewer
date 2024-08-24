@@ -5,8 +5,8 @@
  */
 if( ! defined('ABSPATH') ) { die( "Don't access directly" ); }
 
-if( ! class_exists('PDFEV_Embed_Viewer_Enque') ){
-    class PDFEV_Embed_Viewer_Enque{
+if( ! class_exists('PDFEV_Enque_Style') ){
+    class PDFEV_Enque_Style{
         public function __construct()
         {
             add_action('admin_enqueue_scripts',[$this,'backend_style']);
@@ -44,5 +44,5 @@ if( ! class_exists('PDFEV_Embed_Viewer_Enque') ){
 
     }
     
-    $PDFEV_Embed_Viewer_Enque = new PDFEV_Embed_Viewer_Enque();
+    $PDFEV_Enque_Style = new PDFEV_Enque_Style();
 }

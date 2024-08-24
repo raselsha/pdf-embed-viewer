@@ -7,9 +7,9 @@
 
 if( ! defined('ABSPATH') ) { die( "Don't access directly" ); }
 
-if( ! class_exists('PDFEV_Embed_Viewer_Options_Setup') ){
+if( ! class_exists('PDFEV_Options_Setup') ){
 
-    class PDFEV_Embed_Viewer_Options_Setup{
+    class PDFEV_Options_Setup{
 
         public function __construct(){
             add_action('init',[$this,'set_options_value']);
@@ -52,5 +52,5 @@ if( ! class_exists('PDFEV_Embed_Viewer_Options_Setup') ){
         }
     }
     
-    $PDFEV_Embed_Viewer_Options_Setup = new PDFEV_Embed_Viewer_Options_Setup();
+    $PDFEV_Options_Setup = new PDFEV_Options_Setup();
 }

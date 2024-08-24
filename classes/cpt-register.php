@@ -6,9 +6,9 @@
 
 if( ! defined('ABSPATH') ) { die( "Don't access directly" ); }
 
-if( ! class_exists('PDFEV_Embed_Viewer_CPT') ){
+if( ! class_exists('PDFEV_CPT') ){
 
-    class PDFEV_Embed_Viewer_CPT{
+    class PDFEV_CPT{
        
         public function __construct() {
             add_action( 'init', array($this,'create_post_type') );
@@ -157,7 +157,7 @@ if( ! class_exists('PDFEV_Embed_Viewer_CPT') ){
 
     
 
-    $PDFEV_Embed_Viewer_CPT = new PDFEV_Embed_Viewer_CPT();
+    $PDFEV_CPT = new PDFEV_CPT();
 
     
 }
