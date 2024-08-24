@@ -66,7 +66,7 @@ if ( wp_is_block_theme() ) {  ?>
 						$paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
 						$args = array(
 						'post_type'=>'pdfev_embed_viewer',
-						'order' => 'ASC',
+						'order' => 'DSC',
 						'post_status' => 'publish',
 						'posts_per_page'=> -1,
 						'paged' => $paged,
