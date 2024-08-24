@@ -77,7 +77,7 @@ if( ! class_exists('PDFEV_CPT') ){
                 "map_meta_cap" => true,
                 "rewrite" => [ "slug" => "pdf-embed-viewer", "with_front" => true ],
                 "query_var" => true,
-                "menu_icon" => PDFEV_Embed_Viewer_URL.'assets/images/pdf-embed-viewer-icon.png',
+                "menu_icon" => PDFEV_Const_URL.'assets/images/pdf-embed-viewer-icon.png',
                 "show_in_graphql" => false,
                 //"register_metabox_cb" => array($this,'add_meta_boxes'),
             ];
@@ -111,7 +111,7 @@ if( ! class_exists('PDFEV_CPT') ){
                  
                 $single_template = get_template_directory().'/template/single.php';
                 if( ! file_exists($single_template)){
-                    $single_template = PDFEV_Embed_Viewer_Path . 'template/single.php';
+                    $single_template = PDFEV_Const_Path . 'template/single.php';
                 }
             }
             return $single_template;

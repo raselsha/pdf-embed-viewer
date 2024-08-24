@@ -42,7 +42,7 @@ if ( wp_is_block_theme() ) {  ?>
 		$check_download  = get_post_meta( get_the_ID(), 'pdfev_meta_download', true );
 		if($check_download == 'yes'):
 	?>
-	<p><a href="<?php echo esc_attr($pdf_emd_vwr_file_url); ?>" class="download-btn" download><?php the_time('F'); ?> | <?php the_time('Y'); ?> <img src="<?php echo esc_attr(PDFEV_Embed_Viewer_URL.'assets/images/download.svg'); ?>" alt="<?php echo esc_attr('download-icon','pdf-embed-viewer'); ?>"></a></p>
+	<p><a href="<?php echo esc_attr($pdf_emd_vwr_file_url); ?>" class="download-btn" download><?php the_time('F'); ?> | <?php the_time('Y'); ?> <img src="<?php echo esc_attr(PDFEV_Const_URL.'assets/images/download.svg'); ?>" alt="<?php echo esc_attr('download-icon','pdf-embed-viewer'); ?>"></a></p>
 	<?php endif; ?>
 	<iframe class="pdf-viewer" src="<?php echo esc_attr($pdf_emd_vwr_file_url); ?>" frameborder="0"></iframe>
 	<div class="pagination">

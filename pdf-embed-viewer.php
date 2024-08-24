@@ -41,20 +41,20 @@ if( ! class_exists( 'PDFEV_Embed_Viewer' ) ){
         }
 
         public function define_contstants(){
-            define( 'PDFEV_Embed_Viewer_Path', plugin_dir_path(__FILE__) );
-            define( 'PDFEV_Embed_Viewer_URL', plugin_dir_url(__FILE__) );
-            define( 'PDFEV_Embed_Viewer_VERSION', '1.0.2' );
+            define( 'PDFEV_Const_Path', plugin_dir_path(__FILE__) );
+            define( 'PDFEV_Const_URL', plugin_dir_url(__FILE__) );
+            define( 'PDFEV_Const_VERSION', '1.0.2' );
         }
 
         public static function include_plugin_files() {
-            require_once PDFEV_Embed_Viewer_Path . 'classes/cpt-register.php';
-            require_once PDFEV_Embed_Viewer_Path . 'classes/functions.php';
-            require_once PDFEV_Embed_Viewer_Path . 'classes/options-setup.php';
-            require_once PDFEV_Embed_Viewer_Path . 'classes/admin-settings.php';
-            require_once PDFEV_Embed_Viewer_Path . 'classes/enque-style-script.php';
-            require_once PDFEV_Embed_Viewer_Path . 'classes/metabox-register.php';
-            require_once PDFEV_Embed_Viewer_Path . 'classes/metabox/general.php';
-            require_once PDFEV_Embed_Viewer_Path . 'classes/shortcode.php';
+            require_once PDFEV_Const_Path . 'classes/cpt-register.php';
+            require_once PDFEV_Const_Path . 'classes/functions.php';
+            require_once PDFEV_Const_Path . 'classes/options-setup.php';
+            require_once PDFEV_Const_Path . 'classes/admin-settings.php';
+            require_once PDFEV_Const_Path . 'classes/enque-style-script.php';
+            require_once PDFEV_Const_Path . 'classes/metabox-register.php';
+            require_once PDFEV_Const_Path . 'classes/metabox/general.php';
+            require_once PDFEV_Const_Path . 'classes/shortcode.php';
         }
 
         public static function activate(){

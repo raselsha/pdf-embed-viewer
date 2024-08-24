@@ -90,7 +90,7 @@ if ( wp_is_block_theme() ) {  ?>
 												$pdf_emd_vwr_file_url=get_post_meta( get_the_ID(), 'pdfev_meta_pdf_url', true );
 												if(isset($pdf_emd_vwr_file_url)):
 											?>
-											<a href="<?php echo esc_attr(get_post_meta( get_the_ID(), 'pdfev_meta_pdf_url', true ))?>" class="download-btn" download><?php echo esc_html('Download','pdf-embed-viewer'); ?> <img src="<?php echo esc_attr(PDFEV_Embed_Viewer_URL.'assets/images/download.svg'); ?>" alt="<?php echo esc_html('Download icon','pdf-embed-viewer'); ?>"> </a>
+											<a href="<?php echo esc_attr(get_post_meta( get_the_ID(), 'pdfev_meta_pdf_url', true ))?>" class="download-btn" download><?php echo esc_html('Download','pdf-embed-viewer'); ?> <img src="<?php echo esc_attr(PDFEV_Const_URL.'assets/images/download.svg'); ?>" alt="<?php echo esc_html('Download icon','pdf-embed-viewer'); ?>"> </a>
 											<?php endif; ?>
 										
 									<?php endif; ?>

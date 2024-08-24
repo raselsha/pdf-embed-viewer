@@ -26,7 +26,7 @@ if( ! class_exists('PDFEV_Functions') ){
         public static function appsero_init_tracker() {
 
             if ( ! class_exists( 'Appsero\Client' ) ) {
-            require_once PDFEV_Embed_Viewer_Path . '/vendor/appsero/src/Client.php';
+            require_once PDFEV_Const_Path . '/vendor/appsero/src/Client.php';
             }
             $client = new Appsero\Client( 'efdff7cb-2ab8-4e9a-a19f-9ca95f4a5b42', 'PDF Embed Viewer', __FILE__ );
             $client->insights()->init();
@@ -35,8 +35,8 @@ if( ! class_exists('PDFEV_Functions') ){
 
 
         public static function insert_demo_post() {
-            $image = PDFEV_Embed_Viewer_Path.'assets/images/book-image.png';
-            $pdf = PDFEV_Embed_Viewer_Path.'assets/images/pdf-book-sample.pdf';
+            $image = PDFEV_Const_Path.'assets/images/book-image.png';
+            $pdf = PDFEV_Const_Path.'assets/images/pdf-book-sample.pdf';
             $image_attached = PDFEV_Functions::insert_media($image);
             $pdf_attached = PDFEV_Functions::insert_media($pdf);
             // Create an array of demo post data
@@ -133,9 +133,9 @@ if( ! class_exists('PDFEV_Functions') ){
             if( ! file_exists($archive_template)){
                 $archive_template = get_template_directory().'/template/list.php';
                 if( ! file_exists($archive_template)){
-                    $archive_template = PDFEV_Embed_Viewer_Path . 'template/'. $template_file;
+                    $archive_template = PDFEV_Const_Path . 'template/'. $template_file;
                     if( ! file_exists($archive_template)){
-                        $archive_template = PDFEV_Embed_Viewer_Path . 'template/list.php';
+                        $archive_template = PDFEV_Const_Path . 'template/list.php';
                     }
                 }
             }
