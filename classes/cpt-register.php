@@ -94,22 +94,12 @@ if( ! class_exists('PDFEV_Embed_Viewer_CPT') ){
             foreach($opt_templates as $key => $value){
                 if($template == $key){
                     $value = $value;
-                    $inc_template = $key.'.php';
+                    $load_template = $key.'.php';
                 }
             }
 
             if ( is_post_type_archive ( 'pdfev_embed_viewer' ) ) {                
-                $archive_template = get_template_directory().'/template/'. $inc_template;
-                if( ! file_exists($archive_template)){
-                    $archive_template = get_template_directory().'/template/list.php';
-                    if( ! file_exists($archive_template)){
-                        $archive_template = PDFEV_Embed_Viewer_Path . 'template/'. $inc_template;
-                        if( ! file_exists($archive_template)){
-                            $archive_template = PDFEV_Embed_Viewer_Path . 'template/list.php';
-                        }
-                    }
-                }
-                
+                $archive_template = PDFEV_Functions::load_template($load_template);                
             }
 
             return $archive_template;

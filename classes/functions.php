@@ -127,6 +127,20 @@ if( ! class_exists('PDFEV_Functions') ){
 
             return $attachment;
         }
+
+        public static function load_template($template_file){
+            $archive_template = get_template_directory().'/template/'. $template_file;
+            if( ! file_exists($archive_template)){
+                $archive_template = get_template_directory().'/template/list.php';
+                if( ! file_exists($archive_template)){
+                    $archive_template = PDFEV_Embed_Viewer_Path . 'template/'. $template_file;
+                    if( ! file_exists($archive_template)){
+                        $archive_template = PDFEV_Embed_Viewer_Path . 'template/list.php';
+                    }
+                }
+            }
+            return $archive_template;
+        }
     }
     
     new PDFEV_Functions();
