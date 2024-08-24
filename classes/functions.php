@@ -16,7 +16,7 @@ if( ! class_exists('PDFEV_Functions') ){
             add_action( 'plugins_loaded', ['PDFEV_Functions','load_plugin_textdomain'] );  
             add_action( 'plugins_loaded', ['PDFEV_Functions','appsero_init_tracker'] );   
             add_action( 'init', ['PDFEV_Functions','insert_demo_post'] );   
-            add_action( 'init', ['PDFEV_Functions','insert_media'] );   
+               
         }
 
         public static function load_plugin_textdomain() {
@@ -35,8 +35,8 @@ if( ! class_exists('PDFEV_Functions') ){
 
 
         public static function insert_demo_post() {
-            
-            
+            $file_path = PDFEV_Embed_Viewer_Path.'assets/images/pdf-book.png';
+            PDFEV_Functions::insert_media($file_path);
             // Create an array of demo post data
             for($i=1; $i<6;$i++){
                 $post_data = array(
@@ -72,14 +72,8 @@ if( ! class_exists('PDFEV_Functions') ){
             }
         }
 
-        public static function insert_media() {
-            $temp_file = PDFEV_Embed_Viewer_Path.'assets/images/pdf-book.png';
-            // Download the file to a temporary location
-            // $temp_file = download_url($file_url);
-            // if (is_wp_error($temp_file)) {
-            //     return 'File download failed: ' . $temp_file->get_error_message();
-            // }
-
+        public static function insert_media($file_path) {
+            
             // Load necessary WordPress files
             require_once(ABSPATH . 'wp-admin/includes/file.php');
             require_once(ABSPATH . 'wp-admin/includes/media.php');
@@ -87,11 +81,11 @@ if( ! class_exists('PDFEV_Functions') ){
 
             // Prepare the file
             $file = array(
-                'name'     => basename($temp_file),
-                'type'     => mime_content_type($temp_file),
-                'tmp_name' => $temp_file,
+                'name'     => basename($file_path),
+                'type'     => mime_content_type($file_path),
+                'tmp_name' => $file_path,
                 'error'    => 0,
-                'size'     => filesize($temp_file),
+                'size'     => filesize($file_path),
             );
 
             // Handle file upload
@@ -115,14 +109,13 @@ if( ! class_exists('PDFEV_Functions') ){
             // Generate metadata and update attachment
             $attachment_data = wp_generate_attachment_metadata($attachment_id, $upload['file']);
             wp_update_attachment_metadata($attachment_id, $attachment_data);
-
-            // Clean up temporary file
-            @unlink($temp_file);
-
-            return array(
-                'attachment_id' => $attachment_id,
-                'attachment_url' => wp_get_attachment_url($attachment_id),
+            
+            $attachment = array(
+                'id' => $attachment_id,
+                'url' => wp_get_attachment_url($attachment_id),
             );
+
+            return $attachment;
         }
     }
     
