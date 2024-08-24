@@ -55,7 +55,7 @@ if( ! class_exists('PDFEV_Functions') ){
                     if (!is_wp_error($post_id)) {
                         
                         $meta_data = array(
-                            'pdfev_emd_vwr_file_url' => $pdf_attached['url'],
+                            'pdfev_emd_vwr_file_url' => $pdf_attached['url']??'',
                             'pdfev_emd_vwr_check_download' => 'yes',
                         );
 
@@ -65,7 +65,7 @@ if( ! class_exists('PDFEV_Functions') ){
 
                         require_once(ABSPATH . "wp-admin" . '/includes/image.php');
 
-                        set_post_thumbnail( $post_id, $image_attached['id'] );
+                        set_post_thumbnail( $post_id, $image_attached['id']??'' );
 
                     } else {
                         echo 'Error inserting post: ' . $post_id->get_error_message();
@@ -76,6 +76,14 @@ if( ! class_exists('PDFEV_Functions') ){
 
         public static function insert_media($file_path) {
             
+            if(!file_exists($file_path)){
+                // $temp_file = download_url($image);
+                // if (is_wp_error($temp_file)) {
+                //     return 'File download failed: ' . $temp_file->get_error_message();
+                // }
+                return;
+            }
+
             // Load necessary WordPress files
             require_once(ABSPATH . 'wp-admin/includes/file.php');
             require_once(ABSPATH . 'wp-admin/includes/media.php');
