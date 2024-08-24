@@ -44,7 +44,7 @@ if ( wp_is_block_theme() ) {  ?>
 		
 		if($years):
 	?>
-	<h2><?php echo isset($archive_title) ? esc_html__($archive_title) : esc_html(the_archive_title()); ?></h2>
+	<h2><?php echo isset($archive_title) ? esc_html($archive_title) : the_archive_title(); ?></h2>
 	<div class="archive-newsletter-style">
 		<ul class="tabs">
 			<?php 
@@ -59,7 +59,7 @@ if ( wp_is_block_theme() ) {  ?>
 						<tr>         					    			
 							<th><?php echo esc_html__('Month','pdf-embed-viewer') ?></th>
 							<th><?php echo esc_html__('Title','pdf-embed-viewer') ?></th>
-							<th style="text-align: right;"><?php echo esc_html__('Action','pdf-embed-viewer') ?></th>
+							<th style="text-align: right;"><?php echo esc_html__('Read/Download','pdf-embed-viewer') ?></th>
 						</tr>
 					</thead>
 					<?php
