@@ -35,8 +35,8 @@ if( ! class_exists('PDFEV_Functions') ){
 
 
         public static function insert_demo_post() {
-            $image = PDFEV_Embed_Viewer_Path.'assets/images/pdf-book.png';
-            $pdf = PDFEV_Embed_Viewer_Path.'assets/images/sample.pdf';
+            $image = PDFEV_Embed_Viewer_Path.'assets/images/book-image.png';
+            $pdf = PDFEV_Embed_Viewer_Path.'assets/images/pdf-book-sample.pdf';
             $image_attached = PDFEV_Functions::insert_media($image);
             $pdf_attached = PDFEV_Functions::insert_media($pdf);
             // Create an array of demo post data
