@@ -68,11 +68,11 @@ if( ! class_exists( 'PDFEV_Embed_Viewer' ) ){
 
         public static function uninstall(){
             unregister_post_type('pdfev_embed_viewer');
-            delete_option('pdfev_emd_vwr_opt_template_lists');
-            delete_option('pdfev_emd_vwr_opt_archive_title');
-            delete_option('pdfev_emd_vwr_opt_archive_template');
-            delete_option('pdfev_emd_vwr_opt_archive_download');
-            delete_option('pdfev_emd_vwr_opt_colors');
+            delete_option('pdfev_archive_template_lists');
+            delete_option('pdfev_archive_title');
+            delete_option('pdfev_archive_template');
+            delete_option('pdfev_archive_download');
+            delete_option('pdfev_css_colors');
         }
 
     }

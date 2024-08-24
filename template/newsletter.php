@@ -38,8 +38,8 @@ if ( wp_is_block_theme() ) {  ?>
 
 <div class="pdfev-embed-viewer">
 	<?php
-		$archive_title = get_option('pdfev_emd_vwr_opt_archive_title');
-		$check_download_archive  =  get_option('pdfev_emd_vwr_opt_archive_download');
+		$archive_title = get_option('pdfev_archive_title');
+		$check_download_archive  =  get_option('pdfev_archive_download');
 		$years =  PDFEV_CPT::get_posts_years_array();
 		
 		if($years):

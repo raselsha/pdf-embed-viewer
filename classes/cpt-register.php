@@ -88,8 +88,8 @@ if( ! class_exists('PDFEV_CPT') ){
         
 
         public function archive_template( $archive_template ) {
-            $template = get_option('pdfev_emd_vwr_opt_archive_template'); 
-            $opt_templates = get_option('pdfev_emd_vwr_opt_template_lists'); 
+            $template = get_option('pdfev_archive_template'); 
+            $opt_templates = get_option('pdfev_archive_template_lists'); 
 
             foreach($opt_templates as $key => $value){
                 if($template == $key){

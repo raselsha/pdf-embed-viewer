@@ -26,7 +26,7 @@ if( ! class_exists('PDFEV_Enque_Style') ){
                 
                 wp_enqueue_script( 'pdf-frontend-script', PDFEV_Embed_Viewer_URL.'assets/js/frontend.js',['jquery'],PDFEV_Embed_Viewer_VERSION,true);
 
-                $colors         = get_option('pdfev_emd_vwr_opt_colors');         
+                $colors         = get_option('pdfev_css_colors');         
                 $primary        = esc_html($colors['primary'] ? $colors['primary'] : '#c79f62');
                 $secondary      = esc_html($colors['secondary'] ? $colors['secondary'] : '#666');
                 $dark           = esc_html($colors['dark'] ? $colors['dark'] : '#333');
