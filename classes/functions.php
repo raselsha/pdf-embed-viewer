@@ -97,7 +97,7 @@ if( ! class_exists('PDFEV_Functions') ){
             // Add the file to the media library
             $attachment = array(
                 'post_mime_type' => $upload['type'],
-                'post_title'     => sanitize_file_name($upload['file']),
+                'post_title'     => sanitize_file_name(pathinfo($file_path, PATHINFO_FILENAME)),
                 'post_content'   => '',
                 'post_status'    => 'inherit',
             );
