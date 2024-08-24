@@ -55,13 +55,13 @@ if ( wp_is_block_theme() ) {  ?>
 		<div class="tabs-content" >
 			<?php foreach($years as $year): ?>
 				<table  class="<?php echo esc_attr($year==gmdate('Y')?'active':''); ?>" data-tab-content  id="year-<?php echo esc_attr($year);?>">
-					<tr>         					    			
-						<th><?php echo esc_html__('Month','pdf-embed-viewer') ?></th>
-						<th><?php echo esc_html__('Title','pdf-embed-viewer') ?></th>
-						<?php if($check_download_archive == 'yes'): ?>
-						<th><?php echo esc_html__('Download','pdf-embed-viewer') ?></th>
-						<?php endif; ?>
-					</tr>
+					<thead>
+						<tr>         					    			
+							<th><?php echo esc_html__('Month','pdf-embed-viewer') ?></th>
+							<th><?php echo esc_html__('Title','pdf-embed-viewer') ?></th>
+							<th style="text-align: right;"><?php echo esc_html__('Action','pdf-embed-viewer') ?></th>
+						</tr>
+					</thead>
 					<?php
 						$paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
 						$args = array(
@@ -83,7 +83,7 @@ if ( wp_is_block_theme() ) {  ?>
 							<tr>
 								<td width="10%"><?php the_time('F'); ?></td>
 								<td width="60%"><a href="<?php the_permalink(); ?>"><?php the_title();?></a></td>
-								<td width="20%">
+								<td width="20%" style="text-align: right;">
 									<a href="<?php the_permalink(); ?>" class="download-btn"><i class="far fa-address-book"></i> <?php echo esc_html('Read','pdf-embed-viewer');?></a>
 									<?php if($check_download_archive == 'yes'): ?>
 											<?php
