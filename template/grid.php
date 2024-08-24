@@ -68,7 +68,7 @@ if ( wp_is_block_theme() ) {  ?>
 						<h2><a href="<?php the_permalink(); ?>"> <?php the_title();?></a></h2>
 						<div class="action">
 							<?php if($check_download_archive == 'yes' and  isset($pdf_emd_vwr_file_url)): ?>
-								<a href="<?php echo esc_attr($pdf_emd_vwr_file_ur); ?>" class="download-btn" download><?php echo esc_html('Download','pdf-embed-viewer'); ?></a>
+								<a href="<?php echo esc_attr($pdf_emd_vwr_file_url); ?>" class="download-btn" download><?php echo esc_html('Download','pdf-embed-viewer'); ?></a>
 							<?php endif; ?>
 						</div>
 					</div>
