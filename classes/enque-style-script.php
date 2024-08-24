@@ -32,10 +32,10 @@ if( ! class_exists('PDFEV_Enque_Style') ){
                 $dark           = esc_html($colors['dark'] ? $colors['dark'] : '#333');
                 $light          = esc_html($colors['light'] ? $colors['light'] : '#e5e5e5');
                 $inline_css = ":root{
-                        --pdfev-emd-vwr-primary:{$primary };        
-                        --pdfev-emd-vwr-secondary:{$secondary};
-                        --pdfev-emd-vwr-dark:{$dark}; 
-                        --pdfev-emd-vwr-light:{$light};     
+                        --pdfev-primary:{$primary };        
+                        --pdfev-secondary:{$secondary};
+                        --pdfev-dark:{$dark}; 
+                        --pdfev-light:{$light};     
                     ";
                 wp_add_inline_style('pdf-frontend-style', $inline_css);
             }

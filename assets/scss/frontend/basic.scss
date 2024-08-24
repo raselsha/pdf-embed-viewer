@@ -5,14 +5,14 @@
 
     a{
         text-decoration: none;
-        color: var(--pdfev-emd-vwr-primary);
+        color: var(--pdfev-primary);
         font-weight: bold;
     }
     h1{
-        color:var(--pdfev-emd-vwr-dark); ;
+        color:var(--pdfev-dark); ;
     }
     .button{
-        background: var(--pdfev-emd-vwr-primary);
+        background: var(--pdfev-primary);
         padding: 0.1em 0.5em;
         border-radius: .25em;
         color: var(--pdfev-emd-vwr-white);
@@ -36,9 +36,9 @@
         .page-numbers{
             display: inline-block;
             padding: 5px 10px;
-            border: 1px solid var(--pdfev-emd-vwr-secondary);
+            border: 1px solid var(--pdfev-secondary);
             &.current{
-                background-color: var(--pdfev-emd-vwr-primary);
+                background-color: var(--pdfev-primary);
                 color: var(--pdfev-emd-vwr-white);
             }
         }
