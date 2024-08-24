@@ -39,15 +39,16 @@ if( ! class_exists('PDFEV_Functions') ){
             $pdf = PDFEV_Const_Path.'assets/images/pdf-book-sample.pdf';
             $image_attached = PDFEV_Functions::insert_media($image);
             $pdf_attached = PDFEV_Functions::insert_media($pdf);
+            $months = ["", "January", "February", "March", "April", "May", "June"];
             // Create an array of demo post data
-            for($i=1; $i<6;$i++){
+            for($i=1; $i<7;$i++){
                 $post_data = array(
-                    'post_title'    => 'Demo Pdf '.$i,
+                    'post_title'    => 'Newsletter '.$months[$i],
                     'post_content'  => 'This is the content of demo post '.$i,
                     'post_status'   => 'publish',
                     'post_author'   => 1, // Change this to the author ID you want
+                    'post_date'     => '2024-'.$i.'-24 12:00:00',
                     'post_type'     => 'pdfev_embed_viewer',
-                    'post_name'    => 'demo-pdf-'.$i
                 );
                 
                 if ( ! get_page_by_path( 'demo-pdf-'.$i, OBJECT, 'pdfev_embed_viewer' ) ) {
