@@ -37,13 +37,7 @@ if( ! class_exists( 'PDFEV_Embed_Viewer' ) ){
 
         public function __construct() {
             $this->define_contstants();
-            $this->include_plugin_files();
-            add_action( 'plugins_loaded', [$this,'load_plugin_textdomain'] );  
-            add_action( 'init', [$this,'appsero_init_tracker'] );          
-        }
-
-        public function load_plugin_textdomain() {
-            load_plugin_textdomain( 'pdf-embed-viewer', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+            $this->include_plugin_files();        
         }
 
         public function define_contstants(){
@@ -53,18 +47,17 @@ if( ! class_exists( 'PDFEV_Embed_Viewer' ) ){
         }
 
         public static function include_plugin_files() {
+            require_once PDFEV_Embed_Viewer_Path . 'classes/functions.php';
             require_once PDFEV_Embed_Viewer_Path . 'classes/cpt-register.php';
             require_once PDFEV_Embed_Viewer_Path . 'classes/options-setup.php';
             require_once PDFEV_Embed_Viewer_Path . 'classes/admin-settings.php';
             require_once PDFEV_Embed_Viewer_Path . 'classes/enque-style-script.php';
             require_once PDFEV_Embed_Viewer_Path . 'classes/metabox-register.php';
             require_once PDFEV_Embed_Viewer_Path . 'classes/metabox/general.php';
-            
         }
 
         public static function activate(){
             update_option('rewrite_rules','');
-            PDFEV_Embed_Viewer_CPT::insert_demo_post();
         }
 
         public static function deactivate(){
@@ -78,16 +71,6 @@ if( ! class_exists( 'PDFEV_Embed_Viewer' ) ){
             delete_option('pdfev_emd_vwr_opt_archive_template');
             delete_option('pdfev_emd_vwr_opt_archive_download');
             delete_option('pdfev_emd_vwr_opt_colors');
-        }
-
-        public function appsero_init_tracker() {
-
-            if ( ! class_exists( 'Appsero\Client' ) ) {
-            require_once __DIR__ . '/vendor/appsero/src/Client.php';
-            }
-            $client = new Appsero\Client( 'efdff7cb-2ab8-4e9a-a19f-9ca95f4a5b42', 'PDF Embed Viewer', __FILE__ );
-            $client->insights()->init();
-
         }
 
     }
