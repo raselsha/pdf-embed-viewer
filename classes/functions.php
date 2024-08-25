@@ -156,13 +156,13 @@ if( ! class_exists('PDFEV_Functions') ){
         }
 
         public static function load_template($template_file){
-            $archive_template = get_template_directory().'/template/'. $template_file;
+            $archive_template = get_template_directory().'/template/style/'. $template_file;
             if( ! file_exists($archive_template)){
-                $archive_template = get_template_directory().'/template/list.php';
+                $archive_template = get_template_directory().'/template/style/list.php';
                 if( ! file_exists($archive_template)){
-                    $archive_template = PDFEV_Const_Path . 'template/'. $template_file;
+                    $archive_template = PDFEV_Const_Path . 'template/style/'. $template_file;
                     if( ! file_exists($archive_template)){
-                        $archive_template = PDFEV_Const_Path . 'template/list.php';
+                        $archive_template = PDFEV_Const_Path . 'template/style/list.php';
                     }
                 }
             }
