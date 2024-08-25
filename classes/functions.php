@@ -14,9 +14,7 @@ if( ! class_exists('PDFEV_Functions') ){
         
         public function __construct() {
             add_action( 'plugins_loaded', ['PDFEV_Functions','load_plugin_textdomain'] );  
-            add_action( 'plugins_loaded', ['PDFEV_Functions','appsero_init_tracker'] );   
-            // add_action( 'init', ['PDFEV_Functions','insert_demo_post'] );   
-               
+            add_action( 'plugins_loaded', ['PDFEV_Functions','appsero_init_tracker'] );          
         }
 
         public static function load_plugin_textdomain() {
@@ -76,57 +74,85 @@ if( ! class_exists('PDFEV_Functions') ){
         }
 
         public static function insert_media($file_path) {
+
+            $attachment = PDFEV_Functions::does_attachment_exist(basename($file_path));
             
-            if(!file_exists($file_path)){
-                // $temp_file = download_url($image);
-                // if (is_wp_error($temp_file)) {
-                //     return 'File download failed: ' . $temp_file->get_error_message();
-                // }
-                return;
+            if( empty($attachment) ){
+                // Load necessary WordPress files
+                require_once(ABSPATH . 'wp-admin/includes/file.php');
+                require_once(ABSPATH . 'wp-admin/includes/media.php');
+                require_once(ABSPATH . 'wp-admin/includes/image.php');
+
+                // Prepare the file
+                $file = array(
+                    'name'     => basename($file_path),
+                    'type'     => mime_content_type($file_path),
+                    'tmp_name' => $file_path,
+                    'error'    => 0,
+                    'size'     => filesize($file_path),
+                );
+
+                // Handle file upload
+                $upload = wp_handle_sideload($file, array('test_form' => false));
+                if (isset($upload['error'])) {
+                    return 'File upload failed: ' . $upload['error'];
+                }
+
+                // Add the file to the media library
+                $attachment = array(
+                    'post_mime_type' => $upload['type'],
+                    'post_title'     => sanitize_file_name(pathinfo($file_path, PATHINFO_FILENAME)),
+                    'post_content'   => '',
+                    'post_status'    => 'inherit',
+                );
+                $attachment_id = wp_insert_attachment($attachment, $upload['file']);
+                if (is_wp_error($attachment_id)) {
+                    return 'Attachment insert failed: ' . $attachment_id->get_error_message();
+                }
+
+                // Generate metadata and update attachment
+                $attachment_data = wp_generate_attachment_metadata($attachment_id, $upload['file']);
+                wp_update_attachment_metadata($attachment_id, $attachment_data);
+
+                $attachment = array(
+                    'id' => $attachment_id,
+                    'url' => wp_get_attachment_url($attachment_id),
+                );
+
+                return $attachment;
             }
-
-            // Load necessary WordPress files
-            require_once(ABSPATH . 'wp-admin/includes/file.php');
-            require_once(ABSPATH . 'wp-admin/includes/media.php');
-            require_once(ABSPATH . 'wp-admin/includes/image.php');
-
-            // Prepare the file
-            $file = array(
-                'name'     => basename($file_path),
-                'type'     => mime_content_type($file_path),
-                'tmp_name' => $file_path,
-                'error'    => 0,
-                'size'     => filesize($file_path),
-            );
-
-            // Handle file upload
-            $upload = wp_handle_sideload($file, array('test_form' => false));
-            if (isset($upload['error'])) {
-                return 'File upload failed: ' . $upload['error'];
-            }
-
-            // Add the file to the media library
-            $attachment = array(
-                'post_mime_type' => $upload['type'],
-                'post_title'     => sanitize_file_name(pathinfo($file_path, PATHINFO_FILENAME)),
-                'post_content'   => '',
-                'post_status'    => 'inherit',
-            );
-            $attachment_id = wp_insert_attachment($attachment, $upload['file']);
-            if (is_wp_error($attachment_id)) {
-                return 'Attachment insert failed: ' . $attachment_id->get_error_message();
-            }
-
-            // Generate metadata and update attachment
-            $attachment_data = wp_generate_attachment_metadata($attachment_id, $upload['file']);
-            wp_update_attachment_metadata($attachment_id, $attachment_data);
-            
-            $attachment = array(
-                'id' => $attachment_id,
-                'url' => wp_get_attachment_url($attachment_id),
-            );
-
             return $attachment;
+        }
+
+        public static function does_attachment_exist($filename) {
+            global $wpdb;
+
+            // Sanitize the filename
+            $filename = sanitize_text_field($filename);
+
+            // Query to find attachments based on the filename in the post meta
+            $query = $wpdb->prepare(
+                "SELECT p.ID 
+                FROM $wpdb->posts p
+                JOIN $wpdb->postmeta pm ON p.ID = pm.post_id
+                WHERE p.post_type = 'attachment'
+                AND pm.meta_key = '_wp_attached_file'
+                AND pm.meta_value LIKE %s",
+                '%' . $wpdb->esc_like($filename) . '%'
+            );
+
+            // Get the attachment ID
+            $attachment_id = $wpdb->get_var($query);
+
+            // If attachment ID is found, check if the file exists
+            if ($attachment_id) {
+                $attachment = array(
+                    'id' => $attachment_id,
+                    'url' => wp_get_attachment_url($attachment_id),
+                );
+                return $attachment;
+            }
+            return false;
         }
 
         public static function load_template($template_file){
