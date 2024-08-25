@@ -72,31 +72,31 @@ if( ! class_exists('PDFEV_Admin_Settings') ){
                         <?php $this->options_fields(); ?>
                         <?php submit_button(); ?>
                     </div> 
-                    <div class="tab-content active" id="pdfev_emd_vwr_admin_tabs_shortcode">
+                    <div class="tab-content" id="pdfev_emd_vwr_admin_tabs_shortcode">
                         <table class="form-table" role="presentation">
                             <tbody>
                                 <tr>
-                                    <th scope="row"><?php esc_html_e('Archive list view','pdf-embed-viewer') ?></th>
                                     <td>
-                                        <?php echo esc_html('[pdfev_viewer template="list"]') ?>
+                                        <h3><?php echo esc_html('[pdfev_viewer template="list"]') ?></h3>
+                                        <img src="<?php echo PDFEV_Const_URL.'assets/images/template-list.png'; ?>" width="600">
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="row"><?php esc_html_e('Archive grid view','pdf-embed-viewer') ?></th>
                                     <td>
-                                        <?php echo esc_html('[pdfev_viewer template="grid"]') ?>
+                                        <h3><?php echo esc_html('[pdfev_viewer template="grid"]') ?></h3>
+                                        <img src="<?php echo PDFEV_Const_URL.'assets/images/template-grid.png'; ?>" width="600">
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="row"><?php esc_html_e('Archive ebook view','pdf-embed-viewer') ?></th>
                                     <td>
-                                        <?php echo esc_html('[pdfev_viewer template="ebook"]') ?>
+                                        <h3><?php echo esc_html('[pdfev_viewer template="ebook"]') ?></h3>
+                                        <img src="<?php echo PDFEV_Const_URL.'assets/images/template-ebook.png'; ?>" width="600">
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th scope="row"><?php esc_html_e('Archive newsletter view','pdf-embed-viewer') ?></th>
                                     <td>
-                                        <?php echo esc_html('[pdfev_viewer template="newsletter"]') ?>
+                                        <h3><?php echo esc_html('[pdfev_viewer template="newsletter"]') ?></h3>
+                                        <img src="<?php echo PDFEV_Const_URL.'assets/images/template-newsletter.png'; ?>" width="600">
                                     </td>
                                 </tr>
                             </tbody>
