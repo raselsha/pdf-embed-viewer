@@ -63,6 +63,7 @@ if( ! class_exists('PDFEV_Admin_Settings') ){
                 <h2><?php get_admin_page_title(); ?></h2>
                 <h2 class="nav-tab-wrapper">
                     <button class="nav-tab nav-tab-active" data-tab-target="#pdfev_emd_vwr_admin_tabs_settings"> <?php echo esc_html__('Settings','pdf-embed-viewer'); ?> </a>
+                    <button class="nav-tab" data-tab-target="#pdfev_emd_vwr_admin_tabs_shortcode"> <?php echo esc_html__('Shortcode','pdf-embed-viewer'); ?> </a>
                     <button class="nav-tab" data-tab-target="#pdfev_emd_vwr_admin_tabs_support"> <?php echo esc_html__('Support','pdf-embed-viewer'); ?> </a>
                 </h2>
                 <form action="" method="post">
@@ -70,6 +71,36 @@ if( ! class_exists('PDFEV_Admin_Settings') ){
                     <div class="tab-content active" id="pdfev_emd_vwr_admin_tabs_settings">
                         <?php $this->options_fields(); ?>
                         <?php submit_button(); ?>
+                    </div> 
+                    <div class="tab-content active" id="pdfev_emd_vwr_admin_tabs_shortcode">
+                        <table class="form-table" role="presentation">
+                            <tbody>
+                                <tr>
+                                    <th scope="row"><?php esc_html_e('Archive list view','pdf-embed-viewer') ?></th>
+                                    <td>
+                                        <?php echo esc_html('[pdfev_viewer template="list"]') ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row"><?php esc_html_e('Archive grid view','pdf-embed-viewer') ?></th>
+                                    <td>
+                                        <?php echo esc_html('[pdfev_viewer template="grid"]') ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row"><?php esc_html_e('Archive ebook view','pdf-embed-viewer') ?></th>
+                                    <td>
+                                        <?php echo esc_html('[pdfev_viewer template="ebook"]') ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row"><?php esc_html_e('Archive newsletter view','pdf-embed-viewer') ?></th>
+                                    <td>
+                                        <?php echo esc_html('[pdfev_viewer template="newsletter"]') ?>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div> 
                     <div class="tab-content" id="pdfev_emd_vwr_admin_tabs_support">
                         <h2><?php esc_html_e('Give a review for your feedback','pdf-embed-viewer'); ?> <a target="_blank" href="<?php echo esc_url('https://wordpress.org/support/plugin/pdf-embed-viewer/reviews/'); ?>"><?php esc_html_e('Add Review','pdf-embed-viewer'); ?></a> </h2>    
