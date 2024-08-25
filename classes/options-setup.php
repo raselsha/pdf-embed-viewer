@@ -38,7 +38,7 @@ if( ! class_exists('PDFEV_Options_Setup') ){
             $colors['light']     = sanitize_hex_color('#e5e5e5');
             
             $archive_title       = sanitize_text_field(__('Pdf Embed Viewer','pdf-embed-viewer'));
-            $template            = sanitize_text_field(__('List','pdf-embed-viewer'));
+            $template            = sanitize_text_field('list');
             
             $archive_download_button  = sanitize_text_field('yes');
             $template_list  = $this->options_array_sanitize($template_list);

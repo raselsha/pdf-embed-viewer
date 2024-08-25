@@ -96,14 +96,13 @@ if( ! class_exists('PDFEV_CPT') ){
         public function archive_template( $archive_template ) {
             $template = get_option('pdfev_archive_template'); 
             $opt_templates = get_option('pdfev_archive_template_lists'); 
-
             foreach($opt_templates as $key => $value){
                 if($template == $key){
                     $value = $value;
                     $load_template = $key.'.php';
                 }
             }
-
+            
             if ( is_post_type_archive ( 'pdfev_embed_viewer' ) ) {                
                 $archive_template = PDFEV_Functions::load_template($load_template);                
             }
