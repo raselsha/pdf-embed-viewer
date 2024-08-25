@@ -6,36 +6,7 @@
  * To customize archive page template; you can copy this /template/newsletter.php file to your theme directory. 
  * If you used child theme, put into parent direcotory first.
  */
-if( ! defined('ABSPATH') ) { die( "Don't access directly" ); }
-
-if ( wp_is_block_theme() ) {  ?>
-<!DOCTYPE html>
-<html <?php language_attributes(); ?>>
-<head>
-	<meta charset="<?php bloginfo( 'charset' ); ?>">
-	<?php
-	$block_content = do_blocks( '
-		<!-- wp:group {"layout":{"type":"constrained"}} -->
-		<div class="wp-block-group">
-		<!-- wp:post-content /-->
-		</div>
-		<!-- /wp:group -->'
- 	);
-    wp_head(); ?>
-</head>
-<body <?php body_class(); ?>>
-<?php wp_body_open(); ?>
-<div class="wp-site-blocks">
-<header class="wp-block-template-part site-header">
-    <?php block_header_area(); ?>
-</header>
-</div>
-<?php
-} else {
-    get_header();	
-}
-?>
-
+if( ! defined('ABSPATH') ) { die( "Don't access directly" ); }?>
 <div class="pdfev-embed-viewer">
 	<?php
 		$archive_title = get_option('pdfev_archive_title');
@@ -110,17 +81,3 @@ if ( wp_is_block_theme() ) {  ?>
 		<h2><?php echo esc_html('No data found','pdf-embed-viewer'); ?></h2>
 	<?php endif; ?>
 </div>
-
-
-<?php if ( wp_is_block_theme() ) : ?>
-	<footer class="wp-block-template-part">
-		<?php block_footer_area(); ?>
-	</footer>
-	<?php wp_footer(); ?>
-</body>  
-
-<?php
-	else:
-		get_footer();
-	endif;
-?>
