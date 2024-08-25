@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PDF Embed Viewer\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-06-03 11:24+0000\n"
-"PO-Revision-Date: 2024-06-03 11:59+0000\n"
+"PO-Revision-Date: 2024-08-25 06:57+0000\n"
 "Last-Translator: \n"
 "Language-Team: বাংলা\n"
 "Language: bn_BD\n"
@@ -12,52 +12,72 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/\n"
-"X-Loco-Version: 2.6.9; wp-6.5.3\n"
+"X-Loco-Version: 2.6.11; wp-6.6.1\n"
 "X-Domain: pdf-embed-viewer"
 
-#: classes/metabox/general.php:40
+#: classes/metabox/general.php:37
 msgid "Add pdf file by upload button"
 msgstr "আপলোড বাটন দ্বারা পিডিএফ ফাইল আপলোড করুন"
 
-#: classes/metabox/general.php:39
+#: classes/metabox/general.php:36
 msgid "Add PDF URL"
 msgstr "পিডিএফ ইউআরএল লিংক করুন"
 
-#: classes/cpt-register.php:48
+#: classes/admin-settings.php:106
+msgid "Add Review"
+msgstr "পর্যালোচনা যোগ করুন"
+
+#: classes/cpt-register.php:56
 msgid "All PDF"
 msgstr "সব পিডিএফ"
 
-#: classes/admin-settings.php:112
+#: classes/admin-settings.php:142
 msgid "Archive Template"
 msgstr "আর্কাইভ টেম্পলেট"
 
-#: classes/admin-settings.php:105
+#: classes/admin-settings.php:135
 msgid "Archive Title"
 msgstr "আর্কাইভ শিরোনাম"
 
-#: classes/admin-settings.php:143
+#: classes/cpt-register.php:26
+msgid "Author"
+msgstr "লেখক"
+
+#: classes/admin-settings.php:107
+msgid "Create a support ticket"
+msgstr "একটি সমর্থন টিকিট তৈরি করুন"
+
+#: classes/admin-settings.php:173
 msgid "Dark Color"
 msgstr "গাঢ় রঙ"
 
-#: classes/admin-settings.php:122 classes/metabox/general.php:53
+#: classes/cpt-register.php:27
+msgid "Date"
+msgstr "তারিখ"
+
+#: classes/admin-settings.php:152 classes/metabox/general.php:50
 msgid "Download Button"
 msgstr "ডাউনলোড বাটন"
+
+#: classes/cpt-register.php:24
+msgid "Download Enable"
+msgstr "ডাউনলোড সক্ষম করুন"
 
 #: classes/options-setup.php:31
 msgid "Ebook Template"
 msgstr "ইবুক টেমপ্লেট"
 
-#: classes/cpt-register.php:23
+#: classes/cpt-register.php:25
 msgid "File Url"
 msgstr "ফাইল ইউআরএল"
-
-#: classes/admin-settings.php:76
-msgid "For Support send email to"
-msgstr "সাহায্যের প্রয়োজন হলে ইমেইল করুন"
 
 #: classes/metabox/general.php:21
 msgid "General"
 msgstr "সাধারণ"
+
+#: classes/admin-settings.php:106
+msgid "Give a review for your feedback"
+msgstr "আপনার প্রতিক্রিয়া জন্য একটি পর্যালোচনা দিন"
 
 #: classes/options-setup.php:29
 msgid "Grid Template"
@@ -65,13 +85,13 @@ msgstr "গ্রিড টেমপ্লেট"
 
 #. Author URI of the plugin
 msgid "https://shahadat.com.bd"
-msgstr ""
+msgstr "https://shahadat.com.bd"
 
 #. URI of the plugin
 msgid "https://wordpress.org/plugins/pdf-embed-viewer"
-msgstr ""
+msgstr "https://wordpress.org/plugins/pdf-embed-viewer"
 
-#: classes/admin-settings.php:150
+#: classes/admin-settings.php:180
 msgid "Light Color"
 msgstr "হালকা রং"
 
@@ -79,7 +99,11 @@ msgstr "হালকা রং"
 msgid "List Template"
 msgstr "টেমপ্লেট এর তালিকা"
 
-#: classes/cpt-register.php:49 classes/cpt-register.php:50
+#: template/style/newsletter.php:31
+msgid "Month"
+msgstr "মাস"
+
+#: classes/cpt-register.php:57 classes/cpt-register.php:58
 msgid "New PDF Embed"
 msgstr "নতুন PDF এম্বেড"
 
@@ -87,16 +111,16 @@ msgstr "নতুন PDF এম্বেড"
 msgid "Newsletter Template"
 msgstr "নিউজলেটার টেমপ্লেট"
 
-#: template/single.php:48
+#: template/single.php:54
 msgid "Next"
 msgstr "পরবর্তী"
 
-#: classes/cpt-register.php:46 classes/cpt-register.php:47
 #: classes/cpt-register.php:54 classes/cpt-register.php:55
+#: classes/cpt-register.php:62 classes/cpt-register.php:63
 msgid "PDF Embed"
 msgstr "PDF এম্বেড"
 
-#: classes/admin-settings.php:26
+#: classes/admin-settings.php:25
 msgid "PDF Embed - Viewer"
 msgstr "PDF এম্বেড - ভিউয়ার"
 
@@ -105,41 +129,65 @@ msgid "PDF Embed Settings"
 msgstr "PDF এম্বেড সেটিংস"
 
 #. Name of the plugin
-#: classes/cpt-register.php:45
+#: classes/cpt-register.php:53
 msgid "PDF Embed Viewer"
 msgstr "PDF এম্বেড ভিউয়ার"
 
-#: template/single.php:47
+#: classes/options-setup.php:40
+msgid "Pdf Embed Viewer"
+msgstr "PDF এম্বেড ভিউয়ার"
+
+#: template/single.php:53
 msgid "Previous"
 msgstr "আগে"
 
-#: classes/admin-settings.php:131
+#: classes/admin-settings.php:161
 msgid "Primary Color"
 msgstr "মৌলিক রঙ"
 
-#: classes/admin-settings.php:73
-msgid "Save"
-msgstr "সংরক্ষণ"
+#: classes/admin-settings.php:108
+msgid "raselsha@gmail.com"
+msgstr "raselsha@gmail.com"
 
-#: classes/admin-settings.php:137
+#: template/style/newsletter.php:33
+msgid "Read/Download"
+msgstr "পড়ুন/ডাউনলোড করুন"
+
+#: classes/admin-settings.php:167
 msgid "Secondary Color"
 msgstr "সেকেন্ডারি কালার"
 
-#: classes/admin-settings.php:27 classes/admin-settings.php:37
-#: classes/admin-settings.php:66
+#: classes/admin-settings.php:108
+msgid "Send email"
+msgstr "ইমেইল পাঠান"
+
+#: classes/admin-settings.php:26 classes/admin-settings.php:36
+#: classes/admin-settings.php:65
 msgid "Settings"
 msgstr "সেটিংস"
+
+#: classes/admin-settings.php:52
+msgid "Settings Saved!"
+msgstr "সেটিংস সংরক্ষিত!"
 
 #. Author of the plugin
 msgid "Shahadat Hossain"
 msgstr "শাহাদাত হোসাইন"
 
-#: classes/metabox/general.php:54
+#: classes/admin-settings.php:66
+msgid "Shortcode"
+msgstr "শর্টকোড"
+
+#: classes/metabox/general.php:51
 msgid "Show/Hide download Button in single page."
 msgstr "সিঙ্গেল পেজ এ ডাউনলোড বাটন দেখান অথবা বন্ধ রাখুন"
 
 #: classes/admin-settings.php:67
 msgid "Support"
+msgstr "সাপোর্ট"
+
+#: classes/admin-settings.php:107
+msgid "support"
 msgstr "সাপোর্ট"
 
 #. Description of the plugin
@@ -156,6 +204,10 @@ msgstr ""
 "ব্যবহারকারী-বান্ধব ইন্টারফেস এবং কাস্টমাইজযোগ্য বৈশিষ্ট্যগুলির সাথে, এই "
 "প্লাগইনটি ওয়েবপেজে PDF প্রদর্শনের জন্য একটি ঝামেলা-মুক্ত সমাধান অফার করে।"
 
-#: classes/metabox/general.php:45
+#: template/style/newsletter.php:32
+msgid "Title"
+msgstr "শিরোনাম"
+
+#: classes/metabox/general.php:42
 msgid "Upload"
 msgstr "আপলোড করুন"
