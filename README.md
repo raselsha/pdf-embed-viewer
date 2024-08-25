@@ -4,7 +4,7 @@
 * Requires at least: 3.0
 * Tested up to:      6.4
 * Requires PHP:      7.0
-* Stable tag:        1.2.0
+* Stable tag:        1.2.1
 * License:           GPLv2 or later
 * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 * Tags:              plugin best practices, testing, accessibility, performance, security
