@@ -4,7 +4,7 @@ Contributors:      raselsha
 Requires at least: 3.0
 Tested up to:      6.5
 Requires PHP:      7.0
-Stable tag:	       1.2.1
+Stable tag:	       trunk
 License:           GPLv2 or later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 Tags:              ebook reader, newsletter viewer, pdf, pdf viewer, pdf download,
@@ -65,16 +65,16 @@ Learn more about how [Appsero collects and uses this data](https://appsero.com/p
 == Changelog ==
 
 = 1.0.3 =
-*Shortcode added for 4 templates view*
-*Color changing issue for template*
-*Translation for template header*
-*Sample data inserted on activation*
+* Shortcode added for 4 templates view
+* Color changing issue for template
+* Translation for template header
+* Sample data inserted on activation
 
 = 1.0.2 =
-*Appsero analytics setup*
+* Appsero analytics setup
 
 = 1.0.1 =
-*Admin support info*
+* Admin support info
 
 = 1.0.0 =
-*Initial Release*
+* Initial Release

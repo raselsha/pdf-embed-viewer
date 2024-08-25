@@ -3,8 +3,8 @@
  * Plugin Name: PDF Embed Viewer
  * Plugin URI: https://wordpress.org/plugins/pdf-embed-viewer
  * Description: The "PDF Embed Viewer" plugin is designed to view and download PDF files in your wordpress website. Its allowing easy access to Documents, Newsletter, Ebook directly within web pages. With its user-friendly interface and customizable features, this plugin offers a hassle-free solution for displaying PDFs in webpage.
- * Version: 1.2.1
- * Stable Tag: 1.2.1
+ * Version: 1.0.3
+ * Stable Tag: trunk
  * Requires at least: 3.0
  * Requires PHP:      7.4
  * Author: Shahadat Hossain
@@ -43,7 +43,7 @@ if( ! class_exists( 'PDFEV_Embed_Viewer' ) ){
         public function define_contstants(){
             define( 'PDFEV_Const_Path', plugin_dir_path(__FILE__) );
             define( 'PDFEV_Const_URL', plugin_dir_url(__FILE__) );
-            define( 'PDFEV_Const_VERSION', '1.2.1' );
+            define( 'PDFEV_Const_VERSION', '1.0.3' );
         }
 
         public static function include_plugin_files() {
