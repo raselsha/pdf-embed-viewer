@@ -4,7 +4,7 @@
 * Requires at least: 3.0
 * Tested up to:      6.4
 * Requires PHP:      7.0
-* Stable tag:        1.0.2
+* Stable tag:        1.0.3
 * License:           GPLv2 or later
 * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 * Tags:              plugin best practices, testing, accessibility, performance, security
@@ -49,6 +49,11 @@ Learn more about how [Appsero collects and uses this data](https://appsero.com/p
 
 # Changelog
 
+* 1.0.3
+    * Shortcode added for 4 templates view
+    * Color changing issue for template
+    * Translation for template header
+    * Sample data inserted on activation
 * 1.0.2
     * Appsero analytics setup
 * 1.0.1

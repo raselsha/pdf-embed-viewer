@@ -20,9 +20,17 @@ The "PDF Embed Viewer" plugin is designed to view and download PDF files in your
 ** Newsletter Template
 ** Ebook Template
 
+## Shortcode 
+** [pdfev_viewer template="list"]
+** [pdfev_viewer template="grid"]
+** [pdfev_viewer template="ebook"]
+** [pdfev_viewer template="newsletter"]
+
 ## Stand alone menu and color settings
 ** Wordpress sidebar has Stand alone menu
 ** Settings page for color adjustment 
+** Sample data on activation to test.
+** PDF Downlad button enable/disable
 
 == Screenshot ==
 
@@ -55,9 +63,12 @@ Learn more about how [Appsero collects and uses this data](https://appsero.com/p
 
 
 == Changelog ==
+
 = 1.0.3 =
-*Color changing issue fix*
-*Newsletter table title translation fix*
+*Shortcode added for 4 templates view*
+*Color changing issue for template*
+*Translation for template header*
+*Sample data inserted on activation*
 
 = 1.0.2 =
 *Appsero analytics setup*
