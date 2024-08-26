@@ -169,6 +169,14 @@ if( ! class_exists('PDFEV_Functions') ){
             return $archive_template;
         }
 
+        public static function get_cpt_name(){
+            return 'pdfev_embed_viewer';
+        }
+
+        public static function get_post_order(){
+            return 'DSC';
+        }
+        
         public static function get_pdf_link(){
             $link = get_post_meta( get_the_ID(), 'pdfev_meta_pdf_url', true );
             $link = $link??'';

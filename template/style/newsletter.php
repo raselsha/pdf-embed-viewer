@@ -33,8 +33,8 @@ if( ! defined('ABSPATH') ) { die( "Don't access directly" ); }?>
 					<?php
 						$paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
 						$args = array(
-						'post_type'=>'pdfev_embed_viewer',
-						'order' => 'DSC',
+						'post_type'=>PDFEV_Functions::get_cpt_name(),
+						'order' => PDFEV_Functions::get_post_order(),
 						'post_status' => 'publish',
 						'posts_per_page'=> -1,
 						'paged' => $paged,
