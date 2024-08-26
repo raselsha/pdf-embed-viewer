@@ -9,13 +9,10 @@
 if( ! defined('ABSPATH') ) { die( "Don't access directly" ); }?>
 <div class="pdfev-embed-viewer">
 	<?php
-		$archive_title = get_option('pdfev_archive_title');
-		$check_download_archive  =  get_option('pdfev_archive_download');
 		$years =  PDFEV_CPT::get_posts_years_array();
-		
 		if($years):
 	?>
-	<h2><?php echo isset($archive_title) ? esc_html($archive_title) : the_archive_title(); ?></h2>
+	<h2><?php PDFEV_Functions::archive_title(); ?></h2>
 	<div class="archive-newsletter-style">
 		<ul class="tabs">
 			<?php 
@@ -55,16 +52,8 @@ if( ! defined('ABSPATH') ) { die( "Don't access directly" ); }?>
 								<td width="10%"><?php the_time('F'); ?></td>
 								<td width="60%"><a href="<?php the_permalink(); ?>"><?php the_title();?></a></td>
 								<td width="20%" style="text-align: right;">
-									<a href="<?php the_permalink(); ?>" class="download-btn"><i class="far fa-address-book"></i> <?php echo esc_html__('Read','pdf-embed-viewer');?></a>
-									<?php if($check_download_archive == 'yes'): ?>
-											<?php
-												$pdf_emd_vwr_file_url=get_post_meta( get_the_ID(), 'pdfev_meta_pdf_url', true );
-												if(isset($pdf_emd_vwr_file_url)):
-											?>
-											<a href="<?php echo esc_attr(get_post_meta( get_the_ID(), 'pdfev_meta_pdf_url', true ))?>" class="download-btn" download><?php echo esc_html__('Download','pdf-embed-viewer'); ?> <img src="<?php echo esc_attr(PDFEV_Const_URL.'assets/images/download.svg'); ?>" alt="<?php echo esc_html__('Download icon','pdf-embed-viewer'); ?>"> </a>
-											<?php endif; ?>
-										
-									<?php endif; ?>
+									<?php PDFEV_Functions::read_button(); ?>
+									<?php PDFEV_Functions::download_button(); ?>
 								</td>
 
 							</tr>

@@ -168,6 +168,37 @@ if( ! class_exists('PDFEV_Functions') ){
             }
             return $archive_template;
         }
+
+        public static function get_pdf_link(){
+            $link = get_post_meta( get_the_ID(), 'pdfev_meta_pdf_url', true );
+            $link = $link??'';
+            return $link;
+        }
+
+        public static function pdf_link(){
+            $link = self::get_pdf_link();
+            echo esc_attr($link);
+        }
+
+        public static function archive_title(){
+            $archive_title = get_option('pdfev_archive_title');
+            echo isset($archive_title) ? esc_html($archive_title) : '';
+        }
+
+        public static function read_button(){
+            ?>
+            <a href="<?php the_permalink(); ?>" class="download-btn"><i class="far fa-address-book"></i> <?php echo esc_html__('Read','pdf-embed-viewer');?></a>
+            <?php
+        }
+
+        public static function download_button(){
+            $check_download_archive  =  get_option('pdfev_archive_download');
+            if($check_download_archive == 'yes'): 
+            ?>
+            <a href="<?php PDFEV_Functions::pdf_link(); ?>" class="download-btn" download><?php echo esc_html__('Download','pdf-embed-viewer'); ?> <img src="<?php echo esc_attr(PDFEV_Const_URL.'assets/images/download.svg'); ?>" alt="<?php echo esc_html__('Download icon','pdf-embed-viewer'); ?>"> </a>
+            <?php
+            endif;
+        }
     }
     
     new PDFEV_Functions();
