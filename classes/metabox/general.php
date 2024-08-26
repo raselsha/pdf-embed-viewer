@@ -33,6 +33,19 @@ if( ! class_exists('PDFEV_Metabox_General') ){
                 <section>
                     <label class="label">
                         <div>
+                            <p><?php echo esc_html__( 'Shortcode', 'pdf-embed-viewer' )?></p>
+                            <span><?php echo esc_html__('You can add the shortcode to any page or post for easy integration','pdf-embed-viewer') ?></span>
+                        </div>
+                        <div style="width: 50%; text-align:right;">
+                            <code>
+                                <?php echo esc_html('[pdfev_viewer id="'.get_the_ID().'"]') ?>
+                            </code>
+                        </div>
+                    </label>
+                </section>
+                <section>
+                    <label class="label">
+                        <div>
                             <p><?php echo esc_html__( 'Add PDF URL', 'pdf-embed-viewer' )?></p>
                             <span><?php echo esc_html__('Add pdf file by upload button','pdf-embed-viewer') ?></span>
                         </div>
