@@ -3,9 +3,9 @@ msgstr ""
 "Project-Id-Version: PDF Embed Viewer\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-06-03 11:24+0000\n"
-"PO-Revision-Date: 2024-08-25 06:57+0000\n"
+"PO-Revision-Date: 2024-08-26 10:40+0000\n"
 "Last-Translator: \n"
-"Language-Team: বাংলা\n"
+"Language-Team: Bengali (Bangladesh)\n"
 "Language: bn_BD\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
@@ -14,6 +14,10 @@ msgstr ""
 "X-Generator: Loco https://localise.biz/\n"
 "X-Loco-Version: 2.6.11; wp-6.6.1\n"
 "X-Domain: pdf-embed-viewer"
+
+#: template/style/list.php:22
+msgid "Action"
+msgstr ""
 
 #: classes/metabox/general.php:37
 msgid "Add pdf file by upload button"
@@ -55,6 +59,11 @@ msgstr "গাঢ় রঙ"
 msgid "Date"
 msgstr "তারিখ"
 
+#: template/style/ebook.php:42 template/style/list.php:47
+#: template/style/newsletter.php:64 template/style/grid.php:45
+msgid "Download"
+msgstr "ডাউনলোড"
+
 #: classes/admin-settings.php:152 classes/metabox/general.php:50
 msgid "Download Button"
 msgstr "ডাউনলোড বাটন"
@@ -62,6 +71,10 @@ msgstr "ডাউনলোড বাটন"
 #: classes/cpt-register.php:24
 msgid "Download Enable"
 msgstr "ডাউনলোড সক্ষম করুন"
+
+#: template/style/list.php:47 template/style/newsletter.php:64
+msgid "Download icon"
+msgstr "ডাউনলোড"
 
 #: classes/options-setup.php:31
 msgid "Ebook Template"
@@ -99,7 +112,7 @@ msgstr "হালকা রং"
 msgid "List Template"
 msgstr "টেমপ্লেট এর তালিকা"
 
-#: template/style/newsletter.php:31
+#: template/style/list.php:21 template/style/newsletter.php:31
 msgid "Month"
 msgstr "মাস"
 
@@ -148,6 +161,11 @@ msgstr "মৌলিক রঙ"
 #: classes/admin-settings.php:108
 msgid "raselsha@gmail.com"
 msgstr "raselsha@gmail.com"
+
+#: template/style/ebook.php:40 template/style/list.php:41
+#: template/style/newsletter.php:58 template/style/grid.php:43
+msgid "Read"
+msgstr "পড়ুন"
 
 #: template/style/newsletter.php:33
 msgid "Read/Download"
@@ -204,7 +222,7 @@ msgstr ""
 "ব্যবহারকারী-বান্ধব ইন্টারফেস এবং কাস্টমাইজযোগ্য বৈশিষ্ট্যগুলির সাথে, এই "
 "প্লাগইনটি ওয়েবপেজে PDF প্রদর্শনের জন্য একটি ঝামেলা-মুক্ত সমাধান অফার করে।"
 
-#: template/style/newsletter.php:32
+#: template/style/list.php:20 template/style/newsletter.php:32
 msgid "Title"
 msgstr "শিরোনাম"
 
