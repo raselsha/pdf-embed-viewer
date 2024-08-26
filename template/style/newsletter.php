@@ -1,10 +1,9 @@
 <?php 
 /**
  * @package pdv-embed-viewer
- * @version 1.0.0
+ * @version 1.0.3
  * @template newsletter
- * To customize archive page template; you can copy this /template/newsletter.php file to your theme directory. 
- * If you used child theme, put into parent direcotory first.
+ * To customize the archive page template, simply copy the /template/newsletter.php file into your theme directory. 
  */
 if( ! defined('ABSPATH') ) { die( "Don't access directly" ); }?>
 <div class="pdfev-embed-viewer">

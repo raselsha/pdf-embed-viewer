@@ -1,10 +1,9 @@
 <?php 
 /**
  * @package pdv-embed-viewer
- * @version 1.0.0
+ * @version 1.0.3
  * @template grid
- * To customize archive page template; you can copy this /template/grid.php file to your theme directory. 
- * If you used child theme, put into parent direcotory first.
+ * To customize the archive page template, simply copy the /template/ebook.php file into your theme directory. 
  */
 if( ! defined('ABSPATH') ) { die( "Don't access directly" ); } ?>
 
