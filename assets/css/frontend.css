@@ -3,8 +3,8 @@
   --pdfev-secondary:#666;
   --pdfev-light:#e5e5e5;
   --pdfev-dark:#333;
-  --pdfev-emd-vwr-black:#000;
-  --pdfev-emd-vwr-white:#fff;
+  --pdfev-black:#000;
+  --pdfev-white:#fff;
 }
 
 /*!
@@ -3909,6 +3909,10 @@ readers do not read off random characters that represent icons */
   color: var(--pdfev-primary);
   font-weight: bold;
 }
+.pdfev-embed-viewer a:hover {
+  color: var(--pdfev-secondary);
+  text-decoration: underline;
+}
 .pdfev-embed-viewer h1 {
   color: var(--pdfev-dark);
 }
@@ -3916,13 +3920,20 @@ readers do not read off random characters that represent icons */
   background: var(--pdfev-primary);
   padding: 0.1em 0.5em;
   border-radius: 0.25em;
-  color: var(--pdfev-emd-vwr-white);
+  color: var(--pdfev-white);
   font-weight: normal;
 }
 .pdfev-embed-viewer .download-btn {
   display: inline-flex;
   align-items: center;
   gap: 0.5em;
+  color: var(--pdfev-white);
+  text-decoration: none;
+}
+.pdfev-embed-viewer .download-btn:hover {
+  color: var(--pdfev-primary);
+  background-color: var(--pdfev-secondary);
+  text-decoration: none;
 }
 .pdfev-embed-viewer .pdf-viewer {
   margin: 0.5em 0;

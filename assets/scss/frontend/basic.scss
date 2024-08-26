@@ -7,6 +7,10 @@
         text-decoration: none;
         color: var(--pdfev-primary);
         font-weight: bold;
+        &:hover{
+            color: var(--pdfev-secondary);
+            text-decoration: underline;
+        }
     }
     h1{
         color:var(--pdfev-dark); ;
@@ -15,7 +19,7 @@
         background: var(--pdfev-primary);
         padding: 0.1em 0.5em;
         border-radius: .25em;
-        color: var(--pdfev-emd-vwr-white);
+        color: var(--pdfev-white);
         font-weight: normal;
     }
     .download-btn{
@@ -23,6 +27,13 @@
         display: inline-flex;
         align-items: center;
         gap: .5em;
+        color: var(--pdfev-white);
+        text-decoration: none;
+        &:hover{
+            color: var(--pdfev-primary);
+            background-color: var(--pdfev-secondary);
+            text-decoration: none;
+        }
     }
     .pdf-viewer{
         margin: .5em 0;
