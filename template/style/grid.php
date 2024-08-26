@@ -10,19 +10,14 @@ if( ! defined('ABSPATH') ) { die( "Don't access directly" ); }
 ?>
 
 <div class="pdfev-embed-viewer">
-	<?php
-		$archive_title = get_option('pdfev_archive_title');
-		$check_download_archive  =  get_option('pdfev_archive_download');
-		$pdf_emd_vwr_file_url=get_post_meta( get_the_ID(), 'pdfev_meta_pdf_url', true );
-	?>
-	<h2><?php echo isset($archive_title) ? esc_html($archive_title) : the_archive_title(); ?></h2>
+	<h2><?php PDFEV_Functions::archive_title(); ?></h2>
 	<div class="archive-grid-style">
 
 		<?php
 			$paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
 			$args = array(
-			'post_type'=>'pdfev_embed_viewer',
-			'order' => 'DSC',
+			'post_type'=>PDFEV_Functions::get_cpt_name(),
+			'order' => PDFEV_Functions::get_post_order(),
 			'post_status' => 'publish',
 			'posts_per_page'=> get_option( 'posts_per_page' ),
 			'paged' => $paged
@@ -40,10 +35,8 @@ if( ! defined('ABSPATH') ) { die( "Don't access directly" ); }
 					<div class="content">
 						<h2><a href="<?php the_permalink(); ?>"> <?php the_title();?></a></h2>
 						<div class="action">
-							<a href="<?php the_permalink(); ?>" class="download-btn"><i class="far fa-address-book"></i> <?php echo esc_html__('Read','pdf-embed-viewer');?></a>
-							<?php if($check_download_archive == 'yes' and  isset($pdf_emd_vwr_file_url)): ?>
-								<a href="<?php echo esc_attr($pdf_emd_vwr_file_url); ?>" class="download-btn" download><?php echo esc_html__('Download','pdf-embed-viewer'); ?></a>
-							<?php endif; ?>
+							<?php PDFEV_Functions::read_button(); ?>
+							<?php PDFEV_Functions::download_button(); ?>
 						</div>
 					</div>
 				</div>
