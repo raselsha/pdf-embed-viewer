@@ -15,7 +15,7 @@ if( ! defined('ABSPATH') ) { die( "Don't access directly" ); }
 		$check_download_archive  =  get_option('pdfev_archive_download');
 		$pdf_emd_vwr_file_url=get_post_meta( get_the_ID(), 'pdfev_meta_pdf_url', true );
 	?>
-	<h2><?php echo isset($archive_title) ? esc_html($archive_title) : esc_html(the_archive_title()); ?></h2>
+	<h2><?php echo isset($archive_title) ? esc_html($archive_title) : the_archive_title(); ?></h2>
 	<div class="archive-grid-style">
 
 		<?php
@@ -40,8 +40,9 @@ if( ! defined('ABSPATH') ) { die( "Don't access directly" ); }
 					<div class="content">
 						<h2><a href="<?php the_permalink(); ?>"> <?php the_title();?></a></h2>
 						<div class="action">
+							<a href="<?php the_permalink(); ?>" class="download-btn"><i class="far fa-address-book"></i> <?php echo esc_html__('Read','pdf-embed-viewer');?></a>
 							<?php if($check_download_archive == 'yes' and  isset($pdf_emd_vwr_file_url)): ?>
-								<a href="<?php echo esc_attr($pdf_emd_vwr_file_url); ?>" class="download-btn" download><?php echo esc_html('Download','pdf-embed-viewer'); ?></a>
+								<a href="<?php echo esc_attr($pdf_emd_vwr_file_url); ?>" class="download-btn" download><?php echo esc_html__('Download','pdf-embed-viewer'); ?></a>
 							<?php endif; ?>
 						</div>
 					</div>

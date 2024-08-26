@@ -32,13 +32,14 @@ if( ! defined('ABSPATH') ) { die( "Don't access directly" ); } ?>
 				?>
 				<div class="grid-item">
 					<div class="image">
-						<?php the_post_thumbnail() ?>
+						<a href="<?php the_permalink(); ?>"><?php the_post_thumbnail() ?></a>
 					</div>					
 					<div class="content">
 						<h2><a href="<?php the_permalink(); ?>"><?php echo esc_html(mb_strimwidth(get_the_title(), 0, 50, '...'));?></a></h2>
-						<div class="action">
+						<div class="">
+							<a href="<?php the_permalink(); ?>" class="download-btn"><i class="far fa-address-book"></i> <?php echo esc_html__('Read','pdf-embed-viewer');?></a>
 							<?php if($check_download_archive == 'yes' and  isset($pdf_emd_vwr_file_url)): ?>
-								<a href="<?php echo esc_attr($pdf_emd_vwr_file_url); ?>" class="download-btn"  download><?php echo esc_html('Download','pdf-embed-viewer'); ?></a>
+								<a href="<?php echo esc_attr($pdf_emd_vwr_file_url); ?>" class="download-btn"  download><?php echo esc_html__('Download','pdf-embed-viewer'); ?></a>
 							<?php endif; ?>
 						</div>
 					</div>
