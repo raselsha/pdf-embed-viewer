@@ -16,22 +16,18 @@ if( ! class_exists('PDFEV_Shortcode') ){
 
         public function register_shortcode() {
             add_shortcode('pdfev_viewer', [$this,'pdfev_viewer_shortcode'] );
+            add_shortcode('pdfev_embed_viewer', [$this,'pdfev_embed_shortcode'] );
         }
 
-        public function pdfev_viewer_shortcode($atts) {
-            // Set default attributes and merge with user-provided attributes
+        public function pdfev_embed_shortcode($atts) {
             $atts = shortcode_atts(
                 array(
                     'id' => '',
-                    'template' => 'list', // Default option
                 ),
                 $atts,
-                'pdfev_viewer'
+                'pdfev_embed_viewer'
             );
-            // Extract the attribute
             $post_id = intval($atts['id']);
-            $template = sanitize_text_field($atts['template']);
-                        
             if(isset($post_id)){
                 if ($post_id <= 0) {
                     return;
@@ -42,8 +38,21 @@ if( ! class_exists('PDFEV_Shortcode') ){
                     return ob_get_clean();
                 }
             }
+        }
+        public function pdfev_viewer_shortcode($atts) {
+            // Set default attributes and merge with user-provided attributes
+            $atts = shortcode_atts(
+                array(
+                    'template' => 'list', // Default option
+                ),
+                $atts,
+                'pdfev_viewer'
+            );
+            // Extract the attribute
             
-            if(isset($template)){
+            $template = sanitize_text_field($atts['template']);
+
+            if(!empty($template)){
                 ob_start();
                 // Switch based on the option
                 switch ($template) {

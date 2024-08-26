@@ -38,7 +38,7 @@ if( ! class_exists('PDFEV_Metabox_General') ){
                         </div>
                         <div style="width: 50%; text-align:right;">
                             <code>
-                                <?php echo esc_html('[pdfev_viewer id="'.get_the_ID().'"]') ?>
+                                <?php echo esc_html('[pdfev_embed_viewer id="'.get_the_ID().'"]') ?>
                             </code>
                         </div>
                     </label>
