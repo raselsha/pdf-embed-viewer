@@ -64,6 +64,13 @@ Learn more about how [Appsero collects and uses this data](https://appsero.com/p
 
 == Changelog ==
 
+= 1.0.4 =
+* Shortcode added for single view
+* Button translation and Read button
+* Download Button hover effect
+* General tab new section for Shortcode
+* Shortcode column added for backend
+
 = 1.0.3 =
 * Shortcode added for 4 templates view
 * Color changing issue for template
