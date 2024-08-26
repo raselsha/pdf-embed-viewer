@@ -1,7 +1,7 @@
 <?php
 /**
  * @author Shahadat Hossain <raselsha@gmail.com>
- * @version 1.0.1
+ * @version 1.0.2
  * @since 1.0.3
  */
 
@@ -29,18 +29,22 @@ if( ! class_exists('PDFEV_Shortcode') ){
                 'pdfev_viewer'
             );
             // Extract the attribute
-            $template = sanitize_text_field($atts['template']);
             $post_id = intval($atts['id']);
-            ob_start();
+            $template = sanitize_text_field($atts['template']);
+                        
             if(isset($post_id)){
                 if ($post_id <= 0) {
                     return;
                 }
                 else{
+                    ob_start();
                     PDFEV_Functions::shortcode_view($post_id);
+                    return ob_get_clean();
                 }
             }
-            elseif(isset($template)){
+            
+            if(isset($template)){
+                ob_start();
                 // Switch based on the option
                 switch ($template) {
                     case 'list':
@@ -65,8 +69,9 @@ if( ! class_exists('PDFEV_Shortcode') ){
                 }
                 $archive_template = PDFEV_Functions::load_template($load_template);
                 require $archive_template;
+                return ob_get_clean();
             }
-            return ob_get_clean();
+            
         }
         
     }

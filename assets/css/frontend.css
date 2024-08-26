@@ -3954,6 +3954,29 @@ readers do not read off random characters that represent icons */
   color: var(--pdfev-emd-vwr-white);
 }
 
+.pdfev-embed-viewer-shortcode {
+  max-width: auto;
+  margin: 0 auto;
+  width: 100%;
+}
+.pdfev-embed-viewer-shortcode .download-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  color: var(--pdfev-white);
+  text-decoration: none;
+}
+.pdfev-embed-viewer-shortcode .download-btn:hover {
+  color: var(--pdfev-primary);
+  background-color: var(--pdfev-secondary);
+  text-decoration: none;
+}
+.pdfev-embed-viewer-shortcode .pdf-viewer {
+  margin: 0.5em 0;
+  width: 100%;
+  height: 1024px;
+}
+
 /*==================footer pagination================*/
 .pdfev-embed-viewer .archive-list-style {
   overflow-x: scroll;

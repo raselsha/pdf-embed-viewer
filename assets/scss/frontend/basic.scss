@@ -57,7 +57,29 @@
     
 }
 
-
+.pdfev-embed-viewer-shortcode{
+    max-width: auto;
+    margin: 0 auto;
+    width: 100%;
+    .download-btn{
+        @extend .button;
+        display: inline-flex;
+        align-items: center;
+        gap: .5em;
+        color: var(--pdfev-white);
+        text-decoration: none;
+        &:hover{
+            color: var(--pdfev-primary);
+            background-color: var(--pdfev-secondary);
+            text-decoration: none;
+        }
+    }
+    .pdf-viewer{
+        margin: .5em 0;
+        width: 100%;
+        height: 1024px;
+    }
+}
 
 /*==================footer pagination================*/
 
