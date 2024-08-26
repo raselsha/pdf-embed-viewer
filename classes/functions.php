@@ -169,6 +169,14 @@ if( ! class_exists('PDFEV_Functions') ){
             return $archive_template;
         }
 
+        public static function shortcode_view($post_id){
+            $link = get_post_meta($post_id, 'pdfev_meta_pdf_url', true );
+            ?>
+            <div class="pdfev-embed-viewer">
+                <iframe class="pdf-viewer" src="<?php echo esc_attr($link); ?>" frameborder="0"></iframe>
+            </div>
+            <?php
+        }
         public static function get_cpt_name(){
             return 'pdfev_embed_viewer';
         }

@@ -22,39 +22,50 @@ if( ! class_exists('PDFEV_Shortcode') ){
             // Set default attributes and merge with user-provided attributes
             $atts = shortcode_atts(
                 array(
+                    'id' => '',
                     'template' => 'list', // Default option
                 ),
                 $atts,
                 'pdfev_viewer'
             );
-        
             // Extract the attribute
             $template = sanitize_text_field($atts['template']);
+            $post_id = intval($atts['id']);
             ob_start();
-            // Switch based on the option
-            switch ($template) {
-                case 'list':
-                    $load_template = $template.'.php';
-                    break;
-        
-                case 'grid':
-                    $load_template = $template.'.php';
-                    break;
-        
-                case 'newsletter':
-                    $load_template = $template.'.php';
-                    break;
-        
-                case 'ebook':
-                    $load_template = $template.'.php';
-                    break;
-        
-                default:
-                    $load_template = $template.'.php';
-                    break;
+            if(isset($post_id)){
+                if ($post_id <= 0) {
+                    return;
+                }
+                else{
+                    PDFEV_Functions::shortcode_view($post_id);
+                }
             }
-            $archive_template = PDFEV_Functions::load_template($load_template);
-            require $archive_template;
+            elseif(isset($template)){
+                // Switch based on the option
+                switch ($template) {
+                    case 'list':
+                        $load_template = $template.'.php';
+                        break;
+            
+                    case 'grid':
+                        $load_template = $template.'.php';
+                        break;
+            
+                    case 'newsletter':
+                        $load_template = $template.'.php';
+                        break;
+            
+                    case 'ebook':
+                        $load_template = $template.'.php';
+                        break;
+            
+                    default:
+                        $load_template = $template.'.php';
+                        break;
+                }
+                $archive_template = PDFEV_Functions::load_template($load_template);
+                require $archive_template;
+            }
             return ob_get_clean();
         }
         
