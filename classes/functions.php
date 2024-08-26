@@ -3,7 +3,7 @@
 /**
  * @author Shahadat Hossain <raselsha@gmail.com>
  * @package pdf-embed-viewer
- * @version 1.0.0
+ * @version 1.0.2
  * @since 1.0.3
  */
 
