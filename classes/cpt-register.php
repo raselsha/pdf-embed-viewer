@@ -22,6 +22,7 @@ if( ! class_exists('PDFEV_CPT') ){
         public function posts_columns($columns){
             unset($columns['date']);
             $columns['pdfev_meta_download'] = esc_html__('Download Enable','pdf-embed-viewer');
+            $columns['shortcode'] = esc_html__('Shortcode','pdf-embed-viewer');
             $columns['pdfev_meta_pdf_url'] = esc_html__('File Url','pdf-embed-viewer');
             $columns['Author'] = esc_html__('Author','pdf-embed-viewer');
             $columns['date'] = esc_html__('Date','pdf-embed-viewer');
@@ -37,6 +38,9 @@ if( ! class_exists('PDFEV_CPT') ){
                 case 'pdfev_meta_download':
                      echo esc_html__(get_post_meta($post_id,'pdfev_meta_download',true),'pdf-embed-viewer');
                 break;
+                case 'shortcode':
+                    echo esc_html('[pdfev_viewer id="'.get_the_ID().'"]');
+                break;
             }
         }
 
@@ -44,6 +48,7 @@ if( ! class_exists('PDFEV_CPT') ){
 
             $columns['pdfev_meta_pdf_url']='pdfev_meta_pdf_url';
             $columns['pdfev_meta_download']='pdfev_meta_download';
+            $columns['shortcode']='pdfev_meta_download';
             return $columns;
         }
 
