@@ -173,7 +173,7 @@ if( ! class_exists('PDFEV_Functions') ){
             $link = get_post_meta($post_id, 'pdfev_meta_pdf_url', true );
             ?>
             <div class="pdfev-embed-viewer-shortcode">
-                <?php  PDFEV_Functions::download_button_single($post_id); ?>
+                <?php  PDFEV_Functions::download_button_page_view($post_id); ?>
                 <iframe class="pdf-viewer" src="<?php echo esc_attr($link); ?>" frameborder="0"></iframe>
             </div>
             <?php
@@ -218,14 +218,12 @@ if( ! class_exists('PDFEV_Functions') ){
             endif;
         }
 
-        public static function download_button_single($post_id){
-            if(is_single()):
-                $check_download  = get_post_meta( $post_id, 'pdfev_meta_download', true );
-                if($check_download == 'yes'):
-                    ?>
-                    <p><a href="<?php PDFEV_Functions::pdf_link(); ?>" class="download-btn" download><?php the_time('F'); ?> | <?php the_time('Y'); ?> <img src="<?php echo esc_attr(PDFEV_Const_URL.'assets/images/download.svg'); ?>" alt="<?php echo esc_attr('download-icon','pdf-embed-viewer'); ?>"></a></p>
-                <?php
-                endif;
+        public static function download_button_page_view($post_id){
+            $check_download  = get_post_meta( $post_id, 'pdfev_meta_download', true );
+            if($check_download == 'yes'):
+                ?>
+                <p><a href="<?php PDFEV_Functions::pdf_link(); ?>" class="download-btn" download><?php the_time('F'); ?> | <?php the_time('Y'); ?> <img src="<?php echo esc_attr(PDFEV_Const_URL.'assets/images/download.svg'); ?>" alt="<?php echo esc_attr('download-icon','pdf-embed-viewer'); ?>"></a></p>
+            <?php
             endif;
         }
     }

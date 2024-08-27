@@ -38,7 +38,7 @@ if ( wp_is_block_theme() ) {  ?>
 <div class="pdfev-embed-viewer">
 
 	<h1><?php the_title();?></h1>
-	<?php  PDFEV_Functions::download_button_single(get_the_ID()); ?>
+	<?php  PDFEV_Functions::download_button_page_view(get_the_ID()); ?>
 	<iframe class="pdf-viewer" src="<?php PDFEV_Functions::pdf_link(); ?>" frameborder="0"></iframe>
 	
 	<div class="pagination">
