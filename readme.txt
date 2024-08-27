@@ -64,6 +64,10 @@ Learn more about how [Appsero collects and uses this data](https://appsero.com/p
 
 == Changelog ==
 
+= 1.0.5 =
+* Archive page slug editable from settings page
+* 
+
 = 1.0.4 =
 * Shortcode added for single view
 * Button translation and Read button
