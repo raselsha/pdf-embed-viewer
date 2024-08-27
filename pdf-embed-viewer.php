@@ -70,6 +70,7 @@ if( ! class_exists( 'PDFEV_Embed_Viewer' ) ){
             unregister_post_type('pdfev_embed_viewer');
             delete_option('pdfev_archive_template_lists');
             delete_option('pdfev_archive_title');
+            delete_option('pdfev_archive_slug');
             delete_option('pdfev_archive_template');
             delete_option('pdfev_archive_download');
             delete_option('pdfev_css_colors');

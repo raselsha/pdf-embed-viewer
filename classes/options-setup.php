@@ -38,6 +38,7 @@ if( ! class_exists('PDFEV_Options_Setup') ){
             $colors['light']     = sanitize_hex_color('#e5e5e5');
             
             $archive_title       = sanitize_text_field(__('Pdf Embed Viewer','pdf-embed-viewer'));
+            $archive_slug        = sanitize_text_field('pdf-embed-viewer');
             $template            = sanitize_text_field('list');
             
             $archive_download_button  = sanitize_text_field('yes');
@@ -45,6 +46,7 @@ if( ! class_exists('PDFEV_Options_Setup') ){
             
             
             add_option('pdfev_archive_title',$archive_title);
+            add_option('pdfev_archive_slug',$archive_slug);
             add_option('pdfev_archive_template',$template);
             add_option('pdfev_archive_template_lists',$template_list);
             add_option('pdfev_archive_download',$archive_download_button);

@@ -15,7 +15,12 @@ if( ! class_exists('PDFEV_Admin_Settings') ){
             
             add_action( 'admin_menu', array($this,'create_admin_menu') );
             add_action( 'admin_init', array($this,'save_options_data') ); 
+            add_action( 'init', array($this,'custom_rewrite_flush') ); 
             add_filter( 'plugin_action_links_pdf-embed-viewer/pdf-embed-viewer.php',[$this,'add_settings_link']);
+        }
+
+        public function custom_rewrite_flush(){
+            flush_rewrite_rules();
         }
 
         public function create_admin_menu(){
@@ -116,6 +121,7 @@ if( ! class_exists('PDFEV_Admin_Settings') ){
 
         public function options_fields(){
             $archive_title  = get_option('pdfev_archive_title'); 
+            $archive_slug  = get_option('pdfev_archive_slug')??'pdf-embed-viewer'; 
             $template = get_option('pdfev_archive_template');
             $template_lists =  get_option('pdfev_archive_template_lists');
 
@@ -134,8 +140,13 @@ if( ! class_exists('PDFEV_Admin_Settings') ){
                     <tr>
                         <th scope="row"><?php esc_html_e('Archive Title','pdf-embed-viewer') ?></th>
                         <td>
-                            
                             <input type="text" name="pdfev_archive_title" placeholder="Pdf Embed Viewer" value="<?php echo esc_attr($archive_title); ?>">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><?php echo esc_html__( 'Archive Slug', 'pdf-embed-viewer' )?></th>
+                        <td>
+                            <input type="text" name="pdfev_archive_slug" placeholder="pdf-embed-viewer" value="<?php echo esc_attr($archive_slug); ?>">
                         </td>
                     </tr>
                     <tr>
@@ -203,6 +214,7 @@ if( ! class_exists('PDFEV_Admin_Settings') ){
                 }
                 
                 $archive_title      = isset( $_POST['pdfev_archive_title'] ) ? sanitize_text_field($_POST['pdfev_archive_title']): 'Pdf Embed Viewer';
+                $archive_slug       = isset( $_POST['pdfev_archive_slug'] ) ? sanitize_text_field($_POST['pdfev_archive_slug']): 'pdf-embed-viewer';
                 $archive_template   = isset( $_POST['pdfev_archive_template'] ) ? sanitize_text_field($_POST['pdfev_archive_template']): 'list';
                 $archive_download   = isset( $_POST['pdfev_archive_download'] ) ? sanitize_text_field($_POST['pdfev_archive_download']): 'no';
                 $primary            = isset( $_POST['pdfev_css_colors']['primary'] ) ? sanitize_hex_color($_POST['pdfev_css_colors']['primary']) : '';
@@ -217,6 +229,7 @@ if( ! class_exists('PDFEV_Admin_Settings') ){
                     'light'     => $light,
                 ];
                 update_option('pdfev_archive_title',$archive_title);
+                update_option('pdfev_archive_slug',$archive_slug);
                 update_option('pdfev_archive_template',$archive_template);
                 update_option('pdfev_archive_download',$archive_download);
                 update_option('pdfev_css_colors',$colors );

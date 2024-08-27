@@ -33,10 +33,10 @@ if( ! class_exists('PDFEV_CPT') ){
 
             switch($columns){
                 case 'pdfev_meta_pdf_url':
-                     echo esc_url(get_post_meta($post_id,'pdfev_meta_pdf_url',true));
+                    echo esc_url(get_post_meta($post_id,'pdfev_meta_pdf_url',true));
                 break;
                 case 'pdfev_meta_download':
-                     echo esc_html__(get_post_meta($post_id,'pdfev_meta_download',true),'pdf-embed-viewer');
+                    echo esc_html__(get_post_meta($post_id,'pdfev_meta_download',true),'pdf-embed-viewer');
                 break;
                 case 'shortcode_column':
                     echo esc_html('[pdfev_embed_viewer id="'.get_the_ID().'"]');
@@ -86,7 +86,7 @@ if( ! class_exists('PDFEV_CPT') ){
                 "delete_with_user" => true,
                 "capability_type" => "post",
                 "map_meta_cap" => true,
-                "rewrite" => [ "slug" => "pdf-embed-viewer", "with_front" => true ],
+                "rewrite" => [ "slug" => get_option('pdfev_archive_slug'), "with_front" => true ],
                 "query_var" => true,
                 "menu_icon" => PDFEV_Const_URL.'assets/images/pdf-embed-viewer-icon.png',
                 "show_in_graphql" => false,
