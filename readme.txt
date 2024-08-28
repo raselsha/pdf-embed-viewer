@@ -40,6 +40,7 @@ The "PDF Embed Viewer" plugin is designed to view and download PDF files in your
 * **Archive Page Shortcode:** Utilize a shortcode specifically for archive pages.
 * **Single Document Shortcode:** Easily embed single documents with a dedicated shortcode.
 * **Import Demo Content:** Quickly set up your archive view with the import demo button.
+* **Multilingual Support:** Fully compatible with multiple languages.
 
 == Screenshot ==
 
@@ -76,6 +77,7 @@ Learn more about how [Appsero collects and uses this data](https://appsero.com/p
 = 1.0.5 =
 * Archive page slug editable from settings page
 * Import Demo button on settings page
+* Translation update
 
 = 1.0.4 =
 * Shortcode added for single view
