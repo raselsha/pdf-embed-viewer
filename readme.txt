@@ -14,23 +14,32 @@ PDF Embed Viewer plugin is designed to view and download PDF files in your wordp
 == Description ==
 The "PDF Embed Viewer" plugin is designed to view and download PDF files in your wordpress website. Its allowing easy access to Documents, Newsletter, Ebook directly within web pages. With its user-friendly interface and customizable features, this plugin offers a hassle-free solution for displaying PDFs in webpage.
 
-## This plugin supports 4 templates
+## This plugin supports 4 templates for Archive view
 ** List Template
 ** Grid Template
 ** Newsletter Template
 ** Ebook Template
 
-## Shortcode 
+## Shortcode for arvhive view
 ** [pdfev_viewer template="list"]
 ** [pdfev_viewer template="grid"]
 ** [pdfev_viewer template="ebook"]
 ** [pdfev_viewer template="newsletter"]
 
-## Stand alone menu and color settings
-** Wordpress sidebar has Stand alone menu
-** Settings page for color adjustment 
-** Sample data on activation to test.
-** PDF Downlad button enable/disable
+## Shortcode for single page/post
+** [pdfev_embed_viewer id="100"]
+
+## Features
+* **Display PDFs Anywhere:** Easily embed PDFs in any page or post using a shortcode.
+* **Archive Page Templates:** Choose from four distinct templates for your archive pages.
+* **Standalone Sidebar Menu:** WordPress sidebar has a dedicated menu.
+* **Color Adjustment Settings:** Personalize colors with an intuitive settings page.
+* **Customizable Archive Page URL:** Modify the URL structure of your archive pages to suit your needs.
+* **Download Button Control:** Toggle the PDF download button on or off as desired.
+* **Editable Archive Page Title:** Customize the title of your archive pages.
+* **Archive Page Shortcode:** Utilize a shortcode specifically for archive pages.
+* **Single Document Shortcode:** Easily embed single documents with a dedicated shortcode.
+* **Import Demo Content:** Quickly set up your archive view with the import demo button.
 
 == Screenshot ==
 
@@ -66,7 +75,7 @@ Learn more about how [Appsero collects and uses this data](https://appsero.com/p
 
 = 1.0.5 =
 * Archive page slug editable from settings page
-* 
+* Import Demo button on settings page
 
 = 1.0.4 =
 * Shortcode added for single view
