@@ -11,6 +11,7 @@ jQuery(document).ready(function ($) {
   pdfev_emd_vwr_tab();
   pdfev_emd_vwr_settings_tab();
   pdfev_emd_vwr_upload();
+  pdfev_import_demo();
   $('.color-field').wpColorPicker();
 
 // ============admin tabs===========
@@ -52,6 +53,32 @@ jQuery(document).ready(function ($) {
   }
 
 
+  // =================Import Demo Content======== 
+  function pdfev_import_demo(){
+    $('#import-demo-content').click(function (e) {
+      e.preventDefault();
+      
+      $.ajax({
+        url: pdfevAjax.ajaxurl,
+        type: 'POST',
+        data: {
+            action: 'import_demo_data',
+            nonce: pdfevAjax.nonce,
+            some_data: 'example_data' // Replace with your actual data
+        },
+        success: function(response) {
+            // Handle the response
+            $('#response-container').html(response);
+            console.log(response);
+        },
+        error: function(xhr, status, error) {
+            // Handle errors
+            $('#response-container').html('An error occurred: ' + error);
+            console.log('error');
+        }
+      });
+    });
+  }
   // =================media upload======== 
   function pdfev_emd_vwr_upload() {
     $('.pdfev-emd-vwr-upload').click(function(e) {

@@ -17,10 +17,17 @@ if( ! class_exists('PDFEV_Admin_Settings') ){
             add_action( 'init', array($this,'save_options_data') ); 
             add_action( 'init', array($this,'custom_rewrite_flush') ); 
             add_filter( 'plugin_action_links_pdf-embed-viewer/pdf-embed-viewer.php',[$this,'add_settings_link']);
+            // ajux import demoe data
+            add_action('wp_ajax_import_demo_data', 'import_demo_data'); // For logged-in users
+            add_action('wp_ajax_nopriv_import_demo_data', 'import_demo_data');
         }
 
         public function custom_rewrite_flush(){
             flush_rewrite_rules();
+        }
+
+        public function import_demo_data(){
+            echo 'test';
         }
 
         public function create_admin_menu(){
@@ -190,6 +197,10 @@ if( ! class_exists('PDFEV_Admin_Settings') ){
                     <tr>
                         <th scope="row"><?php esc_html_e('Light Color','pdf-embed-viewer') ?></th>
                         <td> <input class="color-field" type="text"  name="pdfev_css_colors[light]" value="<?php echo esc_attr($light); ?>"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><?php esc_html_e('Import Demo Content','pdf-embed-viewer') ?></th>
+                        <td> <input type="button" class="button-primary"  id="import-demo-content" value="Import Demo"></td>
                     </tr>
                 </tbody>
                 </table>

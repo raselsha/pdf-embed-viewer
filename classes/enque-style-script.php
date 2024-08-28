@@ -17,6 +17,10 @@ if( ! class_exists('PDFEV_Enque_Style') ){
             wp_enqueue_style('main',PDFEV_Const_URL.'assets/css/admin.css',['wp-color-picker'],PDFEV_Const_VERSION,'all');
             wp_enqueue_media();       
             wp_enqueue_script( 'pdf-embed-viewer', PDFEV_Const_URL.'assets/js/admin.js', ['jquery','wp-color-picker','jquery-ui-core'], PDFEV_Const_VERSION, true );
+            wp_localize_script('pdf-embed-viewer', 'pdfevAjax', array(
+                'ajaxurl' => admin_url('admin-ajax.php'),
+                'nonce'   => wp_create_nonce('pdf_ajax_nonce')
+            ));
         }
 
         public function frontend_style(){
