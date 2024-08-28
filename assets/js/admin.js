@@ -62,14 +62,14 @@ jQuery(document).ready(function ($) {
         url: pdfevAjax.ajaxurl,
         type: 'POST',
         data: {
-            action: 'import_demo_data',
+            action: 'pdfev_import_demo_data',
             nonce: pdfevAjax.nonce,
-            some_data: 'example_data' // Replace with your actual data
+            import_status: 'yes',
         },
         success: function(response) {
             // Handle the response
-            $('#response-container').html(response);
-            console.log(response);
+            $('#response-container').html(response.data);
+            console.log();
         },
         error: function(xhr, status, error) {
             // Handle errors

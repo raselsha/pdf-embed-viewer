@@ -18,8 +18,8 @@ if( ! class_exists('PDFEV_Admin_Settings') ){
             add_action( 'init', array($this,'custom_rewrite_flush') ); 
             add_filter( 'plugin_action_links_pdf-embed-viewer/pdf-embed-viewer.php',[$this,'add_settings_link']);
             // ajux import demoe data
-            add_action('wp_ajax_import_demo_data', 'import_demo_data'); // For logged-in users
-            add_action('wp_ajax_nopriv_import_demo_data', 'import_demo_data');
+            add_action('wp_ajax_pdfev_import_demo_data', array($this,'import_demo_data')); // For logged-in users
+            add_action('wp_ajax_nopriv_pdfev_import_demo_data', array($this,'import_demo_data'));
         }
 
         public function custom_rewrite_flush(){
@@ -27,7 +27,15 @@ if( ! class_exists('PDFEV_Admin_Settings') ){
         }
 
         public function import_demo_data(){
-            echo 'test';
+            // Check if the user has the required permissions
+            check_ajax_referer('pdf_ajax_nonce', 'nonce');
+            if (PDFEV_Functions::insert_demo_post()) {
+                wp_send_json_success('Demo data imported successfully.');
+            }
+            else{
+                wp_send_json_error('Failed to import demo data.');
+            }
+            wp_die(); // End AJAX request
         }
 
         public function create_admin_menu(){
@@ -200,7 +208,13 @@ if( ! class_exists('PDFEV_Admin_Settings') ){
                     </tr>
                     <tr>
                         <th scope="row"><?php esc_html_e('Import Demo Content','pdf-embed-viewer') ?></th>
-                        <td> <input type="button" class="button-primary"  id="import-demo-content" value="Import Demo"></td>
+                        <td> 
+                            <input type="button" class="button-primary"  id="import-demo-content" value="Import Demo">
+                            
+                        </td>
+                    </tr>
+                    <tr>
+                        <td id="response-container" colspan="2" style="color: green;"></td>
                     </tr>
                 </tbody>
                 </table>
