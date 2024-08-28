@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PDF Embed Viewer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-28 15:55+0000\n"
+"POT-Creation-Date: 2024-08-26 10:39+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -16,59 +16,56 @@ msgstr ""
 "X-Loco-Version: 2.6.9; wp-6.5.3\n"
 "X-Domain: pdf-embed-viewer"
 
-#: classes/metabox/general.php:50
+#: template/style/list.php:22
+msgid "Action"
+msgstr ""
+
+#: classes/metabox/general.php:37
 msgid "Add pdf file by upload button"
 msgstr ""
 
-#: classes/metabox/general.php:49
+#: classes/metabox/general.php:36
 msgid "Add PDF URL"
 msgstr ""
 
-#: classes/admin-settings.php:135
+#: classes/admin-settings.php:106
 msgid "Add Review"
 msgstr ""
 
-#: classes/cpt-register.php:61
+#: classes/cpt-register.php:56
 msgid "All PDF"
 msgstr ""
 
-#: classes/admin-settings.php:171
-msgid "Archive Slug"
-msgstr ""
-
-#: classes/admin-settings.php:177
+#: classes/admin-settings.php:142
 msgid "Archive Template"
 msgstr ""
 
-#: classes/admin-settings.php:165
+#: classes/admin-settings.php:135
 msgid "Archive Title"
 msgstr ""
 
-#: classes/cpt-register.php:27
+#: classes/cpt-register.php:26
 msgid "Author"
 msgstr ""
 
-#: classes/admin-settings.php:136
+#: classes/admin-settings.php:107
 msgid "Create a support ticket"
 msgstr ""
 
-#: classes/admin-settings.php:208
+#: classes/admin-settings.php:173
 msgid "Dark Color"
 msgstr ""
 
-#: classes/admin-settings.php:36
-msgid "Data processed successfully!"
-msgstr ""
-
-#: classes/cpt-register.php:28
+#: classes/cpt-register.php:27
 msgid "Date"
 msgstr ""
 
-#: classes/functions.php:216
+#: template/style/ebook.php:42 template/style/list.php:47
+#: template/style/newsletter.php:64 template/style/grid.php:45
 msgid "Download"
 msgstr ""
 
-#: classes/admin-settings.php:187 classes/metabox/general.php:63
+#: classes/admin-settings.php:152 classes/metabox/general.php:50
 msgid "Download Button"
 msgstr ""
 
@@ -76,7 +73,7 @@ msgstr ""
 msgid "Download Enable"
 msgstr ""
 
-#: classes/functions.php:216
+#: template/style/list.php:47 template/style/newsletter.php:64
 msgid "Download icon"
 msgstr ""
 
@@ -84,11 +81,7 @@ msgstr ""
 msgid "Ebook Template"
 msgstr ""
 
-#: classes/admin-settings.php:43
-msgid "Failed to import demo data."
-msgstr ""
-
-#: classes/cpt-register.php:26
+#: classes/cpt-register.php:25
 msgid "File Url"
 msgstr ""
 
@@ -96,7 +89,7 @@ msgstr ""
 msgid "General"
 msgstr ""
 
-#: classes/admin-settings.php:135
+#: classes/admin-settings.php:106
 msgid "Give a review for your feedback"
 msgstr ""
 
@@ -112,15 +105,7 @@ msgstr ""
 msgid "https://wordpress.org/plugins/pdf-embed-viewer"
 msgstr ""
 
-#: classes/admin-settings.php:221
-msgid "Import Demo"
-msgstr ""
-
-#: classes/admin-settings.php:219
-msgid "Import Demo Content"
-msgstr ""
-
-#: classes/admin-settings.php:215
+#: classes/admin-settings.php:180
 msgid "Light Color"
 msgstr ""
 
@@ -128,11 +113,11 @@ msgstr ""
 msgid "List Template"
 msgstr ""
 
-#: template/style/list.php:16 template/style/newsletter.php:27
+#: template/style/list.php:21 template/style/newsletter.php:31
 msgid "Month"
 msgstr ""
 
-#: classes/cpt-register.php:62 classes/cpt-register.php:63
+#: classes/cpt-register.php:57 classes/cpt-register.php:58
 msgid "New PDF Embed"
 msgstr ""
 
@@ -140,16 +125,16 @@ msgstr ""
 msgid "Newsletter Template"
 msgstr ""
 
-#: template/single.php:46
+#: template/single.php:54
 msgid "Next"
 msgstr ""
 
-#: classes/cpt-register.php:59 classes/cpt-register.php:60
-#: classes/cpt-register.php:67 classes/cpt-register.php:68
+#: classes/cpt-register.php:54 classes/cpt-register.php:55
+#: classes/cpt-register.php:62 classes/cpt-register.php:63
 msgid "PDF Embed"
 msgstr ""
 
-#: classes/admin-settings.php:54
+#: classes/admin-settings.php:25
 msgid "PDF Embed - Viewer"
 msgstr ""
 
@@ -158,7 +143,7 @@ msgid "PDF Embed Settings"
 msgstr ""
 
 #. Name of the plugin
-#: classes/cpt-register.php:58
+#: classes/cpt-register.php:53
 msgid "PDF Embed Viewer"
 msgstr ""
 
@@ -166,40 +151,41 @@ msgstr ""
 msgid "Pdf Embed Viewer"
 msgstr ""
 
-#: template/single.php:45
+#: template/single.php:53
 msgid "Previous"
 msgstr ""
 
-#: classes/admin-settings.php:196
+#: classes/admin-settings.php:161
 msgid "Primary Color"
 msgstr ""
 
-#: classes/admin-settings.php:137
+#: classes/admin-settings.php:108
 msgid "raselsha@gmail.com"
 msgstr ""
 
-#: classes/functions.php:207
+#: template/style/ebook.php:40 template/style/list.php:41
+#: template/style/newsletter.php:58 template/style/grid.php:43
 msgid "Read"
 msgstr ""
 
-#: template/style/list.php:17 template/style/newsletter.php:29
+#: template/style/newsletter.php:33
 msgid "Read/Download"
 msgstr ""
 
-#: classes/admin-settings.php:202
+#: classes/admin-settings.php:167
 msgid "Secondary Color"
 msgstr ""
 
-#: classes/admin-settings.php:137
+#: classes/admin-settings.php:108
 msgid "Send email"
 msgstr ""
 
-#: classes/admin-settings.php:55 classes/admin-settings.php:65
-#: classes/admin-settings.php:94
+#: classes/admin-settings.php:26 classes/admin-settings.php:36
+#: classes/admin-settings.php:65
 msgid "Settings"
 msgstr ""
 
-#: classes/admin-settings.php:81
+#: classes/admin-settings.php:52
 msgid "Settings Saved!"
 msgstr ""
 
@@ -207,20 +193,19 @@ msgstr ""
 msgid "Shahadat Hossain"
 msgstr ""
 
-#: classes/cpt-register.php:25 classes/admin-settings.php:95
-#: classes/metabox/general.php:36
+#: classes/admin-settings.php:66
 msgid "Shortcode"
 msgstr ""
 
-#: classes/metabox/general.php:64
+#: classes/metabox/general.php:51
 msgid "Show/Hide download Button in single page."
 msgstr ""
 
-#: classes/admin-settings.php:96
+#: classes/admin-settings.php:67
 msgid "Support"
 msgstr ""
 
-#: classes/admin-settings.php:136
+#: classes/admin-settings.php:107
 msgid "support"
 msgstr ""
 
@@ -233,14 +218,10 @@ msgid ""
 "displaying PDFs in webpage."
 msgstr ""
 
-#: template/style/list.php:15 template/style/newsletter.php:28
+#: template/style/list.php:20 template/style/newsletter.php:32
 msgid "Title"
 msgstr ""
 
-#: classes/metabox/general.php:55
+#: classes/metabox/general.php:42
 msgid "Upload"
-msgstr ""
-
-#: classes/metabox/general.php:37
-msgid "You can add the shortcode to any page or post for easy integration"
 msgstr ""

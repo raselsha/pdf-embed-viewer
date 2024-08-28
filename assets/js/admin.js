@@ -69,7 +69,6 @@ jQuery(document).ready(function ($) {
         success: function(response) {
             // Handle the response
             $('#response-container').html(response.data);
-            console.log();
         },
         error: function(xhr, status, error) {
             // Handle errors
