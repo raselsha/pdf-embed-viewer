@@ -46,10 +46,10 @@ if( ! class_exists('PDFEV_Functions') ){
                     'post_status'   => 'publish',
                     'post_author'   => 1, // Change this to the author ID you want
                     'post_date'     => '2024-'.$i.'-24 12:00:00',
-                    'post_type'     => 'pdfev_embed_viewer',
+                    'post_type'     => PDFEV_Functions::get_cpt_name(),
                 );
                 
-                if ( ! get_page_by_path( 'demo-pdf-'.$i, OBJECT, 'pdfev_embed_viewer' ) ) {
+                if ( ! get_page_by_path( 'demo-pdf-'.$i, OBJECT, PDFEV_Functions::get_cpt_name() ) ) {
                     $post_id = wp_insert_post( $post_data );
                     if (!is_wp_error($post_id)) {
                         

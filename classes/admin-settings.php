@@ -14,7 +14,7 @@ if( ! class_exists('PDFEV_Admin_Settings') ){
         public function __construct() {
             
             add_action( 'admin_menu', array($this,'create_admin_menu') );
-            add_action( 'admin_init', array($this,'save_options_data') ); 
+            add_action( 'init', array($this,'save_options_data') ); 
             add_action( 'init', array($this,'custom_rewrite_flush') ); 
             add_filter( 'plugin_action_links_pdf-embed-viewer/pdf-embed-viewer.php',[$this,'add_settings_link']);
         }
@@ -214,7 +214,7 @@ if( ! class_exists('PDFEV_Admin_Settings') ){
                 }
                 
                 $archive_title      = isset( $_POST['pdfev_archive_title'] ) ? sanitize_text_field($_POST['pdfev_archive_title']): 'Pdf Embed Viewer';
-                $archive_slug       = isset( $_POST['pdfev_archive_slug'] ) ? sanitize_text_field($_POST['pdfev_archive_slug']): 'pdf-embed-viewer';
+                $archive_slug       = isset( $_POST['pdfev_archive_slug'] ) ? sanitize_text_field(sanitize_title($_POST['pdfev_archive_slug'])): 'pdf-embed-viewer';
                 $archive_template   = isset( $_POST['pdfev_archive_template'] ) ? sanitize_text_field($_POST['pdfev_archive_template']): 'list';
                 $archive_download   = isset( $_POST['pdfev_archive_download'] ) ? sanitize_text_field($_POST['pdfev_archive_download']): 'no';
                 $primary            = isset( $_POST['pdfev_css_colors']['primary'] ) ? sanitize_hex_color($_POST['pdfev_css_colors']['primary']) : '';
@@ -232,9 +232,7 @@ if( ! class_exists('PDFEV_Admin_Settings') ){
                 update_option('pdfev_archive_slug',$archive_slug);
                 update_option('pdfev_archive_template',$archive_template);
                 update_option('pdfev_archive_download',$archive_download);
-                update_option('pdfev_css_colors',$colors );
-                
-                
+                update_option('pdfev_css_colors',$colors );                
             }
         }
     }
