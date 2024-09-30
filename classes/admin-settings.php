@@ -27,22 +27,21 @@ if( ! class_exists('PDFEV_Admin_Settings') ){
         }
 
         public function import_demo_data(){
-            // Check if the user has the required permissions
-            check_ajax_referer('pdf_ajax_nonce', 'nonce');
             
-            if (PDFEV_Functions::insert_demo_post()) {
-                $response = array(
-                    'success' => true/false,
-                    'message' => __('Data processed successfully!', 'pdf-embed-viewer')
-                );
-            } else {
-                $response = array(
-                    'success' => true/false, // Set to false for failure
-                    'message' => __('Failed to import demo data. Please try again or contact support.', 'pdf-embed-viewer')
-                );
-                error_log('Demo post insertion failed.'); // Log the error for debugging
+            if( isset( $_POST['ajaxnonce'] ) ){
+                if( ! wp_verify_nonce( sanitize_text_field( wp_unslash ( $_POST['ajaxnonce'] ) ) , 'pdf_ajax_nonce' ) ){
+                    wp_send_json_error('Invalid nonce');
+                    return;
+                }
             }
 
+            $success = PDFEV_Functions::insert_demo_post();
+
+            // Prepare the response
+            $response = array(
+                'success' => $success, // This should be true or false based on the function result
+                'message' => $success ? __('Demo Data imported successfully!', 'pdf-embed-viewer') : __('Failed to import data.', 'pdf-embed-viewer')
+            );
             wp_send_json($response);
             wp_die(); // End AJAX request
 

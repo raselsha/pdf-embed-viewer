@@ -62,19 +62,18 @@ jQuery(document).ready(function ($) {
           type: 'POST',
           data: {
               action: 'pdfev_import_demo_data',
-              nonce: pdfevAjax.nonce,
+              ajaxnonce: pdfevAjax.ajaxnonce,
               import_status: 'yes',
           },
           success: function(response) {
-              // Check if the response indicates success
+              
               if (response.success) {
-                  $('#response-container').html(response.message); // Display success message
+                  $('#response-container').html(response.message); 
               } else {
-                  $('#response-container').html('Error: ' + response.message); // Display error message
+                  $('#response-container').html('Error: ' + response.message); 
               }
           },
           error: function(xhr, status, error) {
-              // Handle errors
               $('#response-container').html('An error occurred: ' + error);
               console.log('Error:', error);
           }

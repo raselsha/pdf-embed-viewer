@@ -71,6 +71,7 @@ if( ! class_exists('PDFEV_Functions') ){
                     }
                 }
             }
+            return true;
         }
 
         public static function insert_media($file_path) {
