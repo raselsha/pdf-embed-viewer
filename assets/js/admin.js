@@ -57,24 +57,27 @@ jQuery(document).ready(function ($) {
   function pdfev_import_demo(){
     $('#import-demo-content').click(function (e) {
       e.preventDefault();
-      
       $.ajax({
-        url: pdfevAjax.ajaxurl,
-        type: 'POST',
-        data: {
-            action: 'pdfev_import_demo_data',
-            nonce: pdfevAjax.nonce,
-            import_status: 'yes',
-        },
-        success: function(response) {
-            // Handle the response
-            $('#response-container').html(response.data);
-        },
-        error: function(xhr, status, error) {
-            // Handle errors
-            $('#response-container').html('An error occurred: ' + error);
-            console.log('error');
-        }
+          url: pdfevAjax.ajaxurl,
+          type: 'POST',
+          data: {
+              action: 'pdfev_import_demo_data',
+              nonce: pdfevAjax.nonce,
+              import_status: 'yes',
+          },
+          success: function(response) {
+              // Check if the response indicates success
+              if (response.success) {
+                  $('#response-container').html(response.message); // Display success message
+              } else {
+                  $('#response-container').html('Error: ' + response.message); // Display error message
+              }
+          },
+          error: function(xhr, status, error) {
+              // Handle errors
+              $('#response-container').html('An error occurred: ' + error);
+              console.log('Error:', error);
+          }
       });
     });
   }

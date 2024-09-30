@@ -32,19 +32,20 @@ if( ! class_exists('PDFEV_Admin_Settings') ){
             
             if (PDFEV_Functions::insert_demo_post()) {
                 $response = array(
-                    'success' => true,
+                    'success' => true/false,
                     'message' => __('Data processed successfully!', 'pdf-embed-viewer')
                 );
-                wp_send_json($response);
-            }
-            else{
+            } else {
                 $response = array(
-                    'success' => true,
-                    'message' => __('Failed to import demo data.', 'pdf-embed-viewer')
+                    'success' => true/false, // Set to false for failure
+                    'message' => __('Failed to import demo data. Please try again or contact support.', 'pdf-embed-viewer')
                 );
-                wp_send_json($response);
+                error_log('Demo post insertion failed.'); // Log the error for debugging
             }
+
+            wp_send_json($response);
             wp_die(); // End AJAX request
+
         }
 
         public function create_admin_menu(){
@@ -218,7 +219,7 @@ if( ! class_exists('PDFEV_Admin_Settings') ){
                     <tr>
                         <th scope="row"><?php esc_html_e('Import Demo Content','pdf-embed-viewer') ?></th>
                         <td> 
-                            <input type="button" class="button-primary"  id="import-demo-content" value="<?php __('Import Demo','pdf-embed-viewer') ?>">
+                            <input type="button" class="button-primary"  id="import-demo-content" value="<?php _e('Import Demo','pdf-embed-viewer') ?>">
                             
                         </td>
                     </tr>
