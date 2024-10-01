@@ -15,19 +15,19 @@ PDF Embed Viewer plugin is designed to view and download PDF files in your wordp
 The "PDF Embed Viewer" plugin is designed to view and download PDF files in your wordpress website. Its allowing easy access to Documents, Newsletter, Ebook directly within web pages. With its user-friendly interface and customizable features, this plugin offers a hassle-free solution for displaying PDFs in webpage.
 
 ## This plugin supports 4 templates for Archive view
-** List Template
-** Grid Template
-** Newsletter Template
-** Ebook Template
+* ** List Template
+* ** Grid Template
+* ** Newsletter Template
+* ** Ebook Template
 
 ## Shortcode for arvhive view
-** [pdfev_viewer template="list"]
-** [pdfev_viewer template="grid"]
-** [pdfev_viewer template="ebook"]
-** [pdfev_viewer template="newsletter"]
+* ** [pdfev_viewer template="list"]
+* ** [pdfev_viewer template="grid"]
+* ** [pdfev_viewer template="ebook"]
+* ** [pdfev_viewer template="newsletter"]
 
 ## Shortcode for single page/post
-** [pdfev_embed_viewer id="100"]
+* ** [pdfev_embed_viewer id="post_id"]
 
 ## Features
 * **Display PDFs Anywhere:** Easily embed PDFs in any page or post using a shortcode.
@@ -73,6 +73,10 @@ Learn more about how [Appsero collects and uses this data](https://appsero.com/p
 
 
 == Changelog ==
+
+= 1.0.6 =
+* Demo import button fix
+* Translation Update
 
 = 1.0.5 =
 * Archive page slug editable from settings page

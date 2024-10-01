@@ -1,9 +1,9 @@
 <?php
 /**
- * Plugin Name: PDF Embed Viewer
+ * Plugin Name: PDF Embed E-Books | Newsletter | Reports | Annual Reports | Documentation | Manual Boooks
  * Plugin URI: https://wordpress.org/plugins/pdf-embed-viewer
- * Description: The "PDF Embed Viewer" plugin is designed to view and download PDF files in your wordpress website. Its allowing easy access to Documents, Newsletter, Ebook directly within web pages. With its user-friendly interface and customizable features, this plugin offers a hassle-free solution for displaying PDFs in webpage.
- * Version: 1.0.5
+ * Description: The plugin is designed to view and download PDF files in your wordpress website. Its allowing easy access to Documents, Newsletter, Ebook directly within web pages. With its user-friendly interface and customizable features, this plugin offers a hassle-free solution for displaying PDFs in webpage.
+ * Version: 1.0.6
  * Stable Tag: trunk
  * Requires at least: 3.0
  * Requires PHP:      7.4
@@ -43,7 +43,7 @@ if( ! class_exists( 'PDFEV_Embed_Viewer' ) ){
         public function define_contstants(){
             define( 'PDFEV_Const_Path', plugin_dir_path(__FILE__) );
             define( 'PDFEV_Const_URL', plugin_dir_url(__FILE__) );
-            define( 'PDFEV_Const_VERSION', '1.0.4' );
+            define( 'PDFEV_Const_VERSION', '1.0.6' );
         }
 
         public static function include_plugin_files() {
