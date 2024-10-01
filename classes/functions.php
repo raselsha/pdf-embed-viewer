@@ -227,6 +227,12 @@ if( ! class_exists('PDFEV_Functions') ){
             <?php
             endif;
         }
+
+        public static function back_to_archive(){
+            ?>
+                <a href="<?php echo esc_url(get_post_type_archive_link(PDFEV_Functions::get_cpt_name())); ?>" class="back-button"><i class="fas fa-arrow-left"></i> <?php _e('Back to overview','pdf-embed-viewer') ?></a>
+            <?php
+        }
     }
     
     new PDFEV_Functions();

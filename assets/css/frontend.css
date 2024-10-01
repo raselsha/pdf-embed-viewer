@@ -3940,9 +3940,16 @@ readers do not read off random characters that represent icons */
   width: 100%;
   height: 1024px;
 }
+.pdfev-embed-viewer .navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 .pdfev-embed-viewer .pagination {
   width: max-content;
-  margin: 1rem auto;
+  display: flex;
+  justify-content: center;
+  gap: 30px;
 }
 .pdfev-embed-viewer .pagination .page-numbers {
   display: inline-block;
