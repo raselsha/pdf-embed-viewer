@@ -33,7 +33,7 @@ msgstr "সব পিডিএফ"
 
 #: classes/admin-settings.php:171
 msgid "Archive Slug"
-msgstr "আর্কাইভ স্লাগ"
+msgstr ""
 
 #: classes/admin-settings.php:177
 msgid "Archive Template"

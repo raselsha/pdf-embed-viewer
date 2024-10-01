@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PDF Embed Viewer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-01 00:44+0000\n"
+"POT-Creation-Date: 2024-08-28 15:55+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -56,15 +56,15 @@ msgstr ""
 msgid "Dark Color"
 msgstr ""
 
+#: classes/admin-settings.php:36
+msgid "Data processed successfully!"
+msgstr ""
+
 #: classes/cpt-register.php:28
 msgid "Date"
 msgstr ""
 
-#: classes/admin-settings.php:43
-msgid "Demo Data imported successfully!"
-msgstr ""
-
-#: classes/functions.php:217
+#: classes/functions.php:216
 msgid "Download"
 msgstr ""
 
@@ -76,7 +76,7 @@ msgstr ""
 msgid "Download Enable"
 msgstr ""
 
-#: classes/functions.php:217
+#: classes/functions.php:216
 msgid "Download icon"
 msgstr ""
 
@@ -85,7 +85,7 @@ msgid "Ebook Template"
 msgstr ""
 
 #: classes/admin-settings.php:43
-msgid "Failed to import data."
+msgid "Failed to import demo data."
 msgstr ""
 
 #: classes/cpt-register.php:26
@@ -178,7 +178,7 @@ msgstr ""
 msgid "raselsha@gmail.com"
 msgstr ""
 
-#: classes/functions.php:208
+#: classes/functions.php:207
 msgid "Read"
 msgstr ""
 
