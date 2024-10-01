@@ -3916,21 +3916,21 @@ readers do not read off random characters that represent icons */
 .pdfev-embed-viewer h1 {
   color: var(--pdfev-dark);
 }
-.pdfev-embed-viewer .button, .pdfev-embed-viewer .download-btn {
+.pdfev-embed-viewer .button, .pdfev-embed-viewer .download-btn, .pdfev-embed-viewer .read-btn {
   background: var(--pdfev-primary);
   padding: 0.1em 0.5em;
   border-radius: 0.25em;
   color: var(--pdfev-white);
   font-weight: normal;
 }
-.pdfev-embed-viewer .download-btn {
+.pdfev-embed-viewer .download-btn, .pdfev-embed-viewer .read-btn {
   display: inline-flex;
   align-items: center;
   gap: 0.5em;
   color: var(--pdfev-white);
   text-decoration: none;
 }
-.pdfev-embed-viewer .download-btn:hover {
+.pdfev-embed-viewer .download-btn:hover, .pdfev-embed-viewer .read-btn:hover {
   color: var(--pdfev-primary);
   background-color: var(--pdfev-secondary);
   text-decoration: none;
@@ -3966,14 +3966,14 @@ readers do not read off random characters that represent icons */
   margin: 0 auto;
   width: 100%;
 }
-.pdfev-embed-viewer-shortcode .download-btn {
+.pdfev-embed-viewer-shortcode .download-btn, .pdfev-embed-viewer-shortcode .pdfev-embed-viewer .read-btn, .pdfev-embed-viewer .pdfev-embed-viewer-shortcode .read-btn {
   display: inline-flex;
   align-items: center;
   gap: 0.5em;
   color: var(--pdfev-white);
   text-decoration: none;
 }
-.pdfev-embed-viewer-shortcode .download-btn:hover {
+.pdfev-embed-viewer-shortcode .download-btn:hover, .pdfev-embed-viewer-shortcode .pdfev-embed-viewer .read-btn:hover, .pdfev-embed-viewer .pdfev-embed-viewer-shortcode .read-btn:hover {
   color: var(--pdfev-primary);
   background-color: var(--pdfev-secondary);
   text-decoration: none;

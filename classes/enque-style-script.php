@@ -43,6 +43,11 @@ if( ! class_exists('PDFEV_Enque_Style') ){
                     ";
                 wp_add_inline_style('pdf-frontend-style', $inline_css);
             }
+
+            wp_localize_script('pdf-frontend-script', 'pdfevAjax', array(
+                'ajaxurl' => admin_url('admin-ajax.php'),
+                'ajaxnonce'   => wp_create_nonce('pdf_ajax_nonce')
+            ));
             
         }
 

@@ -35,6 +35,9 @@
             text-decoration: none;
         }
     }
+    .read-btn{
+        @extend .download-btn;
+    }
     .pdf-viewer{
         margin: .5em 0;
         width: 100%;

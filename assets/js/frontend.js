@@ -15,6 +15,33 @@ jQuery(document).ready(function ($) {
 
 
 // ============admin scripts===========
-
+jQuery(document).ready(function ($) {
+  $('.download-btn').click(function(e){
+    e.preventDefault();
+    var post_id = $(this).data('post-id');
+    var $this = $(this);
+    var downloadUrl = $this.attr('href');
+    $.ajax({
+        url: pdfevAjax.ajaxurl,
+        type: 'POST',
+        data: {
+          action: 'pdfev_count_manager_download',
+          ajaxnonce: pdfevAjax.ajaxnonce,
+          post_id: post_id,
+        },
+        success: function(response) {
+          if (response.success) {
+            $this.find('.pdfev-download-counter').html(response.data.download_count); 
+            window.location.href = downloadUrl; 
+          } else {
+            $this.find('.pdfev-download-counter').html('Error: ' + response.data.download_count); 
+          }
+      },
+      error: function(xhr, status, error) {
+          console.log('Error:', error);
+      }
+    });
+  });
+});
 
 // ============metabox scripts========

@@ -40,6 +40,7 @@ if ( wp_is_block_theme() ) {  ?>
 	<h1><?php the_title();?></h1>
 	
 	<?php  PDFEV_Functions::download_button_page_view(get_the_ID()); ?>
+	
 	<div class="navigation">
 		<?php PDFEV_Functions::back_to_archive();?>
 		<div class="pagination">

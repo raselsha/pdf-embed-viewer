@@ -50,7 +50,7 @@ if( ! defined('ABSPATH') ) { die( "Don't access directly" ); }?>
 							<tr>
 								<td width="10%"><?php the_time('F'); ?></td>
 								<td width="60%"><a href="<?php the_permalink(); ?>"><?php the_title();?></a></td>
-								<td width="20%" style="text-align: right;">
+								<td width="24%" style="text-align: right;">
 									<?php PDFEV_Functions::read_button(); ?>
 									<?php PDFEV_Functions::download_button(); ?>
 								</td>

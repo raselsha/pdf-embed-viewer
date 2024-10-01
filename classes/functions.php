@@ -205,26 +205,39 @@ if( ! class_exists('PDFEV_Functions') ){
 
         public static function read_button(){
             ?>
-            <a href="<?php the_permalink(); ?>" class="download-btn"><i class="far fa-address-book"></i> <?php echo esc_html__('Read','pdf-embed-viewer');?></a>
+            <a href="<?php the_permalink(); ?>" class="read-btn"><i class="far fa-address-book"></i> <?php echo esc_html__('Read','pdf-embed-viewer');?> <?php echo self::get_post_view();?></a>
             <?php
         }
 
+        public static function get_post_view() {
+            $meta_key = 'pdfev_meta_views_count';
+            $count = get_post_meta(get_the_ID(), $meta_key, true);
+            return $count ? $count : 0;
+        }
+
+        public static function get_download_count() {
+            $count_key = 'pdfev_meta_downloads_count';
+            $count = get_post_meta(get_the_ID(), $count_key, true);
+            return $count ? $count : 0;
+        }
+
+        public static function get_download_button(){
+        ?>
+            <a href="<?php PDFEV_Functions::pdf_link(); ?>" class="download-btn" data-post-id="<?php echo get_the_ID(); ?>" download><?php echo esc_html__('Download','pdf-embed-viewer'); ?><img src="<?php echo esc_attr(PDFEV_Const_URL.'assets/images/download.svg'); ?>" alt="<?php echo esc_html__('Download icon','pdf-embed-viewer'); ?>"> <span class="pdfev-download-counter"><?php echo esc_html(self::get_download_count(get_the_ID()));?></span> </a>
+        <?php
+        }
         public static function download_button(){
             
             $check_download_archive  =  get_option('pdfev_archive_download');
             if($check_download_archive == 'yes'): 
-            ?>
-                <a href="<?php PDFEV_Functions::pdf_link(); ?>" class="download-btn" download><?php echo esc_html__('Download','pdf-embed-viewer'); ?> <img src="<?php echo esc_attr(PDFEV_Const_URL.'assets/images/download.svg'); ?>" alt="<?php echo esc_html__('Download icon','pdf-embed-viewer'); ?>"> </a>
-            <?php
+                self::get_download_button();
             endif;
         }
 
         public static function download_button_page_view($post_id){
             $check_download  = get_post_meta( $post_id, 'pdfev_meta_download', true );
             if($check_download == 'yes'):
-                ?>
-                <p><a href="<?php PDFEV_Functions::pdf_link(); ?>" class="download-btn" download><?php the_time('F'); ?> | <?php the_time('Y'); ?> <img src="<?php echo esc_attr(PDFEV_Const_URL.'assets/images/download.svg'); ?>" alt="<?php echo esc_attr('download-icon','pdf-embed-viewer'); ?>"></a></p>
-            <?php
+                self::get_download_button();
             endif;
         }
 
