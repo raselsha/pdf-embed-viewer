@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PDF Embed Viewer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-01 00:44+0000\n"
+"POT-Creation-Date: 2024-10-01 17:24+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -15,6 +15,10 @@ msgstr ""
 "X-Generator: Loco https://localise.biz/\n"
 "X-Loco-Version: 2.6.9; wp-6.5.3\n"
 "X-Domain: pdf-embed-viewer"
+
+#: template/single.php:47 template/single.php:56
+msgid " Previous"
+msgstr ""
 
 #: classes/metabox/general.php:50
 msgid "Add pdf file by upload button"
@@ -48,6 +52,10 @@ msgstr ""
 msgid "Author"
 msgstr ""
 
+#: classes/functions.php:246
+msgid "Back to overview"
+msgstr ""
+
 #: classes/admin-settings.php:136
 msgid "Create a support ticket"
 msgstr ""
@@ -64,7 +72,7 @@ msgstr ""
 msgid "Demo Data imported successfully!"
 msgstr ""
 
-#: classes/functions.php:217
+#: classes/functions.php:226
 msgid "Download"
 msgstr ""
 
@@ -76,7 +84,7 @@ msgstr ""
 msgid "Download Enable"
 msgstr ""
 
-#: classes/functions.php:217
+#: classes/functions.php:226
 msgid "Download icon"
 msgstr ""
 
@@ -140,8 +148,8 @@ msgstr ""
 msgid "Newsletter Template"
 msgstr ""
 
-#: template/single.php:46
-msgid "Next"
+#: template/single.php:48 template/single.php:57
+msgid "Next "
 msgstr ""
 
 #: classes/cpt-register.php:59 classes/cpt-register.php:60
@@ -153,21 +161,22 @@ msgstr ""
 msgid "PDF Embed - Viewer"
 msgstr ""
 
+#. Name of the plugin
+msgid ""
+"PDF Embed E-Books | Newsletter | Reports | Annual Reports | Documentation | "
+"Manual Boooks"
+msgstr ""
+
 #: classes/metabox-register.php:14
 msgid "PDF Embed Settings"
 msgstr ""
 
-#. Name of the plugin
 #: classes/cpt-register.php:58
 msgid "PDF Embed Viewer"
 msgstr ""
 
 #: classes/options-setup.php:40
 msgid "Pdf Embed Viewer"
-msgstr ""
-
-#: template/single.php:45
-msgid "Previous"
 msgstr ""
 
 #: classes/admin-settings.php:196
@@ -226,11 +235,10 @@ msgstr ""
 
 #. Description of the plugin
 msgid ""
-"The \"PDF Embed Viewer\" plugin is designed to view and download PDF files "
-"in your wordpress website. Its allowing easy access to Documents, Newsletter,"
-" Ebook directly within web pages. With its user-friendly interface and "
-"customizable features, this plugin offers a hassle-free solution for "
-"displaying PDFs in webpage."
+"The plugin is designed to view and download PDF files in your wordpress "
+"website. Its allowing easy access to Documents, Newsletter, Ebook directly "
+"within web pages. With its user-friendly interface and customizable features,"
+" this plugin offers a hassle-free solution for displaying PDFs in webpage."
 msgstr ""
 
 #: template/style/list.php:15 template/style/newsletter.php:28

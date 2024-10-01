@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PDF Embed Viewer\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-06-03 11:24+0000\n"
-"PO-Revision-Date: 2024-10-01 00:48+0000\n"
+"PO-Revision-Date: 2024-10-01 17:25+0000\n"
 "Last-Translator: \n"
 "Language-Team: Bengali (Bangladesh)\n"
 "Language: bn_BD\n"
@@ -14,6 +14,10 @@ msgstr ""
 "X-Generator: Loco https://localise.biz/\n"
 "X-Loco-Version: 2.6.11; wp-6.6.2\n"
 "X-Domain: pdf-embed-viewer"
+
+#: template/single.php:47 template/single.php:56
+msgid " Previous"
+msgstr "আগের"
 
 #: classes/metabox/general.php:50
 msgid "Add pdf file by upload button"
@@ -47,6 +51,10 @@ msgstr "আর্কাইভ শিরোনাম"
 msgid "Author"
 msgstr "লেখক"
 
+#: classes/functions.php:246
+msgid "Back to overview"
+msgstr "ওভারভিউতে ফিরে যান"
+
 #: classes/admin-settings.php:136
 msgid "Create a support ticket"
 msgstr "একটি সমর্থন টিকিট তৈরি করুন"
@@ -63,7 +71,7 @@ msgstr "তারিখ"
 msgid "Demo Data imported successfully!"
 msgstr "ডেমো ডেটা সফলভাবে আমদানি করা হয়েছে!"
 
-#: classes/functions.php:217
+#: classes/functions.php:226
 msgid "Download"
 msgstr "ডাউনলোড"
 
@@ -75,7 +83,7 @@ msgstr "ডাউনলোড বাটন"
 msgid "Download Enable"
 msgstr "ডাউনলোড সক্ষম করুন"
 
-#: classes/functions.php:217
+#: classes/functions.php:226
 msgid "Download icon"
 msgstr "ডাউনলোড"
 
@@ -139,8 +147,8 @@ msgstr "নতুন PDF এম্বেড"
 msgid "Newsletter Template"
 msgstr "নিউজলেটার টেমপ্লেট"
 
-#: template/single.php:46
-msgid "Next"
+#: template/single.php:48 template/single.php:57
+msgid "Next "
 msgstr "পরবর্তী"
 
 #: classes/cpt-register.php:59 classes/cpt-register.php:60
@@ -152,11 +160,18 @@ msgstr "PDF এম্বেড"
 msgid "PDF Embed - Viewer"
 msgstr "PDF এম্বেড - ভিউয়ার"
 
+#. Name of the plugin
+msgid ""
+"PDF Embed E-Books | Newsletter | Reports | Annual Reports | Documentation | "
+"Manual Boooks"
+msgstr ""
+"পিডিএফ এম্বেড ইবুক | নিউজলেটার | রিপোর্ট | বার্ষিক প্রতিবেদন | ডকুমেন্টেশন | "
+"ম্যানুয়াল বই"
+
 #: classes/metabox-register.php:14
 msgid "PDF Embed Settings"
 msgstr "PDF এম্বেড সেটিংস"
 
-#. Name of the plugin
 #: classes/cpt-register.php:58
 msgid "PDF Embed Viewer"
 msgstr "PDF এম্বেড ভিউয়ার"
@@ -164,10 +179,6 @@ msgstr "PDF এম্বেড ভিউয়ার"
 #: classes/options-setup.php:40
 msgid "Pdf Embed Viewer"
 msgstr "PDF এম্বেড ভিউয়ার"
-
-#: template/single.php:45
-msgid "Previous"
-msgstr "আগে"
 
 #: classes/admin-settings.php:196
 msgid "Primary Color"
@@ -225,17 +236,16 @@ msgstr "সাপোর্ট"
 
 #. Description of the plugin
 msgid ""
-"The \"PDF Embed Viewer\" plugin is designed to view and download PDF files "
-"in your wordpress website. Its allowing easy access to Documents, Newsletter,"
-" Ebook directly within web pages. With its user-friendly interface and "
-"customizable features, this plugin offers a hassle-free solution for "
-"displaying PDFs in webpage."
+"The plugin is designed to view and download PDF files in your wordpress "
+"website. Its allowing easy access to Documents, Newsletter, Ebook directly "
+"within web pages. With its user-friendly interface and customizable features,"
+" this plugin offers a hassle-free solution for displaying PDFs in webpage."
 msgstr ""
-"\"পিডিএফ এম্বেড ভিউয়ার\" প্লাগইনটি আপনার ওয়ার্ডপ্রেস ওয়েবসাইটে পিডিএফ "
-"ফাইলগুলি দেখতে এবং ডাউনলোড করার জন্য ডিজাইন করা হয়েছে। এটি সরাসরি ওয়েব "
-"পেজের মধ্যে ডকুমেন্ট, নিউজলেটার, ইবুকে সহজে অ্যাক্সেসের অনুমতি দেয়। এর "
-"ব্যবহারকারী-বান্ধব ইন্টারফেস এবং কাস্টমাইজযোগ্য বৈশিষ্ট্যগুলির সাথে, এই "
-"প্লাগইনটি ওয়েবপেজে PDF প্রদর্শনের জন্য একটি ঝামেলা-মুক্ত সমাধান অফার করে।"
+"প্লাগইনটি আপনার ওয়ার্ডপ্রেস ওয়েবসাইটে পিডিএফ ফাইল দেখতে এবং ডাউনলোড করার "
+"জন্য ডিজাইন করা হয়েছে। এটি সরাসরি ওয়েব পেজের মধ্যে ডকুমেন্ট, নিউজলেটার, "
+"ইবুকে সহজে অ্যাক্সেসের অনুমতি দেয়। এর ব্যবহারকারী-বান্ধব ইন্টারফেস এবং "
+"কাস্টমাইজযোগ্য বৈশিষ্ট্যগুলির সাথে, এই প্লাগইনটি ওয়েবপেজে PDF প্রদর্শনের "
+"জন্য একটি ঝামেলা-মুক্ত সমাধান অফার করে।"
 
 #: template/style/list.php:15 template/style/newsletter.php:28
 msgid "Title"
