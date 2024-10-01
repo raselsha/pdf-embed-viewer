@@ -1,4 +1,4 @@
-=== PDF Embed Viewer ===
+=== PDF Embed E-Books | Newsletter | Reports | Annual Reports | Documentation | Manual Boooks ===
 
 Contributors:      raselsha
 Requires at least: 3.0
@@ -7,12 +7,12 @@ Requires PHP:      7.0
 Stable tag:	       trunk
 License:           GPLv2 or later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
-Tags:              ebook reader, newsletter viewer, pdf, pdf viewer, pdf download,
+Tags:              ebook reader, newsletter, pdf, pdf viewer, pdf download,
 
 PDF Embed Viewer plugin is designed to view and download PDF files in your wordpress site. Read and view Newsletter, Ebook directly within web pages.
 
 == Description ==
-The "PDF Embed Viewer" plugin is designed to view and download PDF files in your wordpress website. Its allowing easy access to Documents, Newsletter, Ebook directly within web pages. With its user-friendly interface and customizable features, this plugin offers a hassle-free solution for displaying PDFs in webpage.
+The plugin is designed to view and download PDF files in your wordpress website. Its allowing easy access to Documents, Newsletter, Ebook directly within web pages. With its user-friendly interface and customizable features, this plugin offers a hassle-free solution for displaying PDFs in webpage.
 
 ## This plugin supports 4 templates for Archive view
 * ** List Template
@@ -32,6 +32,7 @@ The "PDF Embed Viewer" plugin is designed to view and download PDF files in your
 ## Features
 * **Display PDFs Anywhere:** Easily embed PDFs in any page or post using a shortcode.
 * **Archive Page Templates:** Choose from four distinct templates for your archive pages.
+* **Track Reads and Downloads:** Monitor the number of times your content is read and downloaded for better insights.
 * **Standalone Sidebar Menu:** WordPress sidebar has a dedicated menu.
 * **Color Adjustment Settings:** Personalize colors with an intuitive settings page.
 * **Customizable Archive Page URL:** Modify the URL structure of your archive pages to suit your needs.
@@ -73,6 +74,10 @@ Learn more about how [Appsero collects and uses this data](https://appsero.com/p
 
 
 == Changelog ==
+
+= 1.0.7 =
+* Add a new feature to count read a pdf and download counting
+* Translation Update
 
 = 1.0.6 =
 * Demo import button fix
