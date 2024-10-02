@@ -1,8 +1,8 @@
 <?php
 /**
- * Plugin Name: PDF Embed E-Books | Newsletter | Reports | Annual Reports | Documentation | Manual Boooks
+ * Plugin Name: PDF Embedder: E-Books, Newsletters, Reports & Manuals
  * Plugin URI: https://wordpress.org/plugins/pdf-embed-viewer
- * Description: The plugin is designed to view and download PDF files in your wordpress website. Its allowing easy access to Documents, Newsletter, Ebook directly within web pages. With its user-friendly interface and customizable features, this plugin offers a hassle-free solution for displaying PDFs in webpage.
+ * Description: Enhance your WordPress site with our powerful PDF Embedder plugin, designed for seamless integration and user engagement. Easily display and download PDFs, newsletters, and eBooks using simple shortcodes. Choose from four unique archive page templates and customize URLs to improve SEO. Track reads and downloads for valuable insights, and enjoy features like a dedicated sidebar menu, color adjustment settings, and customizable titles. With multilingual support and quick demo content import, this plugin is perfect for businesses, educators, and content creators looking to streamline document sharing.
  * Version: 1.0.8
  * Stable Tag: trunk
  * Requires at least: 3.0
