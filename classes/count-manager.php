@@ -62,7 +62,7 @@ if( ! class_exists('PDFEV_Count_Manager') ){
             if ($count == '') {
                 $count = 0;
                 delete_post_meta(get_the_ID(), $meta_key);
-                add_post_meta(get_the_ID(), $meta_key, '0');
+                add_post_meta(get_the_ID(), $meta_key, '1');
             } else {
                 $count++;
                 update_post_meta(get_the_ID(), $meta_key, $count);
