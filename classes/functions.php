@@ -205,7 +205,7 @@ if( ! class_exists('PDFEV_Functions') ){
 
         public static function read_button(){
             ?>
-            <a href="<?php the_permalink(); ?>" class="read-btn"><i class="far fa-address-book"></i> <?php echo esc_html__('Read','pdf-embed-viewer');?> <?php echo self::get_post_view();?></a>
+            <a href="<?php the_permalink(); ?>" class="button btn read-btn"><i class="fas fa-eye"></i> <?php echo esc_html__('Read','pdf-embed-viewer');?> <?php echo self::get_post_view();?></a>
             <?php
         }
 
@@ -223,7 +223,8 @@ if( ! class_exists('PDFEV_Functions') ){
 
         public static function get_download_button(){
         ?>
-            <a href="<?php PDFEV_Functions::pdf_link(); ?>" class="download-btn" data-post-id="<?php echo get_the_ID(); ?>" download><?php echo esc_html__('Download','pdf-embed-viewer'); ?><img src="<?php echo esc_attr(PDFEV_Const_URL.'assets/images/download.svg'); ?>" alt="<?php echo esc_html__('Download icon','pdf-embed-viewer'); ?>"> <span class="pdfev-download-counter"><?php echo esc_html(self::get_download_count(get_the_ID()));?></span> </a>
+            <a href="<?php PDFEV_Functions::pdf_link(); ?>" class="button btn download-btn" data-post-id="<?php echo get_the_ID(); ?>" download> <i class="fas fa-cloud-download-alt"></i> <?php echo esc_html__('Download','pdf-embed-viewer'); ?>
+             <span class="pdfev-download-counter"><?php echo esc_html(self::get_download_count(get_the_ID()));?></span> </a>
         <?php
         }
         public static function download_button(){

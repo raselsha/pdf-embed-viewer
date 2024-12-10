@@ -26,10 +26,12 @@ if( ! defined('ABSPATH') ) { die( "Don't access directly" ); }
 				$WpQuery->the_post();
 				?>
 				<div class="grid-item">
-					<div class="image">
-						<?php the_post_thumbnail() ?>
-						<span class="date"><?php the_time('d-m-Y'); ?></span>
-					</div>
+					<a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>"> 
+						<div class="image">
+							<?php the_post_thumbnail() ?>
+							<span class="date"><?php the_time('d-m-Y'); ?></span>
+						</div>
+					</a>
 					<h2><a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>"> 
 						<?php
 							$title = get_the_title(); 

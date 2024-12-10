@@ -30,17 +30,21 @@
         color: var(--pdfev-white);
         text-decoration: none;
         &:hover{
-            color: var(--pdfev-primary);
+            color: var(--pdfev-white);
             background-color: var(--pdfev-secondary);
             text-decoration: none;
         }
     }
     .read-btn{
         @extend .button;
+        display: inline-flex;
+        align-items: center;
         color: var(--pdfev-white);
         text-decoration: none;
+        justify-content: space-between;
+        gap: 4.2px;
         &:hover{
-            color: var(--pdfev-primary);
+            color: var(--pdfev-white);
             background-color: var(--pdfev-secondary);
             text-decoration: none;
         }
@@ -82,7 +86,8 @@
         @extend .button;
         display: inline-flex;
         align-items: center;
-        gap: .5em;
+        justify-content: space-between;
+        gap: 4.2px;
         color: var(--pdfev-white);
         text-decoration: none;
         &:hover{
