@@ -3926,7 +3926,7 @@ readers do not read off random characters that represent icons */
 .pdfev-embed-viewer .download-btn, .pdfev-embed-viewer .read-btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.5em;
+  gap: 0.1em;
   color: var(--pdfev-white);
   text-decoration: none;
 }
@@ -4048,7 +4048,7 @@ readers do not read off random characters that represent icons */
   padding: 2px 5px;
   border-radius: 4px;
   font-size: 12px;
-  color: var(--pdfev-emd-vwr-white);
+  color: var(--pdfev-white);
   background-color: var(--pdfev-primary);
   margin: 0;
   z-index: 2;
