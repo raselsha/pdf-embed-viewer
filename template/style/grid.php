@@ -32,7 +32,13 @@ if( ! defined('ABSPATH') ) { die( "Don't access directly" ); }
 					<span class="date"><?php the_time('d-m-Y'); ?></span>
 					
 					<div class="content">
-						<h2><a href="<?php the_permalink(); ?>"> <?php the_title();?></a></h2>
+						<h2><a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>"> 
+							<?php
+								$title = get_the_title(); 
+								$trimmed_title = wp_html_excerpt($title, 80, '...');
+								echo esc_html($trimmed_title);
+							?>
+						</a></h2>
 						<div class="action">
 							<?php PDFEV_Functions::read_button(); ?>
 							<?php PDFEV_Functions::download_button(); ?>

@@ -3958,7 +3958,7 @@ readers do not read off random characters that represent icons */
 }
 .pdfev-embed-viewer .pagination .page-numbers.current {
   background-color: var(--pdfev-primary);
-  color: var(--pdfev-emd-vwr-white);
+  color: var(--pdfev-white);
 }
 
 .pdfev-embed-viewer-shortcode {
