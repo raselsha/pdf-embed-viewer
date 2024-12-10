@@ -36,7 +36,14 @@
         }
     }
     .read-btn{
-        @extend .download-btn;
+        @extend .button;
+        color: var(--pdfev-white);
+        text-decoration: none;
+        &:hover{
+            color: var(--pdfev-primary);
+            background-color: var(--pdfev-secondary);
+            text-decoration: none;
+        }
     }
     .pdf-viewer{
         margin: .5em 0;

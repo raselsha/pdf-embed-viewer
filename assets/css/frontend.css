@@ -3916,21 +3916,30 @@ readers do not read off random characters that represent icons */
 .pdfev-embed-viewer h1 {
   color: var(--pdfev-dark);
 }
-.pdfev-embed-viewer .button, .pdfev-embed-viewer .download-btn, .pdfev-embed-viewer .read-btn {
+.pdfev-embed-viewer .button, .pdfev-embed-viewer .read-btn, .pdfev-embed-viewer .download-btn {
   background: var(--pdfev-primary);
   padding: 0.1em 0.5em;
   border-radius: 0.25em;
   color: var(--pdfev-white);
   font-weight: normal;
 }
-.pdfev-embed-viewer .download-btn, .pdfev-embed-viewer .read-btn {
+.pdfev-embed-viewer .download-btn {
   display: inline-flex;
   align-items: center;
   gap: 0.1em;
   color: var(--pdfev-white);
   text-decoration: none;
 }
-.pdfev-embed-viewer .download-btn:hover, .pdfev-embed-viewer .read-btn:hover {
+.pdfev-embed-viewer .download-btn:hover {
+  color: var(--pdfev-primary);
+  background-color: var(--pdfev-secondary);
+  text-decoration: none;
+}
+.pdfev-embed-viewer .read-btn {
+  color: var(--pdfev-white);
+  text-decoration: none;
+}
+.pdfev-embed-viewer .read-btn:hover {
   color: var(--pdfev-primary);
   background-color: var(--pdfev-secondary);
   text-decoration: none;
@@ -3966,14 +3975,14 @@ readers do not read off random characters that represent icons */
   margin: 0 auto;
   width: 100%;
 }
-.pdfev-embed-viewer-shortcode .download-btn, .pdfev-embed-viewer-shortcode .pdfev-embed-viewer .read-btn, .pdfev-embed-viewer .pdfev-embed-viewer-shortcode .read-btn {
+.pdfev-embed-viewer-shortcode .download-btn {
   display: inline-flex;
   align-items: center;
   gap: 0.5em;
   color: var(--pdfev-white);
   text-decoration: none;
 }
-.pdfev-embed-viewer-shortcode .download-btn:hover, .pdfev-embed-viewer-shortcode .pdfev-embed-viewer .read-btn:hover, .pdfev-embed-viewer .pdfev-embed-viewer-shortcode .read-btn:hover {
+.pdfev-embed-viewer-shortcode .download-btn:hover {
   color: var(--pdfev-primary);
   background-color: var(--pdfev-secondary);
   text-decoration: none;
@@ -4032,14 +4041,17 @@ readers do not read off random characters that represent icons */
 .pdfev-embed-viewer .archive-grid-style {
   display: flex;
   justify-content: start;
-  align-items: stretch;
   flex-wrap: wrap;
+  gap: 20px;
 }
 .pdfev-embed-viewer .archive-grid-style .grid-item {
-  width: 24%;
+  width: 23%;
   border: 1px solid var(--pdfev-light);
-  margin: 5px;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: start;
 }
 .pdfev-embed-viewer .archive-grid-style .grid-item .date {
   position: absolute;
@@ -4073,19 +4085,17 @@ readers do not read off random characters that represent icons */
   z-index: 1;
   background-image: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.468));
 }
-.pdfev-embed-viewer .archive-grid-style .grid-item .content {
-  padding: 5px;
-}
-.pdfev-embed-viewer .archive-grid-style .grid-item .content h2 {
-  margin: 5px 0;
-  padding: 5px 0;
+.pdfev-embed-viewer .archive-grid-style .grid-item h2 {
+  margin: 10px;
   font-size: 1rem;
   font-weight: bold;
 }
-.pdfev-embed-viewer .archive-grid-style .grid-item .content .action {
+.pdfev-embed-viewer .archive-grid-style .grid-item .action {
+  margin: 10px;
   display: flex;
-  justify-content: space-between;
-  align-items: end;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
 }
 
 .pdfev-embed-viewer .archive-ebook-style {

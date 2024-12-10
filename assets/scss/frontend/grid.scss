@@ -3,13 +3,16 @@
     .archive-grid-style{
         display: flex;
         justify-content: start;
-        align-items: stretch;
         flex-wrap: wrap;
+        gap: 20px;
         .grid-item{
-            width: 24%;
+            width: 23%;
             border: 1px solid var(--pdfev-light);
-            margin: 5px;
             position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: start;
             .date{
                 position: absolute;
                 top: 5px;
@@ -42,19 +45,18 @@
                     background-image: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.468));
                 }
             }
-            .content{
-                padding: 5px;
-                h2{
-                    margin: 5px 0;
-                    padding: 5px 0;
-                    font-size: 1rem;
-                    font-weight: bold;
-                }
-                .action{
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: end;
-                }
+            
+            h2{
+                margin: 10px;
+                font-size: 1rem;
+                font-weight: bold;
+            }
+            .action{
+                margin: 10px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 10px;
             }
         }   
     }
