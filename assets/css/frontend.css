@@ -4121,9 +4121,15 @@ readers do not read off random characters that represent icons */
 .pdfev-embed-viewer .archive-grid-style .grid-item .action {
   margin: 10px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 10px;
+}
+@media (min-width: 580px) {
+  .pdfev-embed-viewer .archive-grid-style .grid-item .action {
+    flex-direction: row;
+  }
 }
 
 .pdfev-embed-viewer .archive-ebook-style {
