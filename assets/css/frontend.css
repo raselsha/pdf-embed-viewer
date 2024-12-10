@@ -4045,12 +4045,17 @@ readers do not read off random characters that represent icons */
 
 .pdfev-embed-viewer .archive-grid-style {
   display: flex;
-  justify-content: start;
+  justify-content: center;
   flex-wrap: wrap;
   gap: 20px;
 }
+@media (min-width: 1024px) {
+  .pdfev-embed-viewer .archive-grid-style {
+    justify-content: start;
+  }
+}
 .pdfev-embed-viewer .archive-grid-style .grid-item {
-  width: 23%;
+  width: 46%;
   border: 1px solid var(--pdfev-light);
   position: relative;
   display: flex;
@@ -4059,6 +4064,16 @@ readers do not read off random characters that represent icons */
   align-items: center;
   border-radius: 5px;
   box-shadow: 0 0 5px var(--pdfev-light);
+}
+@media (min-width: 768px) {
+  .pdfev-embed-viewer .archive-grid-style .grid-item {
+    width: 30%;
+  }
+}
+@media (min-width: 1024px) {
+  .pdfev-embed-viewer .archive-grid-style .grid-item {
+    width: 23%;
+  }
 }
 .pdfev-embed-viewer .archive-grid-style .grid-item .date {
   position: absolute;
