@@ -2,16 +2,25 @@
 .pdfev-embed-viewer{
     .archive-ebook-style{
         display: flex;
-        justify-content: start;
-        align-items: stretch;
+        justify-content: center;
+        align-items: center;
         flex-wrap: wrap;
+        @media (min-width:1024px) {
+            justify-content: start;
+        }
         .grid-item{
-            width: 24%;
+            width: 48%;
             margin: 5px;
             position: relative;
+            @media (min-width:580px) {
+                width: 30%;
+            }
+            @media (min-width:1024px) {
+                width: 19%;
+            }
             .image{
                 width: auto;
-                height: 280px;
+                height: 200px;
                 img{
                     max-width: 180px;
                     height: 100%;
@@ -23,8 +32,8 @@
                 padding-left: 0;
                 h2{
                     margin:0;
+                    margin-bottom: 10px;
                     padding:0;
-                    line-height: 2.5em;
                     font-size: 1rem;
                     font-weight: bold;
                     a{
@@ -33,8 +42,10 @@
                 }
                 .action{
                     display: flex;
+                    flex-direction: column;
                     justify-content: space-between;
-                    align-items: end;
+                    align-items: start;
+                    gap: 5px;
                     a{
                         font-weight: normal;
                     }

@@ -4134,18 +4134,33 @@ readers do not read off random characters that represent icons */
 
 .pdfev-embed-viewer .archive-ebook-style {
   display: flex;
-  justify-content: start;
-  align-items: stretch;
+  justify-content: center;
+  align-items: center;
   flex-wrap: wrap;
 }
+@media (min-width: 1024px) {
+  .pdfev-embed-viewer .archive-ebook-style {
+    justify-content: start;
+  }
+}
 .pdfev-embed-viewer .archive-ebook-style .grid-item {
-  width: 24%;
+  width: 48%;
   margin: 5px;
   position: relative;
 }
+@media (min-width: 580px) {
+  .pdfev-embed-viewer .archive-ebook-style .grid-item {
+    width: 30%;
+  }
+}
+@media (min-width: 1024px) {
+  .pdfev-embed-viewer .archive-ebook-style .grid-item {
+    width: 19%;
+  }
+}
 .pdfev-embed-viewer .archive-ebook-style .grid-item .image {
   width: auto;
-  height: 280px;
+  height: 200px;
 }
 .pdfev-embed-viewer .archive-ebook-style .grid-item .image img {
   max-width: 180px;
@@ -4158,8 +4173,8 @@ readers do not read off random characters that represent icons */
 }
 .pdfev-embed-viewer .archive-ebook-style .grid-item .content h2 {
   margin: 0;
+  margin-bottom: 10px;
   padding: 0;
-  line-height: 2.5em;
   font-size: 1rem;
   font-weight: bold;
 }
@@ -4168,8 +4183,10 @@ readers do not read off random characters that represent icons */
 }
 .pdfev-embed-viewer .archive-ebook-style .grid-item .content .action {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
-  align-items: end;
+  align-items: start;
+  gap: 5px;
 }
 .pdfev-embed-viewer .archive-ebook-style .grid-item .content .action a {
   font-weight: normal;
