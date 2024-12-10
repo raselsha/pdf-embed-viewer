@@ -75,6 +75,10 @@ Learn more about how [Appsero collects and uses this data](https://appsero.com/p
 
 == Changelog ==
 
+= 1.0.9 =
+* Grid Archive view responsive and css update.
+* Ebook Archive view responsive and css update.
+
 = 1.0.8 =
 * Fatal error fix that count manager not incleded.
 * Single page navigation icon fix.
