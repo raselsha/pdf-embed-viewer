@@ -3922,13 +3922,16 @@ readers do not read off random characters that represent icons */
   border-radius: 0.25em;
   color: var(--pdfev-white);
   font-weight: normal;
+  text-decoration: none;
 }
 .pdfev-embed-viewer .download-btn {
   display: inline-flex;
+  justify-content: space-evenly;
   align-items: center;
-  gap: 0.1em;
-  color: var(--pdfev-white);
-  text-decoration: none;
+  width: 100%; /* Make all buttons stretch to the container width */
+  max-width: 160px; /* Optional: Set a maximum width */
+  text-align: center;
+  box-sizing: border-box;
 }
 .pdfev-embed-viewer .download-btn:hover {
   color: var(--pdfev-white);
@@ -3937,11 +3940,12 @@ readers do not read off random characters that represent icons */
 }
 .pdfev-embed-viewer .read-btn {
   display: inline-flex;
+  justify-content: space-evenly;
   align-items: center;
-  color: var(--pdfev-white);
-  text-decoration: none;
-  justify-content: space-between;
-  gap: 4.2px;
+  width: 100%; /* Make all buttons stretch to the container width */
+  max-width: 130px; /* Optional: Set a maximum width */
+  text-align: center;
+  box-sizing: border-box;
 }
 .pdfev-embed-viewer .read-btn:hover {
   color: var(--pdfev-white);
@@ -3962,7 +3966,8 @@ readers do not read off random characters that represent icons */
   width: max-content;
   display: flex;
   justify-content: center;
-  gap: 30px;
+  gap: 10px;
+  margin: 10px 0;
 }
 .pdfev-embed-viewer .pagination .page-numbers {
   display: inline-block;
