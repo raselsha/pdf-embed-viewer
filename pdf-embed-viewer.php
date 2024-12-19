@@ -56,6 +56,7 @@ if( ! class_exists( 'PDFEV_Embed_Viewer' ) ){
             require_once PDFEV_Const_Path . 'classes/metabox/general.php';
             require_once PDFEV_Const_Path . 'classes/shortcode.php';
             require_once PDFEV_Const_Path . 'classes/count-manager.php';
+            require_once PDFEV_Const_Path . 'classes/template.php';
         }
 
         public static function activate(){

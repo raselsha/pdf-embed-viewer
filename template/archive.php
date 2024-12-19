@@ -36,13 +36,10 @@ if ( wp_is_block_theme() ) {  ?>
 }
 ?>
 
-<div class="pdfev-embed-viewer">
-    <?php
-        $template = get_option('pdfev_archive_template'); 
-        $load_template = $template.'.php';
-        require PDFEV_Functions::load_template($load_template);  
-    ?>
-</div>
+<main>
+	<!-- Here Archive Template will display -->
+	<?php do_action('pdfev_template_archive_view'); ?>
+</main>
 
 <?php if ( wp_is_block_theme() ) : ?>
 	<footer class="wp-block-template-part">
