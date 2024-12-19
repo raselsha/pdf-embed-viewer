@@ -2,7 +2,7 @@
 
 Contributors:      raselsha
 Requires at least: 3.0
-Tested up to:      6.5
+Tested up to:      6.7
 Requires PHP:      7.0
 Stable tag:	       trunk
 License:           GPLv2 or later
@@ -12,7 +12,7 @@ Tags:              ebook reader, newsletter, pdf, pdf viewer, pdf download,
 PDF Embed Viewer plugin is designed to view and download PDF files in your wordpress site. Read and view Newsletter, Ebook directly within web pages.
 
 == Description ==
-The plugin is designed to view and download PDF files in your wordpress website. Its allowing easy access to Documents, Newsletter, Ebook directly within web pages. With its user-friendly interface and customizable features, this plugin offers a hassle-free solution for displaying PDFs in webpage.
+The plugin is designed to read and download PDF files in your wordpress website. Its allowing easy access to Documents, Newsletter, Ebook directly within web pages. With its user-friendly interface and customizable features. It counts read and downloads per items. It has options to show/hide read and download button.
 
 ## This plugin supports 4 templates for Archive view
 * **List Template**
@@ -42,6 +42,7 @@ The plugin is designed to view and download PDF files in your wordpress website.
 * **Single Document Shortcode:** Easily embed single documents with a dedicated shortcode.
 * **Import Demo Content:** Quickly set up your archive view with the import demo button.
 * **Multilingual Support:** Fully compatible with multiple languages.
+* **Button Enable/Disable:** Options to show/hide read and download buttons.
 
 == Screenshot ==
 
@@ -74,6 +75,12 @@ Learn more about how [Appsero collects and uses this data](https://appsero.com/p
 
 
 == Changelog ==
+
+= 1.0.10 =
+* Download button counter fix.
+* Read Button show hide settings.
+* Read and Download Button style fix.
+* Template hook added for edit template.
 
 = 1.0.9 =
 * Grid Archive view responsive and css update.
