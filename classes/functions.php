@@ -203,10 +203,17 @@ if( ! class_exists('PDFEV_Functions') ){
             echo isset($archive_title) ? esc_html($archive_title) : '';
         }
 
-        public static function read_button(){
+        public static function get_read_button(){
             ?>
             <a href="<?php the_permalink(); ?>" class="button btn read-btn"><i class="fas fa-eye"></i> <?php echo esc_html__('Read','pdf-embed-viewer');?> <?php echo "(".self::get_post_view().")";?></a>
             <?php
+        }
+
+        public static function read_button(){
+            $check_read_archive  =  get_option('pdfev_archive_read');
+            if($check_read_archive == 'yes'): 
+                self::get_read_button();
+            endif;
         }
 
         public static function get_post_view() {
