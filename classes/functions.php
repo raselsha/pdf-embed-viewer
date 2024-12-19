@@ -223,8 +223,11 @@ if( ! class_exists('PDFEV_Functions') ){
 
         public static function get_download_button(){
         ?>
-            <a class="button btn download-btn" href="<?php PDFEV_Functions::pdf_link(); ?>" data-post-id="<?php echo get_the_ID(); ?>" download="<?php echo sanitize_title(get_the_title()); ?>"> <i class="fas fa-cloud-download-alt"></i> <?php echo esc_html__('Download','pdf-embed-viewer'); ?>
-            (<span class="pdfev-download-counter"><?php echo self::get_download_count(get_the_ID());?></span>)</a>
+            <a class="button btn download-btn" href="<?php PDFEV_Functions::pdf_link(); ?>" data-post-id="<?php echo get_the_ID(); ?>" download="<?php echo sanitize_title(get_the_title()); ?>"> 
+                <i class="fas fa-cloud-download-alt"></i> 
+                <?php echo esc_html__('Download','pdf-embed-viewer'); ?>
+                <span><?php esc_html_e('('); ?><span class="pdfev-download-counter"><?php echo self::get_download_count(get_the_ID());?></span><?php esc_html_e(')'); ?></span>
+            </a>
         <?php
         }
         public static function download_button(){
