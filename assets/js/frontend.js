@@ -17,9 +17,10 @@ jQuery(document).ready(function ($) {
 // ============admin scripts===========
 jQuery(document).ready(function ($) {
   $('.download-btn').click(function(e){
-    e.preventDefault();
+    // e.preventDefault();
     var post_id = $(this).data('post-id');
     var $button = $(this);
+    var downloadUrl = $button.attr('href');
     $.ajax({
         url: pdfevAjax.ajaxurl,
         type: 'POST',
@@ -30,7 +31,7 @@ jQuery(document).ready(function ($) {
         },
         success: function(response) {
           if (response.success) {
-            $button.find('.pdfev-download-counter').html(response.data.download_count);
+            $button.find('.pdfev-download-counter').html(response.data.download_count); 
           } else {
             $button.find('.pdfev-download-counter').html('Error: ' + response.data.download_count); 
           }
