@@ -20,7 +20,6 @@ jQuery(document).ready(function ($) {
     e.preventDefault();
     var post_id = $(this).data('post-id');
     var $button = $(this);
-    var downloadUrl = $button.attr('href');
     $.ajax({
         url: pdfevAjax.ajaxurl,
         type: 'POST',
@@ -31,15 +30,7 @@ jQuery(document).ready(function ($) {
         },
         success: function(response) {
           if (response.success) {
-            $button.find('.pdfev-download-counter').html(response.data.download_count); 
-             // Create a temporary link element
-              var downloadUrl = $button.attr('href'); // Replace with the actual URL
-              var $tempLink = $('<a>').attr('href', downloadUrl).attr('download', '').css('display', 'none');
-              
-              // Append to body, trigger click and remove
-              $('body').append($tempLink);
-              $tempLink[0].click();
-              $tempLink.remove();
+            $button.find('.pdfev-download-counter').html(response.data.download_count);
           } else {
             $button.find('.pdfev-download-counter').html('Error: ' + response.data.download_count); 
           }
