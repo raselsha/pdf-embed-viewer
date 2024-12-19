@@ -42,6 +42,7 @@ if( ! class_exists('PDFEV_Options_Setup') ){
             $template            = sanitize_text_field('list');
             
             $archive_download_button  = sanitize_text_field('yes');
+            $archive_read_button  = sanitize_text_field('yes');
             $template_list  = $this->options_array_sanitize($template_list);
             
             
@@ -50,6 +51,7 @@ if( ! class_exists('PDFEV_Options_Setup') ){
             add_option('pdfev_archive_template',$template);
             add_option('pdfev_archive_template_lists',$template_list);
             add_option('pdfev_archive_download',$archive_download_button);
+            add_option('pdfev_archive_read',$archive_read_button);
             add_option('pdfev_css_colors',$colors);
         }
     }

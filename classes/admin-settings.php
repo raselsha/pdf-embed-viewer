@@ -149,6 +149,9 @@ if( ! class_exists('PDFEV_Admin_Settings') ){
             $template = get_option('pdfev_archive_template');
             $template_lists =  get_option('pdfev_archive_template_lists');
 
+            $archive_read =  get_option('pdfev_archive_read');
+            $archive_read = $archive_read ? $archive_read : 'no';
+            
             $archive_download =  get_option('pdfev_archive_download');
             $archive_download = $archive_download ? $archive_download : 'no';
 
@@ -184,7 +187,16 @@ if( ! class_exists('PDFEV_Admin_Settings') ){
                         </td>
                     </tr>
                     <tr>
-                        <th><?php echo esc_html__( 'Download Button', 'pdf-embed-viewer' )?></th>
+                        <th><?php echo esc_html__( 'Show Read Button', 'pdf-embed-viewer' )?></th>
+                        <td>
+                            <label class="switch">
+                                <input type="checkbox" name="pdfev_archive_read" value="<?php echo esc_attr($archive_read); ?>" <?php echo esc_attr(($archive_read=='yes')?'checked':''); ?>>
+                                <span class="slider"></span>
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><?php echo esc_html__( 'Show Download Button', 'pdf-embed-viewer' )?></th>
                         <td>
                             <label class="switch">
                                 <input type="checkbox" name="pdfev_archive_download" value="<?php echo esc_attr($archive_download); ?>" <?php echo esc_attr(($archive_download=='yes')?'checked':''); ?>>
@@ -240,8 +252,6 @@ if( ! class_exists('PDFEV_Admin_Settings') ){
         }
 
         public function save_options_data() {
-
-
             if( isset( $_POST['pdfev_emd_vwr_options_nonce'] ) ){
                 if( ! wp_verify_nonce( sanitize_text_field( wp_unslash ( $_POST['pdfev_emd_vwr_options_nonce'] ) ) , 'pdfev_emd_vwr_options_nonce' ) ){
                     return;
@@ -250,6 +260,7 @@ if( ! class_exists('PDFEV_Admin_Settings') ){
                 $archive_title      = isset( $_POST['pdfev_archive_title'] ) ? sanitize_text_field($_POST['pdfev_archive_title']): 'Pdf Embed Viewer';
                 $archive_slug       = isset( $_POST['pdfev_archive_slug'] ) ? sanitize_text_field(sanitize_title($_POST['pdfev_archive_slug'])): 'pdf-embed-viewer';
                 $archive_template   = isset( $_POST['pdfev_archive_template'] ) ? sanitize_text_field($_POST['pdfev_archive_template']): 'list';
+                $archive_read       = isset( $_POST['pdfev_archive_read'] ) ? sanitize_text_field($_POST['pdfev_archive_read']): 'no';
                 $archive_download   = isset( $_POST['pdfev_archive_download'] ) ? sanitize_text_field($_POST['pdfev_archive_download']): 'no';
                 $primary            = isset( $_POST['pdfev_css_colors']['primary'] ) ? sanitize_hex_color($_POST['pdfev_css_colors']['primary']) : '';
                 $secondary          = isset( $_POST['pdfev_css_colors']['secondary'] ) ? sanitize_hex_color($_POST['pdfev_css_colors']['secondary']) : '';
@@ -265,6 +276,7 @@ if( ! class_exists('PDFEV_Admin_Settings') ){
                 update_option('pdfev_archive_title',$archive_title);
                 update_option('pdfev_archive_slug',$archive_slug);
                 update_option('pdfev_archive_template',$archive_template);
+                update_option('pdfev_archive_read',$archive_read);
                 update_option('pdfev_archive_download',$archive_download);
                 update_option('pdfev_css_colors',$colors );                
             }
