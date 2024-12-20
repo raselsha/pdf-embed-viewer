@@ -37,26 +37,12 @@ if ( wp_is_block_theme() ) {  ?>
 
 <div class="pdfev-embed-viewer">
 
-	<h1><?php the_title();?></h1>
+	<?php do_action('pdfev_template_single_header'); ?>
 	
-	<?php  PDFEV_Functions::download_button_page_view(get_the_ID()); ?>
+	<?php do_action('pdfev_template_book_reader'); ?>
+
+	<?php do_action('pdfev_template_single_footer'); ?>
 	
-	<div class="navigation">
-		<?php PDFEV_Functions::back_to_archive();?>
-		<div class="pagination">
-			<?php previous_post_link('%link','&larr;'.__(' Previous','pdf-embed-viewer') ); ?>
-			<?php next_post_link('%link',__('Next ','pdf-embed-viewer').' &rarr;' ); ?>
-		</div>
-	</div>
-	<iframe class="pdf-viewer" src="<?php PDFEV_Functions::pdf_link(); ?>" frameborder="0"></iframe>
-	
-	<div class="navigation">
-		<?php PDFEV_Functions::back_to_archive();?>
-		<div class="pagination">
-			<?php previous_post_link('%link','&larr;'.__(' Previous','pdf-embed-viewer') ); ?>
-			<?php next_post_link('%link',__('Next ','pdf-embed-viewer').' &rarr;' ); ?>
-		</div>
-	</div>
 </div>
 
 <?php if ( wp_is_block_theme() ) : ?>

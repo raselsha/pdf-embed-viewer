@@ -15,6 +15,10 @@ if( ! class_exists( 'PDFEV_Template' ) ){
             add_action('pdfev_template_archive_grid', [$this,'template_archive_grid']);
             add_action('pdfev_template_archive_newsletter', [$this,'template_archive_newsletter']);
             add_action('pdfev_template_archive_ebook', [$this,'template_archive_ebook']);
+
+            add_action('pdfev_template_single_header', [$this,'template_single_header']);
+            add_action('pdfev_template_book_reader', [$this,'template_single_book_reader']);
+            add_action('pdfev_template_single_footer', [$this,'template_single_footer']);
         } 
 
         public function template_archive_view(){
@@ -218,6 +222,36 @@ if( ! class_exists( 'PDFEV_Template' ) ){
                     <?php PDFEV_CPT::pagination_bar( $WpQuery ); ?>
                 </div>
             <?php
+        }
+        //===================== single view ==================
+        public function template_single_header(){
+            ?>
+            <h1><?php the_title();?></h1>
+            <?php  PDFEV_Functions::download_button_page_view(get_the_ID()); ?>
+            <div class="navigation">
+                <?php PDFEV_Functions::back_to_archive();?>
+                <div class="pagination">
+                    <?php previous_post_link('%link','&larr;'.__(' Previous','pdf-embed-viewer') ); ?>
+                    <?php next_post_link('%link',__('Next ','pdf-embed-viewer').' &rarr;' ); ?>
+                </div>
+            </div>
+            <?php
+        }
+        public function template_single_book_reader(){
+        ?>
+            <iframe class="pdf-viewer" src="<?php PDFEV_Functions::pdf_link(); ?>" frameborder="0"></iframe>
+        <?php
+        }
+        public function template_single_footer(){
+        ?>
+            <div class="navigation">
+                <?php PDFEV_Functions::back_to_archive();?>
+                <div class="pagination">
+                    <?php previous_post_link('%link','&larr;'.__(' Previous','pdf-embed-viewer') ); ?>
+                    <?php next_post_link('%link',__('Next ','pdf-embed-viewer').' &rarr;' ); ?>
+                </div>
+            </div>
+        <?php
         }
     }
     new PDFEV_Template();
