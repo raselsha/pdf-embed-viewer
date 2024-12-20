@@ -76,6 +76,9 @@ Learn more about how [Appsero collects and uses this data](https://appsero.com/p
 
 == Changelog ==
 
+= 1.1.0 =
+* Temlate file missing error fix.
+
 = 1.0.10 =
 * Download button counter fix.
 * Read Button show hide settings.
