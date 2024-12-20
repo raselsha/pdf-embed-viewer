@@ -20,11 +20,11 @@ if( ! class_exists('PDFEV_Metabox')){
                 <main class="pdfev-embed-viewer" id="pdfev-embed-metabox-tabs">
                     <aside>
                         <ul>
-                            <?php do_action('pdfev_emd_vwr_actn_nav_tabs',$post_id); ?>
+                            <?php do_action('pdfev_metabox_tabs',$post_id); ?>
                         </ul>
                     </aside>
                     <div class="content">
-                        <?php do_action('pdfev_emd_vwr_actn_tabs_content',$post_id); ?>
+                        <?php do_action('pdfev_metabox_tabs_content',$post_id); ?>
                     </div>
                 </main>
             <?php

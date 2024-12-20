@@ -1,9 +1,14 @@
 
 // ============custom metabox data tabs===========
-jQuery(document).ready(function ($) {
-  
- 
-});
+(function($){
+  $(document).on('click','[data-tab-target]',function(){
+    $('[data-tab-target]').removeClass('active');
+    $(this).addClass('active');
+    var target = $(this).data('tab-target');
+    $('.pdfev-tab-content').removeClass('active');
+    $('[data-tab="' + target + '"]').addClass('active'); 
+  });
+})(jQuery);
 
 
 jQuery(document).ready(function ($) {

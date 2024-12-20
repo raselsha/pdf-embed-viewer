@@ -3964,7 +3964,7 @@ readers do not read off random characters that represent icons */
   padding-right: 0;
   list-style: none;
 }
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs aside ul li.pdfev-emd-vwr-tab {
+#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs aside ul li.pdfev-tab {
   margin: 0;
   padding: 10px;
   border-bottom: 1px solid var(--pdfev-gray);
@@ -3974,11 +3974,11 @@ readers do not read off random characters that represent icons */
   border-left: 2px solid transparent;
   cursor: pointer;
 }
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs aside ul li.pdfev-emd-vwr-tab.active {
+#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs aside ul li.pdfev-tab.active {
   background-color: var(--pdfev-white);
   border-left: 2px solid var(--pdfev-primary);
 }
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs aside ul li.pdfev-emd-vwr-tab i {
+#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs aside ul li.pdfev-tab i {
   padding: 0 10px;
   color: var(--pdfev-primary);
 }
@@ -3986,10 +3986,10 @@ readers do not read off random characters that represent icons */
   width: 80%;
   padding: 2% 5%;
 }
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .content .pdf-emd-vwr-tab-content {
+#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .content .pdfev-tab-content {
   display: none;
 }
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .content .pdf-emd-vwr-tab-content.active {
+#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .content .pdfev-tab-content.active {
   display: block;
 }
 #pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs section {

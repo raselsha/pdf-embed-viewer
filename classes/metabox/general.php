@@ -12,13 +12,13 @@ if( ! class_exists('PDFEV_Metabox_General') ){
     class PDFEV_Metabox_General{
         public function __construct()
         {
-            add_action('pdfev_emd_vwr_actn_nav_tabs',array($this,'tabs'));
-            add_action('pdfev_emd_vwr_actn_tabs_content',array($this,'tabs_content'));
+            add_action('pdfev_metabox_tabs',array($this,'tabs'));
+            add_action('pdfev_metabox_tabs_content',array($this,'tabs_content'));
             add_action( 'save_post' , array( $this, 'save_post') );
         }
         public function tabs($post_id){
             ?>
-                <li class="pdfev-emd-vwr-tab active" data-tab-target="#pdfev-emd-vwr-tabs-general"> <i class="fas fa-tools"></i> <?php esc_html_e('General','pdf-embed-viewer'); ?></li>
+                <li class="pdfev-tab active" data-tab-target="pdfev-tabs-general"> <i class="fas fa-tools"></i> <?php esc_html_e('General','pdf-embed-viewer'); ?></li>
             <?php
         }
         public function tabs_content($post_id){
@@ -28,7 +28,7 @@ if( ! class_exists('PDFEV_Metabox_General') ){
             $check_download  = get_post_meta( $post_id, 'pdfev_meta_download', true );
             $check_download  = $check_download ? $check_download : 'yes';
             ?>
-            <div class="pdfev-emd-vwr-tab-content" id="pdfev-emd-vwr-tabs-general">
+            <div class="pdfev-tab-content active" data-tab="pdfev-tabs-general">
                 <?php wp_nonce_field( 'pdfev_emd_vwr_metabox_nonce', 'pdfev_emd_vwr_metabox_nonce' ); ?>
                 <section>
                     <label class="label">

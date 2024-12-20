@@ -14,7 +14,7 @@
                     padding: 20px;
                     padding-right: 0;
                     list-style: none;
-                    li.pdfev-emd-vwr-tab{
+                    li.pdfev-tab{
                         margin: 0;
                         padding: 10px;
                         border-bottom: 1px solid $gray;
@@ -37,14 +37,12 @@
             .content{
                 width: 80%;
                 padding: 2% 5%;
-                .pdf-emd-vwr-tab-content {
+                .pdfev-tab-content{
                     display: none;
                     &.active {
                         display: block;
                     }
                 }
-                
-                
             }
 
             section{
