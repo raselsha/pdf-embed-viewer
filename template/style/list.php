@@ -12,9 +12,6 @@ if( ! defined('ABSPATH') ) { die( "Don't access directly" ); }
 	
 	<?php do_action('pdfev_template_archive_list'); ?>
 	
-	<div class="pagination">
-		<?php PDFEV_CPT::pagination_bar( $WpQuery ); ?>
-	</div>
 </div>
 
 
