@@ -2,14 +2,14 @@
 .pdfev-embed-viewer{
     
     .archive-list-style{
-        overflow-x: scroll;
+        overflow-x: auto;
         table{
             text-align: left;
             border-collapse: collapse;
             transition: all .5s;
             border:1px solid  var(--pdfev-secondary);
             width: 100%;
-
+            overflow-x: auto;
             th{
                 background: var(--pdfev-light);
                 padding: .5em;

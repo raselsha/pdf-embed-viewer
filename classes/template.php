@@ -123,9 +123,9 @@ if( ! class_exists( 'PDFEV_Template' ) ){
                             <table  class="<?php echo esc_attr($year==gmdate('Y')?'active':''); ?>" data-tab-content  id="year-<?php echo esc_attr($year);?>">
                                 <thead>
                                     <tr>         					    			
-                                        <th><?php echo esc_html__('Month','pdf-embed-viewer') ?></th>
-                                        <th><?php echo esc_html__('Title','pdf-embed-viewer') ?></th>
-                                        <th></th>
+                                        <th width="10%"><?php echo esc_html__('Month','pdf-embed-viewer') ?></th>
+                                        <th width="50%"><?php echo esc_html__('Title','pdf-embed-viewer') ?></th>
+                                        <th width="40%" style="text-align: right;"></th>
                                     </tr>
                                 </thead>
                                 <?php
@@ -147,9 +147,9 @@ if( ! class_exists( 'PDFEV_Template' ) ){
                                         $WpQuery->the_post();
                                         ?>
                                         <tr>
-                                            <td width="10%"><?php the_time('F'); ?></td>
-                                            <td width="60%"><a href="<?php the_permalink(); ?>"><?php the_title();?></a></td>
-                                            <td width="28%" style="text-align: right;">
+                                            <td><?php the_time('F'); ?></td>
+                                            <td><a href="<?php the_permalink(); ?>"><?php the_title();?></a></td>
+                                            <td  style="text-align: right;">
                                                 <?php PDFEV_Functions::read_button(); ?>
                                                 <?php PDFEV_Functions::download_button(); ?>
                                             </td>
