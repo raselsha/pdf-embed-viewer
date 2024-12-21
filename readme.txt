@@ -76,14 +76,20 @@ Learn more about how [Appsero collects and uses this data](https://appsero.com/p
 
 == Changelog ==
 
+= 1.1.1 =
+* shortcode page url settings added.
+* code refactor.
+* singel page template settings add into metabox.
+
 = 1.1.0 =
-* Temlate file missing error fix.
+* Template file missing error fix.
 
 = 1.0.10 =
 * Download button counter fix.
 * Read Button show hide settings.
 * Read and Download Button style fix.
 * Template hook added for edit template.
+* Download counter and read data added into post table.
 
 = 1.0.9 =
 * Grid Archive view responsive and css update.
