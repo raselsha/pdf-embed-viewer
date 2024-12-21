@@ -97,30 +97,30 @@ if( ! class_exists('PDFEV_Settings_General') ){
                     <tr>
                         <th scope="row"><?php esc_html_e('Primary Color','pdf-embed-viewer') ?></th>
                         <td>
-                            <input class="color-field" type="text" name="pdfev_css_colors[primary]" value="<?php echo esc_attr($primary); ?>">     
+                            <input class="pdfev-color-field" type="text" name="pdfev_css_colors[primary]" value="<?php echo esc_attr($primary); ?>">     
                         </td>
                     </tr>
                     <tr>
                         <th scope="row"><?php esc_html_e('Secondary Color','pdf-embed-viewer') ?></th>
                         <td>
-                            <input class="color-field" type="text"  name="pdfev_css_colors[secondary]"  value="<?php echo esc_attr($secondary); ?>">         
+                            <input class="pdfev-color-field" type="text"  name="pdfev_css_colors[secondary]"  value="<?php echo esc_attr($secondary); ?>">         
                         </td>
                     </tr>
                     <tr>
                         <th scope="row"><?php esc_html_e('Dark Color','pdf-embed-viewer') ?></th>
                         <td>
-                            <input  class="color-field" type="text"  name="pdfev_css_colors[dark]" value="<?php echo esc_attr($dark); ?>">
+                            <input  class="pdfev-color-field" type="text"  name="pdfev_css_colors[dark]" value="<?php echo esc_attr($dark); ?>">
                                 
                         </td>
                     </tr>
                     <tr>
                         <th scope="row"><?php esc_html_e('Light Color','pdf-embed-viewer') ?></th>
-                        <td> <input class="color-field" type="text"  name="pdfev_css_colors[light]" value="<?php echo esc_attr($light); ?>"></td>
+                        <td> <input class="pdfev-color-field" type="text"  name="pdfev_css_colors[light]" value="<?php echo esc_attr($light); ?>"></td>
                     </tr>
                     <tr>
                         <th scope="row"><?php esc_html_e('Import Demo Content','pdf-embed-viewer') ?></th>
                         <td> 
-                            <input type="button" class="button-primary"  id="import-demo-content" value="<?php _e('Import Demo','pdf-embed-viewer') ?>">
+                            <input type="button" class="button-primary"  id="pdfev-import-demo-content" value="<?php _e('Import Demo','pdf-embed-viewer') ?>">
                             
                         </td>
                     </tr>

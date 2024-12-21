@@ -1,8 +1,9 @@
 (function($){
-
-  $('.color-field').wpColorPicker();
-
-  // ===========metabox tab=================
+  // ===========color picker=================
+  $(document).ready(function() {
+    $('.pdfev-color-field').wpColorPicker();
+  });
+  // ===========tab=================
   $(document).on('click','[data-tab-target]',function(){
     $('[data-tab-target]').removeClass('active');
     $(this).addClass('active');
@@ -12,7 +13,7 @@
   });
 
   // ============toggle switch=======
-  $('.switch .slider').click(function() {
+  $(document).on('click','.switch .slider',function() {
       var checkbox = $(this).prev('input[type="checkbox"]');
       if (checkbox.val() === 'yes') {
           checkbox.val('no');
@@ -22,7 +23,7 @@
   });
 
   // =================media upload======== 
-  $('.pdfev-emd-vwr-upload').click(function(e) {
+  $(document).on('click','.pdfev-emd-vwr-upload',function(e) {
       e.preventDefault();
       var mediaUploader = wp.media({
           title: 'Upload PDF',
@@ -48,7 +49,7 @@
   });
   
   // =================Import Demo Content========
-  $('#import-demo-content').click(function (e) {
+  $(document).on('click','#pdfev-import-demo-content',function (e) {
     e.preventDefault();
     $.ajax({
         url: pdfevAjax.ajaxurl,
