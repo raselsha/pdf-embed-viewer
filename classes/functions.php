@@ -253,8 +253,12 @@ if( ! class_exists('PDFEV_Functions') ){
         }
 
         public static function back_to_archive(){
+            $shortcode_page_url  = get_option('pdfev_shortcode_page_url');
+            $archive_link = get_post_type_archive_link(PDFEV_Functions::get_cpt_name());
             ?>
-                <a href="<?php echo esc_url(get_post_type_archive_link(PDFEV_Functions::get_cpt_name())); ?>" class="back-button"><i class="fas fa-arrow-left"></i> <?php _e('Back to overview','pdf-embed-viewer') ?></a>
+                
+                <a href="<?php echo $shortcode_page_url=='' ? esc_url($archive_link) : esc_url($shortcode_page_url); ?>" class="back-button"><i class="fas fa-arrow-left"></i> <?php _e('Back to overview','pdf-embed-viewer') ?></a>
+               
             <?php
         }
     }

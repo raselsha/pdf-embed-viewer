@@ -33,11 +33,29 @@ if( ! class_exists('PDFEV_Settings_General') ){
             <?php
         }
 
+        public function get_all_pages(){
+            $pages = get_pages();
+            $page_array = [];
+            foreach ( $pages as $page ) {
+                $page_array[] = [
+                    'ID' => $page->ID,
+                    'title' => $page->post_title,
+                    'slug' => $page->post_name,
+                    'url' => get_permalink( $page->ID ),
+                ];
+            }
+            return $page_array;
+        }
+        
         public function options_fields(){
             $archive_title  = get_option('pdfev_archive_title'); 
             $archive_slug  = get_option('pdfev_archive_slug')??'pdf-embed-viewer'; 
+             
             $template = get_option('pdfev_archive_template');
             $template_lists =  get_option('pdfev_archive_template_lists');
+            $shortcode_page_url  = get_option('pdfev_shortcode_page_url')??'';
+            
+            $page_lists = $this->get_all_pages();
 
             $archive_read =  get_option('pdfev_archive_read');
             $archive_read = $archive_read ? $archive_read : 'no';
@@ -64,6 +82,17 @@ if( ! class_exists('PDFEV_Settings_General') ){
                         <th><?php echo esc_html__( 'Archive Slug', 'pdf-embed-viewer' )?></th>
                         <td>
                             <input type="text" name="pdfev_archive_slug" placeholder="pdf-embed-viewer" value="<?php echo esc_attr($archive_slug); ?>">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><?php echo esc_html__( 'Shortcode Page\'s URL', 'pdf-embed-viewer' )?></th>
+                        <td>
+                            <select name="pdfev_shortcode_page_url">
+                                <option value=""><?php echo esc_html__('Select Page','pdf-embed-viewer'); ?></option>
+                                <?php foreach($page_lists as $value): ?>
+                                <option value="<?php echo esc_attr($value['url']); ?>" <?php echo $value['url']==$shortcode_page_url? esc_attr('selected'):'' ?>><?php echo esc_html($value['title']); ?></option>
+                                <?php endforeach; ?>
+                            </select>
                         </td>
                     </tr>
                     <tr>
