@@ -91,17 +91,17 @@ if( ! class_exists('PDFEV_Admin_Settings') ){
             <div class="wrap admin-wrap pdfev-embed-viewer">
                 <h2><?php get_admin_page_title(); ?></h2>
                 <h2 class="nav-tab-wrapper">
-                    <button class="nav-tab nav-tab-active" data-tab-target="#pdfev_emd_vwr_admin_tabs_settings"> <?php echo esc_html__('Settings','pdf-embed-viewer'); ?> </a>
-                    <button class="nav-tab" data-tab-target="#pdfev_emd_vwr_admin_tabs_shortcode"> <?php echo esc_html__('Shortcode','pdf-embed-viewer'); ?> </a>
-                    <button class="nav-tab" data-tab-target="#pdfev_emd_vwr_admin_tabs_support"> <?php echo esc_html__('Support','pdf-embed-viewer'); ?> </a>
+                    <button class="nav-tab active" data-tab-target="pdfev_emd_vwr_admin_tabs_settings"> <?php echo esc_html__('Settings','pdf-embed-viewer'); ?> </a>
+                    <button class="nav-tab" data-tab-target="pdfev_emd_vwr_admin_tabs_shortcode"> <?php echo esc_html__('Shortcode','pdf-embed-viewer'); ?> </a>
+                    <button class="nav-tab" data-tab-target="pdfev_emd_vwr_admin_tabs_support"> <?php echo esc_html__('Support','pdf-embed-viewer'); ?> </a>
                 </h2>
                 <form action="" method="post">
                     <?php wp_nonce_field( 'pdfev_emd_vwr_options_nonce', 'pdfev_emd_vwr_options_nonce' ); ?>
-                    <div class="tab-content active" id="pdfev_emd_vwr_admin_tabs_settings">
+                    <div class="pdfev-tab-content active" data-tab="pdfev_emd_vwr_admin_tabs_settings">
                         <?php $this->options_fields(); ?>
                         <?php submit_button(); ?>
                     </div> 
-                    <div class="tab-content" id="pdfev_emd_vwr_admin_tabs_shortcode">
+                    <div class="pdfev-tab-content" data-tab="pdfev_emd_vwr_admin_tabs_shortcode">
                         <table class="form-table" role="presentation">
                             <tbody>
                                 <tr>
@@ -131,7 +131,7 @@ if( ! class_exists('PDFEV_Admin_Settings') ){
                             </tbody>
                         </table>
                     </div> 
-                    <div class="tab-content" id="pdfev_emd_vwr_admin_tabs_support">
+                    <div class="pdfev-tab-content" data-tab="pdfev_emd_vwr_admin_tabs_support">
                         <h2><?php esc_html_e('Give a review for your feedback','pdf-embed-viewer'); ?> <a target="_blank" href="<?php echo esc_url('https://wordpress.org/support/plugin/pdf-embed-viewer/reviews/'); ?>"><?php esc_html_e('Add Review','pdf-embed-viewer'); ?></a> </h2>    
                         <h2><?php esc_html_e('Create a support ticket','pdf-embed-viewer'); ?> <a target="_blank" href="<?php echo esc_url('https://wordpress.org/support/plugin/pdf-embed-viewer/'); ?>"><?php esc_html_e('support','pdf-embed-viewer'); ?></a> </h2>    
                         <h2><?php esc_html_e('Send email','pdf-embed-viewer'); ?> <a href="<?php echo esc_url('mailto:raselsha@gmail.com'); ?>"><?php esc_html_e('raselsha@gmail.com','pdf-embed-viewer'); ?></a> </h2>    
