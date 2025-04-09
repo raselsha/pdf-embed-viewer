@@ -204,8 +204,9 @@ if( ! class_exists('PDFEV_Functions') ){
         }
 
         public static function get_read_button(){
+            $reading_counter  =  get_option('pdfev_reading_counter');
             ?>
-            <a href="<?php the_permalink(); ?>" class="button btn read-btn"><i class="fas fa-eye"></i> <?php echo esc_html__('Read','pdf-embed-viewer');?> <?php echo "(".self::get_post_view().")";?></a>
+            <a href="<?php the_permalink(); ?>" class="button btn read-btn"><i class="fas fa-eye"></i> <?php echo esc_html__('Read','pdf-embed-viewer');?> <?php  echo  $reading_counter=='yes'? "(".self::get_post_view().")" : '' ;?></a>
             <?php
         }
 
@@ -229,11 +230,14 @@ if( ! class_exists('PDFEV_Functions') ){
         }
 
         public static function get_download_button(){
+            $download_counter  =  get_option('pdfev_download_counter');
         ?>
             <a class="button btn download-btn" href="<?php PDFEV_Functions::pdf_link(); ?>" data-post-id="<?php echo get_the_ID(); ?>" download="<?php echo sanitize_title(get_the_title()); ?>"> 
                 <i class="fas fa-cloud-download-alt"></i> 
                 <?php echo esc_html__('Download','pdf-embed-viewer'); ?>
+                <?php if($download_counter=='yes'): ?>
                 <span><?php esc_html_e('('); ?><span class="pdfev-download-counter"><?php echo self::get_download_count(get_the_ID());?></span><?php esc_html_e(')'); ?></span>
+                <?php endif; ?>
             </a>
         <?php
         }
@@ -255,9 +259,10 @@ if( ! class_exists('PDFEV_Functions') ){
         public static function back_to_archive(){
             $shortcode_page_url  = get_option('pdfev_shortcode_page_url');
             $archive_link = get_post_type_archive_link(PDFEV_Functions::get_cpt_name());
+            $back_link = $shortcode_page_url=='' ? $archive_link : home_url( '/' . $shortcode_page_url );
             ?>
                 
-                <a href="<?php echo $shortcode_page_url=='' ? esc_url($archive_link) : esc_url($shortcode_page_url); ?>" class="back-button"><i class="fas fa-arrow-left"></i> <?php _e('Back to overview','pdf-embed-viewer') ?></a>
+                <a href="<?php echo esc_attr($back_link); ?>" class="back-button"><i class="fas fa-reply"></i> <?php _e('Back to overview','pdf-embed-viewer') ?></a>
                
             <?php
         }

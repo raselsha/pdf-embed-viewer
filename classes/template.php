@@ -228,8 +228,9 @@ if( ! class_exists( 'PDFEV_Template' ) ){
             ?>
             <h1><?php the_title();?></h1>
             <?php  PDFEV_Functions::download_button_page_view(get_the_ID()); ?>
+            <?php PDFEV_Functions::back_to_archive();?>
             <div class="navigation">
-                <?php PDFEV_Functions::back_to_archive();?>
+                
                 <div class="pagination">
                     <?php previous_post_link('%link','&larr;'.__(' Previous','pdf-embed-viewer') ); ?>
                     <?php next_post_link('%link',__('Next ','pdf-embed-viewer').' &rarr;' ); ?>
@@ -245,7 +246,6 @@ if( ! class_exists( 'PDFEV_Template' ) ){
         public function template_single_footer(){
         ?>
             <div class="navigation">
-                <?php PDFEV_Functions::back_to_archive();?>
                 <div class="pagination">
                     <?php previous_post_link('%link','&larr;'.__(' Previous','pdf-embed-viewer') ); ?>
                     <?php next_post_link('%link',__('Next ','pdf-embed-viewer').' &rarr;' ); ?>

@@ -53,15 +53,21 @@ if( ! class_exists('PDFEV_Settings_General') ){
              
             $template = get_option('pdfev_archive_template');
             $template_lists =  get_option('pdfev_archive_template_lists');
-            $shortcode_page_url  = get_option('pdfev_shortcode_page_url')??'';
-            
+            $shortcode_page_url  = get_option('pdfev_shortcode_page_url');
+            $shortcode_page_url  = $shortcode_page_url?$shortcode_page_url:'';
             $page_lists = $this->get_all_pages();
-
+            
             $archive_read =  get_option('pdfev_archive_read');
             $archive_read = $archive_read ? $archive_read : 'no';
+
+            $reading_counter =  get_option('pdfev_reading_counter');
+            $reading_counter = $reading_counter ? $reading_counter : 'yes';
             
             $archive_download =  get_option('pdfev_archive_download');
             $archive_download = $archive_download ? $archive_download : 'no';
+
+            $download_counter =  get_option('pdfev_download_counter');
+            $download_counter = $download_counter ? $download_counter : 'yes';
 
             $colors         = get_option('pdfev_css_colors');         
             $primary        = $colors['primary'] ? $colors['primary']:'#c79f62';
@@ -90,7 +96,7 @@ if( ! class_exists('PDFEV_Settings_General') ){
                             <select name="pdfev_shortcode_page_url">
                                 <option value=""><?php echo esc_html__('Select Page','pdf-embed-viewer'); ?></option>
                                 <?php foreach($page_lists as $value): ?>
-                                <option value="<?php echo esc_attr($value['url']); ?>" <?php echo $value['url']==$shortcode_page_url? esc_attr('selected'):'' ?>><?php echo esc_html($value['title']); ?></option>
+                                <option value="<?php echo esc_attr($value['slug']); ?>" <?php selected($value['slug'], $shortcode_page_url); ?>><?php echo esc_html($value['title']); ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </td>
@@ -115,10 +121,28 @@ if( ! class_exists('PDFEV_Settings_General') ){
                         </td>
                     </tr>
                     <tr>
+                        <th><?php echo esc_html__( 'Show Reading Counter', 'pdf-embed-viewer' )?></th>
+                        <td>
+                            <label class="switch">
+                                <input type="checkbox" name="pdfev_reading_counter" value="<?php echo esc_attr($reading_counter); ?>" <?php echo esc_attr(($reading_counter=='yes')?'checked':''); ?>>
+                                <span class="slider"></span>
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
                         <th><?php echo esc_html__( 'Show Download Button', 'pdf-embed-viewer' )?></th>
                         <td>
                             <label class="switch">
                                 <input type="checkbox" name="pdfev_archive_download" value="<?php echo esc_attr($archive_download); ?>" <?php echo esc_attr(($archive_download=='yes')?'checked':''); ?>>
+                                <span class="slider"></span>
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><?php echo esc_html__( 'Show Download Counter', 'pdf-embed-viewer' )?></th>
+                        <td>
+                            <label class="switch">
+                                <input type="checkbox" name="pdfev_download_counter" value="<?php echo esc_attr($download_counter); ?>" <?php echo esc_attr(($download_counter=='yes')?'checked':''); ?>>
                                 <span class="slider"></span>
                             </label>
                         </td>

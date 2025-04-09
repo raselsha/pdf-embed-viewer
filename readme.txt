@@ -2,7 +2,7 @@
 
 Contributors:      raselsha
 Requires at least: 3.0
-Tested up to:      6.7
+Tested up to:      6.8
 Requires PHP:      7.0
 Stable tag:	       trunk
 License:           GPLv2 or later
@@ -77,9 +77,9 @@ Learn more about how [Appsero collects and uses this data](https://appsero.com/p
 == Changelog ==
 
 = 1.1.1 =
-* shortcode page url settings added.
+* shortcode return page options added.
+* hide counter and download settings
 * code refactor.
-* singel page template settings add into metabox.
 
 = 1.1.0 =
 * Template file missing error fix.
