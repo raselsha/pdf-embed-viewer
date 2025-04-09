@@ -91,7 +91,7 @@ if( ! class_exists('PDFEV_Settings_General') ){
                         </td>
                     </tr>
                     <tr>
-                        <th><?php echo esc_html__( 'Shortcode Page\'s URL', 'pdf-embed-viewer' )?></th>
+                        <th><?php echo esc_html__( 'Back to Overview Page', 'pdf-embed-viewer' )?></th>
                         <td>
                             <select name="pdfev_shortcode_page_url">
                                 <option value=""><?php echo esc_html__('Select Page','pdf-embed-viewer'); ?></option>
