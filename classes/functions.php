@@ -225,7 +225,41 @@ if( ! class_exists('PDFEV_Functions') ){
                
             <?php
         }
+
+        public static function generate_pdf_thumbnail($pdf_path,$output_path) {
+            if ( ! class_exists( 'Imagick' ) ) {
+                error_log( 'Imagick not installed' );
+                return false;
+            }
+            try {
+                $imagick = new Imagick();
+                $imagick->setResolution(150, 150); // Set resolution for quality
+                $imagick->readImage($pdf_path . '[0]'); // Only first page
+                $imagick->setImageFormat('png'); // Output format
+                $imagick->setImageCompressionQuality(90); // Optional quality
+                $imagick->writeImage($output_path); // Save to location
+                $imagick->clear();
+                $imagick->destroy();
+                return true;
+            } catch (Exception $e) {
+                error_log( 'PDF thumbnail error: ' . $e->getMessage() );
+                return false;
+            }       
+
+        }
+        
+        
     }
     
     new PDFEV_Functions();
 }
+
+// generate pdf thumbnail
+// $pdf_path = PDFEV_Const_Path.'assets/images/pdf-book-sample.pdf';
+// $output_path = PDFEV_Const_Path.'assets/images/thumb.png';
+
+// if ( PDFEV_Functions::generate_pdf_thumbnail($pdf_path,$output_path) ) {
+//     echo '<img src="'.$output_path.'" alt="PDF Thumbnail">';
+// } else {
+//     echo 'Failed to generate thumbnail.';
+// }
