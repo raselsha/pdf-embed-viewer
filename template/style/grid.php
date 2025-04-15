@@ -11,8 +11,4 @@ if( ! defined('ABSPATH') ) { die( "Don't access directly" ); }
 <div class="pdfev-embed-viewer">
 	<?php do_action('pdfev_template_archive_title'); ?>
 	<?php do_action('pdfev_template_archive_grid'); ?>
-	
-	<div class="pagination">
-		<?php PDFEV_CPT::pagination_bar( $WpQuery ); ?>
-	</div>
 </div>

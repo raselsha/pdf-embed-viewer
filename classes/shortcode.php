@@ -15,11 +15,11 @@ if( ! class_exists('PDFEV_Shortcode') ){
         } 
 
         public function register_shortcode() {
-            add_shortcode('pdfev_viewer', [$this,'pdfev_viewer_shortcode'] );
-            add_shortcode('pdfev_embed_viewer', [$this,'pdfev_embed_shortcode'] );
+            add_shortcode('pdfev_viewer', [$this,'archive_pdf_shortcode'] );
+            add_shortcode('pdfev_embed_viewer', [$this,'single_pdf_shortcode'] );
         }
 
-        public function pdfev_embed_shortcode($atts) {
+        public function single_pdf_shortcode($atts) {
             $atts = shortcode_atts(
                 array(
                     'id' => '',
@@ -39,7 +39,7 @@ if( ! class_exists('PDFEV_Shortcode') ){
                 }
             }
         }
-        public function pdfev_viewer_shortcode($atts) {
+        public function archive_pdf_shortcode($atts) {
             // Set default attributes and merge with user-provided attributes
             $atts = shortcode_atts(
                 array(

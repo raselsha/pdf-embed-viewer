@@ -31,49 +31,6 @@ if( ! class_exists('PDFEV_Functions') ){
 
         }
 
-
-        public static function insert_demo_post() {
-            $image = PDFEV_Const_Path.'assets/images/book-image.png';
-            $pdf = PDFEV_Const_Path.'assets/images/pdf-book-sample.pdf';
-            $image_attached = PDFEV_Functions::insert_media($image);
-            $pdf_attached = PDFEV_Functions::insert_media($pdf);
-            $months = ["", "January", "February", "March", "April", "May", "June"];
-            // Create an array of demo post data
-            for($i=1; $i<7;$i++){
-                $post_data = array(
-                    'post_title'    => 'Newsletter '.$months[$i],
-                    'post_content'  => 'This is the content of demo post '.$i,
-                    'post_status'   => 'publish',
-                    'post_author'   => 1, // Change this to the author ID you want
-                    'post_date'     => '2024-'.$i.'-24 12:00:00',
-                    'post_type'     => PDFEV_Functions::get_cpt_name(),
-                );
-                
-                if ( ! get_page_by_path( 'demo-pdf-'.$i, OBJECT, PDFEV_Functions::get_cpt_name() ) ) {
-                    $post_id = wp_insert_post( $post_data );
-                    if (!is_wp_error($post_id)) {
-                        
-                        $meta_data = array(
-                            'pdfev_meta_pdf_url' => $pdf_attached['url']??'',
-                            'pdfev_meta_download' => 'yes',
-                        );
-
-                        foreach ($meta_data as $meta_key => $meta_value) {
-                            update_post_meta($post_id, $meta_key, $meta_value);
-                        }
-
-                        require_once(ABSPATH . "wp-admin" . '/includes/image.php');
-
-                        set_post_thumbnail( $post_id, $image_attached['id']??'' );
-
-                    } else {
-                        echo 'Error inserting post: ' . $post_id->get_error_message();
-                    }
-                }
-            }
-            return true;
-        }
-
         public static function insert_media($file_path) {
 
             $attachment = PDFEV_Functions::does_attachment_exist(basename($file_path));
@@ -200,7 +157,9 @@ if( ! class_exists('PDFEV_Functions') ){
 
         public static function archive_title(){
             $archive_title = get_option('pdfev_archive_title');
-            echo isset($archive_title) ? esc_html($archive_title) : '';
+            if ( is_post_type_archive( 'pdfev_embed_viewer' ) ) {
+                echo isset($archive_title) ? esc_html($archive_title) : '';
+            }
         }
 
         public static function get_read_button(){

@@ -12,10 +12,6 @@ if( ! class_exists('PDFEV_Settings_General') ){
 
             add_action('pdfev_settings_tabs',array($this,'tabs'));
             add_action('pdfev_settings_tabs_content',array($this,'tabs_content'));
-
-            // ajux import demo data
-            add_action('wp_ajax_pdfev_import_demo_data', array($this,'import_demo_data')); // For logged-in users
-            add_action('wp_ajax_nopriv_pdfev_import_demo_data', array($this,'import_demo_data'));
         
         }
         
@@ -184,27 +180,6 @@ if( ! class_exists('PDFEV_Settings_General') ){
                 </table>
 
             <?php
-        }
-
-        public function import_demo_data(){
-            
-            if( isset( $_POST['ajaxnonce'] ) ){
-                if( ! wp_verify_nonce( sanitize_text_field( wp_unslash ( $_POST['ajaxnonce'] ) ) , 'pdf_ajax_nonce' ) ){
-                    wp_send_json_error('Invalid nonce');
-                    return;
-                }
-            }
-
-            $success = PDFEV_Functions::insert_demo_post();
-
-            // Prepare the response
-            $response = array(
-                'success' => $success, // This should be true or false based on the function result
-                'message' => $success ? __('Demo Data imported successfully!', 'pdf-embed-viewer') : __('Failed to import data.', 'pdf-embed-viewer')
-            );
-            wp_send_json($response);
-            wp_die(); // End AJAX request
-
         }
     }
     new PDFEV_Settings_General();

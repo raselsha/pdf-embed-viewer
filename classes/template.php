@@ -9,8 +9,8 @@ if( ! class_exists( 'PDFEV_Template' ) ){
     class PDFEV_Template{
 
         public function __construct() {
-            add_action('pdfev_template_archive_view', [$this,'template_archive_view']);
             add_action('pdfev_template_archive_title', [$this,'template_archive_title']);
+            add_action('pdfev_template_archive_view', [$this,'template_archive_view']);
             add_action('pdfev_template_archive_list', [$this,'template_archive_list']);
             add_action('pdfev_template_archive_grid', [$this,'template_archive_grid']);
             add_action('pdfev_template_archive_newsletter', [$this,'template_archive_newsletter']);
