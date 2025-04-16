@@ -254,9 +254,9 @@ if( ! class_exists('PDFEV_Functions') ){
     new PDFEV_Functions();
 }
 
-// generate pdf thumbnail
-// $pdf_path = PDFEV_Const_Path.'assets/images/pdf-book-sample.pdf';
-// $output_path = PDFEV_Const_Path.'assets/images/thumb.png';
+
+// $generated_image = PDFEV_Const_Path.'assets/demo/book-'.$key.'.png';
+// $image_made = PDFEV_Functions::generate_pdf_thumbnail($dummy_data['pdf_file'],$generated_image);
 
 // if ( PDFEV_Functions::generate_pdf_thumbnail($pdf_path,$output_path) ) {
 //     echo '<img src="'.$output_path.'" alt="PDF Thumbnail">';

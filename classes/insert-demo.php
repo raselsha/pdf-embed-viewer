@@ -25,7 +25,7 @@ if ( ! class_exists( 'PDFEV_Insert_Demo' ) ) {
                 }
             }
 
-            $success = $this->insert_demo_post();
+            $success = $this->insert_demo_post_xml();
 
             // Prepare the response
             $response = array(
@@ -35,6 +35,54 @@ if ( ! class_exists( 'PDFEV_Insert_Demo' ) ) {
             wp_send_json($response);
             wp_die(); // End AJAX request
 
+        }
+
+        public function insert_demo_post_xml(){
+            $dummy = $this->dummy_data();
+            foreach ($dummy as $key => $dummy_data) {
+                $pdf_attached = PDFEV_Functions::insert_media($dummy_data['pdf_file']);
+                $image_attached = PDFEV_Functions::insert_media(($dummy_data['image_file']));
+                $dummy_data['meta_data']['pdfev_meta_pdf_url'] = $pdf_attached['url'];
+                $post_id = wp_insert_post([
+                    'post_title' => $dummy_data['title'],
+                    'post_status' => 'publish',
+                    'post_type' => PDFEV_Functions::get_cpt_name(),
+                ]);
+                if (array_key_exists('meta_data', $dummy_data)) {
+                    foreach ($dummy_data['meta_data'] as $meta_key => $data) {
+                        update_post_meta($post_id, $meta_key, $data);
+                    }
+                }
+                set_post_thumbnail( $post_id, $image_attached['id']??'' );
+                
+            }
+            $this->create_demo_pages();
+            return true;
+        }
+
+        public function dummy_data(){
+            return [
+                [
+                    'title' => 'Pdf books',
+                    'pdf_file' => PDFEV_Const_Path.'assets/demo/book-1.pdf',
+                    'image_file' => PDFEV_Const_Path.'assets/demo/book-1.png',
+                    'meta_data' => [
+                        'pdfev_meta_pdf_url' => '',
+                        'pdfev_meta_download' => 'yes',
+                    ],
+                    
+                ],
+                [
+                    'title' => 'Pdf books',
+                    'pdf_file' => PDFEV_Const_Path.'assets/demo/book-2.pdf',
+                    'image_file' => PDFEV_Const_Path.'assets/demo/book-2.png',
+                    'meta_data' => [
+                        'pdfev_meta_pdf_url' => '',
+                        'pdfev_meta_download' => 'yes',
+                    ],
+                    
+                ],
+            ];
         }
 
         public function insert_demo_post() {
@@ -76,7 +124,7 @@ if ( ! class_exists( 'PDFEV_Insert_Demo' ) ) {
                     }
                 }
             }
-            $this->create_demo_pages();
+            
             return true;
         }
 
