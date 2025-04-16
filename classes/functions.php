@@ -226,40 +226,39 @@ if( ! class_exists('PDFEV_Functions') ){
             <?php
         }
 
-        public static function generate_pdf_thumbnail($pdf_path,$output_path) {
+        public static function generate_pdf_thumbnail( $pdf_path, $output_path) {
             if ( ! class_exists( 'Imagick' ) ) {
                 error_log( 'Imagick not installed' );
                 return false;
             }
+        
+            if ( ! file_exists( $pdf_path ) ) {
+                error_log( 'PDF file not found: ' . $pdf_path );
+                return false;
+            }
+        
+            if ( ! is_writable( dirname( $output_path ) ) ) {
+                error_log( 'Output directory not writable: ' . dirname( $output_path ) );
+                return false;
+            }
             try {
                 $imagick = new Imagick();
-                $imagick->setResolution(150, 150); // Set resolution for quality
-                $imagick->readImage($pdf_path . '[0]'); // Only first page
-                $imagick->setImageFormat('png'); // Output format
-                $imagick->setImageCompressionQuality(90); // Optional quality
-                $imagick->writeImage($output_path); // Save to location
+                $imagick->setResolution(150, 150);
+                $imagick->readImage($pdf_path);
+                $imagick->setIteratorIndex(0); // First page
+                $imagick->setImageFormat('png');
+                $imagick->setImageCompressionQuality(90);
+                $imagick->writeImage($output_path);
                 $imagick->clear();
                 $imagick->destroy();
-                return true;
+                return $output_path;
             } catch (Exception $e) {
                 error_log( 'PDF thumbnail error: ' . $e->getMessage() );
                 return false;
-            }       
-
-        }
-        
+            }
+        }        
         
     }
     
     new PDFEV_Functions();
 }
-
-
-// $generated_image = PDFEV_Const_Path.'assets/demo/book-'.$key.'.png';
-// $image_made = PDFEV_Functions::generate_pdf_thumbnail($dummy_data['pdf_file'],$generated_image);
-
-// if ( PDFEV_Functions::generate_pdf_thumbnail($pdf_path,$output_path) ) {
-//     echo '<img src="'.$output_path.'" alt="PDF Thumbnail">';
-// } else {
-//     echo 'Failed to generate thumbnail.';
-// }

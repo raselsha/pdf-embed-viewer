@@ -40,8 +40,19 @@ if ( ! class_exists( 'PDFEV_Insert_Demo' ) ) {
         public function insert_demo_post_xml(){
             $dummy = $this->dummy_data();
             foreach ($dummy as $key => $dummy_data) {
-                $pdf_attached = PDFEV_Functions::insert_media($dummy_data['pdf_file']);
-                $image_attached = PDFEV_Functions::insert_media(($dummy_data['image_file']));
+                $pdf_attached = PDFEV_Functions::insert_media( $dummy_data['pdf_file'] );
+
+                $generate_dir = PDFEV_Const_Path . 'assets/demo/';
+                $temp_image_path = $generate_dir . 'book.png'; // Temporary image path
+                $generated_image = PDFEV_Functions::generate_pdf_thumbnail( $dummy_data['pdf_file'], $temp_image_path );
+
+                $filename = pathinfo( $dummy_data['pdf_file'], PATHINFO_FILENAME );
+                $renamed_image_path = $generate_dir . $filename . '.png';
+
+                if ( file_exists( $generated_image ) ) {
+                    rename( $generated_image, $renamed_image_path );
+                }
+                $image_attached = PDFEV_Functions::insert_media($renamed_image_path);
                 $dummy_data['meta_data']['pdfev_meta_pdf_url'] = $pdf_attached['url'];
                 $post_id = wp_insert_post([
                     'post_title' => $dummy_data['title'],
