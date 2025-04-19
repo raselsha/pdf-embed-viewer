@@ -41,18 +41,7 @@ if ( ! class_exists( 'PDFEV_Insert_Demo' ) ) {
             $dummy = $this->dummy_data();
             foreach ($dummy as $key => $dummy_data) {
                 $pdf_attached = PDFEV_Functions::insert_media( $dummy_data['pdf_file'] );
-
-                $generate_dir = PDFEV_Const_Path . 'assets/demo/';
-                $temp_image_path = $generate_dir . 'book.png'; // Temporary image path
-                $generated_image = PDFEV_Functions::generate_pdf_thumbnail( $dummy_data['pdf_file'], $temp_image_path );
-
-                $filename = pathinfo( $dummy_data['pdf_file'], PATHINFO_FILENAME );
-                $renamed_image_path = $generate_dir . $filename . '.png';
-
-                if ( file_exists( $generated_image ) ) {
-                    rename( $generated_image, $renamed_image_path );
-                }
-                $image_attached = PDFEV_Functions::insert_media($renamed_image_path);
+                $image_attached = PDFEV_Functions::insert_media($dummy_data['image_file']);
                 $dummy_data['meta_data']['pdfev_meta_pdf_url'] = $pdf_attached['url'];
                 $post_id = wp_insert_post([
                     'post_title' => $dummy_data['title'],
@@ -74,9 +63,9 @@ if ( ! class_exists( 'PDFEV_Insert_Demo' ) ) {
         public function dummy_data(){
             return [
                 [
-                    'title' => 'Pdf books',
+                    'title' => 'The Call Of The Wild',
                     'pdf_file' => PDFEV_Const_Path.'assets/demo/book-1.pdf',
-                    'image_file' => PDFEV_Const_Path.'assets/demo/book-1.png',
+                    'image_file' => PDFEV_Const_Path.'assets/demo/book-cover-1.jpg',
                     'meta_data' => [
                         'pdfev_meta_pdf_url' => '',
                         'pdfev_meta_download' => 'yes',
@@ -84,9 +73,49 @@ if ( ! class_exists( 'PDFEV_Insert_Demo' ) ) {
                     
                 ],
                 [
-                    'title' => 'Pdf books',
+                    'title' => 'Romeo And Juliet',
                     'pdf_file' => PDFEV_Const_Path.'assets/demo/book-2.pdf',
-                    'image_file' => PDFEV_Const_Path.'assets/demo/book-2.png',
+                    'image_file' => PDFEV_Const_Path.'assets/demo/book-cover-2.jpg',
+                    'meta_data' => [
+                        'pdfev_meta_pdf_url' => '',
+                        'pdfev_meta_download' => 'yes',
+                    ],
+                    
+                ],
+                [
+                    'title' => 'The Adventures of Sherlock Holmes',
+                    'pdf_file' => PDFEV_Const_Path.'assets/demo/book-1.pdf',
+                    'image_file' => PDFEV_Const_Path.'assets/demo/book-cover-3.jpg',
+                    'meta_data' => [
+                        'pdfev_meta_pdf_url' => '',
+                        'pdfev_meta_download' => 'yes',
+                    ],
+                    
+                ],
+                [
+                    'title' => 'The Little Lady of the Big House',
+                    'pdf_file' => PDFEV_Const_Path.'assets/demo/book-1.pdf',
+                    'image_file' => PDFEV_Const_Path.'assets/demo/book-cover-4.jpg',
+                    'meta_data' => [
+                        'pdfev_meta_pdf_url' => '',
+                        'pdfev_meta_download' => 'yes',
+                    ],
+                    
+                ],
+                [
+                    'title' => 'The Wonderful Wizard of Oz',
+                    'pdf_file' => PDFEV_Const_Path.'assets/demo/book-1.pdf',
+                    'image_file' => PDFEV_Const_Path.'assets/demo/book-cover-5.jpg',
+                    'meta_data' => [
+                        'pdfev_meta_pdf_url' => '',
+                        'pdfev_meta_download' => 'yes',
+                    ],
+                    
+                ],
+                [
+                    'title' => 'Peter and Wendy',
+                    'pdf_file' => PDFEV_Const_Path.'assets/demo/book-1.pdf',
+                    'image_file' => PDFEV_Const_Path.'assets/demo/book-cover-6.jpg',
                     'meta_data' => [
                         'pdfev_meta_pdf_url' => '',
                         'pdfev_meta_download' => 'yes',
