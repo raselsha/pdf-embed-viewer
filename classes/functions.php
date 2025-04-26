@@ -164,6 +164,7 @@ if( ! class_exists('PDFEV_Functions') ){
 
         public static function get_read_button(){
             $reading_counter  =  get_option('pdfev_reading_counter');
+            $reading_counter = $reading_counter ? $reading_counter : 'yes';
             ?>
             <a href="<?php the_permalink(); ?>" class="button btn read-btn"><i class="fas fa-eye"></i> <?php echo esc_html__('Read','pdf-embed-viewer');?> <?php  echo  $reading_counter=='yes'? "(".self::get_post_view().")" : '' ;?></a>
             <?php
@@ -190,6 +191,7 @@ if( ! class_exists('PDFEV_Functions') ){
 
         public static function get_download_button(){
             $download_counter  =  get_option('pdfev_download_counter');
+            $download_counter = $download_counter ? $download_counter : 'yes';
         ?>
             <a class="button btn download-btn" href="<?php PDFEV_Functions::pdf_link(); ?>" data-post-id="<?php echo get_the_ID(); ?>" download="<?php echo sanitize_title(get_the_title()); ?>"> 
                 <i class="fas fa-cloud-download-alt"></i> 
