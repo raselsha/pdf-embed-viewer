@@ -75,11 +75,15 @@ Learn more about how [Appsero collects and uses this data](https://appsero.com/p
 
 
 == Changelog ==
+= 1.1.2 =
+* Insert Demo pages for shortcode view.
+* Fix default counter value.
+* Code refactor.
 
 = 1.1.1 =
-* shortcode return page options added.
-* hide counter and download settings
-* code refactor.
+* An option added for return page when use shortcode.
+* A settings added for show/hide counter.
+* Code refactor.
 
 = 1.1.0 =
 * Template file missing error fix.
