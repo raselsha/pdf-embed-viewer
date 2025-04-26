@@ -1,4 +1,4 @@
-=== PDF Embed & Viewer – Display E-Books, Newsletters, Reports, and Manuals ===
+=== PDF Viewer & Embedder – Display E-Books, Newsletters, Reports, and Manuals ===
 
 Contributors:      raselsha
 Requires at least: 3.0
