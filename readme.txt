@@ -1,4 +1,4 @@
-=== PDF Embed E-Books | Newsletter | Reports | Annual Reports | Documentation | Manual Boooks ===
+=== PDF Embed & Viewer – Display E-Books, Newsletters, Reports, and Manuals ===
 
 Contributors:      raselsha
 Requires at least: 3.0
@@ -137,3 +137,45 @@ Learn more about how [Appsero collects and uses this data](https://appsero.com/p
 
 = 1.0.0 =
 * Initial Release
+
+== Frequently Asked Questions ==
+
+= Q. How do I embed a PDF on a single page or post? =
+A. Use the shortcode [pdfev_embed_viewer id="post_id"], replacing post_id with the ID of your uploaded PDF post.
+
+= Q. Can I create a gallery or archive of multiple PDFs? =
+A. Yes! Use [pdfev_viewer template="list"], [pdfev_viewer template="grid"], [pdfev_viewer template="ebook"], or [pdfev_viewer template="newsletter"] to create different archive layouts.
+
+= Q. How do I track how many times a PDF is read or downloaded? =
+A. The plugin automatically tracks reads and downloads. You can see the counts in the plugin settings and post list.
+
+= Q. Is there an option to show or hide the download and view counters on buttons? =
+A. Yes! In the plugin settings, you can enable or disable the read (view) and download counters on the action buttons easily.
+
+= Q. Can I customize the archive page URL and titles? =
+A. Yes! You can change the archive page slug and title easily from the plugin settings.
+
+= Q. Is it possible to disable the download or read buttons? =
+A. Yes. You can show or hide the read and download buttons from the plugin settings.
+
+= Q. Does the plugin support multiple languages? =
+A. Yes, it’s translation-ready and compatible with multilingual websites.
+
+= Q. Can I override the plugin templates in my child theme? =
+A. Yes! You can override the plugin templates easily. Just copy the desired template files from the template/ folder inside the plugin and paste them into your child theme.
+For example:
+your-child-theme/template/archive.php
+your-child-theme/template/single.php
+You can then modify the copied file as needed without worrying about plugin updates overwriting your changes.
+
+= Q. How do I import demo content? =
+A. Just click the "Import Demo" button in the plugin settings to quickly add sample content.
+
+= Q. Will this plugin slow down my website? =
+A. No, the plugin is lightweight and optimized for fast performance.
+
+= Q. Do I need coding knowledge to use this plugin? =
+A. No coding skills are required! You can manage everything with shortcodes and plugin settings.
+
+= Q. Is Appsero collecting my private data? =
+A. No. Appsero only collects basic telemetry data after you give permission. It’s 100% optional and secure.
