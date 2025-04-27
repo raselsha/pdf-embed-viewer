@@ -1,4 +1,4 @@
-=== PDF Viewer & Embedder – Display E-Books, Newsletters, Reports, and Manuals ===
+=== 3D Flipbook PDF Viewer & Embedder – E-Books, Manuals, Newsletters, Reports ===
 
 Contributors:      raselsha
 Requires at least: 3.0
@@ -9,10 +9,10 @@ License:           GPLv2 or later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 Tags:              ebook reader, newsletter, pdf, pdf viewer, pdf download,
 
-PDF Embed Viewer plugin is designed to view and download PDF files in your wordpress site. Read and view Newsletter, Ebook directly within web pages.
+Display PDFs as interactive 3D flipbooks or traditional viewers for E-Books, Manuals, Newsletters, and Reports.
 
 == Description ==
-The plugin is designed to read and download PDF files in your wordpress website. Its allowing easy access to Documents, Newsletter, Ebook directly within web pages. With its user-friendly interface and customizable features. It counts read and downloads per items. It has options to show/hide read and download button.
+3D Flipbook PDF Viewer & Embedder allows easy reading and downloading of PDF files on your WordPress website, offering both traditional and interactive 3D Flipbook views for documents, newsletters, and eBooks directly within web pages. With a user-friendly interface and customizable features, it tracks reads and downloads per item. You can also choose to show or hide the read and download buttons.
 
 ## This plugin supports 4 templates for Archive view
 * **List Template**
@@ -30,7 +30,7 @@ The plugin is designed to read and download PDF files in your wordpress website.
 * **[pdfev_embed_viewer id="post_id"]**
 
 ## Features
-* **Display PDFs Anywhere:** Easily embed PDFs in any page or post using a shortcode.
+* **Display PDFs Anywhere:**  Easily embed PDFs in any page or post using a shortcode, with both traditional and 3D Flipbook views.
 * **Archive Page Templates:** Choose from four distinct templates for your archive pages.
 * **Track Reads and Downloads:** Monitor the number of times your content is read and downloaded for better insights.
 * **Standalone Sidebar Menu:** WordPress sidebar has a dedicated menu.
@@ -42,7 +42,7 @@ The plugin is designed to read and download PDF files in your wordpress website.
 * **Single Document Shortcode:** Easily embed single documents with a dedicated shortcode.
 * **Import Demo Content:** Quickly set up your archive view with the import demo button.
 * **Multilingual Support:** Fully compatible with multiple languages.
-* **Button Enable/Disable:** Options to show/hide read and download buttons.
+* **Button Enable/Disable:** Options to show/hide read and download buttons for both traditional and 3D Flipbook views.
 
 == Screenshot ==
 
@@ -155,8 +155,8 @@ A. Yes! In the plugin settings, you can enable or disable the read (view) and do
 = Q. Can I customize the archive page URL and titles? =
 A. Yes! You can change the archive page slug and title easily from the plugin settings.
 
-= Q. Is it possible to disable the download or read buttons? =
-A. Yes. You can show or hide the read and download buttons from the plugin settings.
+= Q. How do I switch between the Traditional PDF View and 3D Flipbook View? =
+A. You can choose your preferred mode between the two views in the plugin’s settings to enable or disable.
 
 = Q. Does the plugin support multiple languages? =
 A. Yes, it’s translation-ready and compatible with multilingual websites.
