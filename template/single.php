@@ -36,54 +36,13 @@ if ( wp_is_block_theme() ) {  ?>
 ?>
 
 <div class="pdfev-embed-viewer">
+
 	<?php do_action('pdfev_template_single_header'); ?>
-	<div class="sample-container-box">
-		<div class="sample-container"></div>
-	</div>
+	
 	<?php do_action('pdfev_template_book_reader'); ?>
 
 	<?php do_action('pdfev_template_single_footer'); ?>
-	<script type="text/javascript">
-jQuery(function($){
-    let options = {
-        pdf: "http://localhost:3000/wp-content/uploads/2025/04/book-1-20.pdf",
-        page: 3,
-        template: function () {
-            return {
-                html: [
-                    {
-                        url: "<?php echo PDFEV_Const_URL; ?>assets/templates/default-book-view.html",
-                        data: jsData.urls["templates/default-book-view.html"],
-                    },
-                ],
-                script: [
-                    {
-                        url: "<?php echo PDFEV_Const_URL; ?>assets/js/default-book-view.js",
-                        data: jsData.urls["js/default-book-view.js"],
-                    },
-                ],
-                styles: [
-                    {
-                        url: "css/font-awesome.min.css",
-                        data: jsData.urls["css/font-awesome.min.css"],
-                    },
-                    {
-                        url: "<?php echo PDFEV_Const_URL; ?>assets/css/short-black-book-view.css",
-                        data: jsData.urls["css/short-black-book-view.css"],
-                    },
-                ],
-                sounds: {
-                    startFlip: "<?php echo PDFEV_Const_URL; ?>assets/sounds/start-flip.mp3",
-                    endFlip: "<?php echo PDFEV_Const_URL; ?>assets/sounds/end-flip.mp3",
-                },
-                init: undefined,
-            };
-        },
-    };
-    $(".sample-container").FlipBook(options);
-});
-</script>
-
+	
 </div>
 
 <?php if ( wp_is_block_theme() ) : ?>

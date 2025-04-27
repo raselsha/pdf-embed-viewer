@@ -239,8 +239,12 @@ if( ! class_exists( 'PDFEV_Template' ) ){
             <?php
         }
         public function template_single_book_reader(){
-        ?>
-            <iframe class="pdf-viewer" src="<?php PDFEV_Functions::pdf_link(); ?>" frameborder="0"></iframe>
+            $post_id = get_the_ID();
+        ?>  
+            <div class="pdfev-3dbook-container">
+                <div class="pdfev-3dbook-viewer" id="pdfev-3dbook-<?php echo esc_attr($post_id); ?>" data-pdfev-url="<?php PDFEV_Functions::pdf_link(); ?>"></div>
+            </div>
+            <!-- <iframe class="pdf-viewer" src="<?php PDFEV_Functions::pdf_link(); ?>" frameborder="0"></iframe> -->
         <?php
         }
         public function template_single_footer(){

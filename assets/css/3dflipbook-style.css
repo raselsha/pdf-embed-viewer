@@ -1065,14 +1065,14 @@ h3 {
   height: 90vh;
 }
 
-.sample-container-box {
+.pdfev-3dbook-container {
   box-sizing: border-box;
   padding-top: min(60%, 80vh);
   position: relative;
   background-color: #fafafa;
   margin-bottom: 25px;
 }
-.sample-container {
+.pdfev-3dbook-viewer{
   left: 0;
   top: 0;
   position: absolute;
