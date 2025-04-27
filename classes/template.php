@@ -240,11 +240,16 @@ if( ! class_exists( 'PDFEV_Template' ) ){
         }
         public function template_single_book_reader(){
             $post_id = get_the_ID();
+            $flipbook = get_option('pdfev_flipbook_status');
+            $flipbook = $flipbook ? $flipbook : 'yes';
         ?>  
-            <div class="pdfev-3dbook-container">
-                <div class="pdfev-3dbook-viewer" id="pdfev-3dbook-<?php echo esc_attr($post_id); ?>" data-pdfev-url="<?php PDFEV_Functions::pdf_link(); ?>"></div>
-            </div>
-            <!-- <iframe class="pdf-viewer" src="<?php PDFEV_Functions::pdf_link(); ?>" frameborder="0"></iframe> -->
+            <?php if($flipbook == 'yes'): ?>
+                <div class="pdfev-3dbook-container">
+                    <div class="pdfev-3dbook-viewer" id="pdfev-3dbook-<?php echo esc_attr($post_id); ?>" data-pdfev-url="<?php PDFEV_Functions::pdf_link(); ?>"></div>
+                </div>
+            <?php else: ?>  
+                <iframe class="pdf-viewer" src="<?php PDFEV_Functions::pdf_link(); ?>" frameborder="0"></iframe>
+            <?php endif; ?>
         <?php
         }
         public function template_single_footer(){

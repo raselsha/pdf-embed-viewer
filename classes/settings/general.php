@@ -53,6 +53,9 @@ if( ! class_exists('PDFEV_Settings_General') ){
             $shortcode_page_url  = $shortcode_page_url?$shortcode_page_url:'';
             $page_lists = $this->get_all_pages();
             
+            $flipbook =  get_option('pdfev_flipbook_status');
+            $flipbook = $flipbook ? $flipbook : 'yes';
+
             $archive_read =  get_option('pdfev_archive_read');
             $archive_read = $archive_read ? $archive_read : 'no';
 
@@ -105,6 +108,15 @@ if( ! class_exists('PDFEV_Settings_General') ){
                                 <option value="<?php echo esc_attr($key); ?>" <?php echo $key==$template? esc_attr('selected'):'' ?>><?php echo esc_attr($value); ?></option>
                                 <?php endforeach; ?>
                             </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><?php echo esc_html__( 'Enable 3D Flipbook', 'pdf-embed-viewer' )?></th>
+                        <td>
+                            <label class="switch">
+                                <input type="checkbox" name="pdfev_flipbook_status" value="<?php echo esc_attr($flipbook); ?>" <?php echo esc_attr(($flipbook=='yes')?'checked':''); ?>>
+                                <span class="slider"></span>
+                            </label>
                         </td>
                     </tr>
                     <tr>
