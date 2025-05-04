@@ -39,7 +39,23 @@ jQuery(document).ready(function ($) {
       }
     });
   });
-  
+  // enable 3D flipbook===========
+  $('#pdfev-show-flipbook').on('click', function (e) {
+    e.preventDefault();
+    $(this).addClass('active');
+    $('#pdfev-show-traditional').removeClass('active');
+    $('.pdfev-3dbook-container').show();
+    $('.pdfev-traditional-container').hide();
+  });
+
+  $('#pdfev-show-traditional').on('click', function (e) {
+    e.preventDefault();
+    $(this).addClass('active');
+    $('#pdfev-show-flipbook').removeClass('active');
+    $('.pdfev-traditional-container').show();
+    $('.pdfev-3dbook-container').hide();
+  });
+
   // ===initialize the flipbook===
   $(document).ready(function(){
     let pdfevPostId = pdfevFronend.post_id;
@@ -78,7 +94,8 @@ jQuery(document).ready(function ($) {
           init: undefined,
         };
       },
-    };
+    }
+    $(".pdfev-3dbook-viewer").FlipBook(options);
     if(pdfURL){
     $(".pdfev-3dbook-viewer").FlipBook(options);
     }
