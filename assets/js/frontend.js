@@ -58,7 +58,8 @@ jQuery(document).ready(function ($) {
 
   // ===initialize the flipbook===
   $(document).ready(function(){
-    let pdfevPostId = pdfevFronend.post_id;
+    let post_id = $('.pdfev-3dbook-viewer').data('id');
+    let pdfevPostId = post_id;
     var pdfURL = $('#pdfev-3dbook-' + pdfevPostId).data('pdfev-url');
     let options = {
       pdf: pdfURL,

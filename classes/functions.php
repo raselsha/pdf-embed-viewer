@@ -129,10 +129,22 @@ if( ! class_exists('PDFEV_Functions') ){
 
         public static function shortcode_view($post_id){
             $link = get_post_meta($post_id, 'pdfev_meta_pdf_url', true );
+            $flipbook = get_option('pdfev_flipbook_status');
+            $flipbook = $flipbook ? $flipbook : 'yes';
             ?>
-            <div class="pdfev-embed-viewer-shortcode">
-                <?php  PDFEV_Functions::download_button_page_view($post_id); ?>
-                <iframe class="pdf-viewer" src="<?php echo esc_attr($link); ?>" frameborder="0"></iframe>
+            <div class="pdfev-embed-viewer">
+                
+                <div class="toggle-button">
+                    <a id="pdfev-show-flipbook" class="button btn <?php echo esc_attr($flipbook=='yes'?'active':''); ?>"><i class="fas fa-book-open"></i> <?php _e('Flipbook','pdf-embed-viewer'); ?></a>
+                    <a id="pdfev-show-traditional" class="button btn <?php echo esc_attr($flipbook=='yes'?'':'active'); ?>"><i class="fas fa-book"></i> <?php _e('Traditional','pdf-embed-viewer'); ?></a>
+                    <?php  PDFEV_Functions::download_button_page_view($post_id); ?>
+                </div>
+                <div class="pdfev-3dbook-container" style="display: <?php echo esc_attr($flipbook=='yes'?'block':'none'); ?>;">
+                    <div class="pdfev-3dbook-viewer" id="pdfev-3dbook-<?php echo esc_attr($post_id); ?>" data-id="<?php echo esc_attr($post_id); ?>" data-pdfev-url="<?php echo esc_attr($link); ?>"></div>                
+                </div>
+                <div class="pdfev-traditional-container" style="display: <?php echo esc_attr($flipbook=='yes'?'none':'block'); ?>;">
+                    <iframe class="pdf-viewer" src="<?php echo esc_attr($link); ?>" frameborder="0"></iframe>
+                </div>
             </div>
             <?php
         }
