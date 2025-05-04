@@ -79,7 +79,9 @@ jQuery(document).ready(function ($) {
         };
       },
     };
+    if(pdfURL){
     $(".pdfev-3dbook-viewer").FlipBook(options);
+    }
   });
   
 })(jQuery);
