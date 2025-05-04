@@ -249,19 +249,6 @@ if( ! class_exists( 'PDFEV_Template' ) ){
                 <a id="pdfev-show-flipbook" class="button btn <?php echo esc_attr($flipbook=='yes'?'active':''); ?>"><i class="fas fa-book-open"></i> <?php _e('Flipbook','pdf-embed-viewer'); ?></a>
                 <a id="pdfev-show-traditional" class="button btn <?php echo esc_attr($flipbook=='yes'?'':'active'); ?>"><i class="fas fa-book"></i> <?php _e('Traditional','pdf-embed-viewer'); ?></a>
             </div>
-            <div class="pdfev-preloader">
-                <div class="book-frame">
-                    <div class="left-page"></div>
-                    <div class="right-page"></div>
-                    <!-- Simulate 3 flipping pages -->
-                    <div class="flipping-page page-1"></div>
-                    <div class="flipping-page page-2"></div>
-                    <div class="flipping-page page-3"></div>
-                </div>
-            </div>
-
-
-
             <div class="pdfev-3dbook-container" style="display: <?php echo esc_attr($flipbook=='yes'?'block':'none'); ?>;">
                 <div class="pdfev-3dbook-viewer" id="pdfev-3dbook-<?php echo esc_attr($post_id); ?>" data-pdfev-url="<?php PDFEV_Functions::pdf_link(); ?>"></div>                
             </div>
