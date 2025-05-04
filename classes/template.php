@@ -226,16 +226,18 @@ if( ! class_exists( 'PDFEV_Template' ) ){
         //===================== single view ==================
         public function template_single_header(){
             ?>
-            <h1><?php the_title();?></h1>
-            <?php  PDFEV_Functions::download_button_page_view(get_the_ID()); ?>
-            <?php PDFEV_Functions::back_to_archive();?>
-            <div class="navigation">
-                
-                <div class="pagination">
-                    <?php previous_post_link('%link','&larr;'.__(' Previous','pdf-embed-viewer') ); ?>
-                    <?php next_post_link('%link',__('Next ','pdf-embed-viewer').' &rarr;' ); ?>
+            <div class="header">
+                <h1><?php the_title();?></h1>
+                <div class="action">
+                    <?php PDFEV_Functions::back_to_archive();?>
+                    <?php  PDFEV_Functions::download_button_page_view(get_the_ID()); ?>
                 </div>
             </div>
+            
+            <div class="pagination">
+                <?php previous_post_link('%link','&larr;'.__(' Previous','pdf-embed-viewer') ); ?>
+                    <?php next_post_link('%link',__('Next ','pdf-embed-viewer').' &rarr;' ); ?>
+                </div>
             <?php
         }
         public function template_single_book_reader(){
@@ -243,13 +245,13 @@ if( ! class_exists( 'PDFEV_Template' ) ){
             $flipbook = get_option('pdfev_flipbook_status');
             $flipbook = $flipbook ? $flipbook : 'yes';
         ?>  
-            <?php if($flipbook == 'yes'): ?>
-                <div class="pdfev-3dbook-container">
+            <div class="pdfev-3dbook-container">
+                <?php if($flipbook == 'yes'): ?>
                     <div class="pdfev-3dbook-viewer" id="pdfev-3dbook-<?php echo esc_attr($post_id); ?>" data-pdfev-url="<?php PDFEV_Functions::pdf_link(); ?>"></div>
-                </div>
-            <?php else: ?>  
-                <iframe class="pdf-viewer" src="<?php PDFEV_Functions::pdf_link(); ?>" frameborder="0"></iframe>
-            <?php endif; ?>
+                <?php else: ?>  
+                    <iframe class="pdf-viewer" src="<?php PDFEV_Functions::pdf_link(); ?>" frameborder="0"></iframe>
+                <?php endif; ?>
+            </div>
         <?php
         }
         public function template_single_footer(){

@@ -1,7 +1,31 @@
 .pdfev-embed-viewer{
     max-width:1600px;
     margin: 0 auto;
-    width: 100%;
+    padding: 10px;
+    .header{
+        display: flex;
+        justify-content: space-between;
+        align-items: start;
+        border-bottom: 1px solid var(--pdfev-secondary);
+        flex-direction: column;
+        @media (min-width: 768px) {
+            justify-content: space-between;
+            flex-direction: row;
+            align-items: center;
+        }
+        .action{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            @media (min-width: 768px) {
+                justify-content: end;
+                align-items: center;
+                width: auto;
+            }
+        }
+    }
     a{
         text-decoration: none;
         color: var(--pdfev-primary);
@@ -58,14 +82,28 @@
         width: 100%;
         height: 1024px;
     }
-
+    .pdfev-3dbook-container {
+        box-sizing: border-box;
+        padding-top: min(60%, 80vh);
+        position: relative;
+        background-color: var(--pdfev-light);
+        margin-bottom: 25px;
+        border: 1px solid var(--pdfev-secondary);
+        .pdfev-3dbook-viewer{
+          left: 0;
+          top: 0;
+          position: absolute;
+          height: 100%;
+          width: 100%;
+        }
+    }
     .pagination {
         display: flex;
-        justify-content: center;
+        justify-content: space-between;
         gap: 10px;
         margin: 10px 0;
         @media (min-width: 768px) {
-            justify-content: start;
+            justify-content: space-between;
         }
         .page-numbers{
             display: inline-block;
