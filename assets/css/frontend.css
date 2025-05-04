@@ -1,12 +1,3 @@
-:root {
-  --pdfev-primary:#c79f62;
-  --pdfev-secondary:#666;
-  --pdfev-light:#e5e5e5;
-  --pdfev-dark:#333;
-  --pdfev-black:#000;
-  --pdfev-white:#fff;
-}
-
 .pdfev-embed-viewer {
   max-width: 1600px;
   margin: 0 auto;
@@ -430,6 +421,15 @@
 .pdfev-embed-viewer .archive-newsletter-style .tabs-content table tr:nth-child(odd) {
   background: var(--pdfev-light);
   border: 0;
+}
+
+:root {
+  --pdfev-primary:#c79f62;
+  --pdfev-secondary:#666;
+  --pdfev-light:#e5e5e5;
+  --pdfev-dark:#333;
+  --pdfev-black:#000;
+  --pdfev-white:#fff;
 }
 
 /*# sourceMappingURL=frontend.css.map */

@@ -1,3 +1,9 @@
+@use 'basic';
+@use 'list';
+@use 'grid';
+@use 'ebook';
+@use 'newsletter';
+
 :root{
     --pdfev-primary:#c79f62;
     --pdfev-secondary:#666;
@@ -6,8 +12,3 @@
     --pdfev-black:#000;
     --pdfev-white:#fff;
 }
-@import 'basic';
-@import 'list';
-@import 'grid';
-@import 'ebook';
-@import 'newsletter';
