@@ -76,6 +76,10 @@ Learn more about how [Appsero collects and uses this data](https://appsero.com/p
 
 == Changelog ==
 
+= 1.2.2 =
+* Single page template update
+* Shortcode view upate for 3D flipbook
+
 = 1.2.1 =
 * Fix empty page loading issue
 
