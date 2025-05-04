@@ -75,6 +75,13 @@ Learn more about how [Appsero collects and uses this data](https://appsero.com/p
 
 
 == Changelog ==
+
+= 1.2.1 =
+* Fix empty page loading issue
+
+= 1.2.0 =
+* Added 3D flipbook library
+
 = 1.1.2 =
 * Insert Demo pages for shortcode view.
 * Fix default counter value.
