@@ -63,11 +63,11 @@ jQuery(document).ready(function ($) {
           ],
           styles: [
             {
-              url: pdfevFronend.pdfevurl+"css/font-awesome.min.css",
+              url: pdfevFronend.pdfevurl+"vendor/3dflipbook/css/font-awesome.min.css",
               data: jsData.urls["css/font-awesome.min.css"],
             },
             {
-              url: pdfevFronend.pdfevurl+"assets/css/short-black-book-view.css",
+              url: pdfevFronend.pdfevurl+"vendor/3dflipbook/css/short-black-book-view.css",
               data: jsData.urls["css/short-black-book-view.css"],
             },
           ],
