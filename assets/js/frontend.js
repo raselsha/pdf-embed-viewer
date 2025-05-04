@@ -51,13 +51,13 @@ jQuery(document).ready(function ($) {
         return {
           html: [
             {
-              url: pdfevFronend.pdfevurl+"assets/templates/default-book-view.html",
+              url: pdfevFronend.pdfevurl+"vendor/3dflipbook/templates/default-book-view.html",
               data: jsData.urls["templates/default-book-view.html"],
             },
           ],
           script: [
             {
-              url: pdfevFronend.pdfevurl+"assets/js/default-book-view.js",
+              url: pdfevFronend.pdfevurl+"vendor/3dflipbook/js/default-book-view.js",
               data: jsData.urls["js/default-book-view.js"],
             },
           ],
@@ -72,8 +72,8 @@ jQuery(document).ready(function ($) {
             },
           ],
           sounds: {
-            startFlip: pdfevFronend.pdfevurl+"assets/sounds/start-flip.mp3",
-            endFlip: pdfevFronend.pdfevurl+"assets/sounds/end-flip.mp3",
+            startFlip: pdfevFronend.pdfevurl+"vendor/3dflipbook/sounds/start-flip.mp3",
+            endFlip: pdfevFronend.pdfevurl+"vendor/3dflipbook/sounds/end-flip.mp3",
           },
           init: undefined,
         };

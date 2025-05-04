@@ -4281,4 +4281,20 @@ readers do not read off random characters that represent icons */
   border: 0;
 }
 
+.pdfev-3dbook-container {
+  box-sizing: border-box;
+  padding-top: min(60%, 80vh);
+  position: relative;
+  background-color: #fafafa;
+  margin-bottom: 25px;
+}
+
+.pdfev-3dbook-viewer {
+  left: 0;
+  top: 0;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+
 /*# sourceMappingURL=frontend.css.map */
