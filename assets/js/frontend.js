@@ -95,9 +95,9 @@ jQuery(document).ready(function ($) {
         };
       },
     }
-    $(".pdfev-3dbook-viewer").FlipBook(options);
+    
     if(pdfURL){
-    $(".pdfev-3dbook-viewer").FlipBook(options);
+      $(".pdfev-3dbook-viewer").FlipBook(options);
     }
   });
   
