@@ -234,7 +234,7 @@ if( ! class_exists( 'PDFEV_Template' ) ){
                 </div>
             </div>
             
-            <div class="pagination">
+            <div class="navigation">
                 <?php previous_post_link('%link','&larr;'.__(' Previous','pdf-embed-viewer') ); ?>
                 <?php next_post_link('%link',__('Next ','pdf-embed-viewer').' &rarr;' ); ?>
             </div>
@@ -260,10 +260,8 @@ if( ! class_exists( 'PDFEV_Template' ) ){
         public function template_single_footer(){
         ?>
             <div class="navigation">
-                <div class="pagination">
-                    <?php previous_post_link('%link','&larr;'.__(' Previous','pdf-embed-viewer') ); ?>
-                    <?php next_post_link('%link',__('Next ','pdf-embed-viewer').' &rarr;' ); ?>
-                </div>
+                <?php previous_post_link('%link','&larr;'.__(' Previous','pdf-embed-viewer') ); ?>
+                <?php next_post_link('%link',__('Next ','pdf-embed-viewer').' &rarr;' ); ?>
             </div>
         <?php
         }
