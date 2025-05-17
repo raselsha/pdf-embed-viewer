@@ -111,7 +111,7 @@ if( ! class_exists('PDFEV_Settings_General') ){
                         </td>
                     </tr>
                     <tr>
-                        <th><?php echo esc_html__( 'Enable 3D Flipbook', 'pdf-embed-viewer' )?></th>
+                        <th><?php echo esc_html__( 'Default View 3D Flipbook', 'pdf-embed-viewer' )?></th>
                         <td>
                             <label class="switch">
                                 <input type="checkbox" name="pdfev_flipbook_status" value="<?php echo esc_attr($flipbook); ?>" <?php echo esc_attr(($flipbook=='yes')?'checked':''); ?>>
