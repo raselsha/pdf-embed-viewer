@@ -7,7 +7,7 @@ Requires PHP:      7.0
 Stable tag:	       trunk
 License:           GPLv2 or later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
-Tags:              ebook reader, newsletter, pdf, pdf viewer, pdf download,
+Tags:               3d flipbook, ebook, newsletter, pdf, pdf embed,
 
 Display PDFs as interactive 3D flipbooks or traditional viewers for E-Books, Manuals, Newsletters, and Reports.
 
@@ -23,42 +23,104 @@ Display PDFs as interactive 3D flipbooks or traditional viewers for E-Books, Man
 ## Shortcode for multiple template view
 Use the [pdfev_viewer] shortcode to display your PDF items in various layouts.
 
-Available Attributes
+**Shortcode Attributes**
 
-| Attribute           | Description                                              | Values                                | Default |
-| ------------------- | -------------------------------------------------------- | ------------------------------------- | ------- |
-| `template`          | Choose the display layout.                               | `list`, `grid`, `ebook`, `newsletter` | `list`  |
-| `limit`             | Number of PDF items to display.                          | Integer (e.g., `5`, `10`, `20`)       | `10`    |
-| `order`             | Set display order.                                       | `asc`, `dsc`                          | `dsc`   |
-| `read`              | Show or hide the **Read** button.                        | `yes`, `no`                           | `yes`   |
-| `download`          | Show or hide the **Download** button.                    | `yes`, `no`                           | `yes`   |
-| `reading_count`     | Show or hide how many times the PDF has been read.       | `yes`, `no`                           | `yes`   |
-| `downloading_count` | Show or hide how many times the PDF has been downloaded. | `yes`, `no`                           | `yes`   |
+You can use the `[pdfev_viewer]` shortcode with the following attributes:
 
-* **[pdfev_viewer template="list" limit="10" order="dsc" read="yes" download="yes" reading_count="yes" downloading_count="yes" ]**
-* **[pdfev_viewer template="grid" ]**
-* **[pdfev_viewer template="ebook" limit="10" order="asc" read="yes" download="yes"]**
-* **[pdfev_viewer template="newsletter" limit="30" order="dsc"]**
+- `template`  
+  Choose the display layout.  
+  **Accepted values**: `list`, `grid`, `ebook`, `newsletter`  
+  **Default**: `list`
 
+- `limit`  
+  Number of PDF items to display.  
+  **Accepted values**: Any number like `5`, `10`, `20`  
+  **Default**: `10`
 
+- `order`  
+  Set display order.  
+  **Accepted values**: `asc`, `dsc`  
+  **Default**: `dsc`
+
+- `read`  
+  Show or hide the **Read** button.  
+  **Accepted values**: `yes`, `no`  
+  **Default**: `yes`
+
+- `download`  
+  Show or hide the **Download** button.  
+  **Accepted values**: `yes`, `no`  
+  **Default**: `yes`
+
+- `reading_count`  
+  Show or hide how many times the PDF has been read.  
+  **Accepted values**: `yes`, `no`  
+  **Default**: `yes`
+
+- `downloading_count`  
+  Show or hide how many times the PDF has been downloaded.  
+  **Accepted values**: `yes`, `no`  
+  **Default**: `yes`
+
+**Example**
+
+* [pdfev_viewer `template="list"` `limit="10"` `order="dsc"` `read="yes"` `download="yes"` `reading_count="yes"` `downloading_count="yes"` ]
+* [pdfev_viewer `template="grid"` ]
+* [pdfev_viewer `template="ebook"` `limit="10"` `order="asc"` `read="yes"` `download="yes"`]
+* [pdfev_viewer `template="newsletter"` `limit="30"` `order="dsc"`]
 
 ## Shortcode for single page/post
-* **[pdfev_embed_viewer id="post_id"]**
+* [pdfev_embed_viewer `id="post_id"`]
 
 ## Features
-* **Display PDFs Anywhere:**  Easily embed PDFs in any page or post using a shortcode, with both traditional and 3D Flipbook views.
-* **Archive Page Templates:** Choose from four distinct templates for your archive pages.
-* **Track Reads and Downloads:** Monitor the number of times your content is read and downloaded for better insights.
-* **Standalone Sidebar Menu:** WordPress sidebar has a dedicated menu.
-* **Color Adjustment Settings:** Personalize colors with an intuitive settings page.
-* **Customizable Archive Page URL:** Modify the URL structure of your archive pages to suit your needs.
-* **Download Button Control:** Toggle the PDF download button on or off as desired.
-* **Editable Archive Page Title:** Customize the title of your archive pages.
-* **Archive Page Shortcode:** Utilize a shortcode specifically for archive pages.
-* **Single Document Shortcode:** Easily embed single documents with a dedicated shortcode.
-* **Import Demo Content:** Quickly set up your archive view with the import demo button.
-* **Multilingual Support:** Fully compatible with multiple languages.
-* **Button Enable/Disable:** Options to show/hide read and download buttons for both traditional and 3D Flipbook views.
+
+- **Display PDFs Anywhere**  
+  Easily embed PDFs into any post or page using a shortcode, supporting both traditional and interactive 3D Flipbook views.
+
+- **Multiple Archive Templates**  
+  Choose from four unique display templates: `list`, `grid`, `ebook`, and `newsletter`.
+
+- **Flexible Shortcode Usage**  
+  Use shortcodes anywhere to display your PDF documents or e-books with full control over layout and behavior.
+
+- **Interactive E-Book View**  
+  The `ebook` template includes a smooth hover-preview effect for a realistic book feel.
+
+- **3D Flipbook & Traditional Reading Modes**  
+  Readers can view content in either immersive 3D Flipbook mode or standard document view.
+
+- **Usage Tracking**  
+  Monitor how many times each PDF has been read or downloaded with built-in counters.
+
+- **Dedicated Admin Menu**  
+  A standalone sidebar menu in the WordPress dashboard for managing your documents.
+
+- **Color Customization**  
+  Adjust colors easily using the built-in settings page for better design integration.
+
+- **Custom Archive URLs**  
+  Modify the archive page URL slug to match your site's structure or branding.
+
+- **Download Button Toggle**  
+  Enable or disable the PDF download button as needed from the settings panel.
+
+- **Editable Archive Titles**  
+  Set custom titles for your archive pages to suit your content and audience.
+
+- **Archive Page Shortcode**  
+  Display an archive of all documents using a dedicated archive shortcode.
+
+- **Single Document Shortcode**  
+  Embed individual PDFs using a specialized shortcode for single-view mode.
+
+- **Import Demo Content**  
+  Quickly set up your site with sample content using the demo import feature.
+
+- **Multilingual Support**  
+  Fully compatible with translation plugins to support multiple languages.
+
+- **Read & Download Button Control**  
+  Easily show or hide the Read and Download buttons for both viewing modes.
 
 == Screenshot ==
 
