@@ -21,7 +21,7 @@ if( ! class_exists( 'PDFEV_Template' ) ){
             add_action('pdfev_template_single_footer', [$this,'template_single_footer']);
         } 
 
-        public function template_archive_view(){
+        public function template_archive_view($atts){
             $template = get_option('pdfev_archive_template'); 
             $load_template = $template.'.php';
             require PDFEV_Functions::load_template($load_template);  
@@ -33,45 +33,48 @@ if( ! class_exists( 'PDFEV_Template' ) ){
             <?php 
         }
 
-        public function template_archive_list(){
+        public function template_archive_list($atts=[]){
         ?>
-        <div class="archive-list-style">
-            <table>
-                <tr>
-                    <th><?php echo esc_html__('Title','pdf-embed-viewer') ?></th>
-                    <th><?php echo esc_html__('Date','pdf-embed-viewer') ?></th>
-                    <th></th>
-                </tr>
-                <?php
-                    $paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
-                    $args = array(
-                    'post_type'=>PDFEV_Functions::get_cpt_name(),
-                    'post_status' => 'publish',
-                    'order' => PDFEV_Functions::get_post_order(),
-                    'posts_per_page'=> get_option( 'posts_per_page' ),
-                    'paged' => $paged
-                );
-                $WpQuery = new WP_Query($args);    
-                    while ( $WpQuery->have_posts() ) :
-                        $WpQuery->the_post();
-                        ?>
-                        <tr>
-                            <td><a href="<?php the_permalink(); ?>"><?php the_title();?></a></td>
-                            <td><?php the_time(get_option('date_format')); ?></td>
-                            <td>
-                                <?php PDFEV_Functions::read_button(); ?>
-                                <?php PDFEV_Functions::download_button(); ?>
-                            </td>
-                        </tr>
-                <?php endwhile; ?>
-            </table>
-            <?php $this->pagination($WpQuery);?>
+        <div class="pdfev-embed-viewer">
+            <div class="archive-list-style">
+                <table>
+                    <tr>
+                        <th><?php echo esc_html__('Title','pdf-embed-viewer') ?></th>
+                        <th><?php echo esc_html__('Date','pdf-embed-viewer') ?></th>
+                        <th></th>
+                    </tr>
+                    <?php
+                        $paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
+                        $args = array(
+                        'post_type'=>PDFEV_Functions::get_cpt_name(),
+                        'post_status' => 'publish',
+                        'order' => PDFEV_Functions::get_post_order(),
+                        'posts_per_page'=> isset($atts['limit'])? $atts['limit'] : get_option( 'posts_per_page' ),
+                        'paged' => $paged
+                    );
+                    $WpQuery = new WP_Query($args);    
+                        while ( $WpQuery->have_posts() ) :
+                            $WpQuery->the_post();
+                            ?>
+                            <tr>
+                                <td><a href="<?php the_permalink(); ?>"><?php the_title();?></a></td>
+                                <td><?php the_time(get_option('date_format')); ?></td>
+                                <td>
+                                    <?php PDFEV_Functions::read_button(); ?>
+                                    <?php PDFEV_Functions::download_button(); ?>
+                                </td>
+                            </tr>
+                    <?php endwhile; ?>
+                </table>
+                <?php $this->pagination($WpQuery);?>
+            </div>
         </div>
         <?php 
         }
 
-        public function template_archive_grid(){
+        public function template_archive_grid($atts=[]){
         ?>
+        <div class="pdfev-embed-viewer">
             <div class="archive-grid-style">
                 <?php
                     $paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
@@ -79,7 +82,7 @@ if( ! class_exists( 'PDFEV_Template' ) ){
                     'post_type'=>PDFEV_Functions::get_cpt_name(),
                     'order' => PDFEV_Functions::get_post_order(),
                     'post_status' => 'publish',
-                    'posts_per_page'=> get_option( 'posts_per_page' ),
+                    'posts_per_page'=> isset($atts['limit'])? $atts['limit'] : get_option( 'posts_per_page' ),
                     'paged' => $paged
                 );
                 $WpQuery = new WP_Query($args);    
@@ -108,12 +111,14 @@ if( ! class_exists( 'PDFEV_Template' ) ){
                 <?php endwhile; ?>
             </div>
             <?php $this->pagination($WpQuery);?>
+        </div>
         <?php 
         }
 
-        public function template_archive_newsletter(){
+        public function template_archive_newsletter($atts=[]){
             $years =  PDFEV_CPT::get_posts_years_array();
         ?>
+        <div class="pdfev-embed-viewer">
             <?php if($years): ?>
                 <div class="archive-newsletter-style">
                     <ul class="tabs">
@@ -138,7 +143,7 @@ if( ! class_exists( 'PDFEV_Template' ) ){
                                     'post_type'=>PDFEV_Functions::get_cpt_name(),
                                     'order' => PDFEV_Functions::get_post_order(),
                                     'post_status' => 'publish',
-                                    'posts_per_page'=> -1,
+                                    'posts_per_page'=> isset($atts['limit'])? $atts['limit'] : get_option( 'posts_per_page' ),
                                     'paged' => $paged,
                                     'date_query' => array(
                                         array(
@@ -171,11 +176,13 @@ if( ! class_exists( 'PDFEV_Template' ) ){
             <?php else: ?>
                 <h2><?php echo esc_html('No data found','pdf-embed-viewer'); ?></h2>
             <?php endif; ?>
+        </div>
         <?php
         }
 
-        public function template_archive_ebook(){
+        public function template_archive_ebook($atts=[]){
         ?>
+        <div class="pdfev-embed-viewer">
             <div class="archive-ebook-style">
                 <?php
                     $paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
@@ -183,7 +190,7 @@ if( ! class_exists( 'PDFEV_Template' ) ){
                     'post_type'=>PDFEV_Functions::get_cpt_name(),
                     'order' => PDFEV_Functions::get_post_order(),
                     'post_status' => 'publish',
-                    'posts_per_page'=> get_option( 'posts_per_page' ),
+                    'posts_per_page'=> isset($atts['limit'])? $atts['limit'] : get_option( 'posts_per_page' ),
                     'paged' => $paged
                 );
                 $WpQuery = new WP_Query($args);    
@@ -213,6 +220,8 @@ if( ! class_exists( 'PDFEV_Template' ) ){
                 <?php endwhile; ?>
             </div>
             <?php $this->pagination($WpQuery);?>
+        </div>
+            
         <?php
         }
 

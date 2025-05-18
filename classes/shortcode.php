@@ -43,7 +43,8 @@ if( ! class_exists('PDFEV_Shortcode') ){
             // Set default attributes and merge with user-provided attributes
             $atts = shortcode_atts(
                 array(
-                    'template' => 'list', // Default option
+                    'template' => 'list',
+                    'limit' => '',
                 ),
                 $atts,
                 'pdfev_viewer'
@@ -57,27 +58,25 @@ if( ! class_exists('PDFEV_Shortcode') ){
                 // Switch based on the option
                 switch ($template) {
                     case 'list':
-                        $load_template = $template.'.php';
+                        do_action('pdfev_template_archive_list',$atts);
                         break;
             
                     case 'grid':
-                        $load_template = $template.'.php';
+                        do_action('pdfev_template_archive_grid',$atts);
                         break;
             
                     case 'newsletter':
-                        $load_template = $template.'.php';
+                        do_action('pdfev_template_archive_newsletter',$atts);
                         break;
             
                     case 'ebook':
-                        $load_template = $template.'.php';
+                        do_action('pdfev_template_archive_ebook',$atts);
                         break;
             
                     default:
-                        $load_template = $template.'.php';
+                        do_action('pdfev_template_archive_view',$atts);
                         break;
                 }
-                $archive_template = PDFEV_Functions::load_template($load_template);
-                require $archive_template;
                 return ob_get_clean();
             }
             
