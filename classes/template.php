@@ -204,10 +204,11 @@ if( ! class_exists( 'PDFEV_Template' ) ){
                                         <div class="front-cover">
                                             <?php the_post_thumbnail('medium'); ?>
                                         </div>
-                                        <div class="pages"></div>
+                                    </div>
+                                    <div class="pages">
+                                        <h2><?php the_title(); ?></h2>
                                     </div>
                                 </div>
-
                             </a>				
                             <div class="content">
                                 <h2><a href="<?php the_permalink(); ?>">
