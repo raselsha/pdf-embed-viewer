@@ -200,8 +200,14 @@ if( ! class_exists( 'PDFEV_Template' ) ){
                         <div class="grid-item">
                             <a href="<?php the_permalink(); ?>">
                                 <div class="image">
-                                    <?php the_post_thumbnail() ?>
-                                </div>	
+                                    <div class="book">
+                                        <div class="front-cover">
+                                            <?php the_post_thumbnail('medium'); ?>
+                                        </div>
+                                        <div class="pages"></div>
+                                    </div>
+                                </div>
+
                             </a>				
                             <div class="content">
                                 <h2><a href="<?php the_permalink(); ?>">
@@ -217,6 +223,7 @@ if( ! class_exists( 'PDFEV_Template' ) ){
                                 </div>
                             </div>
                         </div>
+                        
                 <?php endwhile; ?>
             </div>
             <?php $this->pagination($WpQuery);?>

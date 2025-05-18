@@ -1,3 +1,4 @@
+@charset "UTF-8";
 .pdfev-embed-viewer {
   max-width: 1600px;
   margin: 0 auto;
@@ -367,64 +368,116 @@
   }
 }
 
-.pdfev-embed-viewer .archive-ebook-style {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
+.pdfev-embed-viewer {
+  max-width: 1200px;
+  margin: 0 auto;
 }
-@media (min-width: 1024px) {
-  .pdfev-embed-viewer .archive-ebook-style {
-    justify-content: start;
-  }
+.pdfev-embed-viewer .archive-ebook-style {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
 }
 .pdfev-embed-viewer .archive-ebook-style .grid-item {
-  width: 48%;
-  margin: 5px;
-  position: relative;
-}
-@media (min-width: 580px) {
-  .pdfev-embed-viewer .archive-ebook-style .grid-item {
-    width: 30%;
-  }
-}
-@media (min-width: 1024px) {
-  .pdfev-embed-viewer .archive-ebook-style .grid-item {
-    width: 19%;
-  }
+  background-color: var(--pdfev-white);
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  /* Hover flipping */
 }
 .pdfev-embed-viewer .archive-ebook-style .grid-item .image {
-  width: auto;
-  height: 200px;
+  width: 200px;
+  height: 280px;
+  perspective: 1500px;
+  position: relative;
+  cursor: pointer;
 }
-.pdfev-embed-viewer .archive-ebook-style .grid-item .image img {
-  max-width: 180px;
+.pdfev-embed-viewer .archive-ebook-style .grid-item .book {
+  width: 100%;
   height: 100%;
-  object-fit: contain;
+  position: relative;
+  transform-style: preserve-3d;
+  transform-origin: left center;
+  transition: transform 0.8s ease;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.25);
+  border-radius: 6px;
+  overflow: visible;
+}
+.pdfev-embed-viewer .archive-ebook-style .grid-item .front-cover {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  backface-visibility: hidden;
+  border-radius: 6px;
+  box-shadow: 4px 0 15px rgba(0, 0, 0, 0.3);
+  z-index: 2;
+}
+.pdfev-embed-viewer .archive-ebook-style .grid-item .front-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 6px;
+  display: block;
+}
+.pdfev-embed-viewer .archive-ebook-style .grid-item .pages {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: #f9f9f9;
+  border: 2px solid #111;
+  border-radius: 6px;
+  box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.8), 0 0 10px rgba(0, 0, 0, 0.6);
+  transform: rotateY(180deg);
+  backface-visibility: hidden;
+  z-index: 1;
+}
+.pdfev-embed-viewer .archive-ebook-style .grid-item .image:hover .book {
+  transform: rotateY(-70deg);
+  box-shadow: 10px 15px 30px rgba(0, 0, 0, 0.35);
 }
 .pdfev-embed-viewer .archive-ebook-style .grid-item .content {
-  padding: 5px;
-  padding-left: 0;
-}
-.pdfev-embed-viewer .archive-ebook-style .grid-item .content h2 {
-  margin: 0;
-  margin-bottom: 10px;
-  padding: 0;
-  font-size: 1rem;
-  font-weight: bold;
-}
-.pdfev-embed-viewer .archive-ebook-style .grid-item .content h2 a {
-  color: var(--pdfev-dark);
-}
-.pdfev-embed-viewer .archive-ebook-style .grid-item .content .action {
+  padding: 15px;
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  align-items: start;
-  gap: 5px;
 }
-.pdfev-embed-viewer .archive-ebook-style .grid-item .content .action a {
-  font-weight: normal;
+.pdfev-embed-viewer .archive-ebook-style .grid-item .content h2 {
+  font-size: 16px;
+  margin: 0 0 12px;
+  line-height: 1.4;
+}
+.pdfev-embed-viewer .archive-ebook-style .grid-item .content h2 a {
+  color: var(--pdfev-dark);
+  text-decoration: none;
+}
+.pdfev-embed-viewer .archive-ebook-style .grid-item .content .action {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.pdfev-embed-viewer .archive-ebook-style .grid-item .content .action button {
+  background-color: var(--pdfev-primary);
+  border: none;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.pdfev-embed-viewer .archive-ebook-style .grid-item .content .action button.read-btn::before {
+  content: "👁️";
+}
+.pdfev-embed-viewer .archive-ebook-style .grid-item .content .action button.download-btn::before {
+  content: "⬇️";
 }
 
 .pdfev-embed-viewer .archive-newsletter-style {
