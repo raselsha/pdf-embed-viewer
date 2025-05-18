@@ -45,6 +45,11 @@ if( ! class_exists('PDFEV_Shortcode') ){
                 array(
                     'template' => 'list',
                     'limit' => '',
+                    'order' => '',
+                    'read' => '',
+                    'download' => '',
+                    'reading_count' => '',
+                    'downloading_count' => '',
                 ),
                 $atts,
                 'pdfev_viewer'

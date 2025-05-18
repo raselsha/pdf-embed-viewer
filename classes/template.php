@@ -48,7 +48,7 @@ if( ! class_exists( 'PDFEV_Template' ) ){
                         $args = array(
                         'post_type'=>PDFEV_Functions::get_cpt_name(),
                         'post_status' => 'publish',
-                        'order' => PDFEV_Functions::get_post_order(),
+                        'order' => isset($atts['order'])? $atts['order'] : PDFEV_Functions::get_post_order(),
                         'posts_per_page'=> isset($atts['limit'])? $atts['limit'] : get_option( 'posts_per_page' ),
                         'paged' => $paged
                     );
@@ -60,8 +60,8 @@ if( ! class_exists( 'PDFEV_Template' ) ){
                                 <td><a href="<?php the_permalink(); ?>"><?php the_title();?></a></td>
                                 <td><?php the_time(get_option('date_format')); ?></td>
                                 <td>
-                                    <?php PDFEV_Functions::read_button(); ?>
-                                    <?php PDFEV_Functions::download_button(); ?>
+                                    <?php PDFEV_Functions::read_button($atts); ?>
+                                    <?php PDFEV_Functions::download_button($atts); ?>
                                 </td>
                             </tr>
                     <?php endwhile; ?>
@@ -80,7 +80,7 @@ if( ! class_exists( 'PDFEV_Template' ) ){
                     $paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
                     $args = array(
                     'post_type'=>PDFEV_Functions::get_cpt_name(),
-                    'order' => PDFEV_Functions::get_post_order(),
+                    'order' => isset($atts['order'])? $atts['order'] : PDFEV_Functions::get_post_order(),
                     'post_status' => 'publish',
                     'posts_per_page'=> isset($atts['limit'])? $atts['limit'] : get_option( 'posts_per_page' ),
                     'paged' => $paged
@@ -104,8 +104,8 @@ if( ! class_exists( 'PDFEV_Template' ) ){
                                 ?>
                             </a></h2>
                             <div class="action">
-                                <?php PDFEV_Functions::read_button(); ?>
-                                <?php PDFEV_Functions::download_button(); ?>
+                                <?php PDFEV_Functions::read_button($atts); ?>
+                                <?php PDFEV_Functions::download_button($atts); ?>
                             </div>
                         </div>
                 <?php endwhile; ?>
@@ -141,7 +141,7 @@ if( ! class_exists( 'PDFEV_Template' ) ){
                                     $paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
                                     $args = array(
                                     'post_type'=>PDFEV_Functions::get_cpt_name(),
-                                    'order' => PDFEV_Functions::get_post_order(),
+                                    'order' => isset($atts['order'])? $atts['order'] : PDFEV_Functions::get_post_order(),
                                     'post_status' => 'publish',
                                     'posts_per_page'=> isset($atts['limit'])? $atts['limit'] : get_option( 'posts_per_page' ),
                                     'paged' => $paged,
@@ -159,8 +159,8 @@ if( ! class_exists( 'PDFEV_Template' ) ){
                                             <td><?php the_time('F'); ?></td>
                                             <td><a href="<?php the_permalink(); ?>"><?php the_title();?></a></td>
                                             <td  style="text-align: right;">
-                                                <?php PDFEV_Functions::read_button(); ?>
-                                                <?php PDFEV_Functions::download_button(); ?>
+                                                <?php PDFEV_Functions::read_button($atts); ?>
+                                                <?php PDFEV_Functions::download_button($atts); ?>
                                             </td>
 
                                         </tr>
@@ -188,7 +188,7 @@ if( ! class_exists( 'PDFEV_Template' ) ){
                     $paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
                     $args = array(
                     'post_type'=>PDFEV_Functions::get_cpt_name(),
-                    'order' => PDFEV_Functions::get_post_order(),
+                    'order' => isset($atts['order'])? $atts['order'] : PDFEV_Functions::get_post_order(),
                     'post_status' => 'publish',
                     'posts_per_page'=> isset($atts['limit'])? $atts['limit'] : get_option( 'posts_per_page' ),
                     'paged' => $paged
@@ -212,8 +212,8 @@ if( ! class_exists( 'PDFEV_Template' ) ){
                                 ?>
                                 </a></h2>
                                 <div class="action">
-                                    <?php PDFEV_Functions::read_button(); ?>
-                                    <?php PDFEV_Functions::download_button(); ?>
+                                    <?php PDFEV_Functions::read_button($atts); ?>
+                                    <?php PDFEV_Functions::download_button($atts); ?>
                                 </div>
                             </div>
                         </div>
