@@ -3,7 +3,7 @@
  * Plugin Name: 3D Flipbook PDF Viewer & Embedder – E-Books, Manuals, Newsletters, Reports
  * Plugin URI: https://wordpress.org/plugins/pdf-embed-viewer
  * Description: Display PDFs as interactive 3D flipbooks or traditional viewers for E-Books, Manuals, Newsletters, and Reports.
- * Version: 1.2.3
+ * Version: 1.2.4
  * Stable Tag: trunk
  * Requires at least: 3.0
  * Requires PHP:      7.4

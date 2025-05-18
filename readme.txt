@@ -20,11 +20,27 @@ Display PDFs as interactive 3D flipbooks or traditional viewers for E-Books, Man
 * **Newsletter Template**
 * **Ebook Template**
 
-## Shortcode for arvhive view
-* **[pdfev_viewer template="list"]**
-* **[pdfev_viewer template="grid"]**
-* **[pdfev_viewer template="ebook"]**
-* **[pdfev_viewer template="newsletter"]**
+## Shortcode for multiple template view
+Use the [pdfev_viewer] shortcode to display your PDF items in various layouts.
+
+Available Attributes
+
+| Attribute           | Description                                              | Values                                | Default |
+| ------------------- | -------------------------------------------------------- | ------------------------------------- | ------- |
+| `template`          | Choose the display layout.                               | `list`, `grid`, `ebook`, `newsletter` | `list`  |
+| `limit`             | Number of PDF items to display.                          | Integer (e.g., `5`, `10`, `20`)       | `10`    |
+| `order`             | Set display order.                                       | `asc`, `dsc`                          | `dsc`   |
+| `read`              | Show or hide the **Read** button.                        | `yes`, `no`                           | `yes`   |
+| `download`          | Show or hide the **Download** button.                    | `yes`, `no`                           | `yes`   |
+| `reading_count`     | Show or hide how many times the PDF has been read.       | `yes`, `no`                           | `yes`   |
+| `downloading_count` | Show or hide how many times the PDF has been downloaded. | `yes`, `no`                           | `yes`   |
+
+* **[pdfev_viewer template="list" limit="10" order="dsc" read="yes" download="yes" reading_count="yes" downloading_count="yes" ]**
+* **[pdfev_viewer template="grid" ]**
+* **[pdfev_viewer template="ebook" limit="10" order="asc" read="yes" download="yes"]**
+* **[pdfev_viewer template="newsletter" limit="30" order="dsc"]**
+
+
 
 ## Shortcode for single page/post
 * **[pdfev_embed_viewer id="post_id"]**
@@ -75,6 +91,11 @@ Learn more about how [Appsero collects and uses this data](https://appsero.com/p
 
 
 == Changelog ==
+= 1.2.4 =
+* Template shortcode Attribute set
+* Ebook cover fliping style on hover
+* Update E-book Design
+
 = 1.2.3 =
 * Arichive view number pagination fix
 
