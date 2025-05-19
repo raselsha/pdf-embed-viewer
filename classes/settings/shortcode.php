@@ -80,16 +80,15 @@ if( ! class_exists('PDFEV_Settings_Shortcode') ){
                             </select>
                         </div>
 
-                        <button id="pdfev-shortcode-generate">Generate Shortcode</button>
-                        <button id="pdfev-shortcode-reset" type="button">Reset</button>
-
+                        <button id="pdfev-shortcode-generate"><?php echo esc_html__('Generate Shortcode','pdf-embed-viewer'); ?></button>
+                        <button id="pdfev-shortcode-reset" type="button"><?php echo esc_html__('Reset','pdf-embed-viewer'); ?></button>
                         
                     </div>
                     <div class="shortcode-previewer">
-                        <h2>ShortCode</h2>
+                        <h2><?php echo esc_html__('ShortCode','pdf-embed-viewer'); ?></h2>
                         <div id="pdfev-shortcode" class="pdfev-shortcode">[pdfev_viewer template="list" limit="10" order="dsc" read="yes" download="yes" reading_count="yes" downloading_count="yes"]</div>
                         <!-- <div id="shortcode-previewer"></div> -->
-                        <button id="pdfev-copy-shortcode">Copy</button>
+                        <button id="pdfev-copy-shortcode"><?php echo esc_html__('Copy','pdf-embed-viewer'); ?></button>
                     </div>
                 </div>
             </div> 
