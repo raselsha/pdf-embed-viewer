@@ -7,7 +7,7 @@ Requires PHP:      7.0
 Stable tag:	       trunk
 License:           GPLv2 or later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
-Tags:               3d flipbook, ebook, newsletter, pdf, pdf embed,
+Tags:               3d flipbook, ebook, flipbook, pdf, pdf embed,
 
 Display PDFs as interactive 3D flipbooks or traditional viewers for E-Books, Manuals, Newsletters, and Reports.
 
