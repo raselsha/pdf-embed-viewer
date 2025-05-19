@@ -27,6 +27,73 @@
         &.active {
             display: block;
         }
+        .pdfev-shortcode-generaor{
+            display: flex;
+            padding: 10px;
+            gap:50px;
+            .shortcode-sidebar{
+                border: 1px solid #333;
+                width: 30%;
+                padding: 10px;
+            }
+            .shortcode-previewer{
+                border: 1px solid #333;
+                width: 70%;
+                padding: 10px;
+                text-align: center;
+                .pdfev-loading::after {
+                    content: '';
+                    display: inline-block;
+                    margin-left: 10px;
+                    width: 16px;
+                    height: 16px;
+                    border: 2px solid #ccc;
+                    border-top: 2px solid #333;
+                    border-radius: 50%;
+                    animation: spin 0.6s linear infinite;
+                }
+
+                @keyframes spin {
+                    0% { transform: rotate(0deg); }
+                    100% { transform: rotate(360deg); }
+                }
+            }
+            h2 {
+                margin: 0;
+                margin-bottom: 20px;
+            }
+            .form-group {
+                margin-bottom: 15px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                select, input {
+                width:300px;
+                font-size: 14px;
+                }
+            }
+            
+            .pdfev-shortcode{
+                background: #f4f4f4;
+                border: 1px solid #ccc;
+                padding: 10px;
+                margin-top: 20px;
+                font-family: monospace;
+                font-size: 15px;
+            }
+            button {
+            margin-top: 15px;
+            padding: 10px 15px;
+            background: #0073aa;
+            border: none;
+            color: #fff;
+            font-size: 14px;
+            cursor: pointer;
+            }
+            button:hover {
+            background: #005f8d;
+            }
+        }
     }
     
 }
