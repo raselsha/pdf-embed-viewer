@@ -21,7 +21,7 @@ Display PDFs as interactive 3D flipbooks or traditional viewers for E-Books, Man
 * **Ebook Template**
 
 ## Shortcode for multiple template view
-Use the [pdfev_viewer] shortcode to display your PDF items in various layouts.
+Easily generate and customize shortcodes with our built-in shortcode generator.
 
 **Shortcode Attributes**
 
@@ -82,6 +82,9 @@ You can use the `[pdfev_viewer]` shortcode with the following attributes:
 
 - **Flexible Shortcode Usage**  
   Use shortcodes anywhere to display your PDF documents or e-books with full control over layout and behavior.
+
+- **Shortcode Generator** 
+  Easily generate and customize shortcodes with our built-in shortcode generator. Navigate to Settings > Shortcode to create the perfect shortcode for your needs
 
 - **Interactive E-Book View**  
   The `ebook` template includes a smooth hover-preview effect for a realistic book feel.
@@ -153,6 +156,10 @@ Learn more about how [Appsero collects and uses this data](https://appsero.com/p
 
 
 == Changelog ==
+= 1.2.5 =
+* fix admin icons
+* Shortcode Generator Added
+
 = 1.2.4 =
 * Template shortcode Attribute set
 * Ebook cover fliping style on hover
