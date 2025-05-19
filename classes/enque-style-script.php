@@ -14,6 +14,8 @@ if( ! class_exists('PDFEV_Enque_Style') ){
         }
 
         public function backend_style(){
+            wp_enqueue_style('pdfev-font-awesome',PDFEV_Const_URL.'vendor/font-awesome/font-awesome.min.css',[],PDFEV_Const_VERSION,'all');
+
             wp_enqueue_style('main',PDFEV_Const_URL.'assets/css/admin.css',['wp-color-picker'],PDFEV_Const_VERSION,'all');
             wp_enqueue_media();       
             wp_enqueue_script( 'pdf-embed-viewer', PDFEV_Const_URL.'assets/js/admin.js', ['jquery','wp-color-picker','jquery-ui-core'], PDFEV_Const_VERSION, false );
