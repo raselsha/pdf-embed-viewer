@@ -3992,6 +3992,14 @@ readers do not read off random characters that represent icons */
 #pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .content .pdfev-tab-content.active {
   display: block;
 }
+#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .content .pdfev-tab-content h2 {
+  font-size: 20px;
+  font-weight: bold;
+  padding: 0;
+}
+#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .content .pdfev-tab-content p {
+  margin-top: 0;
+}
 #pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs section {
   border: 1px solid var(--pdfev-light);
   margin-top: -1px;
