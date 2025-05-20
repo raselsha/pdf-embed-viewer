@@ -156,6 +156,11 @@ Learn more about how [Appsero collects and uses this data](https://appsero.com/p
 
 
 == Changelog ==
+
+= 1.2.6 =
+* PDF Prevew thumbnail generation
+* Featured image from preview thumbnail
+
 = 1.2.5 =
 * fix admin icons
 * Shortcode Generator Added
