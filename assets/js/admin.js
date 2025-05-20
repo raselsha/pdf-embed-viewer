@@ -23,31 +23,66 @@
   });
 
   // =================media upload======== 
-  $(document).on('click','.pdfev-emd-vwr-upload',function(e) {
-      e.preventDefault();
-      var mediaUploader = wp.media({
-          title: 'Upload PDF',
-          button: {
-              text: 'Embed PDF'
-        },
-        library: {
-              type: 'application/pdf'
-          },
-          multiple: false
-      });
-      mediaUploader.on('select', function () {
-        var attachment = mediaUploader.state().get('selection').first().toJSON();
-        // Check if the selected file is a PDF
-        if (attachment.mime === 'application/pdf') {
-          $('.pdfev-emd-vwr-file').val(attachment.url);
-        } else {
-          alert('Please select a PDF file only.');
-          $('.pdfev-emd-vwr-file').val('');
-        }
-      });
-      mediaUploader.open();
-  });
-  
+    $(document).on('click','.pdfev-emd-vwr-upload',function(e) {
+        e.preventDefault();
+        var mediaUploader = wp.media({
+            title: 'Upload PDF',
+            button: {
+                text: 'Embed PDF'
+            },
+            library: {
+                type: 'application/pdf'
+            },
+            multiple: false
+        });
+        mediaUploader.on('select', function () {
+            var attachment = mediaUploader.state().get('selection').first().toJSON();
+            // Check if the selected file is a PDF
+            if (attachment.mime === 'application/pdf') {
+            $('.pdfev-emd-vwr-file').val(attachment.url);
+            //   $('#pdfev-preview').html(attachment.url);
+            renderPDFPreview(attachment.url);
+            } else {
+            alert('Please select a PDF file only.');
+            $('.pdfev-emd-vwr-file').val('');
+            }
+        });
+        mediaUploader.open();
+    });
+
+    function renderPDFPreview(pdfUrl) {
+        const container = $('#pdfev-preview');
+        container.html('Loading preview...');
+        pdfjsLib.GlobalWorkerOptions.workerSrc = pdfevAjax.pdfevurl + 'vendor/pdf/pdf.worker.min.js';
+        
+        const loadingTask = pdfjsLib.getDocument(pdfUrl);
+        loadingTask.promise.then(pdf => {
+            // Load page 1
+            return pdf.getPage(1);
+        }).then(page => {
+            const scale = 1.5;
+            const viewport = page.getViewport({ scale });
+
+            // Create a canvas element
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+
+            // Append to preview container
+            $('#pdfev-preview').html('').append(canvas);
+
+            const renderContext = {
+                canvasContext: context,
+                viewport: viewport
+            };
+
+            page.render(renderContext);
+        }).catch(error => {
+            console.error('Error loading PDF:', error);
+            $('#pdfev-preview').html('<p style="color:red;">Failed to load preview.</p>');
+        });
+    }
   // =================Import Demo Content========
   $(document).on('click','#pdfev-import-demo-content',function (e) {
     e.preventDefault();

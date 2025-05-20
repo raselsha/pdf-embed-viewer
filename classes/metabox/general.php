@@ -71,6 +71,9 @@ if( ! class_exists('PDFEV_Metabox_General') ){
                         </label>
                     </label>
                 </section>
+                <section id="pdfev-preview">
+
+                </section>
             </div>
 
             <?php
