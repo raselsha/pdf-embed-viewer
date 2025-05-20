@@ -95,8 +95,7 @@ if( ! class_exists('PDFEV_Settings_Shortcode') ){
             <?php
         }
         public function shortcode_generate(){
-            // check_ajax_referer('ajaxnonce', 'ajaxnonce');
-
+            check_ajax_referer('pdf_ajax_nonce', 'ajaxnonce');
             $template = isset($_POST['template']) ? sanitize_text_field($_POST['template']) : '';
             $limit = isset($_POST['limit']) ? intval($_POST['limit']) : 10;
             $order = isset($_POST['order']) ? sanitize_text_field($_POST['order']) : '';
