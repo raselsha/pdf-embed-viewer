@@ -105,8 +105,9 @@
         }
     }
     // ========upload and save featured image==========
-    $(document).on('click','#pdfev-upload-save',function (e) {
+    $(document).on('click', '#pdfev-upload-save', function (e) {
         e.preventDefault();
+
         const imageData = $('#pdfev-featured-image-data').val();
         if (!imageData) {
             alert('Please select an image first.');
@@ -125,7 +126,12 @@
                 if (response.success) {
                     alert('Featured image set successfully!');
                     $('#pdfev-featured-image-area').hide();
-                    $('#set-post-thumbnail img').src(imageData);
+
+                    // ✅ Corrected this line
+                    $('#set-post-thumbnail img').attr('src', imageData).show();
+
+                    // Optional: add CSS class to highlight update
+                    $('#set-post-thumbnail').addClass('updated');
                 } else {
                     alert('Failed to set featured image.');
                     console.log(response);
@@ -136,6 +142,7 @@
             }
         });
     });
+
 
     // on ready show preview pdf
     $(document).ready(function(){
