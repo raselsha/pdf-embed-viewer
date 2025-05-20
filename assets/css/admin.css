@@ -127,6 +127,12 @@
 #pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs section input.pdfev-emd-vwr-file {
   width: 83%;
 }
+#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs #pdfev-preview {
+  display: none;
+}
+#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs #pdfev-preview canvas {
+  border: 1px solid #ddd;
+}
 
 .pdfev-embed-viewer .nav-tab {
   cursor: pointer;

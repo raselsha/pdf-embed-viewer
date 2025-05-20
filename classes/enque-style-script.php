@@ -26,7 +26,8 @@ if( ! class_exists('PDFEV_Enque_Style') ){
             wp_localize_script('pdf-embed-viewer', 'pdfevAjax', array(
                 'ajaxurl' => admin_url('admin-ajax.php'),
                 'ajaxnonce'=> wp_create_nonce('pdf_ajax_nonce'),
-                'pdfevurl' => PDFEV_Const_URL
+                'pdfevurl' => PDFEV_Const_URL,
+                'pdfworker' => PDFEV_Const_URL.'vendor/pdf/pdf.worker.min.js'
             ));
         }
 

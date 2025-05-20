@@ -41,7 +41,7 @@
             if (attachment.mime === 'application/pdf') {
             $('.pdfev-emd-vwr-file').val(attachment.url);
             //   $('#pdfev-preview').html(attachment.url);
-            renderPDFPreview(attachment.url);
+            renderPDFThumbnails(attachment.url);
             } else {
             alert('Please select a PDF file only.');
             $('.pdfev-emd-vwr-file').val('');
@@ -50,39 +50,43 @@
         mediaUploader.open();
     });
 
-    function renderPDFPreview(pdfUrl) {
+    async function renderPDFThumbnails(pdfUrl) {
         const container = $('#pdfev-preview');
+        container.show();
         container.html('Loading preview...');
-        pdfjsLib.GlobalWorkerOptions.workerSrc = pdfevAjax.pdfevurl + 'vendor/pdf/pdf.worker.min.js';
-        
-        const loadingTask = pdfjsLib.getDocument(pdfUrl);
-        loadingTask.promise.then(pdf => {
-            // Load page 1
-            return pdf.getPage(1);
-        }).then(page => {
-            const scale = 1.5;
-            const viewport = page.getViewport({ scale });
+        pdfjsLib.GlobalWorkerOptions.workerSrc = pdfevAjax.pdfworker;// pdf worker url
 
-            // Create a canvas element
-            const canvas = document.createElement('canvas');
-            const context = canvas.getContext('2d');
-            canvas.height = viewport.height;
-            canvas.width = viewport.width;
+        try {
+            const pdf = await pdfjsLib.getDocument(pdfUrl).promise;
+            container.html(''); // Clear previous content
 
-            // Append to preview container
-            $('#pdfev-preview').html('').append(canvas);
+            for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+                const page = await pdf.getPage(pageNum);
+                const scale = 0.2;
+                const viewport = page.getViewport({ scale });
 
-            const renderContext = {
-                canvasContext: context,
-                viewport: viewport
-            };
+                const canvas = document.createElement('canvas');
+                const context = canvas.getContext('2d');
+                canvas.height = viewport.height;
+                canvas.width = viewport.width;
 
-            page.render(renderContext);
-        }).catch(error => {
+                const renderContext = {
+                    canvasContext: context,
+                    viewport: viewport
+                };
+
+                await page.render(renderContext).promise;
+                canvas.style.margin = "5px";
+                container.append(canvas);
+            }
+
+        } catch (error) {
             console.error('Error loading PDF:', error);
-            $('#pdfev-preview').html('<p style="color:red;">Failed to load preview.</p>');
-        });
+            container.html('<p style="color:red;">Failed to load preview.</p>');
+        }
     }
+
+
   // =================Import Demo Content========
   $(document).on('click','#pdfev-import-demo-content',function (e) {
     e.preventDefault();
