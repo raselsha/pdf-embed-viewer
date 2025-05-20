@@ -54,7 +54,7 @@
         const container = $('#pdfev-preview');
         container.show();
         container.html('Loading preview...');
-        pdfjsLib.GlobalWorkerOptions.workerSrc = pdfevAjax.pdfworker;// pdf worker url
+        pdfjsLib.GlobalWorkerOptions.workerSrc = pdfevAjax.pdfevurl + 'vendor/pdf/pdf.worker.min.js';
 
         try {
             const pdf = await pdfjsLib.getDocument(pdfUrl).promise;
@@ -76,8 +76,28 @@
                 };
 
                 await page.render(renderContext).promise;
-                canvas.style.margin = "5px";
-                container.append(canvas);
+
+                // Create wrapper div
+                const wrapper = document.createElement('div');
+                wrapper.style.display = 'inline-block';
+                wrapper.style.textAlign = 'center';
+                wrapper.style.margin = '10px';
+
+                // Add canvas
+                canvas.style.display = 'block';
+                wrapper.appendChild(canvas);
+
+                // Add page number
+                const pageNumberLabel = document.createElement('span');
+                pageNumberLabel.textContent = `Page ${pageNum}`;
+                pageNumberLabel.style.display = 'block';
+                pageNumberLabel.style.marginTop = '5px';
+                pageNumberLabel.style.fontSize = '12px';
+                pageNumberLabel.style.color = '#333';
+
+                wrapper.appendChild(pageNumberLabel);
+
+                container.append(wrapper);
             }
 
         } catch (error) {
@@ -85,6 +105,7 @@
             container.html('<p style="color:red;">Failed to load preview.</p>');
         }
     }
+
 
 
   // =================Import Demo Content========
