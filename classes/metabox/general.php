@@ -72,18 +72,19 @@ if( ! class_exists('PDFEV_Metabox_General') ){
                         </label>
                     </label>
                 </section>
-                <section id="pdfev-featured-image-area">
-                    <label class="label">
-                        <div>
-                            <p><?php echo esc_html__( 'Preview Featured Image', 'pdf-embed-viewer' )?></p>
-                            <span><?php echo esc_html__('Show/Hide download Button in single page.','pdf-embed-viewer') ?></span>
-                        </div>
-                        <input type="hidden" id="pdfev-featured-image-data" name="pdfev_featured_image">
-                        <img id="pdfev-featured-image-preview" src="" style="max-width: 200px; display:none;">
-                        <button id="pdfev-upload-save" class="btn button">Set Fetured Image</button>
-                    </label>
-                </section>
-                <section id="pdfev-preview">
+                
+                <section class="pdfev-preview-area">
+                    <div id="pdfev-preview"></div>
+                    <div id="pdfev-featured-image-area">
+                        <div class="featured-image">
+                            <label class="label">
+                                <p><?php echo esc_html__( 'Preview Featured Image', 'pdf-embed-viewer' )?></p>
+                            </label>
+                            <input type="hidden" id="pdfev-featured-image-data" name="pdfev_featured_image">
+                            <img id="pdfev-featured-image-preview" src="" style="max-width: 200px; display:none;">
+                            <button id="pdfev-upload-save" class="btn button">Set Fetured Image</button>
+                        </div> 
+                    </div>
                 </section>
             </div>
 

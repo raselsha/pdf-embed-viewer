@@ -75,14 +75,54 @@
                 }
             }
 
-            #pdfev-featured-image-area{
-                display: none;
-            }
-            
-            #pdfev-preview{
-                display: none;
-                canvas{
-                    border: 1px solid #ddd;
+            .pdfev-preview-area{
+                display: flex;
+                #pdfev-preview{
+                    display: none;
+                    width: 70%;
+                    .preview-thumbnail{
+                        margin: 5px;
+                        display: inline-block;
+                        text-align: center;
+                        position: relative;
+                        &::before{
+                            display: none;
+                            content: 'Click to set Fetured image';
+                            width: 100%;
+                            height: 100%;
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            padding-top: 50%;
+                            background-color: #000000a9;
+                            color: skyblue;
+                            box-sizing: border-box;
+                        }
+                        &:hover::before{
+                            display: block;
+                        }
+                        .page-number{
+                            font-family: 12px;
+                            text-align: center;
+                        }
+                    }
+                    canvas{
+                        border: 1px solid #ddd;
+                    }
+                }
+                #pdfev-featured-image-area{
+                    display: none;
+                    width: 30%;
+                    .featured-image{
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        gap:10px;
+                        justify-self: center;
+                        background-color: var(--pdfev-light);
+                        padding: 10px;
+                        border-radius: 10px;
+                    }
                 }
             }
         }

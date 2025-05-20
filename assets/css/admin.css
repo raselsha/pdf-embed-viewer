@@ -127,14 +127,55 @@
 #pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs section input.pdfev-emd-vwr-file {
   width: 83%;
 }
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs #pdfev-featured-image-area {
-  display: none;
+#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-preview-area {
+  display: flex;
 }
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs #pdfev-preview {
+#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-preview-area #pdfev-preview {
   display: none;
+  width: 70%;
 }
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs #pdfev-preview canvas {
+#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-preview-area #pdfev-preview .preview-thumbnail {
+  margin: 5px;
+  display: inline-block;
+  text-align: center;
+  position: relative;
+}
+#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-preview-area #pdfev-preview .preview-thumbnail::before {
+  display: none;
+  content: "Click to set Fetured image";
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding-top: 50%;
+  background-color: rgba(0, 0, 0, 0.662745098);
+  color: skyblue;
+  box-sizing: border-box;
+}
+#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-preview-area #pdfev-preview .preview-thumbnail:hover::before {
+  display: block;
+}
+#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-preview-area #pdfev-preview .preview-thumbnail .page-number {
+  font-family: 12px;
+  text-align: center;
+}
+#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-preview-area #pdfev-preview canvas {
   border: 1px solid #ddd;
+}
+#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-preview-area #pdfev-featured-image-area {
+  display: none;
+  width: 30%;
+}
+#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-preview-area #pdfev-featured-image-area .featured-image {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  justify-self: center;
+  background-color: var(--pdfev-light);
+  padding: 10px;
+  border-radius: 10px;
 }
 
 .pdfev-embed-viewer .nav-tab {

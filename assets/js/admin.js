@@ -49,7 +49,7 @@
         });
         mediaUploader.open();
     });
-    // pdf thumbnail generate
+    // ======pdf thumbnail generate=========
     async function renderPDFThumbnails(pdfUrl) {
         const container = $('#pdfev-preview');
         container.show();
@@ -59,6 +59,8 @@
         try {
             const pdf = await pdfjsLib.getDocument(pdfUrl).promise;
             container.html(''); // Clear previous content
+
+            let firstImageSet = false; // ✅ Flag to auto-set first image as featured
 
             for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
                 const page = await pdf.getPage(pageNum);
@@ -72,25 +74,30 @@
 
                 await page.render({ canvasContext: context, viewport }).promise;
 
+                // Convert canvas to image data URL
+                const imageData = canvas.toDataURL('image/jpeg');
+
+                // ✅ Set default featured image from first page
+                if (!firstImageSet) {
+                    $('#pdfev-featured-image-area').hide();
+                    $('#pdfev-featured-image-preview').attr('src', imageData).show();
+                    $('#pdfev-featured-image-data').val(imageData);
+                    firstImageSet = true;
+                }
+
                 // Add label
                 const wrapper = document.createElement('div');
-                wrapper.style.display = 'inline-block';
-                wrapper.style.textAlign = 'center';
-                wrapper.style.margin = '5px';
+                wrapper.classList.add('preview-thumbnail');
                 wrapper.appendChild(canvas);
 
                 const label = document.createElement('div');
+                label.classList.add('page-number');
                 label.innerText = `Page ${pageNum}`;
-                label.style.fontSize = '12px';
                 wrapper.appendChild(label);
 
-                // Add click event to set as featured
+                // Add click event to manually set featured image
                 wrapper.style.cursor = 'pointer';
                 wrapper.addEventListener('click', function () {
-                    // Convert canvas to image data URL
-                    const imageData = canvas.toDataURL('image/jpeg');
-                    
-                    // Set this as "featured image"
                     $('#pdfev-featured-image-area').show();
                     $('#pdfev-featured-image-preview').attr('src', imageData).show();
                     $('#pdfev-featured-image-data').val(imageData);
@@ -104,6 +111,7 @@
             container.html('<p style="color:red;">Failed to load preview.</p>');
         }
     }
+
     // ========upload and save featured image==========
     $(document).on('click', '#pdfev-upload-save', function (e) {
         e.preventDefault();
