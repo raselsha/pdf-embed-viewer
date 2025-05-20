@@ -49,7 +49,7 @@
         });
         mediaUploader.open();
     });
-
+    // pdf thumbnail generate
     async function renderPDFThumbnails(pdfUrl) {
         const container = $('#pdfev-preview');
         container.show();
@@ -70,32 +70,31 @@
                 canvas.height = viewport.height;
                 canvas.width = viewport.width;
 
-                const renderContext = {
-                    canvasContext: context,
-                    viewport: viewport
-                };
+                await page.render({ canvasContext: context, viewport }).promise;
 
-                await page.render(renderContext).promise;
-
-                // Create wrapper div
+                // Add label
                 const wrapper = document.createElement('div');
                 wrapper.style.display = 'inline-block';
                 wrapper.style.textAlign = 'center';
-                wrapper.style.margin = '10px';
-
-                // Add canvas
-                canvas.style.display = 'block';
+                wrapper.style.margin = '5px';
                 wrapper.appendChild(canvas);
 
-                // Add page number
-                const pageNumberLabel = document.createElement('span');
-                pageNumberLabel.textContent = `Page ${pageNum}`;
-                pageNumberLabel.style.display = 'block';
-                pageNumberLabel.style.marginTop = '5px';
-                pageNumberLabel.style.fontSize = '12px';
-                pageNumberLabel.style.color = '#333';
+                const label = document.createElement('div');
+                label.innerText = `Page ${pageNum}`;
+                label.style.fontSize = '12px';
+                wrapper.appendChild(label);
 
-                wrapper.appendChild(pageNumberLabel);
+                // Add click event to set as featured
+                wrapper.style.cursor = 'pointer';
+                wrapper.addEventListener('click', function () {
+                    // Convert canvas to image data URL
+                    const imageData = canvas.toDataURL('image/jpeg');
+                    
+                    // Set this as "featured image"
+                    $('#pdfev-featured-image-area').show();
+                    $('#pdfev-featured-image-preview').attr('src', imageData).show();
+                    $('#pdfev-featured-image-data').val(imageData);
+                });
 
                 container.append(wrapper);
             }
@@ -105,7 +104,43 @@
             container.html('<p style="color:red;">Failed to load preview.</p>');
         }
     }
+    // ========upload and save featured image==========
+    $(document).on('click','#pdfev-upload-save',function (e) {
+        e.preventDefault();
+        const imageData = $('#pdfev-featured-image-data').val();
+        if (!imageData) {
+            alert('Please select an image first.');
+            return;
+        }
 
+        $.ajax({
+            url: pdfevAjax.ajaxurl,
+            type: 'POST',
+            data: {
+                action: 'pdfev_save_featured_image',
+                image_data: imageData,
+                post_id: pdfevAjax.post_id
+            },
+            success: function (response) {
+                if (response.success) {
+                    alert('Featured image set successfully!');
+                    $('#pdfev-featured-image-area').hide();
+                    $('#set-post-thumbnail img').src(imageData);
+                } else {
+                    alert('Failed to set featured image.');
+                    console.log(response);
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error('AJAX Error:', error);
+            }
+        });
+    });
+
+    // on ready show preview pdf
+    $(document).ready(function(){
+        renderPDFThumbnails($('.pdfev-emd-vwr-file').val());
+    });
 
 
   // =================Import Demo Content========

@@ -35,7 +35,7 @@
                     }
                 }
             }
-            
+
             .content{
                 width: 80%;
                 padding: 2% 5%;
@@ -75,6 +75,10 @@
                 }
             }
 
+            #pdfev-featured-image-area{
+                display: none;
+            }
+            
             #pdfev-preview{
                 display: none;
                 canvas{

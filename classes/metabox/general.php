@@ -15,6 +15,7 @@ if( ! class_exists('PDFEV_Metabox_General') ){
             add_action('pdfev_metabox_tabs',array($this,'tabs'));
             add_action('pdfev_metabox_tabs_content',array($this,'tabs_content'));
             add_action( 'save_post' , array( $this, 'save_post') );
+            add_action( 'wp_ajax_pdfev_save_featured_image' , array( $this, 'save_featured_image') );
         }
         public function tabs($post_id){
             ?>
@@ -71,14 +72,78 @@ if( ! class_exists('PDFEV_Metabox_General') ){
                         </label>
                     </label>
                 </section>
+                <section id="pdfev-featured-image-area">
+                    <label class="label">
+                        <div>
+                            <p><?php echo esc_html__( 'Preview Featured Image', 'pdf-embed-viewer' )?></p>
+                            <span><?php echo esc_html__('Show/Hide download Button in single page.','pdf-embed-viewer') ?></span>
+                        </div>
+                        <input type="hidden" id="pdfev-featured-image-data" name="pdfev_featured_image">
+                        <img id="pdfev-featured-image-preview" src="" style="max-width: 200px; display:none;">
+                        <button id="pdfev-upload-save" class="btn button">Set Fetured Image</button>
+                    </label>
+                </section>
                 <section id="pdfev-preview">
-
                 </section>
             </div>
 
             <?php
         }
 
+        public function save_featured_image(){
+            if (!current_user_can('edit_posts')) {
+                wp_send_json_error('Permission denied');
+            }
+
+            $image_data = $_POST['image_data'] ?? '';
+            $post_id = intval($_POST['post_id'] ?? 0);
+
+            if (!$image_data || !$post_id) {
+                wp_send_json_error('Missing data');
+            }
+
+            // Parse the base64 image
+            if (preg_match('/^data:image\/(\w+);base64,/', $image_data, $type)) {
+                $image_data = substr($image_data, strpos($image_data, ',') + 1);
+                $type = strtolower($type[1]); // jpg, png, gif
+
+                if (!in_array($type, ['jpg', 'jpeg', 'gif', 'png'])) {
+                    wp_send_json_error('Invalid image type');
+                }
+
+                $image_data = base64_decode($image_data);
+                if ($image_data === false) {
+                    wp_send_json_error('Base64 decode failed');
+                }
+            } else {
+                wp_send_json_error('Invalid image data format');
+            }
+
+            // Save image to WordPress uploads folder
+            $upload_dir = wp_upload_dir();
+            $filename = 'pdfev-featured-' . time() . '.' . $type;
+            $file_path = $upload_dir['path'] . '/' . $filename;
+
+            file_put_contents($file_path, $image_data);
+
+            // Create attachment
+            $attachment = [
+                'post_mime_type' => 'image/' . $type,
+                'post_title'     => sanitize_file_name($filename),
+                'post_content'   => '',
+                'post_status'    => 'inherit'
+            ];
+
+            $attach_id = wp_insert_attachment($attachment, $file_path, $post_id);
+            require_once ABSPATH . 'wp-admin/includes/image.php';
+            $attach_data = wp_generate_attachment_metadata($attach_id, $file_path);
+            wp_update_attachment_metadata($attach_id, $attach_data);
+
+            // Set as featured image
+            set_post_thumbnail($post_id, $attach_id);
+
+            wp_send_json_success(['attachment_id' => $attach_id]);
+        }
         public function save_post($post_id){
 
                 if( isset( $_POST['pdfev_emd_vwr_metabox_nonce'] ) ){
