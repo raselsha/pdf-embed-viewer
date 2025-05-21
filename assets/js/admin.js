@@ -79,7 +79,12 @@
 
                 // Convert canvas to image data URL
                 const imageData = canvas.toDataURL('image/jpeg');
-
+                var featured_status = $('#pdfev-featured-image').data('status');
+                var featured_image = $('#pdfev-featured-image').data('url');
+                if(featured_status==='yes'){
+                    firstImageSet = true;
+                    $('#pdfev-featured-image-preview').attr('src', featured_image).show();
+                }
                 // ✅ Set default featured image from first page
                 if (!firstImageSet) {
                     $('#pdfev-featured-image').show();
@@ -134,17 +139,14 @@
                 post_id: pdfevAjax.post_id
             },
             success: function (response) {
-                if (response.success) {
+                console.log(response);
+                if (attachment_id) {
                     alert('Featured image set successfully!');
-                    $('#pdfev-featured-image').hide();
-
                     // ✅ Corrected this line
-                    $('#postimagediv img').attr('src', imageData).show();
+                    $('#pdfev-featured-image-preview').attr('src', response.attachment_url).show();
 
-                    // Optional: add CSS class to highlight update
-                    $('#set-post-thumbnail').addClass('updated');
                 } else {
-                    alert('Failed to set featured image.');
+                    alert('Failed to set featured image. Save post first!');
                     console.log(response);
                 }
             },

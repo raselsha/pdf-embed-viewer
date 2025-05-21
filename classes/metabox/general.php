@@ -31,7 +31,7 @@ if( ! class_exists('PDFEV_Metabox_General') ){
             
             $thumbnail = '';
             if ( has_post_thumbnail( $post_id ) ) {
-                $thumbnail = get_the_post_thumbnail( $post_id );
+                $thumbnail_url = get_the_post_thumbnail_url($post_id);
             }
             ?>
             <div class="pdfev-tab-content active" data-tab="pdfev-tabs-general">
@@ -80,13 +80,13 @@ if( ! class_exists('PDFEV_Metabox_General') ){
                 
                 <section class="pdfev-preview-area">
                     <div id="pdfev-preview"></div>
-                    <div class="pdfev-featured-image-area"  data-pdfev-featured="<?php echo $thumbnail?'yes':'no';?>">
-                        <div id="pdfev-featured-image" >
-                            <p><?php echo esc_html__( 'Preview Featured Image', 'pdf-embed-viewer' )?></p>
+                    <div class="pdfev-featured-image-area">
+                        <p><?php echo esc_html__( 'Preview Featured Image', 'pdf-embed-viewer' )?></p>
+                        <div id="pdfev-featured-image" data-status="<?php echo $thumbnail_url?'yes':'no';?>" data-url="<?php echo $thumbnail_url?$thumbnail_url:'';?>">
                             <input type="hidden" id="pdfev-featured-image-data" name="pdfev_featured_image">
-                            <img id="pdfev-featured-image-preview" src="<?php echo esc_attr($thumbnail?$thumbnail:'');?>" style="max-width: 200px; display:none;">
-                            <button id="pdfev-upload-save" class="btn button">Set Fetured Image</button>
+                            <img id="pdfev-featured-image-preview" src="<?php echo esc_attr($thumbnail_url?$thumbnail_url:'');?>" style="max-width: 200px; display:none;">
                         </div> 
+                        <button id="pdfev-upload-save" class="btn button">Set Fetured Image</button>
                     </div>
                 </section>
             </div>
@@ -146,7 +146,10 @@ if( ! class_exists('PDFEV_Metabox_General') ){
             // Set as featured image
             set_post_thumbnail($post_id, $attach_id);
 
-            wp_send_json_success(['attachment_id' => $attach_id]);
+            wp_send_json_success([
+                'attachment_id' => $attach_id,
+                'attachment_url' => get_the_post_thumbnail_url($attach_id),
+            ]);
         }
         public function save_post($post_id){
 
