@@ -132,7 +132,9 @@
 }
 #pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-preview-area #pdfev-preview {
   display: none;
-  width: 70%;
+  width: 75%;
+  height: 400px;
+  overflow: auto;
 }
 #pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-preview-area #pdfev-preview .preview-thumbnail {
   margin: 5px;
@@ -163,21 +165,18 @@
 #pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-preview-area #pdfev-preview canvas {
   border: 1px solid #ddd;
 }
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-preview-area #pdfev-featured-image-area {
-  display: none;
-  width: 30%;
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-preview-area #pdfev-featured-image-area .featured-image {
+#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-preview-area .pdfev-featured-image-area {
+  width: 25%;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 10px;
-  justify-self: center;
+  justify-content: center;
   background-color: var(--pdfev-light);
   padding: 10px;
   border-radius: 10px;
+  text-align: center;
 }
-
 .pdfev-embed-viewer .nav-tab {
   cursor: pointer;
   float: left;

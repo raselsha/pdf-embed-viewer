@@ -64,14 +64,17 @@
 
             for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
                 const page = await pdf.getPage(pageNum);
-                const scale = 0.2;
+                const scale = 0.4;
                 const viewport = page.getViewport({ scale });
 
                 const canvas = document.createElement('canvas');
                 const context = canvas.getContext('2d');
                 canvas.height = viewport.height;
                 canvas.width = viewport.width;
-
+                
+                canvas.style.width = "105px";
+                canvas.style.height = "auto";
+                
                 await page.render({ canvasContext: context, viewport }).promise;
 
                 // Convert canvas to image data URL
@@ -79,7 +82,7 @@
 
                 // ✅ Set default featured image from first page
                 if (!firstImageSet) {
-                    $('#pdfev-featured-image-area').hide();
+                    $('#pdfev-featured-image').show();
                     $('#pdfev-featured-image-preview').attr('src', imageData).show();
                     $('#pdfev-featured-image-data').val(imageData);
                     firstImageSet = true;
@@ -98,7 +101,7 @@
                 // Add click event to manually set featured image
                 wrapper.style.cursor = 'pointer';
                 wrapper.addEventListener('click', function () {
-                    $('#pdfev-featured-image-area').show();
+                    $('#pdfev-featured-image').show();
                     $('#pdfev-featured-image-preview').attr('src', imageData).show();
                     $('#pdfev-featured-image-data').val(imageData);
                 });
@@ -133,10 +136,10 @@
             success: function (response) {
                 if (response.success) {
                     alert('Featured image set successfully!');
-                    $('#pdfev-featured-image-area').hide();
+                    $('#pdfev-featured-image').hide();
 
                     // ✅ Corrected this line
-                    $('#set-post-thumbnail img').attr('src', imageData).show();
+                    $('#postimagediv img').attr('src', imageData).show();
 
                     // Optional: add CSS class to highlight update
                     $('#set-post-thumbnail').addClass('updated');

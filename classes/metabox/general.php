@@ -28,6 +28,11 @@ if( ! class_exists('PDFEV_Metabox_General') ){
             
             $check_download  = get_post_meta( $post_id, 'pdfev_meta_download', true );
             $check_download  = $check_download ? $check_download : 'yes';
+            
+            $thumbnail = '';
+            if ( has_post_thumbnail( $post_id ) ) {
+                $thumbnail = get_the_post_thumbnail( $post_id );
+            }
             ?>
             <div class="pdfev-tab-content active" data-tab="pdfev-tabs-general">
                 <?php wp_nonce_field( 'pdfev_emd_vwr_metabox_nonce', 'pdfev_emd_vwr_metabox_nonce' ); ?>
@@ -75,13 +80,11 @@ if( ! class_exists('PDFEV_Metabox_General') ){
                 
                 <section class="pdfev-preview-area">
                     <div id="pdfev-preview"></div>
-                    <div id="pdfev-featured-image-area">
-                        <div class="featured-image">
-                            <label class="label">
-                                <p><?php echo esc_html__( 'Preview Featured Image', 'pdf-embed-viewer' )?></p>
-                            </label>
+                    <div class="pdfev-featured-image-area"  data-pdfev-featured="<?php echo $thumbnail?'yes':'no';?>">
+                        <div id="pdfev-featured-image" >
+                            <p><?php echo esc_html__( 'Preview Featured Image', 'pdf-embed-viewer' )?></p>
                             <input type="hidden" id="pdfev-featured-image-data" name="pdfev_featured_image">
-                            <img id="pdfev-featured-image-preview" src="" style="max-width: 200px; display:none;">
+                            <img id="pdfev-featured-image-preview" src="<?php echo esc_attr($thumbnail?$thumbnail:'');?>" style="max-width: 200px; display:none;">
                             <button id="pdfev-upload-save" class="btn button">Set Fetured Image</button>
                         </div> 
                     </div>

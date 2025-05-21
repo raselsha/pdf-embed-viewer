@@ -79,7 +79,9 @@
                 display: flex;
                 #pdfev-preview{
                     display: none;
-                    width: 70%;
+                    width: 75%;
+                    height: 400px;
+                    overflow: auto;
                     .preview-thumbnail{
                         margin: 5px;
                         display: inline-block;
@@ -110,18 +112,19 @@
                         border: 1px solid #ddd;
                     }
                 }
-                #pdfev-featured-image-area{
-                    display: none;
-                    width: 30%;
-                    .featured-image{
-                        display: flex;
-                        flex-direction: column;
-                        align-items: center;
-                        gap:10px;
-                        justify-self: center;
-                        background-color: var(--pdfev-light);
-                        padding: 10px;
-                        border-radius: 10px;
+                .pdfev-featured-image-area{
+                    width: 25%;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    gap:10px;
+                    justify-content: center;
+                    background-color: var(--pdfev-light);
+                    padding: 10px;
+                    border-radius: 10px;
+                    text-align: center;
+                    #pdfev-featured-image{
+                        // text-align: center;
                     }
                 }
             }
