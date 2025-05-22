@@ -51,9 +51,9 @@
     });
     // ======pdf thumbnail generate=========
     async function renderPDFThumbnails(pdfUrl) {
-        const container = $('#pdfev-preview');
+        const container = $('#pdfev-document-preview');
         container.show();
-        container.html('Loading preview...');
+        
         pdfjsLib.GlobalWorkerOptions.workerSrc = pdfevAjax.pdfevurl + 'vendor/pdf/pdf.worker.min.js';
 
         try {
@@ -84,12 +84,14 @@
                 if(featured_status==='yes'){
                     firstImageSet = true;
                     $('#pdfev-featured-image-preview').attr('src', featured_image).show();
+                    $('#pdfev-featured-image-data').val(featured_image);
                 }
                 // ✅ Set default featured image from first page
                 if (!firstImageSet) {
                     $('#pdfev-featured-image').show();
                     $('#pdfev-featured-image-preview').attr('src', imageData).show();
                     $('#pdfev-featured-image-data').val(imageData);
+                    
                     firstImageSet = true;
                 }
 
@@ -103,8 +105,6 @@
                 label.innerText = `Page ${pageNum}`;
                 wrapper.appendChild(label);
 
-                // Add click event to manually set featured image
-                wrapper.style.cursor = 'pointer';
                 wrapper.addEventListener('click', function () {
                     $('#pdfev-featured-image').show();
                     $('#pdfev-featured-image-preview').attr('src', imageData).show();
@@ -119,43 +119,6 @@
             container.html('<p style="color:red;">Failed to load preview.</p>');
         }
     }
-
-    // ========upload and save featured image==========
-    $(document).on('click', '#pdfev-upload-save', function (e) {
-        e.preventDefault();
-
-        const imageData = $('#pdfev-featured-image-data').val();
-        if (!imageData) {
-            alert('Please select an image first.');
-            return;
-        }
-
-        $.ajax({
-            url: pdfevAjax.ajaxurl,
-            type: 'POST',
-            data: {
-                action: 'pdfev_save_featured_image',
-                image_data: imageData,
-                post_id: pdfevAjax.post_id
-            },
-            success: function (response) {
-                console.log(response);
-                if (attachment_id) {
-                    alert('Featured image set successfully!');
-                    // ✅ Corrected this line
-                    $('#pdfev-featured-image-preview').attr('src', response.attachment_url).show();
-
-                } else {
-                    alert('Failed to set featured image. Save post first!');
-                    console.log(response);
-                }
-            },
-            error: function (xhr, status, error) {
-                console.error('AJAX Error:', error);
-            }
-        });
-    });
-
 
     // on ready show preview pdf
     $(document).ready(function(){
