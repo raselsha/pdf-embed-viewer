@@ -116,7 +116,7 @@
 
         } catch (error) {
             console.error('Error loading PDF:', error);
-            container.html('<p class="warning"">Failed to load preview. Please Upload an PDF</p>');
+            container.html('<p class="warning"">Failed to load preview. Please Upload a PDF.</p>');
         }
     }
 
