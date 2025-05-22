@@ -72,7 +72,7 @@
                 canvas.height = viewport.height;
                 canvas.width = viewport.width;
                 
-                canvas.style.width = "105px";
+                canvas.style.width = "103px";
                 canvas.style.height = "auto";
                 
                 await page.render({ canvasContext: context, viewport }).promise;
@@ -116,7 +116,7 @@
 
         } catch (error) {
             console.error('Error loading PDF:', error);
-            container.html('<p style="color:red;">Failed to load preview.</p>');
+            container.html('<p class="warning"">Failed to load preview. Please Upload an PDF</p>');
         }
     }
 

@@ -77,11 +77,19 @@
 
             .pdfev-preview-area{
                 display: flex;
+                gap:10px;
+                .warning{
+                    text-align: center;
+                    padding-top: 100px;
+                    color:  red;
+                }
                 #pdfev-document-preview{
                     display: none;
                     width: 75%;
                     height: 400px;
                     overflow: auto;
+                    border: 1px solid var(--pdfev-light);
+                    box-sizing: border-box;
                     .preview-thumbnail{
                         margin: 5px;
                         display: inline-block;
