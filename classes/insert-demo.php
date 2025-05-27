@@ -65,7 +65,7 @@ if ( ! class_exists( 'PDFEV_Insert_Demo' ) ) {
                 [
                     'title' => 'The Call Of The Wild',
                     'pdf_file' => PDFEV_Const_Path.'assets/demo/book-1.pdf',
-                    'image_file' => PDFEV_Const_Path.'assets/demo/book-cover-1.jpg',
+                    'image_file' => PDFEV_Const_Path.'assets/demo/cover-1.jpg',
                     'meta_data' => [
                         'pdfev_meta_pdf_url' => '',
                         'pdfev_meta_download' => 'yes',
@@ -75,7 +75,7 @@ if ( ! class_exists( 'PDFEV_Insert_Demo' ) ) {
                 [
                     'title' => 'Romeo And Juliet',
                     'pdf_file' => PDFEV_Const_Path.'assets/demo/book-2.pdf',
-                    'image_file' => PDFEV_Const_Path.'assets/demo/book-cover-2.jpg',
+                    'image_file' => PDFEV_Const_Path.'assets/demo/cover-2.jpg',
                     'meta_data' => [
                         'pdfev_meta_pdf_url' => '',
                         'pdfev_meta_download' => 'yes',
@@ -84,8 +84,8 @@ if ( ! class_exists( 'PDFEV_Insert_Demo' ) ) {
                 ],
                 [
                     'title' => 'The Adventures of Sherlock Holmes',
-                    'pdf_file' => PDFEV_Const_Path.'assets/demo/book-1.pdf',
-                    'image_file' => PDFEV_Const_Path.'assets/demo/book-cover-3.jpg',
+                    'pdf_file' => PDFEV_Const_Path.'assets/demo/book-3.pdf',
+                    'image_file' => PDFEV_Const_Path.'assets/demo/cover-3.jpg',
                     'meta_data' => [
                         'pdfev_meta_pdf_url' => '',
                         'pdfev_meta_download' => 'yes',
@@ -94,8 +94,8 @@ if ( ! class_exists( 'PDFEV_Insert_Demo' ) ) {
                 ],
                 [
                     'title' => 'The Little Lady of the Big House',
-                    'pdf_file' => PDFEV_Const_Path.'assets/demo/book-1.pdf',
-                    'image_file' => PDFEV_Const_Path.'assets/demo/book-cover-4.jpg',
+                    'pdf_file' => PDFEV_Const_Path.'assets/demo/book-4.pdf',
+                    'image_file' => PDFEV_Const_Path.'assets/demo/cover-4.jpg',
                     'meta_data' => [
                         'pdfev_meta_pdf_url' => '',
                         'pdfev_meta_download' => 'yes',
@@ -104,8 +104,8 @@ if ( ! class_exists( 'PDFEV_Insert_Demo' ) ) {
                 ],
                 [
                     'title' => 'The Wonderful Wizard of Oz',
-                    'pdf_file' => PDFEV_Const_Path.'assets/demo/book-1.pdf',
-                    'image_file' => PDFEV_Const_Path.'assets/demo/book-cover-5.jpg',
+                    'pdf_file' => PDFEV_Const_Path.'assets/demo/book-5.pdf',
+                    'image_file' => PDFEV_Const_Path.'assets/demo/cover-5.jpg',
                     'meta_data' => [
                         'pdfev_meta_pdf_url' => '',
                         'pdfev_meta_download' => 'yes',
@@ -114,8 +114,8 @@ if ( ! class_exists( 'PDFEV_Insert_Demo' ) ) {
                 ],
                 [
                     'title' => 'Peter and Wendy',
-                    'pdf_file' => PDFEV_Const_Path.'assets/demo/book-1.pdf',
-                    'image_file' => PDFEV_Const_Path.'assets/demo/book-cover-6.jpg',
+                    'pdf_file' => PDFEV_Const_Path.'assets/demo/book-6.pdf',
+                    'image_file' => PDFEV_Const_Path.'assets/demo/cover-6.jpg',
                     'meta_data' => [
                         'pdfev_meta_pdf_url' => '',
                         'pdfev_meta_download' => 'yes',

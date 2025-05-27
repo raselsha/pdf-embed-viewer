@@ -40,67 +40,82 @@ jQuery(document).ready(function ($) {
     });
   });
   // enable 3D flipbook===========
-  $('#pdfev-show-flipbook').on('click', function (e) {
+  $('.pdfev-show-flipbook').on('click', function (e) {
     e.preventDefault();
+
+    var $parent = $(this).closest('.pdfev-display-switcher');
+    
     $(this).addClass('active');
-    $('#pdfev-show-traditional').removeClass('active');
-    $('.pdfev-3dbook-container').show();
-    $('.pdfev-traditional-container').hide();
+    $parent.find('.pdfev-show-traditional').removeClass('active');
+    
+    $parent.find('.pdfev-3dbook-container').show();
+    $parent.find('.pdfev-traditional-container').hide();
+    initializeFlipbook();
   });
 
-  $('#pdfev-show-traditional').on('click', function (e) {
+  $('.pdfev-show-traditional').on('click', function (e) {
     e.preventDefault();
+    var $parent = $(this).closest('.pdfev-display-switcher');
     $(this).addClass('active');
-    $('#pdfev-show-flipbook').removeClass('active');
-    $('.pdfev-traditional-container').show();
-    $('.pdfev-3dbook-container').hide();
+    $parent.find('.pdfev-show-flipbook').removeClass('active');
+    
+    $parent.find('.pdfev-traditional-container').show();
+    $parent.find('.pdfev-3dbook-container').hide();
   });
 
   // ===initialize the flipbook===
   $(document).ready(function(){
-    let post_id = $('.pdfev-3dbook-viewer').data('id');
-    let pdfevPostId = post_id;
-    var pdfURL = $('#pdfev-3dbook-' + pdfevPostId).data('pdfev-url');
-    let options = {
-      pdf: pdfURL,
-      page: 3,
-      template: function () {
-        return {
-          html: [
-            {
-              url: pdfevFronend.pdfevurl+"vendor/3dflipbook/templates/default-book-view.html",
-              data: jsData.urls["templates/default-book-view.html"],
-            },
-          ],
-          script: [
-            {
-              url: pdfevFronend.pdfevurl+"vendor/3dflipbook/js/default-book-view.js",
-              data: jsData.urls["js/default-book-view.js"],
-            },
-          ],
-          styles: [
-            {
-              url: pdfevFronend.pdfevurl+"vendor/3dflipbook/css/font-awesome.min.css",
-              data: jsData.urls["css/font-awesome.min.css"],
-            },
-            {
-              url: pdfevFronend.pdfevurl+"vendor/3dflipbook/css/short-black-book-view.css",
-              data: jsData.urls["css/short-black-book-view.css"],
-            },
-          ],
-          sounds: {
-            startFlip: pdfevFronend.pdfevurl+"vendor/3dflipbook/sounds/start-flip.mp3",
-            endFlip: pdfevFronend.pdfevurl+"vendor/3dflipbook/sounds/end-flip.mp3",
-          },
-          init: undefined,
-        };
-      },
-    }
-    
-    if(pdfURL){
-      $(".pdfev-3dbook-viewer").FlipBook(options);
-    }
+    initializeFlipbook();
   });
   
+  function initializeFlipbook() {
+      $('.pdfev-3dbook-viewer').each(function () {
+      let $viewer = $(this);
+      let post_id = $viewer.data('id');
+      let pdfURL = $viewer.data('pdfev-url');
+
+      if (!pdfURL) return;
+
+      let options = {
+        pdf: pdfURL,
+        page: 1, // or customize per book
+        template: function () {
+          return {
+            html: [
+              {
+                url: pdfevFronend.pdfevurl + "vendor/3dflipbook/templates/default-book-view.html",
+                data: jsData.urls["templates/default-book-view.html"],
+              },
+            ],
+            script: [
+              {
+                url: pdfevFronend.pdfevurl + "vendor/3dflipbook/js/default-book-view.js",
+                data: jsData.urls["js/default-book-view.js"],
+              },
+            ],
+            styles: [
+              {
+                url: pdfevFronend.pdfevurl + "vendor/3dflipbook/css/font-awesome.min.css",
+                data: jsData.urls["css/font-awesome.min.css"],
+              },
+              {
+                url: pdfevFronend.pdfevurl + "vendor/3dflipbook/css/short-black-book-view.css",
+                data: jsData.urls["css/short-black-book-view.css"],
+              },
+            ],
+            sounds: {
+              startFlip: pdfevFronend.pdfevurl + "vendor/3dflipbook/sounds/start-flip.mp3",
+              endFlip: pdfevFronend.pdfevurl + "vendor/3dflipbook/sounds/end-flip.mp3",
+            },
+            init: undefined,
+          };
+        },
+      };
+
+      $viewer.FlipBook(options);
+    });
+  }
+
+
 })(jQuery);
 // ============metabox scripts========

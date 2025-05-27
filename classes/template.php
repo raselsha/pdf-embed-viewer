@@ -262,15 +262,17 @@ if( ! class_exists( 'PDFEV_Template' ) ){
             $flipbook = get_option('pdfev_flipbook_status');
             $flipbook = $flipbook ? $flipbook : 'yes';
         ?>  
-            <div class="toggle-button">
-                <a id="pdfev-show-flipbook" class="button btn <?php echo esc_attr($flipbook=='yes'?'active':''); ?>"><i class="fas fa-book-open"></i> <?php _e('Flipbook','pdf-embed-viewer'); ?></a>
-                <a id="pdfev-show-traditional" class="button btn <?php echo esc_attr($flipbook=='yes'?'':'active'); ?>"><i class="fas fa-book"></i> <?php _e('Traditional','pdf-embed-viewer'); ?></a>
-            </div>
-            <div class="pdfev-3dbook-container" style="display: <?php echo esc_attr($flipbook=='yes'?'block':'none'); ?>;">
-                <div class="pdfev-3dbook-viewer" id="pdfev-3dbook-<?php echo esc_attr($post_id); ?>" data-id="<?php echo esc_attr($post_id); ?>" data-pdfev-url="<?php PDFEV_Functions::pdf_link(); ?>"></div>                
-            </div>
-            <div class="pdfev-traditional-container" style="display: <?php echo esc_attr($flipbook=='yes'?'none':'block'); ?>;">
-                <iframe class="pdf-viewer" src="<?php PDFEV_Functions::pdf_link(); ?>" frameborder="0"></iframe>
+            <div class="pdfev-display-switcher">
+                <div class="toggle-button">
+                    <a class="button btn pdfev-show-flipbook <?php echo esc_attr($flipbook=='yes'?'active':''); ?>"><i class="fas fa-book-open"></i> <?php _e('Flipbook','pdf-embed-viewer'); ?></a>
+                    <a class="button btn pdfev-show-traditional <?php echo esc_attr($flipbook=='yes'?'':'active'); ?>"><i class="fas fa-book"></i> <?php _e('Traditional','pdf-embed-viewer'); ?></a>
+                </div>
+                <div class="pdfev-3dbook-container" style="display: <?php echo esc_attr($flipbook=='yes'?'block':'none'); ?>;">
+                    <div class="pdfev-3dbook-viewer" id="pdfev-3dbook-<?php echo esc_attr($post_id); ?>" data-id="<?php echo esc_attr($post_id); ?>" data-pdfev-url="<?php PDFEV_Functions::pdf_link(); ?>"></div>                
+                </div>
+                <div class="pdfev-traditional-container" style="display: <?php echo esc_attr($flipbook=='yes'?'none':'block'); ?>;">
+                    <iframe class="pdf-viewer" src="<?php PDFEV_Functions::pdf_link(); ?>" frameborder="0"></iframe>
+                </div>
             </div>
         <?php
         }
