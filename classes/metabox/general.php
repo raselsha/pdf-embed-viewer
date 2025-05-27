@@ -27,6 +27,11 @@ if( ! class_exists('PDFEV_Metabox_General') ){
             
             $check_download  = get_post_meta( $post_id, 'pdfev_meta_download', true );
             $check_download  = $check_download ? $check_download : 'yes';
+            
+            $thumbnail = '';
+            if ( has_post_thumbnail( $post_id ) ) {
+                $thumbnail_url = get_the_post_thumbnail_url($post_id);
+            }
             ?>
             <div class="pdfev-tab-content active" data-tab="pdfev-tabs-general">
                 <?php wp_nonce_field( 'pdfev_emd_vwr_metabox_nonce', 'pdfev_emd_vwr_metabox_nonce' ); ?>
@@ -51,7 +56,7 @@ if( ! class_exists('PDFEV_Metabox_General') ){
                             <p><?php echo esc_html__( 'Add PDF URL', 'pdf-embed-viewer' )?></p>
                             <span><?php echo esc_html__('Add pdf file by upload button','pdf-embed-viewer') ?></span>
                         </div>
-                        <div style="width: 50%;">
+                        <div style="width: 55%;">
                             <input type="url" class="pdfev-emd-vwr-file" name="pdfev_meta_pdf_url" value="<?php echo $embed_file ? esc_attr($embed_file) : '' ;  ?>" placeholder="<?php echo esc_attr('https://example.com/filename.pdf'); ?>" required>
                             <button class='button pdfev-emd-vwr-upload'>
                                 <i class="fa fa-paperclip" aria-hidden="true"></i> <?php esc_html_e('Upload','pdf-embed-viewer');?>
@@ -71,9 +76,66 @@ if( ! class_exists('PDFEV_Metabox_General') ){
                         </label>
                     </label>
                 </section>
+                
+                <section class="pdfev-preview-area">
+                    
+                    <div class="pdfev-featured-image-area">
+                        <label class="label">
+                            <div>
+                                <p><?php echo esc_html__( 'Preview Featured Image', 'pdf-embed-viewer' )?></p>
+                                <span><?php echo esc_html__('Select any image to set as thumbnail from right.','pdf-embed-viewer') ?></span>
+                            </div>
+                        </label>
+                        <div id="pdfev-featured-image" data-status="<?php echo isset($thumbnail_url)?'yes':'no';?>" data-url="<?php echo isset($thumbnail_url)?$thumbnail_url:'';?>">
+                            <input type="hidden" id="pdfev-featured-image-data" name="pdfev_featured_image">
+                            <img id="pdfev-featured-image-preview" src="<?php echo esc_attr(isset($thumbnail_url)?$thumbnail_url:'');?>">
+                        </div> 
+                    </div>
+                    <div id="pdfev-document-preview">
+                        <div class="pdfev-loader-wrapper">
+                            <div class="pdfev-spinner"></div>
+                            <p>Loading preview...</p>
+                        </div>
+                    </div>
+                </section>
             </div>
 
             <?php
+        }
+
+        public function save_featured_image($post_id,$image_data){
+            if (preg_match('/^data:image\/(\w+);base64,/', $image_data, $type)) {
+                    $image_data = substr($image_data, strpos($image_data, ',') + 1);
+                    $type = strtolower($type[1]);
+
+                    if (!in_array($type, ['jpg', 'jpeg', 'gif', 'png'])) return;
+
+                    $image_data = base64_decode($image_data);
+                    if ($image_data === false) return;
+
+                    // Save to uploads folder
+                    $upload_dir = wp_upload_dir();
+                    $filename = 'pdfev-featured-' . time() . '.' . $type;
+                    $file_path = $upload_dir['path'] . '/' . $filename;
+
+                    file_put_contents($file_path, $image_data);
+
+                    // Create attachment
+                    $attachment = [
+                        'post_mime_type' => 'image/' . $type,
+                        'post_title'     => sanitize_file_name($filename),
+                        'post_content'   => '',
+                        'post_status'    => 'inherit'
+                    ];
+
+                    $attach_id = wp_insert_attachment($attachment, $file_path, $post_id);
+                    require_once ABSPATH . 'wp-admin/includes/image.php';
+                    $attach_data = wp_generate_attachment_metadata($attach_id, $file_path);
+                    wp_update_attachment_metadata($attach_id, $attach_data);
+
+                    // Set as featured image
+                    set_post_thumbnail($post_id, $attach_id);
+                }
         }
 
         public function save_post($post_id){
@@ -95,8 +157,14 @@ if( ! class_exists('PDFEV_Metabox_General') ){
                     elseif( ! current_user_can('edit_post',$post_id) ){
                         return;
                     }
-                }   
+                } 
+                
+                if (empty($_POST['pdfev_featured_image'])) return;
 
+                $image_data = $_POST['pdfev_featured_image'];
+
+                $this->save_featured_image($post_id,$image_data);
+                
                 if( isset($_POST['action']) and $_POST['action']=='editpost' ){                    
 
                     $file_url  = isset( $_POST['pdfev_meta_pdf_url'] ) ? sanitize_url($_POST['pdfev_meta_pdf_url']) : '';

@@ -6,6 +6,7 @@
         #pdfev-embed-metabox-tabs{
             display: flex;
             justify-content: space-between;
+
             aside{
                 width: 20%;
                 background-color: $light;
@@ -34,6 +35,7 @@
                     }
                 }
             }
+
             .content{
                 width: 80%;
                 padding: 2% 5%;
@@ -70,6 +72,95 @@
                 }
                 input.pdfev-emd-vwr-file{
                     width: 83%;
+                }
+            }
+
+            .pdfev-preview-area{
+                display: flex;
+                gap:10px;
+                .warning{
+                    text-align: center;
+                    padding-top: 100px;
+                    color:  red;
+                }
+                #pdfev-document-preview{
+                    display: none;
+                    width: 75%;
+                    height: 400px;
+                    overflow: auto;
+                    border: 1px solid var(--pdfev-light);
+                    box-sizing: border-box;
+                    .preview-thumbnail{
+                        margin: 5px;
+                        display: inline-block;
+                        text-align: center;
+                        position: relative;
+                        cursor: pointer;
+                        &::before{
+                            display: none;
+                            content: 'Click to set Fetured image';
+                            width: 100%;
+                            height: 100%;
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            padding-top: 50%;
+                            background-color: #000000a9;
+                            color: skyblue;
+                            box-sizing: border-box;
+                        }
+                        &:hover::before{
+                            display: block;
+                        }
+                        .page-number{
+                            font-family: 12px;
+                            text-align: center;
+                        }
+                    }
+                    canvas{
+                        border: 1px solid #ddd;
+                    }
+                    .pdfev-loader-wrapper {
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: center;
+                        min-height: 200px;
+                        text-align: center;
+                        color: #555;
+                        font-family: sans-serif;
+                    }
+
+                    .pdfev-spinner {
+                        border: 6px solid #f3f3f3;
+                        border-top: 6px solid #007cba; /* WP blue */
+                        border-radius: 50%;
+                        width: 40px;
+                        height: 40px;
+                        animation: pdfev-spin 1s linear infinite;
+                        margin-bottom: 10px;
+                    }
+
+                    @keyframes pdfev-spin {
+                        0% { transform: rotate(0deg); }
+                        100% { transform: rotate(360deg); }
+                    }
+
+                }
+                .pdfev-featured-image-area{
+                    width: 25%;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    gap:10px;
+                    justify-content: start;
+                    background-color: var(--pdfev-light);
+                    padding: 10px;
+                    border-radius: 10px;
+                    #pdfev-featured-image-preview{
+                        width: 100%;
+                        display:none;
+                    }
                 }
             }
         }
