@@ -57,10 +57,30 @@
         pdfjsLib.GlobalWorkerOptions.workerSrc = pdfevAjax.pdfevurl + 'vendor/pdf/pdf.worker.min.js';
 
         try {
-            const pdf = await pdfjsLib.getDocument(pdfUrl).promise;
-            container.html(''); // Clear previous content
+            const response = await fetch(pdfUrl);
+            const arrayBuffer = await response.arrayBuffer();
+            const fileSizeBytes = arrayBuffer.byteLength;
 
-            let firstImageSet = false; // ✅ Flag to auto-set first image as featured
+            // Decide between MB and KB
+            let fileSizeDisplay = '';
+            if (fileSizeBytes < 1024 * 1024) {
+                const fileSizeKB = (fileSizeBytes / 1024).toFixed(2);
+                fileSizeDisplay = fileSizeKB + ' KB';
+            } else {
+                const fileSizeMB = (fileSizeBytes / (1024 * 1024)).toFixed(2);
+                fileSizeDisplay = fileSizeMB + ' MB';
+            }
+
+            const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+            const totalPages = pdf.numPages;
+
+            $('.pdfev-filesize').html(fileSizeDisplay);
+            $('.pdfev-totalpage').html(totalPages + ' Pages');
+            container.html('');
+
+
+            container.html('');
+            let firstImageSet = false;
 
             for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
                 const page = await pdf.getPage(pageNum);

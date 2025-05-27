@@ -89,12 +89,14 @@ if( ! class_exists('PDFEV_Metabox_General') ){
                         <div id="pdfev-featured-image" data-status="<?php echo isset($thumbnail_url)?'yes':'no';?>" data-url="<?php echo isset($thumbnail_url)?$thumbnail_url:'';?>">
                             <input type="hidden" id="pdfev-featured-image-data" name="pdfev_featured_image">
                             <img id="pdfev-featured-image-preview" src="<?php echo esc_attr(isset($thumbnail_url)?$thumbnail_url:'');?>">
+                            <div><?php _e('Document size: ','pdf-embed-viewer'); ?><strong class="pdfev-filesize"></strong></div>
+                            <div><?php _e('Total Pages: ','pdf-embed-viewer'); ?><strong class="pdfev-totalpage"></strong></div>
                         </div> 
                     </div>
                     <div id="pdfev-document-preview">
                         <div class="pdfev-loader-wrapper">
                             <div class="pdfev-spinner"></div>
-                            <p>Loading preview...</p>
+                            <p><?php echo __('Loading preview...','pdf-embed-viewer') ?></p>
                         </div>
                     </div>
                 </section>
