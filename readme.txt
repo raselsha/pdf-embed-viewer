@@ -157,6 +157,10 @@ Learn more about how [Appsero collects and uses this data](https://appsero.com/p
 
 == Changelog ==
 
+= 1.2.7 =
+* Shortcode for single page toggle button fix
+* Admin backend show the filesize and total pages
+
 = 1.2.6 =
 * PDF Prevew thumbnail generation
 * Featured image from preview thumbnail
