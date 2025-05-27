@@ -14,19 +14,17 @@ jQuery(document).ready(function ($) {
 });
 
 
-// ============admin scripts===========
-jQuery(document).ready(function ($) {
-  $('.download-btn').click(function(e){
-    // e.preventDefault();
+(function($) {
+  // This is the click event for the download button counter
+  $(document).on('click','.download-btn',function(e){
     var post_id = $(this).data('post-id');
     var $button = $(this);
-    var downloadUrl = $button.attr('href');
     $.ajax({
-        url: pdfevAjax.ajaxurl,
+        url: pdfevFronend.ajaxurl,
         type: 'POST',
         data: {
           action: 'pdfev_count_manager_download',
-          ajaxnonce: pdfevAjax.ajaxnonce,
+          ajaxnonce: pdfevFronend.ajaxnonce,
           post_id: post_id,
         },
         success: function(response) {
@@ -41,6 +39,68 @@ jQuery(document).ready(function ($) {
       }
     });
   });
-});
+  // enable 3D flipbook===========
+  $('#pdfev-show-flipbook').on('click', function (e) {
+    e.preventDefault();
+    $(this).addClass('active');
+    $('#pdfev-show-traditional').removeClass('active');
+    $('.pdfev-3dbook-container').show();
+    $('.pdfev-traditional-container').hide();
+  });
 
+  $('#pdfev-show-traditional').on('click', function (e) {
+    e.preventDefault();
+    $(this).addClass('active');
+    $('#pdfev-show-flipbook').removeClass('active');
+    $('.pdfev-traditional-container').show();
+    $('.pdfev-3dbook-container').hide();
+  });
+
+  // ===initialize the flipbook===
+  $(document).ready(function(){
+    let post_id = $('.pdfev-3dbook-viewer').data('id');
+    let pdfevPostId = post_id;
+    var pdfURL = $('#pdfev-3dbook-' + pdfevPostId).data('pdfev-url');
+    let options = {
+      pdf: pdfURL,
+      page: 3,
+      template: function () {
+        return {
+          html: [
+            {
+              url: pdfevFronend.pdfevurl+"vendor/3dflipbook/templates/default-book-view.html",
+              data: jsData.urls["templates/default-book-view.html"],
+            },
+          ],
+          script: [
+            {
+              url: pdfevFronend.pdfevurl+"vendor/3dflipbook/js/default-book-view.js",
+              data: jsData.urls["js/default-book-view.js"],
+            },
+          ],
+          styles: [
+            {
+              url: pdfevFronend.pdfevurl+"vendor/3dflipbook/css/font-awesome.min.css",
+              data: jsData.urls["css/font-awesome.min.css"],
+            },
+            {
+              url: pdfevFronend.pdfevurl+"vendor/3dflipbook/css/short-black-book-view.css",
+              data: jsData.urls["css/short-black-book-view.css"],
+            },
+          ],
+          sounds: {
+            startFlip: pdfevFronend.pdfevurl+"vendor/3dflipbook/sounds/start-flip.mp3",
+            endFlip: pdfevFronend.pdfevurl+"vendor/3dflipbook/sounds/end-flip.mp3",
+          },
+          init: undefined,
+        };
+      },
+    }
+    
+    if(pdfURL){
+      $(".pdfev-3dbook-viewer").FlipBook(options);
+    }
+  });
+  
+})(jQuery);
 // ============metabox scripts========

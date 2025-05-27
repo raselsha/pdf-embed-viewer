@@ -1,12 +1,12 @@
 <?php
 /**
- * Plugin Name: PDF Viewer & Embedder – E-Books, Newsletters, Reports
+ * Plugin Name: 3D Flipbook PDF Viewer & Embedder – E-Books, Manuals, Newsletters, Reports
  * Plugin URI: https://wordpress.org/plugins/pdf-embed-viewer
- * Description: Easily embed, display, and track PDFs on your WordPress site with customizable templates, SEO-friendly URLs, and multilingual support.
- * Version: 1.1.2
+ * Description: Display PDFs as interactive 3D flipbooks or traditional viewers for E-Books, Manuals, Newsletters, and Reports.
+ * Version: 1.2.5
  * Stable Tag: trunk
  * Requires at least: 3.0
- * Requires PHP:      7.4
+ * Requires PHP:      7.0
  * Author: Shahadat Hossain
  * Author URI: https://shahadat.com.bd
  * License: GPL v2 or later
@@ -43,7 +43,7 @@ if( ! class_exists( 'PDFEV_Embed_Viewer' ) ){
         public function define_contstants(){
             define( 'PDFEV_Const_Path', plugin_dir_path(__FILE__) );
             define( 'PDFEV_Const_URL', plugin_dir_url(__FILE__) );
-            define( 'PDFEV_Const_VERSION', '1.1.2' );
+            define( 'PDFEV_Const_VERSION', '1.2.5' );
         }
 
         public static function include_plugin_files() {

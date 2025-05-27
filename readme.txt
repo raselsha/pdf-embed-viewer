@@ -1,4 +1,4 @@
-=== PDF Viewer & Embedder – Display E-Books, Newsletters, Reports, and Manuals ===
+=== 3D Flipbook PDF Viewer & Embedder – E-Books, Manuals, Newsletters, Reports ===
 
 Contributors:      raselsha
 Requires at least: 3.0
@@ -7,12 +7,12 @@ Requires PHP:      7.0
 Stable tag:	       trunk
 License:           GPLv2 or later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
-Tags:              ebook reader, newsletter, pdf, pdf viewer, pdf download,
+Tags:               3d flipbook, ebook, flipbook, pdf, pdf embed,
 
-PDF Embed Viewer plugin is designed to view and download PDF files in your wordpress site. Read and view Newsletter, Ebook directly within web pages.
+Display PDFs as interactive 3D flipbooks or traditional viewers for E-Books, Manuals, Newsletters, and Reports.
 
 == Description ==
-The plugin is designed to read and download PDF files in your wordpress website. Its allowing easy access to Documents, Newsletter, Ebook directly within web pages. With its user-friendly interface and customizable features. It counts read and downloads per items. It has options to show/hide read and download button.
+3D Flipbook PDF Viewer & Embedder allows easy reading and downloading of PDF files on your WordPress website, offering both traditional and interactive 3D Flipbook views for documents, newsletters, and eBooks directly within web pages. With a user-friendly interface and customizable features, it tracks reads and downloads per item. You can also choose to show or hide the read and download buttons.
 
 ## This plugin supports 4 templates for Archive view
 * **List Template**
@@ -20,29 +20,110 @@ The plugin is designed to read and download PDF files in your wordpress website.
 * **Newsletter Template**
 * **Ebook Template**
 
-## Shortcode for arvhive view
-* **[pdfev_viewer template="list"]**
-* **[pdfev_viewer template="grid"]**
-* **[pdfev_viewer template="ebook"]**
-* **[pdfev_viewer template="newsletter"]**
+## Shortcode for multiple template view
+Easily generate and customize shortcodes with our built-in shortcode generator.
+
+**Shortcode Attributes**
+
+You can use the `[pdfev_viewer]` shortcode with the following attributes:
+
+- `template`  
+  Choose the display layout.  
+  **Accepted values**: `list`, `grid`, `ebook`, `newsletter`  
+  **Default**: `list`
+
+- `limit`  
+  Number of PDF items to display.  
+  **Accepted values**: Any number like `5`, `10`, `20`  
+  **Default**: `10`
+
+- `order`  
+  Set display order.  
+  **Accepted values**: `asc`, `dsc`  
+  **Default**: `dsc`
+
+- `read`  
+  Show or hide the **Read** button.  
+  **Accepted values**: `yes`, `no`  
+  **Default**: `yes`
+
+- `download`  
+  Show or hide the **Download** button.  
+  **Accepted values**: `yes`, `no`  
+  **Default**: `yes`
+
+- `reading_count`  
+  Show or hide how many times the PDF has been read.  
+  **Accepted values**: `yes`, `no`  
+  **Default**: `yes`
+
+- `downloading_count`  
+  Show or hide how many times the PDF has been downloaded.  
+  **Accepted values**: `yes`, `no`  
+  **Default**: `yes`
+
+**Example**
+
+* [pdfev_viewer `template="list"` `limit="10"` `order="dsc"` `read="yes"` `download="yes"` `reading_count="yes"` `downloading_count="yes"` ]
+* [pdfev_viewer `template="grid"` ]
+* [pdfev_viewer `template="ebook"` `limit="10"` `order="asc"` `read="yes"` `download="yes"`]
+* [pdfev_viewer `template="newsletter"` `limit="30"` `order="dsc"`]
 
 ## Shortcode for single page/post
-* **[pdfev_embed_viewer id="post_id"]**
+* [pdfev_embed_viewer `id="post_id"`]
 
 ## Features
-* **Display PDFs Anywhere:** Easily embed PDFs in any page or post using a shortcode.
-* **Archive Page Templates:** Choose from four distinct templates for your archive pages.
-* **Track Reads and Downloads:** Monitor the number of times your content is read and downloaded for better insights.
-* **Standalone Sidebar Menu:** WordPress sidebar has a dedicated menu.
-* **Color Adjustment Settings:** Personalize colors with an intuitive settings page.
-* **Customizable Archive Page URL:** Modify the URL structure of your archive pages to suit your needs.
-* **Download Button Control:** Toggle the PDF download button on or off as desired.
-* **Editable Archive Page Title:** Customize the title of your archive pages.
-* **Archive Page Shortcode:** Utilize a shortcode specifically for archive pages.
-* **Single Document Shortcode:** Easily embed single documents with a dedicated shortcode.
-* **Import Demo Content:** Quickly set up your archive view with the import demo button.
-* **Multilingual Support:** Fully compatible with multiple languages.
-* **Button Enable/Disable:** Options to show/hide read and download buttons.
+
+- **Display PDFs Anywhere**  
+  Easily embed PDFs into any post or page using a shortcode, supporting both traditional and interactive 3D Flipbook views.
+
+- **Multiple Archive Templates**  
+  Choose from four unique display templates: `list`, `grid`, `ebook`, and `newsletter`.
+
+- **Flexible Shortcode Usage**  
+  Use shortcodes anywhere to display your PDF documents or e-books with full control over layout and behavior.
+
+- **Shortcode Generator** 
+  Easily generate and customize shortcodes with our built-in shortcode generator. Navigate to Settings > Shortcode to create the perfect shortcode for your needs
+
+- **Interactive E-Book View**  
+  The `ebook` template includes a smooth hover-preview effect for a realistic book feel.
+
+- **3D Flipbook & Traditional Reading Modes**  
+  Readers can view content in either immersive 3D Flipbook mode or standard document view.
+
+- **Usage Tracking**  
+  Monitor how many times each PDF has been read or downloaded with built-in counters.
+
+- **Dedicated Admin Menu**  
+  A standalone sidebar menu in the WordPress dashboard for managing your documents.
+
+- **Color Customization**  
+  Adjust colors easily using the built-in settings page for better design integration.
+
+- **Custom Archive URLs**  
+  Modify the archive page URL slug to match your site's structure or branding.
+
+- **Download Button Toggle**  
+  Enable or disable the PDF download button as needed from the settings panel.
+
+- **Editable Archive Titles**  
+  Set custom titles for your archive pages to suit your content and audience.
+
+- **Archive Page Shortcode**  
+  Display an archive of all documents using a dedicated archive shortcode.
+
+- **Single Document Shortcode**  
+  Embed individual PDFs using a specialized shortcode for single-view mode.
+
+- **Import Demo Content**  
+  Quickly set up your site with sample content using the demo import feature.
+
+- **Multilingual Support**  
+  Fully compatible with translation plugins to support multiple languages.
+
+- **Read & Download Button Control**  
+  Easily show or hide the Read and Download buttons for both viewing modes.
 
 == Screenshot ==
 
@@ -75,6 +156,28 @@ Learn more about how [Appsero collects and uses this data](https://appsero.com/p
 
 
 == Changelog ==
+= 1.2.5 =
+* fix admin icons
+* Shortcode Generator Added
+
+= 1.2.4 =
+* Template shortcode Attribute set
+* Ebook cover fliping style on hover
+* Update E-book Design
+
+= 1.2.3 =
+* Arichive view number pagination fix
+
+= 1.2.2 =
+* Single page template update
+* Shortcode view upate for 3D flipbook
+
+= 1.2.1 =
+* Fix empty page loading issue
+
+= 1.2.0 =
+* Added 3D flipbook library
+
 = 1.1.2 =
 * Insert Demo pages for shortcode view.
 * Fix default counter value.
@@ -155,8 +258,8 @@ A. Yes! In the plugin settings, you can enable or disable the read (view) and do
 = Q. Can I customize the archive page URL and titles? =
 A. Yes! You can change the archive page slug and title easily from the plugin settings.
 
-= Q. Is it possible to disable the download or read buttons? =
-A. Yes. You can show or hide the read and download buttons from the plugin settings.
+= Q. How do I switch between the Traditional PDF View and 3D Flipbook View? =
+A. You can choose your preferred mode between the two views in the plugin’s settings to enable or disable.
 
 = Q. Does the plugin support multiple languages? =
 A. Yes, it’s translation-ready and compatible with multilingual websites.

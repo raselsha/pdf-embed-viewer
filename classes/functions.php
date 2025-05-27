@@ -129,10 +129,22 @@ if( ! class_exists('PDFEV_Functions') ){
 
         public static function shortcode_view($post_id){
             $link = get_post_meta($post_id, 'pdfev_meta_pdf_url', true );
+            $flipbook = get_option('pdfev_flipbook_status');
+            $flipbook = $flipbook ? $flipbook : 'yes';
             ?>
-            <div class="pdfev-embed-viewer-shortcode">
-                <?php  PDFEV_Functions::download_button_page_view($post_id); ?>
-                <iframe class="pdf-viewer" src="<?php echo esc_attr($link); ?>" frameborder="0"></iframe>
+            <div class="pdfev-embed-viewer">
+                
+                <div class="toggle-button">
+                    <a id="pdfev-show-flipbook" class="button btn <?php echo esc_attr($flipbook=='yes'?'active':''); ?>"><i class="fas fa-book-open"></i> <?php _e('Flipbook','pdf-embed-viewer'); ?></a>
+                    <a id="pdfev-show-traditional" class="button btn <?php echo esc_attr($flipbook=='yes'?'':'active'); ?>"><i class="fas fa-book"></i> <?php _e('Traditional','pdf-embed-viewer'); ?></a>
+                    <?php  PDFEV_Functions::download_button_page_view($post_id); ?>
+                </div>
+                <div class="pdfev-3dbook-container" style="display: <?php echo esc_attr($flipbook=='yes'?'block':'none'); ?>;">
+                    <div class="pdfev-3dbook-viewer" id="pdfev-3dbook-<?php echo esc_attr($post_id); ?>" data-id="<?php echo esc_attr($post_id); ?>" data-pdfev-url="<?php echo esc_attr($link); ?>"></div>                
+                </div>
+                <div class="pdfev-traditional-container" style="display: <?php echo esc_attr($flipbook=='yes'?'none':'block'); ?>;">
+                    <iframe class="pdf-viewer" src="<?php echo esc_attr($link); ?>" frameborder="0"></iframe>
+                </div>
             </div>
             <?php
         }
@@ -162,18 +174,17 @@ if( ! class_exists('PDFEV_Functions') ){
             }
         }
 
-        public static function get_read_button(){
-            $reading_counter  =  get_option('pdfev_reading_counter');
-            $reading_counter = $reading_counter ? $reading_counter : 'yes';
+        public static function get_read_button($atts=[]){
+            $reading_counter = isset($atts['reading_count']) && $atts['reading_count']!='' ? $atts['reading_count'] :  get_option('pdfev_reading_counter');
             ?>
-            <a href="<?php the_permalink(); ?>" class="button btn read-btn"><i class="fas fa-eye"></i> <?php echo esc_html__('Read','pdf-embed-viewer');?> <?php  echo  $reading_counter=='yes'? "(".self::get_post_view().")" : '' ;?></a>
+            <a href="<?php the_permalink(); ?>" class="button btn read-btn"><i class="fas fa-eye"></i> <?php echo esc_html__('Read','pdf-embed-viewer');?> <?php  echo  $reading_counter=='yes'? "(".PDFEV_Functions::get_post_view().")" : '' ;?></a>
             <?php
         }
 
-        public static function read_button(){
-            $check_read_archive  =  get_option('pdfev_archive_read');
+        public static function read_button($atts=[]){
+            $check_read_archive  =  isset($atts['read']) && $atts['read'] != ''? $atts['read'] : get_option('pdfev_archive_read');
             if($check_read_archive == 'yes'): 
-                self::get_read_button();
+                self::get_read_button($atts);
             endif;
         }
 
@@ -189,9 +200,8 @@ if( ! class_exists('PDFEV_Functions') ){
             return $count ? $count : 0;
         }
 
-        public static function get_download_button(){
-            $download_counter  =  get_option('pdfev_download_counter');
-            $download_counter = $download_counter ? $download_counter : 'yes';
+        public static function get_download_button($atts=[]){
+            $download_counter = isset($atts['downloading_count']) && $atts['downloading_count']!='' ? $atts['downloading_count'] : get_option('pdfev_download_counter');
         ?>
             <a class="button btn download-btn" href="<?php PDFEV_Functions::pdf_link(); ?>" data-post-id="<?php echo get_the_ID(); ?>" download="<?php echo sanitize_title(get_the_title()); ?>"> 
                 <i class="fas fa-cloud-download-alt"></i> 
@@ -202,18 +212,18 @@ if( ! class_exists('PDFEV_Functions') ){
             </a>
         <?php
         }
-        public static function download_button(){
+        public static function download_button($atts=[]){
             
-            $check_download_archive  =  get_option('pdfev_archive_download');
+            $check_download_archive  =  isset($atts['download']) && $atts['download'] != ''? $atts['download'] : get_option('pdfev_archive_download');
             if($check_download_archive == 'yes'): 
-                self::get_download_button();
+                self::get_download_button($atts);
             endif;
         }
 
         public static function download_button_page_view($post_id){
             $check_download  = get_post_meta( $post_id, 'pdfev_meta_download', true );
             if($check_download == 'yes'):
-                self::get_download_button();
+                self::get_download_button($atts=[]);
             endif;
         }
 

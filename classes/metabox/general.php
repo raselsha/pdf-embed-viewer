@@ -30,11 +30,13 @@ if( ! class_exists('PDFEV_Metabox_General') ){
             ?>
             <div class="pdfev-tab-content active" data-tab="pdfev-tabs-general">
                 <?php wp_nonce_field( 'pdfev_emd_vwr_metabox_nonce', 'pdfev_emd_vwr_metabox_nonce' ); ?>
+                <h2 class="title"><?php _e('General Settings','pdf-embed-viewer'); ?></h2>
+                <p><?php _e('Here you can add basic settings for your document.','pdf-embed-viewer'); ?></p>
                 <section>
                     <label class="label">
                         <div>
                             <p><?php echo esc_html__( 'Shortcode', 'pdf-embed-viewer' )?></p>
-                            <span><?php echo esc_html__('You can add the shortcode to any page or post for easy integration','pdf-embed-viewer') ?></span>
+                            <span><?php echo esc_html__('Add this shortcode to any page or post to view pdf','pdf-embed-viewer') ?></span>
                         </div>
                         <div style="width: 50%; text-align:right;">
                             <code>

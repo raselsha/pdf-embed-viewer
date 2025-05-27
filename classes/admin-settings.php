@@ -94,6 +94,7 @@ if( ! class_exists('PDFEV_Admin_Settings') ){
                 $archive_slug       = isset( $_POST['pdfev_archive_slug'] ) ? sanitize_text_field(sanitize_title($_POST['pdfev_archive_slug'])): 'pdf-embed-viewer';
                 $shortcode_page_url = isset( $_POST['pdfev_shortcode_page_url'] ) ? sanitize_text_field($_POST['pdfev_shortcode_page_url']): '';
                 $archive_template   = isset( $_POST['pdfev_archive_template'] ) ? sanitize_text_field($_POST['pdfev_archive_template']): 'list';
+                $flipbook           = isset( $_POST['pdfev_flipbook_status'] ) ? sanitize_text_field($_POST['pdfev_flipbook_status']): 'no';
                 $archive_read       = isset( $_POST['pdfev_archive_read'] ) ? sanitize_text_field($_POST['pdfev_archive_read']): 'no';
                 $reading_counter    = isset( $_POST['pdfev_reading_counter'] ) ? sanitize_text_field($_POST['pdfev_reading_counter']): 'no';
                 $archive_download   = isset( $_POST['pdfev_archive_download'] ) ? sanitize_text_field($_POST['pdfev_archive_download']): 'no';
@@ -112,6 +113,7 @@ if( ! class_exists('PDFEV_Admin_Settings') ){
                 update_option('pdfev_archive_slug',$archive_slug);
                 update_option('pdfev_shortcode_page_url',$shortcode_page_url);
                 update_option('pdfev_archive_template',$archive_template);
+                update_option('pdfev_flipbook_status',$flipbook);
                 update_option('pdfev_archive_read',$archive_read);
                 update_option('pdfev_reading_counter',$reading_counter);
                 update_option('pdfev_archive_download',$archive_download);
