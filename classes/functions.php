@@ -137,7 +137,11 @@ if( ! class_exists('PDFEV_Functions') ){
                     <div class="toggle-button">
                         <a class="button btn pdfev-show-flipbook <?php echo esc_attr($flipbook=='yes'?'active':''); ?>"><i class="fas fa-book-open"></i> <?php _e('Flipbook','pdf-embed-viewer'); ?></a>
                         <a class="button btn pdfev-show-traditional <?php echo esc_attr($flipbook=='yes'?'':'active'); ?>"><i class="fas fa-book"></i> <?php _e('Traditional','pdf-embed-viewer'); ?></a>
-                        <?php  PDFEV_Functions::download_button_page_view($post_id); ?>
+                        <?php 
+                        if(!is_singular(PDFEV_Functions::get_cpt_name())):
+                            PDFEV_Functions::download_button_page_view($post_id); 
+                        endif;
+                        ?>
                     </div>
                     <div class="pdfev-3dbook-container" style="display: <?php echo esc_attr($flipbook=='yes'?'block':'none'); ?>;">
                         <div class="pdfev-3dbook-viewer" id="pdfev-3dbook-<?php echo esc_attr($post_id); ?>" data-id="<?php echo esc_attr($post_id); ?>" data-pdfev-url="<?php echo esc_attr($link); ?>"></div>                
@@ -149,6 +153,7 @@ if( ! class_exists('PDFEV_Functions') ){
             </div>
             <?php
         }
+
         public static function get_cpt_name(){
             return 'pdfev_embed_viewer';
         }
@@ -239,38 +244,6 @@ if( ! class_exists('PDFEV_Functions') ){
             <?php
         }
 
-        public static function generate_pdf_thumbnail( $pdf_path, $output_path) {
-            if ( ! class_exists( 'Imagick' ) ) {
-                error_log( 'Imagick not installed' );
-                return false;
-            }
-        
-            if ( ! file_exists( $pdf_path ) ) {
-                error_log( 'PDF file not found: ' . $pdf_path );
-                return false;
-            }
-        
-            if ( ! is_writable( dirname( $output_path ) ) ) {
-                error_log( 'Output directory not writable: ' . dirname( $output_path ) );
-                return false;
-            }
-            try {
-                $imagick = new Imagick();
-                $imagick->setResolution(150, 150);
-                $imagick->readImage($pdf_path);
-                $imagick->setIteratorIndex(0); // First page
-                $imagick->setImageFormat('png');
-                $imagick->setImageCompressionQuality(90);
-                $imagick->writeImage($output_path);
-                $imagick->clear();
-                $imagick->destroy();
-                return $output_path;
-            } catch (Exception $e) {
-                error_log( 'PDF thumbnail error: ' . $e->getMessage() );
-                return false;
-            }
-        }        
-        
     }
     
     new PDFEV_Functions();

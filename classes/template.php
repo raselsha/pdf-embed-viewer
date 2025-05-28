@@ -17,7 +17,7 @@ if( ! class_exists( 'PDFEV_Template' ) ){
             add_action('pdfev_template_archive_ebook', [$this,'template_archive_ebook']);
 
             add_action('pdfev_template_single_header', [$this,'template_single_header']);
-            add_action('pdfev_template_book_reader', [$this,'template_single_book_reader']);
+            // add_action('pdfev_template_book_reader', [$this,'template_single_book_reader']);
             add_action('pdfev_template_single_footer', [$this,'template_single_footer']);
         } 
 
@@ -276,6 +276,7 @@ if( ! class_exists( 'PDFEV_Template' ) ){
             </div>
         <?php
         }
+
         public function template_single_footer(){
         ?>
             <div class="navigation">

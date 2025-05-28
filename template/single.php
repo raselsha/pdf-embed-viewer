@@ -38,9 +38,7 @@ if ( wp_is_block_theme() ) {  ?>
 <div class="pdfev-embed-viewer">
 
 	<?php do_action('pdfev_template_single_header'); ?>
-	
-	<?php do_action('pdfev_template_book_reader'); ?>
-
+	<?php echo do_shortcode('[pdfev_embed_viewer id="' . get_the_ID() . '"]'); ?>
 	<?php do_action('pdfev_template_single_footer'); ?>
 	
 </div>
