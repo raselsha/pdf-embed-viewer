@@ -98,6 +98,7 @@ if( ! class_exists('PDFEV_Metabox_General') ){
                             <div class="pdfev-spinner"></div>
                             <p><?php echo __('Loading preview...','pdf-embed-viewer') ?></p>
                         </div>
+                        <p class="warning"><?php echo __('Failed to load preview. Please Upload a PDF.','pdf-embed-viewer') ?></p>
                     </div>
                 </section>
             </div>

@@ -52,15 +52,21 @@
     // ======pdf thumbnail generate=========
     async function renderPDFThumbnails(pdfUrl) {
         const container = $('#pdfev-document-preview');
-        container.show();
-        
+        container.show(); // Clear previous thumbnails, if any
+        container.find('.pdfev-loader-wrapper').show();
+        container.find('.warning').hide();
+        if(!pdfUrl) {
+            container.show(); // Clear previous thumbnails, if any
+            container.find('.pdfev-loader-wrapper').hide();
+            container.find('.warning').show();
+            return;
+        }
         pdfjsLib.GlobalWorkerOptions.workerSrc = pdfevAjax.pdfevurl + 'vendor/pdf/pdf.worker.min.js';
-
         try {
             const response = await fetch(pdfUrl);
             const arrayBuffer = await response.arrayBuffer();
             const fileSizeBytes = arrayBuffer.byteLength;
-
+            console.log("response");
             // Decide between MB and KB
             let fileSizeDisplay = '';
             if (fileSizeBytes < 1024 * 1024) {
@@ -76,15 +82,13 @@
 
             $('.pdfev-filesize').html(fileSizeDisplay);
             $('.pdfev-totalpage').html(totalPages + ' Pages');
-            container.html('');
-
 
             container.html('');
             let firstImageSet = false;
 
             for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
                 const page = await pdf.getPage(pageNum);
-                const scale = 0.4;
+                const scale = 0.2;
                 const viewport = page.getViewport({ scale });
 
                 const canvas = document.createElement('canvas');
@@ -106,7 +110,7 @@
                     $('#pdfev-featured-image-preview').attr('src', featured_image).show();
                     $('#pdfev-featured-image-data').val(featured_image);
                 }
-                // ✅ Set default featured image from first page
+                
                 if (!firstImageSet) {
                     $('#pdfev-featured-image').show();
                     $('#pdfev-featured-image-preview').attr('src', imageData).show();
@@ -115,7 +119,6 @@
                     firstImageSet = true;
                 }
 
-                // Add label
                 const wrapper = document.createElement('div');
                 wrapper.classList.add('preview-thumbnail');
                 wrapper.appendChild(canvas);
@@ -135,8 +138,8 @@
             }
 
         } catch (error) {
-            console.error('Error loading PDF:', error);
-            container.html('<p class="warning"">Failed to load preview. Please Upload a PDF.</p>');
+            //console.error('Error loading PDF:', error);
+            container.find('.warning').show();
         }
     }
 
