@@ -30,7 +30,7 @@ You should have received a copy of the GNU General Public License
 along with PDF Embed Viewer. If not, see https://www.gnu.org/licenses/gpl-2.0.html.
 */
 
-if( ! defined('ABSPATH') ) { die( "Don't access directly" ); }
+defined('ABSPATH') || exit;
 
 if( ! class_exists( 'PDFEV_Embed_Viewer' ) ){
     class PDFEV_Embed_Viewer{
@@ -62,6 +62,7 @@ if( ! class_exists( 'PDFEV_Embed_Viewer' ) ){
             require_once PDFEV_Const_Path . 'classes/count-manager.php';
             require_once PDFEV_Const_Path . 'classes/template.php';
             require_once PDFEV_Const_Path . 'classes/insert-demo.php';
+            
         }
 
         public static function activate(){
@@ -90,5 +91,5 @@ if( class_exists( 'PDFEV_Embed_Viewer' ) ){
     register_activation_hook( __FILE__, array( 'PDFEV_Embed_Viewer','activate' ) );
     register_deactivation_hook( __FILE__, array( 'PDFEV_Embed_Viewer','deactivate' ) );
     register_uninstall_hook( __FILE__, array( 'PDFEV_Embed_Viewer','uninstall' ) );
-    $PDFEV_Embed_Viewer = new PDFEV_Embed_Viewer();
+    new PDFEV_Embed_Viewer();
 }

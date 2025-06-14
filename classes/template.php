@@ -116,7 +116,7 @@ if( ! class_exists( 'PDFEV_Template' ) ){
         }
 
         public function template_archive_newsletter($atts=[]){
-            $years =  PDFEV_CPT::get_posts_years_array();
+            $years =  \PDFEV\CPT::get_posts_years_array();
         ?>
         <div class="pdfev-embed-viewer">
             <?php if($years): ?>
@@ -236,7 +236,7 @@ if( ! class_exists( 'PDFEV_Template' ) ){
         public function pagination($WpQuery){
             ?>
                 <div class="pagination">
-                    <?php PDFEV_CPT::pagination_bar( $WpQuery ); ?>
+                    <?php \PDFEV\CPT::pagination_bar( $WpQuery ); ?>
                 </div>
             <?php
         }
