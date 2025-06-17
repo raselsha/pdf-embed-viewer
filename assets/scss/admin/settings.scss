@@ -24,6 +24,7 @@
     }
     .pdfev-tab-content{
         display: none;
+        padding: 10px;
         &.active {
             display: block;
         }
@@ -93,6 +94,13 @@
             button:hover {
             background: #005f8d;
             }
+        }
+        .pdf-embed-viewer-support{
+            padding: 20px; 
+            background: #f9f9f9; 
+            border: 1px solid #ddd; 
+            border-radius: 8px; 
+            margin-top: 20px;
         }
     }
     

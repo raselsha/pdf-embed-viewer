@@ -242,6 +242,7 @@
 }
 .pdfev-embed-viewer .pdfev-tab-content {
   display: none;
+  padding: 10px;
 }
 .pdfev-embed-viewer .pdfev-tab-content.active {
   display: block;
@@ -314,6 +315,13 @@
 }
 .pdfev-embed-viewer .pdfev-tab-content .pdfev-shortcode-generaor button:hover {
   background: #005f8d;
+}
+.pdfev-embed-viewer .pdfev-tab-content .pdf-embed-viewer-support {
+  padding: 20px;
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-top: 20px;
 }
 
 /*# sourceMappingURL=admin.css.map */

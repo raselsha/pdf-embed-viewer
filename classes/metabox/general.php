@@ -1,183 +1,181 @@
 <?php
-
 /**
  * @author Shahadat Hossain <raselsha@gmail.com>
  * @package pdf-embed-viewer
  * @version 1.0.0
  */
+namespace PDFEV;
 
-if( ! defined('ABSPATH') ) { die( "Don't access directly" ); }
+defined('ABSPATH') || exit;
 
-if( ! class_exists('PDFEV_Metabox_General') ){
-    class PDFEV_Metabox_General{
-        public function __construct()
-        {
-            add_action('pdfev_metabox_tabs',array($this,'tabs'));
-            add_action('pdfev_metabox_tabs_content',array($this,'tabs_content'));
-            add_action( 'save_post' , array( $this, 'save_post') );
+class Metabox_General{
+    public function __construct()
+    {
+        add_action('pdfev_metabox_tabs',array($this,'tabs'));
+        add_action('pdfev_metabox_tabs_content',array($this,'tabs_content'));
+        add_action( 'save_post' , array( $this, 'save_post') );
+    }
+    public function tabs($post_id){
+        ?>
+            <li class="pdfev-tab active" data-tab-target="pdfev-tabs-general"> <i class="fas fa-tools"></i> <?php esc_html_e('General','pdf-embed-viewer'); ?></li>
+        <?php
+    }
+    public function tabs_content($post_id){
+        $embed_file = get_post_meta($post_id,'pdfev_meta_pdf_url',true);
+        $embed_file =  $embed_file ? $embed_file :'';
+        
+        $check_download  = get_post_meta( $post_id, 'pdfev_meta_download', true );
+        $check_download  = $check_download ? $check_download : 'yes';
+        
+        $thumbnail = '';
+        if ( has_post_thumbnail( $post_id ) ) {
+            $thumbnail_url = get_the_post_thumbnail_url($post_id);
         }
-        public function tabs($post_id){
-            ?>
-                <li class="pdfev-tab active" data-tab-target="pdfev-tabs-general"> <i class="fas fa-tools"></i> <?php esc_html_e('General','pdf-embed-viewer'); ?></li>
-            <?php
-        }
-        public function tabs_content($post_id){
-            $embed_file = get_post_meta($post_id,'pdfev_meta_pdf_url',true);
-            $embed_file =  $embed_file ? $embed_file :'';
-            
-            $check_download  = get_post_meta( $post_id, 'pdfev_meta_download', true );
-            $check_download  = $check_download ? $check_download : 'yes';
-            
-            $thumbnail = '';
-            if ( has_post_thumbnail( $post_id ) ) {
-                $thumbnail_url = get_the_post_thumbnail_url($post_id);
-            }
-            ?>
-            <div class="pdfev-tab-content active" data-tab="pdfev-tabs-general">
-                <?php wp_nonce_field( 'pdfev_emd_vwr_metabox_nonce', 'pdfev_emd_vwr_metabox_nonce' ); ?>
-                <h2 class="title"><?php _e('General Settings','pdf-embed-viewer'); ?></h2>
-                <p><?php _e('Here you can add basic settings for your document.','pdf-embed-viewer'); ?></p>
-                <section>
-                    <label class="label">
-                        <div>
-                            <p><?php echo esc_html__( 'Shortcode', 'pdf-embed-viewer' )?></p>
-                            <span><?php echo esc_html__('Add this shortcode to any page or post to view pdf','pdf-embed-viewer') ?></span>
-                        </div>
-                        <div style="width: 50%; text-align:right;">
-                            <code>
-                                <?php echo esc_html('[pdfev_embed_viewer id="'.get_the_ID().'"]') ?>
-                            </code>
-                        </div>
-                    </label>
-                </section>
-                <section>
-                    <label class="label">
-                        <div>
-                            <p><?php echo esc_html__( 'Add PDF URL', 'pdf-embed-viewer' )?></p>
-                            <span><?php echo esc_html__('Add pdf file by upload button','pdf-embed-viewer') ?></span>
-                        </div>
-                        <div style="width: 55%;">
-                            <input type="url" class="pdfev-emd-vwr-file" name="pdfev_meta_pdf_url" value="<?php echo $embed_file ? esc_attr($embed_file) : '' ;  ?>" placeholder="<?php echo esc_attr('https://example.com/filename.pdf'); ?>" required>
-                            <button class='button pdfev-emd-vwr-upload'>
-                                <i class="fa fa-paperclip" aria-hidden="true"></i> <?php esc_html_e('Upload','pdf-embed-viewer');?>
-                            </button>
-                        </div>
-                    </label>
-                </section>
-                <section>
-                    <label class="label">
-                        <div>
-                            <p><?php echo esc_html__( 'Download Button', 'pdf-embed-viewer' )?></p>
-                            <span><?php echo esc_html__('Show/Hide download Button in single page.','pdf-embed-viewer') ?></span>
-                        </div>
-                        <label class="switch">
-                            <input type="checkbox" name="pdfev_meta_download" value="<?php echo esc_attr($check_download); ?>" <?php echo esc_attr(($check_download=='yes')?'checked':''); ?>>
-                            <span class="slider"></span>
-                        </label>
-                    </label>
-                </section>
-                
-                <section class="pdfev-preview-area">
-                    
-                    <div class="pdfev-featured-image-area">
-                        <label class="label">
-                            <div>
-                                <p><?php echo esc_html__( 'Preview Featured Image', 'pdf-embed-viewer' )?></p>
-                                <span><?php echo esc_html__('Select any image to set as thumbnail from right.','pdf-embed-viewer') ?></span>
-                            </div>
-                        </label>
-                        <div id="pdfev-featured-image" data-status="<?php echo isset($thumbnail_url)?'yes':'no';?>" data-url="<?php echo isset($thumbnail_url)?$thumbnail_url:'';?>">
-                            <input type="hidden" id="pdfev-featured-image-data" name="pdfev_featured_image">
-                            <img id="pdfev-featured-image-preview" src="<?php echo esc_attr(isset($thumbnail_url)?$thumbnail_url:'');?>">
-                            <div><?php _e('Document size: ','pdf-embed-viewer'); ?><strong class="pdfev-filesize"></strong></div>
-                            <div><?php _e('Total Pages: ','pdf-embed-viewer'); ?><strong class="pdfev-totalpage"></strong></div>
-                        </div> 
+        ?>
+        <div class="pdfev-tab-content active" data-tab="pdfev-tabs-general">
+            <?php wp_nonce_field( 'pdfev_emd_vwr_metabox_nonce', 'pdfev_emd_vwr_metabox_nonce' ); ?>
+            <h2 class="title"><?php _e('General Settings','pdf-embed-viewer'); ?></h2>
+            <p><?php _e('Here you can add basic settings for your document.','pdf-embed-viewer'); ?></p>
+            <section>
+                <label class="label">
+                    <div>
+                        <p><?php echo esc_html__( 'Shortcode', 'pdf-embed-viewer' )?></p>
+                        <span><?php echo esc_html__('Add this shortcode to any page or post to view pdf','pdf-embed-viewer') ?></span>
                     </div>
-                    <div id="pdfev-document-preview">
-                        <div class="pdfev-loader-wrapper">
-                            <div class="pdfev-spinner"></div>
-                            <p><?php echo __('Loading preview...','pdf-embed-viewer') ?></p>
-                        </div>
-                        <p class="warning"><?php echo __('Failed to load preview. Please Upload a PDF.','pdf-embed-viewer') ?></p>
+                    <div style="width: 50%; text-align:right;">
+                        <code>
+                            <?php echo esc_html('[pdfev_embed_viewer id="'.get_the_ID().'"]') ?>
+                        </code>
                     </div>
-                </section>
-            </div>
-
-            <?php
-        }
-
-        public function save_featured_image($post_id,$image_data){
-            if (preg_match('/^data:image\/(\w+);base64,/', $image_data, $type)) {
-                    $image_data = substr($image_data, strpos($image_data, ',') + 1);
-                    $type = strtolower($type[1]);
-
-                    if (!in_array($type, ['jpg', 'jpeg', 'gif', 'png'])) return;
-
-                    $image_data = base64_decode($image_data);
-                    if ($image_data === false) return;
-
-                    // Save to uploads folder
-                    $upload_dir = wp_upload_dir();
-                    $filename = 'pdfev-featured-' . time() . '.' . $type;
-                    $file_path = $upload_dir['path'] . '/' . $filename;
-
-                    file_put_contents($file_path, $image_data);
-
-                    // Create attachment
-                    $attachment = [
-                        'post_mime_type' => 'image/' . $type,
-                        'post_title'     => sanitize_file_name($filename),
-                        'post_content'   => '',
-                        'post_status'    => 'inherit'
-                    ];
-
-                    $attach_id = wp_insert_attachment($attachment, $file_path, $post_id);
-                    require_once ABSPATH . 'wp-admin/includes/image.php';
-                    $attach_data = wp_generate_attachment_metadata($attach_id, $file_path);
-                    wp_update_attachment_metadata($attach_id, $attach_data);
-
-                    // Set as featured image
-                    set_post_thumbnail($post_id, $attach_id);
-                }
-        }
-
-        public function save_post($post_id){
-
-                if( isset( $_POST['pdfev_emd_vwr_metabox_nonce'] ) ){
-                    if( ! wp_verify_nonce( sanitize_text_field( wp_unslash ( $_POST['pdfev_emd_vwr_metabox_nonce'] ) ) , 'pdfev_emd_vwr_metabox_nonce' ) ){
-                        return;
-                    }
-                }
-
-                if( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ){
-                    return;
-                }
-
-                if( isset($_POST['post_type']) && $_POST['post_type'] === 'pdfev_embed_viewer' ){
-                    if( ! current_user_can('edit_page',$post_id) ){
-                        return;
-                    }
-                    elseif( ! current_user_can('edit_post',$post_id) ){
-                        return;
-                    }
-                } 
+                </label>
+            </section>
+            <section>
+                <label class="label">
+                    <div>
+                        <p><?php echo esc_html__( 'Add PDF URL', 'pdf-embed-viewer' )?></p>
+                        <span><?php echo esc_html__('Add pdf file by upload button','pdf-embed-viewer') ?></span>
+                    </div>
+                    <div style="width: 55%;">
+                        <input type="url" class="pdfev-emd-vwr-file" name="pdfev_meta_pdf_url" value="<?php echo $embed_file ? esc_attr($embed_file) : '' ;  ?>" placeholder="<?php echo esc_attr('https://example.com/filename.pdf'); ?>" required>
+                        <button class='button pdfev-emd-vwr-upload'>
+                            <i class="fa fa-paperclip" aria-hidden="true"></i> <?php esc_html_e('Upload','pdf-embed-viewer');?>
+                        </button>
+                    </div>
+                </label>
+            </section>
+            <section>
+                <label class="label">
+                    <div>
+                        <p><?php echo esc_html__( 'Download Button', 'pdf-embed-viewer' )?></p>
+                        <span><?php echo esc_html__('Show/Hide download Button in single page.','pdf-embed-viewer') ?></span>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" name="pdfev_meta_download" value="<?php echo esc_attr($check_download); ?>" <?php echo esc_attr(($check_download=='yes')?'checked':''); ?>>
+                        <span class="slider"></span>
+                    </label>
+                </label>
+            </section>
+            
+            <section class="pdfev-preview-area">
                 
-                if (empty($_POST['pdfev_featured_image'])) return;
+                <div class="pdfev-featured-image-area">
+                    <label class="label">
+                        <div>
+                            <p><?php echo esc_html__( 'Preview Featured Image', 'pdf-embed-viewer' )?></p>
+                            <span><?php echo esc_html__('Select any image to set as thumbnail from right.','pdf-embed-viewer') ?></span>
+                        </div>
+                    </label>
+                    <div id="pdfev-featured-image" data-status="<?php echo isset($thumbnail_url)?'yes':'no';?>" data-url="<?php echo isset($thumbnail_url)?$thumbnail_url:'';?>">
+                        <input type="hidden" id="pdfev-featured-image-data" name="pdfev_featured_image">
+                        <img id="pdfev-featured-image-preview" src="<?php echo esc_attr(isset($thumbnail_url)?$thumbnail_url:'');?>">
+                        <div><?php _e('Document size: ','pdf-embed-viewer'); ?><strong class="pdfev-filesize"></strong></div>
+                        <div><?php _e('Total Pages: ','pdf-embed-viewer'); ?><strong class="pdfev-totalpage"></strong></div>
+                    </div> 
+                </div>
+                <div id="pdfev-document-preview">
+                    <div class="pdfev-loader-wrapper">
+                        <div class="pdfev-spinner"></div>
+                        <p><?php echo __('Loading preview...','pdf-embed-viewer') ?></p>
+                    </div>
+                    <p class="warning"><?php echo __('Failed to load preview. Please Upload a PDF.','pdf-embed-viewer') ?></p>
+                </div>
+            </section>
+        </div>
 
-                $image_data = $_POST['pdfev_featured_image'];
+        <?php
+    }
 
-                $this->save_featured_image($post_id,$image_data);
-                
-                if( isset($_POST['action']) and $_POST['action']=='editpost' ){                    
+    public function save_featured_image($post_id,$image_data){
+        if (preg_match('/^data:image\/(\w+);base64,/', $image_data, $type)) {
+                $image_data = substr($image_data, strpos($image_data, ',') + 1);
+                $type = strtolower($type[1]);
 
-                    $file_url  = isset( $_POST['pdfev_meta_pdf_url'] ) ? sanitize_url($_POST['pdfev_meta_pdf_url']) : '';
-					update_post_meta( $post_id, 'pdfev_meta_pdf_url', $file_url );
-                    
-                    $check_download  = isset( $_POST['pdfev_meta_download'] ) ? sanitize_text_field($_POST['pdfev_meta_download']) : 'no';
-					update_post_meta( $post_id, 'pdfev_meta_download', $check_download );
-                }
+                if (!in_array($type, ['jpg', 'jpeg', 'gif', 'png'])) return;
+
+                $image_data = base64_decode($image_data);
+                if ($image_data === false) return;
+
+                // Save to uploads folder
+                $upload_dir = wp_upload_dir();
+                $filename = 'pdfev-featured-' . time() . '.' . $type;
+                $file_path = $upload_dir['path'] . '/' . $filename;
+
+                file_put_contents($file_path, $image_data);
+
+                // Create attachment
+                $attachment = [
+                    'post_mime_type' => 'image/' . $type,
+                    'post_title'     => sanitize_file_name($filename),
+                    'post_content'   => '',
+                    'post_status'    => 'inherit'
+                ];
+
+                $attach_id = wp_insert_attachment($attachment, $file_path, $post_id);
+                require_once ABSPATH . 'wp-admin/includes/image.php';
+                $attach_data = wp_generate_attachment_metadata($attach_id, $file_path);
+                wp_update_attachment_metadata($attach_id, $attach_data);
+
+                // Set as featured image
+                set_post_thumbnail($post_id, $attach_id);
             }
     }
-    
-    $PDFEV_Metabox_General = new PDFEV_Metabox_General();
+
+    public function save_post($post_id){
+
+            if( isset( $_POST['pdfev_emd_vwr_metabox_nonce'] ) ){
+                if( ! wp_verify_nonce( sanitize_text_field( wp_unslash ( $_POST['pdfev_emd_vwr_metabox_nonce'] ) ) , 'pdfev_emd_vwr_metabox_nonce' ) ){
+                    return;
+                }
+            }
+
+            if( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ){
+                return;
+            }
+
+            if( isset($_POST['post_type']) && $_POST['post_type'] === 'pdfev_embed_viewer' ){
+                if( ! current_user_can('edit_page',$post_id) ){
+                    return;
+                }
+                elseif( ! current_user_can('edit_post',$post_id) ){
+                    return;
+                }
+            } 
+            
+            if (empty($_POST['pdfev_featured_image'])) return;
+
+            $image_data = $_POST['pdfev_featured_image'];
+
+            $this->save_featured_image($post_id,$image_data);
+            
+            if( isset($_POST['action']) and $_POST['action']=='editpost' ){                    
+
+                $file_url  = isset( $_POST['pdfev_meta_pdf_url'] ) ? sanitize_url($_POST['pdfev_meta_pdf_url']) : '';
+                update_post_meta( $post_id, 'pdfev_meta_pdf_url', $file_url );
+                
+                $check_download  = isset( $_POST['pdfev_meta_download'] ) ? sanitize_text_field($_POST['pdfev_meta_download']) : 'no';
+                update_post_meta( $post_id, 'pdfev_meta_download', $check_download );
+            }
+        }
 }
+
+new \PDFEV\Metabox_General();

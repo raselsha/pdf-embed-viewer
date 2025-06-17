@@ -1,13 +1,12 @@
 <?php
 /**
  * @author Shahadat Hossain <raselsha@gmail.com>
- * @version 1.0.0
+ * @version 1.0.1
  */
+namespace PDFEV;
+defined('ABSPATH') || exit;
 
-if( ! defined('ABSPATH') ) { die( "Don't access directly" ); }
-
-if( ! class_exists('PDFEV_Count_Manager') ){
-    class PDFEV_Count_Manager{
+    class Count_Manager{
         public function __construct() {
             add_action('wp_head', array($this,'track_post_views'));
 
@@ -69,5 +68,4 @@ if( ! class_exists('PDFEV_Count_Manager') ){
             }
         }
     }
-    new PDFEV_Count_Manager();
-}
+    new \PDFEV\Count_Manager();
