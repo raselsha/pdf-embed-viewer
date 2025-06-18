@@ -46,7 +46,7 @@ class Support_Settings{
             <ul style="list-style: disc; padding-left: 20px;">
                 <li>
                     <?php esc_html_e( 'Give a review for your feedback', 'pdf-embed-viewer' ); ?> –
-                    <a target="_blank" href="<?php echo esc_url( 'https://wordpress.org/support/plugin/pdf-embed-viewer/reviews/' ); ?>">
+                    <a target="_blank" href="<?php echo esc_url( 'https://wordpress.org/support/plugin/pdf-embed-viewer/reviews/#new-post' ); ?>">
                         <?php esc_html_e( 'Add Review', 'pdf-embed-viewer' ); ?>
                     </a>
                 </li>
