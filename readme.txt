@@ -156,6 +156,11 @@ Learn more about how [Appsero collects and uses this data](https://appsero.com/p
 
 
 == Changelog ==
+= 1.2.8 =
+* Code refactor
+* Support Form added
+* Single page widh and shortcode page width adjusted
+* Preview image setup
 
 = 1.2.7 =
 * Shortcode for single page toggle button fix
