@@ -39,7 +39,7 @@ class Elementor_Settings {
         $elements_manager->add_category(
             'pdfev-elementor-category',
             [
-                'title' => __( 'PDF Embed Viewer', 'pdf-embed-viewer' ),
+                'title' => __( '3D Flipbook PDF Viewer', 'pdf-embed-viewer' ),
                 'icon'  => 'fa fa-plug',
             ]
         );
@@ -49,7 +49,8 @@ class Elementor_Settings {
      * Include widget files
      */
     private function include_widgets_files() {
-        require_once PDFEV_Const_Path . 'classes/elementor/widgets/grid.php';
+        require_once PDFEV_Const_Path . 'classes/elementor/widgets/archive-view.php';
+        require_once PDFEV_Const_Path . 'classes/elementor/widgets/single-view.php';
     }
 
     /**
@@ -59,6 +60,7 @@ class Elementor_Settings {
         $this->include_widgets_files();
         // Register the widget class (assuming it's defined inside the included file)
         ElementorPlugin::instance()->widgets_manager->register( new \PDFEV\Widgets\PDFEV_Grid_Widget() );
+        ElementorPlugin::instance()->widgets_manager->register( new \PDFEV\Widgets\PDFEV_Single_Widget() );
     }
 }
 
