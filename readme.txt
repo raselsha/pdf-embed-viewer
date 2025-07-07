@@ -12,7 +12,7 @@ Tags:               3d flipbook, ebook, flipbook, pdf, pdf embed,
 Display PDFs as interactive 3D flipbooks or traditional viewers for E-Books, Manuals, Newsletters, and Reports.
 
 == Description ==
-3D Flipbook PDF Viewer & Embedder allows easy reading and downloading of PDF files on your WordPress website, offering both traditional and interactive 3D Flipbook views for documents, newsletters, and eBooks directly within web pages. With a user-friendly interface and customizable features, it tracks reads and downloads per item. You can also choose to show or hide the read and download buttons.
+**3D Flipbook PDF Viewer & Embedder** lets you display and embed PDF files on your WordPress site with traditional or interactive 3D Flipbook views. Ideal for documents, newsletters, and eBooks, it features read/download tracking, customizable buttons, and a user-friendly interface. Now includes Elementor widgets for easily embedding single or archive views using drag-and-drop.
 
 ## This plugin supports 4 templates for Archive view
 * **List Template**
@@ -116,6 +116,9 @@ You can use the `[pdfev_viewer]` shortcode with the following attributes:
 - **Single Document Shortcode**  
   Embed individual PDFs using a specialized shortcode for single-view mode.
 
+- **Elementor Widgets Support**
+  Includes custom Elementor widgets for both archive and single document views—easily drag-and-drop your PDFs anywhere on the page.
+
 - **Import Demo Content**  
   Quickly set up your site with sample content using the demo import feature.
 
@@ -156,6 +159,12 @@ Learn more about how [Appsero collects and uses this data](https://appsero.com/p
 
 
 == Changelog ==
+
+= 1.3.0 =
+* Elementor Widgets Support
+* Archive View Widgets
+* Single View Widgets
+
 = 1.2.8 =
 * Code refactor
 * Support Form added
