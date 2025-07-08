@@ -160,6 +160,9 @@ Learn more about how [Appsero collects and uses this data](https://appsero.com/p
 
 == Changelog ==
 
+= 1.3.1 =
+* settings options saving issue fixed
+
 = 1.3.0 =
 * Elementor Widgets Support
 * Archive View Widgets
