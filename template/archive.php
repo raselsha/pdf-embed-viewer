@@ -36,10 +36,10 @@ if ( wp_is_block_theme() ) {  ?>
 }
 ?>
 
-<main>
-	<!-- Here Archive Template will display -->
-	<?php do_action('pdfev_template_archive_view'); ?>
-</main>
+
+<!-- Here Archive Template will display -->
+<?php do_action('pdfev_template_archive_view'); ?>
+
 
 <?php if ( wp_is_block_theme() ) : ?>
 	<footer class="wp-block-template-part">
