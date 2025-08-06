@@ -1,337 +1,312 @@
-=== 3D Flipbook PDF Viewer & Embedder – E-Books, Manuals, Newsletters, Reports ===
+=== 3D Flipbook PDF Viewer & Embedder ===
 
 Contributors:      raselsha
 Requires at least: 3.0
 Tested up to:      6.8
 Requires PHP:      7.0
-Stable tag:	       trunk
+Stable tag:        trunk
 License:           GPLv2 or later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
-Tags:               3d flipbook, ebook, flipbook, pdf, pdf embed,
+Tags:              3d-flipbook, ebook, flipbook, pdf-embed, elementor
 
-Display PDFs as interactive 3D flipbooks 📖 or traditional viewers for E-Books, Manuals, Newsletters, and Reports.
+Display PDFs as interactive 3D flipbooks or standard viewers—ideal for eBooks, manuals, newsletters, and reports.
 
 == Description ==
-**3D Flipbook PDF Viewer & Embedder** lets you display and embed PDF files on your WordPress site with traditional or interactive 3D Flipbook views. Ideal for documents, newsletters, and eBooks, it features read/download tracking, customizable buttons, and a user-friendly interface. Now includes Elementor widgets for easily embedding single or archive views using drag-and-drop. 🖱️
+**3D Flipbook PDF Viewer & Embedder** enables you to embed and display PDFs on your WordPress site in both traditional and interactive 3D Flipbook modes. Easily showcase documents, newsletters, and eBooks with read/download counters, customizable action buttons, and an intuitive interface. Elementor widgets are included for drag-and-drop embedding of single PDFs or archives. 🖱️
 
-## This plugin supports 4 templates for Archive view
-* **List Template** 📋
-* **Grid Template** 🗂️
-* **Newsletter Template** 📰
-* **Ebook Template** 📚
+## Archive View Templates Supported
+* **List** 📋
+* **Grid** 🟦
+* **Newsletter** 📰
+* **Ebook** 📚
 
 ## Elementor Widgets
 
-**Seamless Elementor Integration** ⚡
+**Effortless Elementor Integration** ⚡
 
-- Drag-and-drop **Archive View** and **Single PDF View** widgets directly into your pages.
-- Instantly display PDF lists or individual documents with full shortcode attribute support.
-- Customize layout, buttons, and counters visually—no coding required. 🎨
-- Works alongside all Elementor-compatible themes for maximum flexibility.
+- Add **Archive View** and **Single PDF View** widgets to your pages with simple drag-and-drop.
+- Instantly display PDF lists or single documents—full support for all shortcode attributes.
+- Visually customize layouts, buttons, and counters—no coding needed. 🎨
+- Fully compatible with all Elementor-ready themes for maximum flexibility.
 
-## Shortcode for multiple template view
-Easily generate and customize shortcodes with our built-in shortcode generator. 🛠️
+## Shortcodes Overview
 
-**Shortcode Attributes**
+Easily embed and customize PDF displays using our shortcodes. Use the built-in generator for quick setup. 🛠️
 
-You can use the `[pdfev_viewer]` shortcode with the following attributes:
+### Archive/Multiple PDFs Shortcode
+
+Use `[pdfev_viewer]` to display a list, grid, ebook, or newsletter-style archive of PDFs.
+
+**Attributes:**
 
 - `template`  
-  Choose the display layout.  
-  **Accepted values**: `list`, `grid`, `ebook`, `newsletter`  
-  **Default**: `list`
+  Layout style: `list`, `grid`, `ebook`, `newsletter` (default: `list`)
 
 - `limit`  
-  Number of PDF items to display.  
-  **Accepted values**: Any number like `5`, `10`, `20`  
-  **Default**: `10`
+  Number of items to show (default: `10`)
 
 - `order`  
-  Set display order.  
-  **Accepted values**: `asc`, `dsc`  
-  **Default**: `dsc`
+  Display order: `asc`, `dsc` (default: `dsc`)
 
 - `read`  
-  Show or hide the **Read** button.  
-  **Accepted values**: `yes`, `no`  
-  **Default**: `yes`
+  Show Read button: `yes`, `no` (default: `yes`)
 
 - `download`  
-  Show or hide the **Download** button.  
-  **Accepted values**: `yes`, `no`  
-  **Default**: `yes`
+  Show Download button: `yes`, `no` (default: `yes`)
 
 - `reading_count`  
-  Show or hide how many times the PDF has been read.  
-  **Accepted values**: `yes`, `no`  
-  **Default**: `yes`
+  Show read counter: `yes`, `no` (default: `yes`)
 
 - `downloading_count`  
-  Show or hide how many times the PDF has been downloaded.  
-  **Accepted values**: `yes`, `no`  
-  **Default**: `yes`
+  Show download counter: `yes`, `no` (default: `yes`)
 
-**Example**
+**Examples:**
 
-* [pdfev_viewer `template="list"` `limit="10"` `order="dsc"` `read="yes"` `download="yes"` `reading_count="yes"` `downloading_count="yes"` ]
-* [pdfev_viewer `template="grid"` ]
-* [pdfev_viewer `template="ebook"` `limit="10"` `order="asc"` `read="yes"` `download="yes"`]
-* [pdfev_viewer `template="newsletter"` `limit="30"` `order="dsc"`]
+- `[pdfev_viewer template="list" limit="10" order="dsc" read="yes" download="yes" reading_count="yes" downloading_count="yes"]`
+- `[pdfev_viewer template="grid"]`
+- `[pdfev_viewer template="ebook" limit="10" order="asc" read="yes" download="yes"]`
+- `[pdfev_viewer template="newsletter" limit="30" order="dsc"]`
 
-## Shortcode for single page/post
-* [pdfev_embed_viewer `id="post_id"`]
+### Single PDF Shortcode
+
+Display a single PDF by post ID:
+
+- `[pdfev_embed_viewer id="post_id"]`
 
 ## Features
 
-- **Display PDFs Anywhere**  
-  Easily embed PDFs into any post or page using a shortcode, supporting both traditional and interactive 3D Flipbook views. 📄
+- **Embed PDFs Anywhere**  
+  Add PDFs to any post or page with a shortcode—choose between traditional or interactive 3D Flipbook views.
 
 - **Multiple Archive Templates**  
-  Choose from four unique display templates: `list`, `grid`, `ebook`, and `newsletter`. 🗂️
+  Display your PDFs in `list`, `grid`, `ebook`, or `newsletter` layouts.
 
-- **Flexible Shortcode Usage**  
-  Use shortcodes anywhere to display your PDF documents or e-books with full control over layout and behavior. 🔧
+- **Flexible Shortcodes**  
+  Use shortcodes to control layout, buttons, counters, and more.
 
-- **Shortcode Generator** 
-  Easily generate and customize shortcodes with our built-in shortcode generator. Navigate to Settings > Shortcode to create the perfect shortcode for your needs 🛠️
+- **Shortcode Generator**  
+  Create custom shortcodes easily from the plugin settings.
 
-- **Elementor Widgets**  
-  Includes Elementor widgets for both archive and single PDF views. Easily drag-and-drop archive lists or individual PDF viewers into your pages using Elementor. 🧩
+- **Elementor Integration**  
+  Drag-and-drop archive or single PDF widgets into your pages.
 
-- **Category Organization**  
-  Easily organize your books and documents by assigning categories, making it simple for users to browse and find content by topic or type. 🏷️
+- **Category Support**  
+  Organize PDFs by category for easy browsing.
 
-- **Interactive E-Book View**  
-  The `ebook` template includes a smooth hover-preview effect for a realistic book feel. 📚
+- **Interactive Ebook View**  
+  The `ebook` template features a hover-preview for a realistic book effect.
 
-- **3D Flipbook & Traditional Reading Modes**  
-  Readers can view content in either immersive 3D Flipbook mode or standard document view. 🔄
+- **3D Flipbook & Standard Modes**  
+  Let users switch between immersive 3D and standard PDF views.
 
-- **Usage Tracking**  
-  Monitor how many times each PDF has been read or downloaded with built-in counters. 📊
+- **Usage Counters**  
+  Track reads and downloads for each PDF.
 
-- **Dedicated Admin Menu**  
-  A standalone sidebar menu in the WordPress dashboard for managing your documents. 🗄️
+- **Admin Menu**  
+  Manage all documents from a dedicated dashboard menu.
 
 - **Color Customization**  
-  Adjust colors easily using the built-in settings page for better design integration. 🎨
+  Adjust colors from the settings page.
 
 - **Custom Archive URLs**  
-  Modify the archive page URL slug to match your site's structure or branding. 🔗
+  Change the archive page slug to fit your site.
 
 - **Download Button Toggle**  
-  Enable or disable the PDF download button as needed from the settings panel. ⬇️
+  Enable or disable the download button as needed.
 
 - **Editable Archive Titles**  
-  Set custom titles for your archive pages to suit your content and audience. 📝
+  Set custom titles for archive pages.
 
-- **Archive Page Shortcode**  
-  Display an archive of all documents using a dedicated archive shortcode. 📑
+- **Archive & Single Shortcodes**  
+  Show all documents or a single PDF with dedicated shortcodes.
 
-- **Single Document Shortcode**  
-  Embed individual PDFs using a specialized shortcode for single-view mode. 📄
+- **Demo Import**  
+  Add sample content with one click.
 
-- **Elementor Widgets Support**
-  Includes custom Elementor widgets for both archive and single document views—easily drag-and-drop your PDFs anywhere on the page. 🧩
-
-- **Import Demo Content**  
-  Quickly set up your site with sample content using the demo import feature. 🚀
-
-- **Multilingual Support**  
-  Fully compatible with translation plugins to support multiple languages. 🌐
+- **Multilingual Ready**  
+  Compatible with translation plugins.
 
 - **Read & Download Button Control**  
-  Easily show or hide the Read and Download buttons for both viewing modes. 👁️⬇️
+  Show or hide Read and Download buttons as needed.
 
 == Screenshot ==
 
 == Installation ==
 
-= Uploading in WordPress Dashboard =
+= Install via WordPress Dashboard =
 
-1. Navigate to the 'Add New' in the plugins dashboard
-2. Navigate to the 'Upload' area
-3. Select pdf-embed-viewer.zip from your computer
-4. Click 'Install Now'
-5. Activate the plugin in the Plugin dashboard ✅
+1. Go to 'Plugins' > 'Add New' in your WordPress dashboard.
+2. Click 'Upload Plugin'.
+3. Choose the `pdf-embed-viewer.zip` file from your computer.
+4. Click 'Install Now', then activate the plugin. ✅
 
-= Using FTP =
+= Install via FTP =
 
-1. Download pdf-embed-viewer.zip
-2. Extract the pdf-embed-viewer directory to your computer
-3. Upload the pdf-embed-viewer directory to the /wp-content/plugins/ directory
-4. Activate the plugin in the Plugin dashboard ✅
+1. Download `pdf-embed-viewer.zip` and extract it.
+2. Upload the extracted `pdf-embed-viewer` folder to `/wp-content/plugins/` on your server.
+3. Go to 'Plugins' in your WordPress dashboard and activate the plugin. ✅
 
 ## Privacy Policy
-PDF Embed Viewer uses [Appsero](https://appsero.com) SDK to collect some telemetry data upon user's confirmation. This helps us to troubleshoot problems faster & make product improvements. 🛡️
+PDF Embed Viewer uses the [Appsero](https://appsero.com) SDK to collect basic telemetry data, but **only after you give explicit consent** via the admin notice. This data helps us improve the plugin and troubleshoot issues. 🛡️
 
-Appsero SDK **does not gather any data by default.** The SDK only starts gathering basic telemetry data **when a user allows it via the admin notice**. We collect the data to ensure a great user experience for all our users.
+By default, Appsero SDK **does not collect any data**. Data collection begins **only if you allow it**. No personal or sensitive information is gathered without your permission.
 
-Integrating Appsero SDK **DOES NOT IMMEDIATELY** start gathering data, **without confirmation from users in any case.**
-
-Learn more about how [Appsero collects and uses this data](https://appsero.com/privacy-policy/). 🔒
+For more details, see the [Appsero Privacy Policy](https://appsero.com/privacy-policy/). 🔒
 
 == Changelog ==
 
 = 1.3.3 =
-
-* Category feature integration 🏷️
-* Elementor widgets updated to support category selection 🧩
+* Added category feature 🏷️
+* Elementor widgets now support category selection 🧩
 
 = 1.3.2 =
-* full width fix for the archive list view
+* Fixed full width issue in archive list view
 
 = 1.3.1 =
-* settings options saving issue fixed
+* Fixed settings options saving issue
 
 = 1.3.0 =
-* Elementor Widgets Support 🧩
-* Archive View Widgets
-* Single View Widgets
+* Added Elementor Widgets Support 🧩
+* Introduced Archive View and Single View Widgets
 
 = 1.2.8 =
-* Code refactor
-* Support Form added
-* Single page widh and shortcode page width adjusted
-* Preview image setup
+* Refactored code
+* Added support form
+* Adjusted width for single and shortcode pages
+* Added preview image setup
 
 = 1.2.7 =
-* Shortcode for single page toggle button fix
-* Admin backend show the filesize and total pages
+* Fixed toggle button for single page shortcode
+* Backend now shows file size and total pages
 
 = 1.2.6 =
-* PDF Prevew thumbnail generation 🖼️
-* Featured image from preview thumbnail
+* Added PDF preview thumbnail generation 🖼️
+* Set featured image from preview thumbnail
 
 = 1.2.5 =
-* fix admin icons
-* Shortcode Generator Added 🛠️
+* Fixed admin icons
+* Added Shortcode Generator 🛠️
 
 = 1.2.4 =
-* Template shortcode Attribute set
-* Ebook cover fliping style on hover 📚
-* Update E-book Design
+* Added template shortcode attribute
+* Added ebook cover flipping style on hover 📚
+* Updated ebook design
 
 = 1.2.3 =
-* Arichive view number pagination fix
+* Fixed archive view pagination
 
 = 1.2.2 =
-* Single page template update
-* Shortcode view upate for 3D flipbook
+* Updated single page template
+* Updated shortcode view for 3D flipbook
 
 = 1.2.1 =
-* Fix empty page loading issue
+* Fixed empty page loading issue
 
 = 1.2.0 =
 * Added 3D flipbook library 📖
 
 = 1.1.2 =
-* Insert Demo pages for shortcode view. 🚀
-* Fix default counter value.
-* Code refactor.
+* Added demo pages for shortcode view 🚀
+* Fixed default counter value
+* Refactored code
 
 = 1.1.1 =
-* An option added for return page when use shortcode.
-* A settings added for show/hide counter.
-* Code refactor.
+* Added option to return page when using shortcode
+* Added setting to show/hide counter
+* Refactored code
 
 = 1.1.0 =
-* Template file missing error fix.
+* Fixed missing template file error
 
 = 1.0.10 =
-* Download button counter fix.
-* Read Button show hide settings.
-* Read and Download Button style fix.
-* Template hook added for edit template.
-* Download counter and read data added into post table.
+* Fixed download button counter
+* Added read button show/hide settings
+* Improved button styles
+* Added template hook for editing templates
+* Added download and read data to post table
 
 = 1.0.9 =
-* Grid Archive view responsive and css update.
-* Ebook Archive view responsive and css update.
+* Improved grid and ebook archive view responsiveness and CSS
 
 = 1.0.8 =
-* Fatal error fix that count manager not incleded.
-* Single page navigation icon fix.
+* Fixed fatal error with count manager
+* Fixed single page navigation icon
 
 = 1.0.7 =
-* Add a new feature to count read a pdf and download counting 📊
-* Translation Update
+* Added PDF read and download counters 📊
+* Updated translations
 
 = 1.0.6 =
-* Demo import button fix 🚀
-* Translation Update
+* Fixed demo import button 🚀
+* Updated translations
 
 = 1.0.5 =
-* Archive page slug editable from settings page
-* Import Demo button on settings page 🚀
-* Translation update
+* Made archive page slug editable from settings
+* Added import demo button 🚀
+* Updated translations
 
 = 1.0.4 =
-* Shortcode added for single view
-* Button translation and Read button
-* Download Button hover effect
-* General tab new section for Shortcode
-* Shortcode column added for backend
+* Added shortcode for single view
+* Improved button translation and read button
+* Added download button hover effect
+* Added shortcode section to general tab
+* Added shortcode column to backend
 
 = 1.0.3 =
-* Shortcode added for 4 templates view
-* Color changing issue for template
-* Translation for template header
-* Sample data inserted on activation
+* Added shortcode for 4 template views
+* Fixed color changing issue for templates
+* Added translation for template header
+* Inserted sample data on activation
 
 = 1.0.2 =
-* Appsero analytics setup
+* Set up Appsero analytics
 
 = 1.0.1 =
-* Admin support info
+* Added admin support info
 
 = 1.0.0 =
-* Initial Release 🎉
+* Initial release 🎉
 
 == Frequently Asked Questions ==
 
-= Q. How do I embed a PDF on a single page or post? =
-A. Use the shortcode [pdfev_embed_viewer id="post_id"], replacing post_id with the ID of your uploaded PDF post. 📄
+= How do I embed a PDF on a single page or post? =
+Use the shortcode `[pdfev_embed_viewer id="post_id"]`, replacing `post_id` with the ID of your uploaded PDF post.
 
-= Q. Can I create a gallery or archive of multiple PDFs? =
-A. Yes! Use [pdfev_viewer template="list"], [pdfev_viewer template="grid"], [pdfev_viewer template="ebook"], or [pdfev_viewer template="newsletter"] to create different archive layouts. 🗂️
+= Can I create a gallery or archive of multiple PDFs? =
+Yes! Use `[pdfev_viewer template="list"]`, `[pdfev_viewer template="grid"]`, `[pdfev_viewer template="ebook"]`, or `[pdfev_viewer template="newsletter"]` to display different archive layouts.
 
-= Q. Does the plugin support Elementor? =
-A. Yes! The plugin includes Elementor widgets for both archive and single PDF views. You can easily drag-and-drop PDF lists or individual PDF viewers into your pages using Elementor, with full support for shortcode attributes and visual customization. 🧩
+= Does the plugin support Elementor? =
+Yes, the plugin includes Elementor widgets for both archive and single PDF views. You can drag-and-drop PDF lists or individual PDF viewers into your pages, with full support for shortcode attributes and visual customization.
 
-= Q. Can I organize my PDFs by category? =
-A. Yes! You can assign categories to your PDFs, making it easy to organize and allow users to browse documents by topic or type. 🏷️
+= Can I organize my PDFs by category? =
+Yes, you can assign categories to your PDFs, making it easy to organize and allow users to browse documents by topic or type.
 
-= Q. How do I track how many times a PDF is read or downloaded? =
-A. The plugin automatically tracks reads and downloads. You can see the counts in the plugin settings and post list. 📊
+= How do I track how many times a PDF is read or downloaded? =
+The plugin automatically tracks reads and downloads. You can view the counts in the plugin settings and post list.
 
-= Q. Is there an option to show or hide the download and view counters on buttons? =
-A. Yes! In the plugin settings, you can enable or disable the read (view) and download counters on the action buttons easily. 👁️⬇️
+= Is there an option to show or hide the download and view counters on buttons? =
+Yes, you can enable or disable the read (view) and download counters on the action buttons from the plugin settings.
 
-= Q. Can I customize the archive page URL and titles? =
-A. Yes! You can change the archive page slug and title easily from the plugin settings. 📝
+= Can I customize the archive page URL and titles? =
+Yes, you can change the archive page slug and title from the plugin settings.
 
-= Q. How do I switch between the Traditional PDF View and 3D Flipbook View? =
-A. You can choose your preferred mode between the two views in the plugin’s settings to enable or disable. 🔄
+= How do I switch between the Traditional PDF View and 3D Flipbook View? =
+You can choose your preferred mode in the plugin’s settings.
 
-= Q. Does the plugin support multiple languages? =
-A. Yes, it’s translation-ready and compatible with multilingual websites. 🌐
+= Does the plugin support multiple languages? =
+Yes, it is translation-ready and compatible with multilingual websites.
 
-= Q. Can I override the plugin templates in my child theme? =
-A. Yes! You can override the plugin templates easily. Just copy the desired template files from the template/ folder inside the plugin and paste them into your child theme.
-For example:
-your-child-theme/template/archive.php
-your-child-theme/template/single.php
-You can then modify the copied file as needed without worrying about plugin updates overwriting your changes.
+= Can I override the plugin templates in my child theme? =
+Yes, copy the desired template files from the plugin’s `template/` folder to your child theme (e.g., `your-child-theme/template/archive.php`). You can then modify the copied files as needed.
 
-= Q. How do I import demo content? =
-A. Just click the "Import Demo" button in the plugin settings to quickly add sample content. 🚀
+= How do I import demo content? =
+Click the "Import Demo" button in the plugin settings to quickly add sample content.
 
-= Q. Will this plugin slow down my website? =
-A. No, the plugin is lightweight and optimized for fast performance. ⚡
+= Will this plugin slow down my website? =
+No, the plugin is lightweight and optimized for fast performance.
 
-= Q. Do I need coding knowledge to use this plugin? =
-A. No coding skills are required! You can manage everything with shortcodes and plugin settings. 🛠️
+= Do I need coding knowledge to use this plugin? =
+No coding skills are required. You can manage everything with shortcodes and plugin settings.
 
-= Q. Is Appsero collecting my private data? =
-A. No. Appsero only collects basic telemetry data after you give permission. It’s 100% optional and secure. 🔒
+= Is Appsero collecting my private data? =
+No. Appsero only collects basic telemetry data after you give permission. It’s 100% optional and secure.
