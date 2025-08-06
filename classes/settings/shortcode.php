@@ -20,6 +20,11 @@ class Shortcode_Generator {
         <?php
     }
     public function tabs_content(){
+        $categories = get_terms( array(
+            'taxonomy'   => 'pdfev_category',
+            'hide_empty' => false, // false রাখলে empty category গুলোও পাবে
+        ) );
+
         ?>
         <div class="pdfev-tab-content" data-tab="pdfev_emd_vwr_admin_tabs_shortcode">
             <div class="pdfev-shortcode-generaor">
@@ -34,6 +39,18 @@ class Shortcode_Generator {
                             <option value="ebook">ebook</option>
                             <option value="newsletter">newsletter</option>
                         </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="template">Category</label>
+                        
+                        <select id="category">
+                            <option value="">Select Category</option>
+                            <?php foreach ( $categories as $category ) : ?>
+                            <option value="<?php echo esc_html( $category->slug ); ?>"><?php echo esc_html( $category->name ); ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                        
                     </div>
 
                     <div class="form-group">
@@ -87,7 +104,7 @@ class Shortcode_Generator {
                 </div>
                 <div class="shortcode-previewer">
                     <h2><?php echo esc_html__('ShortCode','pdf-embed-viewer'); ?></h2>
-                    <div id="pdfev-shortcode" class="pdfev-shortcode">[pdfev_viewer template="list" limit="10" order="dsc" read="yes" download="yes" reading_count="yes" downloading_count="yes"]</div>
+                    <div id="pdfev-shortcode" class="pdfev-shortcode">[pdfev_viewer template="list" category="" limit="10" order="dsc" read="yes" download="yes" reading_count="yes" downloading_count="yes"]</div>
                     <!-- <div id="shortcode-previewer"></div> -->
                     <button id="pdfev-copy-shortcode"><?php echo esc_html__('Copy','pdf-embed-viewer'); ?></button>
                 </div>
@@ -98,6 +115,7 @@ class Shortcode_Generator {
     public function shortcode_generate(){
         check_ajax_referer('pdf_ajax_nonce', 'ajaxnonce');
         $template = isset($_POST['template']) ? sanitize_text_field($_POST['template']) : '';
+        $category = isset($_POST['category']) ? sanitize_text_field($_POST['category']) : '';
         $limit = isset($_POST['limit']) ? intval($_POST['limit']) : 10;
         $order = isset($_POST['order']) ? sanitize_text_field($_POST['order']) : '';
         $read = isset($_POST['read']) ? sanitize_text_field($_POST['read']) : '';
@@ -106,8 +124,8 @@ class Shortcode_Generator {
         $downloading_count = isset($_POST['downloading_count']) ? sanitize_text_field($_POST['downloading_count']) : '';
 
         $shortcode = sprintf(
-            '[pdfev_viewer template="%s" limit="%d" order="%s" read="%s" download="%s" reading_count="%s" downloading_count="%s"]',
-            $template, $limit, $order, $read, $download, $reading_count, $downloading_count
+            '[pdfev_viewer template="%s" category="%s" limit="%d" order="%s" read="%s" download="%s" reading_count="%s" downloading_count="%s"]',
+            $template, $category, $limit, $order, $read, $download, $reading_count, $downloading_count
         );
         
         

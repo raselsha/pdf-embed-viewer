@@ -177,6 +177,7 @@
   // ==============shortcode generate============
   function pdfevGenerateShortcode() {
       const template = document.getElementById("template").value;
+      const category = document.getElementById("category").value;
       const limit = document.getElementById("limit").value;
       const order = document.getElementById("order").value;
       const read = document.getElementById("read").value;
@@ -193,6 +194,7 @@
               action: 'pdfev_shortcode_generate',
               ajaxnonce: pdfevAjax.ajaxnonce,
               template: template,
+              category: category,
               limit: limit,
               order: order,
               read: read,
