@@ -13,7 +13,7 @@ class PDFEV_Single_Widget extends Widget_Base {
 	}
 
 	public function get_title() {
-		return __( 'Single View', 'mage-eventpress' );
+		return __( 'PDF Single View', 'mage-eventpress' );
 	}
 
 	public function get_icon() {
