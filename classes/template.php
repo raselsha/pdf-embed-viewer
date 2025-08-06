@@ -46,12 +46,28 @@ class Template{
                 <?php
                     $paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
                     $args = array(
-                    'post_type'=> \PDFEV_Functions::get_cpt_name(),
-                    'post_status' => 'publish',
-                    'order' => isset($atts['order'])? $atts['order'] : \PDFEV_Functions::get_post_order(),
-                    'posts_per_page'=> isset($atts['limit'])? $atts['limit'] : get_option( 'posts_per_page' ),
-                    'paged' => $paged
-                );
+                        'post_type'=> \PDFEV_Functions::get_cpt_name(),
+                        'post_status' => 'publish',
+                        'order' => isset($atts['order'])? $atts['order'] : \PDFEV_Functions::get_post_order(),
+                        'posts_per_page'=> isset($atts['limit'])? $atts['limit'] : get_option( 'posts_per_page' ),
+                        'paged' => $paged
+                    );
+                    if ( ! empty( $atts['category'] ) ) {
+                        $field = 'slug';
+                        if ( is_numeric( $atts['category'] ) ) {
+                            $field = 'term_id';
+                        } elseif ( strpos( $atts['category'], ' ' ) !== false ) {
+                            $field = 'name';
+                        }
+
+                        $args['tax_query'] = array(
+                            array(
+                                'taxonomy' => 'pdfev_category',
+                                'field'    => $field,
+                                'terms'    => $atts['category'],
+                            ),
+                        );
+                    }
                 $WpQuery = new \WP_Query($args);    
                     while ( $WpQuery->have_posts() ) :
                         $WpQuery->the_post();
@@ -85,6 +101,22 @@ class Template{
                 'posts_per_page'=> isset($atts['limit'])? $atts['limit'] : get_option( 'posts_per_page' ),
                 'paged' => $paged
             );
+            if ( ! empty( $atts['category'] ) ) {
+                $field = 'slug';
+                if ( is_numeric( $atts['category'] ) ) {
+                    $field = 'term_id';
+                } elseif ( strpos( $atts['category'], ' ' ) !== false ) {
+                    $field = 'name';
+                }
+
+                $args['tax_query'] = array(
+                    array(
+                        'taxonomy' => 'pdfev_category',
+                        'field'    => $field,
+                        'terms'    => $atts['category'],
+                    ),
+                );
+            }
             $WpQuery = new \WP_Query($args);    
                 while ( $WpQuery->have_posts() ) :
                     $WpQuery->the_post();
@@ -151,6 +183,22 @@ class Template{
                                     ),
                                 ),
                             );
+                            if ( ! empty( $atts['category'] ) ) {
+                                $field = 'slug';
+                                if ( is_numeric( $atts['category'] ) ) {
+                                    $field = 'term_id';
+                                } elseif ( strpos( $atts['category'], ' ' ) !== false ) {
+                                    $field = 'name';
+                                }
+
+                                $args['tax_query'] = array(
+                                    array(
+                                        'taxonomy' => 'pdfev_category',
+                                        'field'    => $field,
+                                        'terms'    => $atts['category'],
+                                    ),
+                                );
+                            }
                             $WpQuery = new \WP_Query($args);    
                                 while ( $WpQuery->have_posts() ) :
                                     $WpQuery->the_post();
@@ -193,6 +241,22 @@ class Template{
                 'posts_per_page'=> isset($atts['limit'])? $atts['limit'] : get_option( 'posts_per_page' ),
                 'paged' => $paged
             );
+            if ( ! empty( $atts['category'] ) ) {
+                $field = 'slug';
+                if ( is_numeric( $atts['category'] ) ) {
+                    $field = 'term_id';
+                } elseif ( strpos( $atts['category'], ' ' ) !== false ) {
+                    $field = 'name';
+                }
+
+                $args['tax_query'] = array(
+                    array(
+                        'taxonomy' => 'pdfev_category',
+                        'field'    => $field,
+                        'terms'    => $atts['category'],
+                    ),
+                );
+            }
             $WpQuery = new \WP_Query($args);    
                 while ( $WpQuery->have_posts() ) :
                     $WpQuery->the_post();

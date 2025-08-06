@@ -41,11 +41,12 @@ class Shortcode{
         // Set default attributes and merge with user-provided attributes
         $atts = shortcode_atts(
             array(
-                'template' => 'list',
-                'limit' => '',
-                'order' => '',
-                'read' => '',
-                'download' => '',
+                'template'  => 'list',
+                'category'  => '',
+                'limit'     => '',
+                'order'     => '',
+                'read'      => '',
+                'download'  => '',
                 'reading_count' => '',
                 'downloading_count' => '',
             ),
