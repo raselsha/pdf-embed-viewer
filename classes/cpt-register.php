@@ -11,6 +11,7 @@ class CPT{
     
     public function __construct() {
         add_action( 'init', array($this,'create_post_type') );
+        add_action( 'init', array($this,'create_post_category') );
         add_filter( 'manage_pdfev_embed_viewer_posts_columns', array($this,'posts_columns') ) ;
         add_action( 'manage_pdfev_embed_viewer_posts_custom_column', array($this,'custom_column'),10,2 ) ;
         add_filter( 'manage_edit-pdfev_embed_viewer_sortable_columns', array($this,'sortable_columns') ) ;
@@ -65,6 +66,30 @@ class CPT{
     }
 
 
+    public function create_post_category(){
+        $args = [
+            'hierarchical' => true,
+            'labels' => [
+                'name'              => _x( 'Categories', 'taxonomy general name', 'pdf-embed-viewer' ),
+                'singular_name'     => _x( 'Category', 'taxonomy singular name', 'pdf-embed-viewer' ),
+                'search_items'      => __( 'Search Categories', 'pdf-embed-viewer' ),
+                'all_items'         => __( 'All Categories', 'pdf-embed-viewer' ),
+                'parent_item'       => __( 'Parent Category', 'pdf-embed-viewer' ),
+                'parent_item_colon' => __( 'Parent Category:', 'pdf-embed-viewer' ),
+                'edit_item'         => __( 'Edit Category', 'pdf-embed-viewer' ),
+                'update_item'       => __( 'Update Category', 'pdf-embed-viewer' ),
+                'add_new_item'      => __( 'Add New Category', 'pdf-embed-viewer' ),
+                'new_item_name'     => __( 'New Category Name', 'pdf-embed-viewer' ),
+                'menu_name'         => __( 'Categories', 'pdf-embed-viewer' ),
+            ],
+            'show_ui' => true,
+            'show_admin_column' => true,
+            'query_var' => true,
+            'rewrite' => [ 'slug' => 'pdfev_category' ],
+        ];
+        // Set the custom post type for this taxonomy by passing it as the second argument
+        register_taxonomy('pdfev_category', ['pdfev_embed_viewer'], $args);
+    }
     public function create_post_type(){
         $labels = [
             "name" => __( "PDF Embed Viewer", 'pdf-embed-viewer' ),
