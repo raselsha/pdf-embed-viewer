@@ -57,6 +57,7 @@ if( ! class_exists( 'PDFEV_Embed_Viewer' ) ){
             require_once PDFEV_Const_Path . 'classes/enque-style-script.php';
             require_once PDFEV_Const_Path . 'classes/metabox-register.php';
             require_once PDFEV_Const_Path . 'classes/metabox/general.php';
+            require_once PDFEV_Const_Path . 'classes/metabox/categories.php';
             require_once PDFEV_Const_Path . 'classes/metabox/template.php';
             require_once PDFEV_Const_Path . 'classes/shortcode.php';
             require_once PDFEV_Const_Path . 'classes/count-manager.php';
