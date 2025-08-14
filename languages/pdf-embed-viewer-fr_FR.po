@@ -1,0 +1,560 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PDF Embed Viewer\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-06-03 11:24+0000\n"
+"PO-Revision-Date: 2025-08-14 15:20+0000\n"
+"Last-Translator: \n"
+"Language-Team: French (France)\n"
+"Language: fr_FR\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Loco-Version: 2.6.11; wp-6.6.2\n"
+"X-Domain: pdf-embed-viewer"
+
+#: classes/template.php:319 classes/template.php:347
+msgid " Previous"
+msgstr "Précédent"
+
+#: classes/elementor/elementor.php:42
+msgid "3D Flipbook PDF Viewer"
+msgstr "Visionneuse PDF 3D Flipbook"
+
+#. Name of the plugin
+msgid ""
+"3D Flipbook PDF Viewer & Embedder – E-Books, Manuals, Newsletters, Reports"
+msgstr ""
+"Visionneuse et intégrateur PDF 3D Flipbook – E-Books, Manuels, Newsletters, Rapports"
+
+#: classes/cpt-register.php:81
+msgid "Add New Category"
+msgstr "Ajouter une nouvelle catégorie"
+
+#: classes/metabox/general.php:56
+msgid "Add pdf file by upload button"
+msgstr "Ajouter un fichier PDF via le bouton de téléchargement"
+
+#: classes/metabox/general.php:55
+msgid "Add PDF URL"
+msgstr "Ajouter l’URL du PDF"
+
+#: classes/settings/support.php:50
+msgid "Add Review"
+msgstr "Ajouter un avis"
+
+#: classes/metabox/general.php:43
+msgid "Add this shortcode to any page or post to view pdf"
+msgstr "Ajoutez ce shortcode à n’importe quelle page ou publication pour afficher le PDF"
+
+#: classes/cpt-register.php:76
+msgid "All Categories"
+msgstr "Toutes les catégories"
+
+#: classes/cpt-register.php:98
+msgid "All PDF"
+msgstr "Tous les PDF"
+
+#: classes/settings/general.php:92
+msgid "Archive Slug"
+msgstr "Slug d’archive"
+
+#: classes/settings/general.php:109
+msgid "Archive Template"
+msgstr "Modèle d’archive"
+
+#: classes/settings/general.php:86
+msgid "Archive Title"
+msgstr "Titre de l’archive"
+
+#: classes/settings/shortcode.php:65
+msgid "asc"
+msgstr "asc"
+
+#: classes/elementor/widgets/archive-view.php:89
+msgid "ASC (Oldest First)"
+msgstr "ASC (le plus ancien d’abord)"
+
+#: classes/cpt-register.php:29
+msgid "Author"
+msgstr "Auteur"
+
+#: classes/functions.php:243
+msgid "Back to overview"
+msgstr "Retour à l’aperçu"
+
+#: classes/settings/general.php:98
+msgid "Back to Overview Page"
+msgstr "Retour à la page d’aperçu"
+
+#: classes/cpt-register.php:83
+msgid "Categories"
+msgstr "Catégories"
+
+#: classes/settings/shortcode.php:45
+#: classes/elementor/widgets/archive-view.php:72
+msgid "Category"
+msgstr "Catégorie"
+
+#: classes/settings/shortcode.php:109
+msgid "Copy"
+msgstr "Copier"
+
+#: classes/settings/support.php:54
+msgid "Create a support ticket"
+msgstr "Créer un ticket de support"
+
+#: classes/settings/general.php:176
+msgid "Dark Color"
+msgstr "Couleur foncée"
+
+#: classes/template.php:43 classes/cpt-register.php:30
+msgid "Date"
+msgstr "Date"
+
+#: classes/settings/general.php:119
+msgid "Default View 3D Flipbook"
+msgstr "Vue par défaut 3D Flipbook"
+
+#: classes/insert-demo.php:31
+msgid "Demo Data imported successfully!"
+msgstr "Données de démonstration importées avec succès !"
+
+#. Description of the plugin
+msgid ""
+"Display PDFs as interactive 3D flipbooks or traditional viewers for E-Books, "
+"Manuals, Newsletters, and Reports."
+msgstr ""
+"Affichez les PDF sous forme de flipbooks 3D interactifs ou de visionneuses traditionnelles pour E-Books, Manuels, Newsletters et Rapports."
+
+#: classes/metabox/general.php:91
+msgid "Document size: "
+msgstr "Taille du document :"
+
+#: classes/functions.php:215
+msgid "Download"
+msgstr "Télécharger"
+
+#: classes/metabox/general.php:69 classes/settings/shortcode.php:78
+msgid "Download Button"
+msgstr "Bouton de téléchargement"
+
+#: classes/cpt-register.php:24
+msgid "Download Enable"
+msgstr "Activer le téléchargement"
+
+#: classes/settings/shortcode.php:94
+msgid "Downloading Count"
+msgstr "Nombre de téléchargements"
+
+#: classes/cpt-register.php:26
+msgid "Downloads"
+msgstr "Téléchargements"
+
+#: classes/settings/shortcode.php:64
+msgid "dsc"
+msgstr "desc"
+
+#: classes/elementor/widgets/archive-view.php:90
+msgid "DSC (Newest First)"
+msgstr "DESC (le plus récent d’abord)"
+
+#: classes/elementor/widgets/archive-view.php:45
+msgid "Ebook"
+msgstr "Ebook"
+
+#: classes/settings/shortcode.php:39
+msgid "ebook"
+msgstr "Ebook"
+
+#: classes/options-setup.php:29
+msgid "Ebook Template"
+msgstr "Modèle Ebook"
+
+#: classes/cpt-register.php:79
+msgid "Edit Category"
+msgstr "Modifier la catégorie"
+
+#: classes/insert-demo.php:31
+msgid "Failed to import data."
+msgstr "Échec de l’importation des données."
+
+#: classes/metabox/general.php:100
+msgid "Failed to load preview. Please Upload a PDF."
+msgstr "Échec du chargement de l’aperçu. Veuillez télécharger un PDF."
+
+#: classes/settings/support.php:76
+msgid "Feature Description"
+msgstr "Description de la fonctionnalité"
+
+#: classes/settings/support.php:61
+msgid "Feature Request Form"
+msgstr "Formulaire de demande de fonctionnalité"
+
+#: classes/cpt-register.php:28
+msgid "File Url"
+msgstr "URL du fichier"
+
+#: classes/template.php:331 classes/functions.php:139
+msgid "Flipbook"
+msgstr "Flipbook"
+
+#: classes/metabox/general.php:20
+msgid "General"
+msgstr "Général"
+
+#: classes/metabox/general.php:37
+msgid "General Settings"
+msgstr "Paramètres généraux"
+
+#: classes/settings/shortcode.php:101
+msgid "Generate Shortcode"
+msgstr "Générer le shortcode"
+
+#: classes/settings/support.php:48
+msgid "Give a review for your feedback"
+msgstr "Laissez un avis pour votre retour"
+
+#: classes/elementor/widgets/archive-view.php:46
+msgid "Grid"
+msgstr "Grille"
+
+#: classes/settings/shortcode.php:38
+msgid "grid"
+msgstr "Grille"
+
+#: classes/options-setup.php:27
+msgid "Grid Template"
+msgstr "Modèle Grille"
+
+#: classes/metabox/general.php:38
+msgid "Here you can add basic settings for your document."
+msgstr "Vous pouvez ajouter ici les paramètres de base pour votre document."
+
+#: classes/metabox/template.php:28
+msgid "Here you can set tempate for the document in single view"
+msgstr "Ici, vous pouvez définir le modèle pour le document en vue individuelle."
+
+#. Author URI of the plugin
+msgid "https://shahadat.com.bd"
+msgstr "https://shahadat.com.bd"
+
+#. URI of the plugin
+msgid "https://wordpress.org/plugins/pdf-embed-viewer"
+msgstr "https://wordpress.org/plugins/pdf-embed-viewer"
+
+#: classes/settings/general.php:189
+msgid "Import Demo"
+msgstr "Importer la démo"
+
+#: classes/settings/general.php:187
+msgid "Import Demo Content"
+msgstr "Importer le contenu de la démo"
+
+#: classes/elementor/widgets/archive-view.php:32
+#: classes/elementor/widgets/single-view.php:32
+msgid "Layout Settings"
+msgstr "Paramètres de mise en page"
+
+#: classes/settings/general.php:183
+msgid "Light Color"
+msgstr "Couleur claire"
+
+#: classes/settings/shortcode.php:57
+#: classes/elementor/widgets/archive-view.php:99
+msgid "Limit"
+msgstr "Limite"
+
+#: classes/elementor/widgets/archive-view.php:47
+msgid "List"
+msgstr "Liste"
+
+#: classes/settings/shortcode.php:37
+msgid "list"
+msgstr "Liste"
+
+#: classes/options-setup.php:26
+msgid "List Template"
+msgstr "Modèle Liste"
+
+#: classes/metabox/general.php:98
+msgid "Loading preview..."
+msgstr "Chargement de l’aperçu…"
+
+#: classes/template.php:167
+msgid "Month"
+msgstr "Mois"
+
+#: classes/settings/support.php:45
+msgid "Need Help or Want to Share Your Experience?"
+msgstr "Besoin d’aide ou envie de partager votre expérience ?"
+
+#: classes/cpt-register.php:82
+msgid "New Category Name"
+msgstr "Nom de la nouvelle catégorie"
+
+#: classes/cpt-register.php:99 classes/cpt-register.php:100
+msgid "New PDF Embed"
+msgstr "Nouvel intégration PDF"
+
+#: classes/elementor/widgets/archive-view.php:48
+msgid "Newsletter"
+msgstr "Newsletter"
+
+#: classes/settings/shortcode.php:40
+msgid "newsletter"
+msgstr "Newsletter"
+
+#: classes/options-setup.php:28
+msgid "Newsletter Template"
+msgstr "Modèle Newsletter"
+
+#: classes/template.php:320 classes/template.php:348
+msgid "Next "
+msgstr "Suivant"
+
+#: classes/elementor/widgets/archive-view.php:116
+#: classes/elementor/widgets/archive-view.php:129
+#: classes/elementor/widgets/archive-view.php:142
+#: classes/elementor/widgets/archive-view.php:155
+msgid "No"
+msgstr "Non"
+
+#: classes/settings/shortcode.php:73 classes/settings/shortcode.php:81
+#: classes/settings/shortcode.php:89 classes/settings/shortcode.php:97
+msgid "no"
+msgstr "non"
+
+#: classes/elementor/widgets/single-view.php:88
+msgid "No PDF selected."
+msgstr "Aucun PDF sélectionné."
+
+#: classes/settings/shortcode.php:62
+#: classes/elementor/widgets/archive-view.php:85
+msgid "Order"
+msgstr "Ordre"
+
+#: classes/cpt-register.php:77
+msgid "Parent Category"
+msgstr "Catégorie parente"
+
+#: classes/cpt-register.php:78
+msgid "Parent Category:"
+msgstr "Catégorie parente :"
+
+#: classes/cpt-register.php:96 classes/cpt-register.php:97
+#: classes/cpt-register.php:104 classes/cpt-register.php:105
+msgid "PDF Embed"
+msgstr "Intégration PDF"
+
+#: classes/admin-settings.php:29
+msgid "PDF Embed - Viewer"
+msgstr "Intégration PDF - Visionneuse"
+
+#: classes/metabox-register.php:16
+msgid "PDF Embed Settings"
+msgstr "Paramètres d’intégration PDF"
+
+#: classes/cpt-register.php:95
+msgid "PDF Embed Viewer"
+msgstr "Visionneuse d’intégration PDF"
+
+#: classes/options-setup.php:38
+msgid "Pdf Embed Viewer"
+msgstr "Visionneuse d’intégration PDF"
+
+#: classes/settings/support.php:38
+msgid "Please configure your email then try again."
+msgstr "Veuillez configurer votre e-mail puis réessayer."
+
+#: classes/metabox/general.php:84
+msgid "Preview Featured Image"
+msgstr "Aperçu de l’image à la une"
+
+#: classes/settings/general.php:164
+msgid "Primary Color"
+msgstr "Couleur principale"
+
+#: classes/functions.php:187
+msgid "Read"
+msgstr "Lire"
+
+#: classes/settings/shortcode.php:70
+msgid "Read Button"
+msgstr "Bouton Lire"
+
+#: classes/settings/shortcode.php:86
+msgid "Reading Count"
+msgstr "Nombre de lectures"
+
+#: classes/settings/shortcode.php:102
+msgid "Reset"
+msgstr "Réinitialiser"
+
+#: classes/cpt-register.php:75
+msgid "Search Categories"
+msgstr "Rechercher des catégories"
+
+#: classes/settings/general.php:170
+msgid "Secondary Color"
+msgstr "Couleur secondaire"
+
+#: classes/elementor/widgets/single-view.php:56
+msgid "Select a PDF"
+msgstr "Sélectionner un PDF"
+
+#: classes/metabox/general.php:85
+msgid "Select any image to set as thumbnail from right."
+msgstr "Sélectionnez une image à droite pour la définir comme miniature."
+
+#: classes/settings/shortcode.php:48
+#: classes/elementor/widgets/archive-view.php:62
+msgid "Select Category"
+msgstr "Sélectionner une catégorie"
+
+#: classes/settings/general.php:101
+msgid "Select Page"
+msgstr "Sélectionner une page"
+
+#: classes/elementor/widgets/single-view.php:41
+msgid "Select PDF Post"
+msgstr "Sélectionner une publication PDF"
+
+#: classes/metabox/template.php:34
+msgid "Select Tempate"
+msgstr "Sélectionner un modèle"
+
+#: classes/settings/support.php:82
+msgid "Send Request"
+msgstr "Envoyer la demande"
+
+#: classes/admin-settings.php:30 classes/admin-settings.php:40
+#: classes/settings/general.php:22
+msgid "Settings"
+msgstr "Paramètres"
+
+#: classes/admin-settings.php:56
+msgid "Settings Saved!"
+msgstr "Paramètres enregistrés !"
+
+#. Author of the plugin
+msgid "Shahadat Hossain"
+msgstr "Shahadat Hossain"
+
+#: classes/settings/shortcode.php:106
+msgid "ShortCode"
+msgstr "Shortcode"
+
+#: classes/cpt-register.php:27 classes/metabox/general.php:42
+#: classes/settings/shortcode.php:19
+msgid "Shortcode"
+msgstr "Shortcode"
+
+#: classes/settings/shortcode.php:32
+msgid "Shortcode Generator"
+msgstr "Générateur de shortcode"
+
+#: classes/settings/general.php:146
+#: classes/elementor/widgets/archive-view.php:126
+msgid "Show Download Button"
+msgstr "Afficher le bouton de téléchargement"
+
+#: classes/settings/general.php:155
+msgid "Show Download Counter"
+msgstr "Afficher le compteur de téléchargements"
+
+#: classes/elementor/widgets/archive-view.php:152
+msgid "Show Downloading Count"
+msgstr "Afficher le nombre de téléchargements"
+
+#: classes/settings/general.php:128
+#: classes/elementor/widgets/archive-view.php:113
+msgid "Show Read Button"
+msgstr "Afficher le bouton Lire"
+
+#: classes/elementor/widgets/archive-view.php:139
+msgid "Show Reading Count"
+msgstr "Afficher le nombre de lectures"
+
+#: classes/settings/general.php:137
+msgid "Show Reading Counter"
+msgstr "Afficher le compteur de lectures"
+
+#: classes/metabox/general.php:70
+msgid "Show/Hide download Button in single page."
+msgstr "Afficher/Masquer le bouton de téléchargement sur la page individuelle."
+
+#: classes/settings/support.php:19 classes/settings/support.php:56
+msgid "Support"
+msgstr "Support"
+
+#: classes/cpt-register.php:73
+msgctxt "taxonomy general name"
+msgid "Categories"
+msgstr "Catégories"
+
+#: classes/cpt-register.php:74
+msgctxt "taxonomy singular name"
+msgid "Category"
+msgstr "Catégorie"
+
+#: classes/metabox/template.php:20 classes/metabox/template.php:33
+#: classes/settings/shortcode.php:35
+#: classes/elementor/widgets/archive-view.php:41
+msgid "Template"
+msgstr "Modèle"
+
+#: classes/metabox/template.php:27
+msgid "Template Settings"
+msgstr "Paramètres du modèle"
+
+#: classes/settings/support.php:36
+msgid "Thank you! Your feature request has been sent."
+msgstr "Merci ! Votre demande de fonctionnalité a été envoyée."
+
+#: classes/template.php:42 classes/template.php:168
+msgid "Title"
+msgstr "Titre"
+
+#: classes/metabox/general.php:92
+msgid "Total Pages: "
+msgstr "Nombre total de pages :"
+
+#: classes/template.php:332 classes/functions.php:140
+msgid "Traditional"
+msgstr "Traditionnel"
+
+#: classes/cpt-register.php:80
+msgid "Update Category"
+msgstr "Mettre à jour la catégorie"
+
+#: classes/metabox/general.php:61
+msgid "Upload"
+msgstr "Télécharger"
+
+#: classes/cpt-register.php:25
+msgid "Views"
+msgstr "Vues"
+
+#: classes/elementor/widgets/archive-view.php:115
+#: classes/elementor/widgets/archive-view.php:128
+#: classes/elementor/widgets/archive-view.php:141
+#: classes/elementor/widgets/archive-view.php:154
+msgid "Yes"
+msgstr "Oui"
+
+#: classes/settings/shortcode.php:72 classes/settings/shortcode.php:80
+#: classes/settings/shortcode.php:88 classes/settings/shortcode.php:96
+msgid "yes"
+msgstr "oui"
+
+#: classes/settings/support.php:71
+msgid "Your Email"
+msgstr "Votre e-mail"
+
+#: classes/settings/support.php:66
+msgid "Your Name"
+msgstr "Votre nom"
+
