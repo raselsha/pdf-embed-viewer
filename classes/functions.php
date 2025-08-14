@@ -18,7 +18,8 @@ if( ! class_exists('PDFEV_Functions') ){
         }
 
         public static function load_plugin_textdomain() {
-            load_plugin_textdomain( 'pdf-embed-viewer', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+            $plugin_dir = basename( dirname( __DIR__ ) ) . "/languages/";
+			load_plugin_textdomain( 'pdf-embed-viewer', false, $plugin_dir );
         }
 
         public static function appsero_init_tracker() {
