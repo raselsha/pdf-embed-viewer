@@ -155,6 +155,11 @@ For more details, see the [Appsero Privacy Policy](https://appsero.com/privacy-p
 
 == Changelog ==
 
+= 1.3.4 =
+* Translation Updated
+* France language Updated
+
+
 = 1.3.3 =
 * Added category feature 🏷️
 * Elementor widgets now support category selection 🧩
