@@ -32,20 +32,20 @@ class Shortcode_Generator {
                     <h2><?php echo esc_html__('Shortcode Generator','pdf-embed-viewer') ?></h2>
 
                     <div class="form-group">
-                        <label for="template">Template</label>
+                        <label for="template"><?php echo esc_html__('Template','pdf-embed-viewer'); ?></label>
                         <select id="template">
-                            <option value="list">list</option>
-                            <option value="grid">grid</option>
-                            <option value="ebook">ebook</option>
-                            <option value="newsletter">newsletter</option>
+                            <option value="list"><?php echo esc_html__('list','pdf-embed-viewer'); ?></option>
+                            <option value="grid"><?php echo esc_html__('grid','pdf-embed-viewer'); ?></option>
+                            <option value="ebook"><?php echo esc_html__('ebook','pdf-embed-viewer'); ?></option>
+                            <option value="newsletter"><?php echo esc_html__('newsletter','pdf-embed-viewer'); ?></option>
                         </select>
                     </div>
 
                     <div class="form-group">
-                        <label for="template">Category</label>
+                        <label for="category"><?php echo esc_html__('Category','pdf-embed-viewer'); ?></label>
                         
                         <select id="category">
-                            <option value="">Select Category</option>
+                            <option value=""><?php echo esc_html__('Select Category','pdf-embed-viewer'); ?></option>
                             <?php foreach ( $categories as $category ) : ?>
                             <option value="<?php echo esc_html( $category->slug ); ?>"><?php echo esc_html( $category->name ); ?></option>
                             <?php endforeach; ?>
@@ -54,47 +54,47 @@ class Shortcode_Generator {
                     </div>
 
                     <div class="form-group">
-                        <label for="limit">Limit</label>
+                        <label for="limit"><?php echo esc_html__('Limit','pdf-embed-viewer'); ?></label>
                         <input type="number" id="limit" value="10" min="1">
                     </div>
 
                     <div class="form-group">
-                        <label for="order">Order</label>
+                        <label for="order"><?php echo esc_html__('Order','pdf-embed-viewer'); ?></label>
                         <select id="order">
-                            <option value="dsc">dsc</option>
-                            <option value="asc">asc</option>
+                            <option value="dsc"><?php echo esc_html__('dsc','pdf-embed-viewer'); ?></option>
+                            <option value="asc"><?php echo esc_html__('asc','pdf-embed-viewer'); ?></option>
                         </select>
                     </div>
 
                     <div class="form-group">
-                        <label for="read">Read Button</label>
+                        <label for="read"><?php echo esc_html__('Read Button','pdf-embed-viewer'); ?></label>
                         <select id="read">
-                            <option value="yes">yes</option>
-                            <option value="no">no</option>
+                            <option value="yes"><?php echo esc_html__('yes','pdf-embed-viewer'); ?></option>
+                            <option value="no"><?php echo esc_html__('no','pdf-embed-viewer'); ?></option>
                         </select>
                     </div>
 
                     <div class="form-group">
-                        <label for="download">Download Button</label>
+                        <label for="download"><?php echo esc_html__('Download Button','pdf-embed-viewer'); ?></label>
                         <select id="download">
-                            <option value="yes">yes</option>
-                            <option value="no">no</option>
+                            <option value="yes"><?php echo esc_html__('yes','pdf-embed-viewer'); ?></option>
+                            <option value="no"><?php echo esc_html__('no','pdf-embed-viewer'); ?></option>
                         </select>
                     </div>
 
                     <div class="form-group">
-                        <label for="reading_count">Reading Count</label>
+                        <label for="reading_count"><?php echo esc_html__('Reading Count','pdf-embed-viewer'); ?></label>
                         <select id="reading_count">
-                            <option value="yes">yes</option>
-                            <option value="no">no</option>
+                            <option value="yes"><?php echo esc_html__('yes','pdf-embed-viewer'); ?></option>
+                            <option value="no"><?php echo esc_html__('no','pdf-embed-viewer'); ?></option>
                         </select>
                     </div>
 
                     <div class="form-group">
-                        <label for="downloading_count">Downloading Count</label>
+                        <label for="downloading_count"><?php echo esc_html__('Downloading Count','pdf-embed-viewer'); ?></label>
                         <select id="downloading_count">
-                            <option value="yes">yes</option>
-                            <option value="no">no</option>
+                            <option value="yes"><?php echo esc_html__('yes','pdf-embed-viewer'); ?></option>
+                            <option value="no"><?php echo esc_html__('no','pdf-embed-viewer'); ?></option>
                         </select>
                     </div>
 

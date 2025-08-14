@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PDF Embed Viewer\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-06-03 11:24+0000\n"
-"PO-Revision-Date: 2025-08-14 14:03+0000\n"
+"PO-Revision-Date: 2025-08-14 15:20+0000\n"
 "Last-Translator: \n"
 "Language-Team: Bengali (Bangladesh)\n"
 "Language: bn_BD\n"
@@ -70,6 +70,10 @@ msgstr "আর্কাইভ টেম্পলেট"
 msgid "Archive Title"
 msgstr "আর্কাইভ শিরোনাম"
 
+#: classes/settings/shortcode.php:65
+msgid "asc"
+msgstr "ক্রমবর্ধমান"
+
 #: classes/elementor/widgets/archive-view.php:89
 msgid "ASC (Oldest First)"
 msgstr "ক্রমবর্ধমান (সবচেয়ে পুরোনো আগে)"
@@ -78,7 +82,7 @@ msgstr "ক্রমবর্ধমান (সবচেয়ে পুরোন
 msgid "Author"
 msgstr "লেখক"
 
-#: classes/functions.php:242
+#: classes/functions.php:243
 msgid "Back to overview"
 msgstr "ওভারভিউতে ফিরে যান"
 
@@ -86,17 +90,14 @@ msgstr "ওভারভিউতে ফিরে যান"
 msgid "Back to Overview Page"
 msgstr "ওভারভিউ পেজে ফিরে যান"
 
-#: classes/cpt-register.php:83 classes/metabox/categories.php:22
+#: classes/cpt-register.php:83
 msgid "Categories"
 msgstr "ক্যাটাগরি সমূহ"
 
+#: classes/settings/shortcode.php:45
 #: classes/elementor/widgets/archive-view.php:72
 msgid "Category"
 msgstr "ক্যাটাগরি"
-
-#: classes/metabox/categories.php:35
-msgid "Category Settings"
-msgstr "ক্যাটাগরি সেটিংস"
 
 #: classes/settings/shortcode.php:109
 msgid "Copy"
@@ -134,11 +135,11 @@ msgstr ""
 msgid "Document size: "
 msgstr "ডকুমেন্টের সাইজ"
 
-#: classes/functions.php:214
+#: classes/functions.php:215
 msgid "Download"
 msgstr "ডাউনলোড"
 
-#: classes/metabox/general.php:69
+#: classes/metabox/general.php:69 classes/settings/shortcode.php:78
 msgid "Download Button"
 msgstr "ডাউনলোড বাটন"
 
@@ -146,9 +147,17 @@ msgstr "ডাউনলোড বাটন"
 msgid "Download Enable"
 msgstr "ডাউনলোড সক্ষম করুন"
 
+#: classes/settings/shortcode.php:94
+msgid "Downloading Count"
+msgstr "ডাউনলোড গণনা"
+
 #: classes/cpt-register.php:26
 msgid "Downloads"
 msgstr "ডাউনলোড"
+
+#: classes/settings/shortcode.php:64
+msgid "dsc"
+msgstr "অবনমন ক্রম"
 
 #: classes/elementor/widgets/archive-view.php:90
 msgid "DSC (Newest First)"
@@ -157,6 +166,10 @@ msgstr "অবনমন ক্রম (নতুনতম আগে)"
 #: classes/elementor/widgets/archive-view.php:45
 msgid "Ebook"
 msgstr "ই-বুক"
+
+#: classes/settings/shortcode.php:39
+msgid "ebook"
+msgstr "Ebook"
 
 #: classes/options-setup.php:29
 msgid "Ebook Template"
@@ -186,7 +199,7 @@ msgstr "ফিচার অনুরোধ ফর্ম"
 msgid "File Url"
 msgstr "ফাইল ইউআরএল"
 
-#: classes/template.php:331 classes/functions.php:138
+#: classes/template.php:331 classes/functions.php:139
 msgid "Flipbook"
 msgstr "ফ্লিপবুক"
 
@@ -210,6 +223,10 @@ msgstr "আপনার প্রতিক্রিয়া জন্য এক
 msgid "Grid"
 msgstr "গ্রিড"
 
+#: classes/settings/shortcode.php:38
+msgid "grid"
+msgstr "গ্রিড"
+
 #: classes/options-setup.php:27
 msgid "Grid Template"
 msgstr "গ্রিড টেমপ্লেট"
@@ -217,10 +234,6 @@ msgstr "গ্রিড টেমপ্লেট"
 #: classes/metabox/general.php:38
 msgid "Here you can add basic settings for your document."
 msgstr "এখানে আপনি আপনার ডকুমেন্টের জন্য মৌলিক সেটিংস যোগ করতে পারেন।"
-
-#: classes/metabox/categories.php:36
-msgid "Here you can set categories"
-msgstr "এখানে আপনি ক্যাটাগরি গুলো সেট করতে পারেন।"
 
 #: classes/metabox/template.php:28
 msgid "Here you can set tempate for the document in single view"
@@ -251,12 +264,17 @@ msgstr "লেআউট সেটিংস"
 msgid "Light Color"
 msgstr "হালকা রং"
 
+#: classes/settings/shortcode.php:57
 #: classes/elementor/widgets/archive-view.php:99
 msgid "Limit"
 msgstr "সীমা"
 
 #: classes/elementor/widgets/archive-view.php:47
 msgid "List"
+msgstr "তালিকা"
+
+#: classes/settings/shortcode.php:37
+msgid "list"
 msgstr "তালিকা"
 
 #: classes/options-setup.php:26
@@ -287,6 +305,10 @@ msgstr "নতুন PDF এম্বেড"
 msgid "Newsletter"
 msgstr "নিউজলেটার"
 
+#: classes/settings/shortcode.php:40
+msgid "newsletter"
+msgstr "নিউজলেটার"
+
 #: classes/options-setup.php:28
 msgid "Newsletter Template"
 msgstr "নিউজলেটার টেমপ্লেট"
@@ -302,10 +324,16 @@ msgstr "পরবর্তী"
 msgid "No"
 msgstr "না"
 
+#: classes/settings/shortcode.php:73 classes/settings/shortcode.php:81
+#: classes/settings/shortcode.php:89 classes/settings/shortcode.php:97
+msgid "no"
+msgstr "না"
+
 #: classes/elementor/widgets/single-view.php:88
 msgid "No PDF selected."
 msgstr "কোনো পিডিএফ নির্বাচন করা হয়নি।"
 
+#: classes/settings/shortcode.php:62
 #: classes/elementor/widgets/archive-view.php:85
 msgid "Order"
 msgstr "ক্রম"
@@ -351,9 +379,17 @@ msgstr "বৈশিষ্ট্যযুক্ত ইমেজ প্রিভ�
 msgid "Primary Color"
 msgstr "মৌলিক রঙ"
 
-#: classes/functions.php:186
+#: classes/functions.php:187
 msgid "Read"
 msgstr "পড়ুন"
+
+#: classes/settings/shortcode.php:70
+msgid "Read Button"
+msgstr "পড়ুন বোতাম"
+
+#: classes/settings/shortcode.php:86
+msgid "Reading Count"
+msgstr "পড়ার সংখ্যা"
 
 #: classes/settings/shortcode.php:102
 msgid "Reset"
@@ -376,6 +412,7 @@ msgid "Select any image to set as thumbnail from right."
 msgstr ""
 "ডান দিক থেকে থাম্বনেইল হিসেবে সেট করার জন্য কোনো একটি ইমেজ নির্বাচন করুন।"
 
+#: classes/settings/shortcode.php:48
 #: classes/elementor/widgets/archive-view.php:62
 msgid "Select Category"
 msgstr "বিভাগ নির্বাচন করুন"
@@ -467,6 +504,7 @@ msgid "Category"
 msgstr "বিভাগ"
 
 #: classes/metabox/template.php:20 classes/metabox/template.php:33
+#: classes/settings/shortcode.php:35
 #: classes/elementor/widgets/archive-view.php:41
 msgid "Template"
 msgstr "টেমপ্লেট"
@@ -487,7 +525,7 @@ msgstr "শিরোনাম"
 msgid "Total Pages: "
 msgstr "মোট পৃষ্ঠা:"
 
-#: classes/template.php:332 classes/functions.php:139
+#: classes/template.php:332 classes/functions.php:140
 msgid "Traditional"
 msgstr "প্রচলিত"
 
@@ -508,6 +546,11 @@ msgstr "দর্শন সংখ্যা"
 #: classes/elementor/widgets/archive-view.php:141
 #: classes/elementor/widgets/archive-view.php:154
 msgid "Yes"
+msgstr "হ্যাঁ"
+
+#: classes/settings/shortcode.php:72 classes/settings/shortcode.php:80
+#: classes/settings/shortcode.php:88 classes/settings/shortcode.php:96
+msgid "yes"
 msgstr "হ্যাঁ"
 
 #: classes/settings/support.php:71

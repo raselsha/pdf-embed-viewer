@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PDF Embed Viewer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-14 13:35+0000\n"
+"POT-Creation-Date: 2025-08-14 15:15+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -69,6 +69,10 @@ msgstr ""
 msgid "Archive Title"
 msgstr ""
 
+#: classes/settings/shortcode.php:65
+msgid "asc"
+msgstr ""
+
 #: classes/elementor/widgets/archive-view.php:89
 msgid "ASC (Oldest First)"
 msgstr ""
@@ -77,7 +81,7 @@ msgstr ""
 msgid "Author"
 msgstr ""
 
-#: classes/functions.php:242
+#: classes/functions.php:243
 msgid "Back to overview"
 msgstr ""
 
@@ -85,16 +89,13 @@ msgstr ""
 msgid "Back to Overview Page"
 msgstr ""
 
-#: classes/cpt-register.php:83 classes/metabox/categories.php:22
+#: classes/cpt-register.php:83
 msgid "Categories"
 msgstr ""
 
+#: classes/settings/shortcode.php:45
 #: classes/elementor/widgets/archive-view.php:72
 msgid "Category"
-msgstr ""
-
-#: classes/metabox/categories.php:35
-msgid "Category Settings"
 msgstr ""
 
 #: classes/settings/shortcode.php:109
@@ -131,11 +132,11 @@ msgstr ""
 msgid "Document size: "
 msgstr ""
 
-#: classes/functions.php:214
+#: classes/functions.php:215
 msgid "Download"
 msgstr ""
 
-#: classes/metabox/general.php:69
+#: classes/metabox/general.php:69 classes/settings/shortcode.php:78
 msgid "Download Button"
 msgstr ""
 
@@ -143,8 +144,16 @@ msgstr ""
 msgid "Download Enable"
 msgstr ""
 
+#: classes/settings/shortcode.php:94
+msgid "Downloading Count"
+msgstr ""
+
 #: classes/cpt-register.php:26
 msgid "Downloads"
+msgstr ""
+
+#: classes/settings/shortcode.php:64
+msgid "dsc"
 msgstr ""
 
 #: classes/elementor/widgets/archive-view.php:90
@@ -153,6 +162,10 @@ msgstr ""
 
 #: classes/elementor/widgets/archive-view.php:45
 msgid "Ebook"
+msgstr ""
+
+#: classes/settings/shortcode.php:39
+msgid "ebook"
 msgstr ""
 
 #: classes/options-setup.php:29
@@ -183,7 +196,7 @@ msgstr ""
 msgid "File Url"
 msgstr ""
 
-#: classes/template.php:331 classes/functions.php:138
+#: classes/template.php:331 classes/functions.php:139
 msgid "Flipbook"
 msgstr ""
 
@@ -207,16 +220,16 @@ msgstr ""
 msgid "Grid"
 msgstr ""
 
+#: classes/settings/shortcode.php:38
+msgid "grid"
+msgstr ""
+
 #: classes/options-setup.php:27
 msgid "Grid Template"
 msgstr ""
 
 #: classes/metabox/general.php:38
 msgid "Here you can add basic settings for your document."
-msgstr ""
-
-#: classes/metabox/categories.php:36
-msgid "Here you can set categories"
 msgstr ""
 
 #: classes/metabox/template.php:28
@@ -248,12 +261,17 @@ msgstr ""
 msgid "Light Color"
 msgstr ""
 
+#: classes/settings/shortcode.php:57
 #: classes/elementor/widgets/archive-view.php:99
 msgid "Limit"
 msgstr ""
 
 #: classes/elementor/widgets/archive-view.php:47
 msgid "List"
+msgstr ""
+
+#: classes/settings/shortcode.php:37
+msgid "list"
 msgstr ""
 
 #: classes/options-setup.php:26
@@ -284,6 +302,10 @@ msgstr ""
 msgid "Newsletter"
 msgstr ""
 
+#: classes/settings/shortcode.php:40
+msgid "newsletter"
+msgstr ""
+
 #: classes/options-setup.php:28
 msgid "Newsletter Template"
 msgstr ""
@@ -299,10 +321,16 @@ msgstr ""
 msgid "No"
 msgstr ""
 
+#: classes/settings/shortcode.php:73 classes/settings/shortcode.php:81
+#: classes/settings/shortcode.php:89 classes/settings/shortcode.php:97
+msgid "no"
+msgstr ""
+
 #: classes/elementor/widgets/single-view.php:88
 msgid "No PDF selected."
 msgstr ""
 
+#: classes/settings/shortcode.php:62
 #: classes/elementor/widgets/archive-view.php:85
 msgid "Order"
 msgstr ""
@@ -348,8 +376,16 @@ msgstr ""
 msgid "Primary Color"
 msgstr ""
 
-#: classes/functions.php:186
+#: classes/functions.php:187
 msgid "Read"
+msgstr ""
+
+#: classes/settings/shortcode.php:70
+msgid "Read Button"
+msgstr ""
+
+#: classes/settings/shortcode.php:86
+msgid "Reading Count"
 msgstr ""
 
 #: classes/settings/shortcode.php:102
@@ -372,6 +408,7 @@ msgstr ""
 msgid "Select any image to set as thumbnail from right."
 msgstr ""
 
+#: classes/settings/shortcode.php:48
 #: classes/elementor/widgets/archive-view.php:62
 msgid "Select Category"
 msgstr ""
@@ -463,6 +500,7 @@ msgid "Category"
 msgstr ""
 
 #: classes/metabox/template.php:20 classes/metabox/template.php:33
+#: classes/settings/shortcode.php:35
 #: classes/elementor/widgets/archive-view.php:41
 msgid "Template"
 msgstr ""
@@ -483,7 +521,7 @@ msgstr ""
 msgid "Total Pages: "
 msgstr ""
 
-#: classes/template.php:332 classes/functions.php:139
+#: classes/template.php:332 classes/functions.php:140
 msgid "Traditional"
 msgstr ""
 
@@ -504,6 +542,11 @@ msgstr ""
 #: classes/elementor/widgets/archive-view.php:141
 #: classes/elementor/widgets/archive-view.php:154
 msgid "Yes"
+msgstr ""
+
+#: classes/settings/shortcode.php:72 classes/settings/shortcode.php:80
+#: classes/settings/shortcode.php:88 classes/settings/shortcode.php:96
+msgid "yes"
 msgstr ""
 
 #: classes/settings/support.php:71
