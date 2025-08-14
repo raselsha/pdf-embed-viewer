@@ -153,6 +153,11 @@ By default, Appsero SDK **does not collect any data**. Data collection begins **
 
 For more details, see the [Appsero Privacy Policy](https://appsero.com/privacy-policy/). 🔒
 
+=== Languages ===
+* English (en_US)
+* Bengali (bn_BD)
+* French (fr_FR)
+
 == Changelog ==
 
 = 1.3.4 =
