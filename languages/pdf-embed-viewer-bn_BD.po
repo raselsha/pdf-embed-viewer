@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PDF Embed Viewer\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-06-03 11:24+0000\n"
-"PO-Revision-Date: 2024-10-01 17:25+0000\n"
+"PO-Revision-Date: 2025-08-14 14:03+0000\n"
 "Last-Translator: \n"
 "Language-Team: Bengali (Bangladesh)\n"
 "Language: bn_BD\n"
@@ -15,67 +15,130 @@ msgstr ""
 "X-Loco-Version: 2.6.11; wp-6.6.2\n"
 "X-Domain: pdf-embed-viewer"
 
-#: template/single.php:47 template/single.php:56
+#: classes/template.php:319 classes/template.php:347
 msgid " Previous"
 msgstr "আগের"
 
-#: classes/metabox/general.php:50
+#: classes/elementor/elementor.php:42
+msgid "3D Flipbook PDF Viewer"
+msgstr ""
+"3D ফ্লিপবুক পিডিএফ ভিউয়ার\n"
+
+#. Name of the plugin
+msgid ""
+"3D Flipbook PDF Viewer & Embedder – E-Books, Manuals, Newsletters, Reports"
+msgstr ""
+"3D ফ্লিপবুক পিডিএফ ভিউয়ার ও এমবেডার – ই-বুক, ম্যানুয়াল, নিউজলেটার, রিপোর্ট"
+
+#: classes/cpt-register.php:81
+msgid "Add New Category"
+msgstr "নতুন একটি ক্যাটাগরি তৈরি করুন"
+
+#: classes/metabox/general.php:56
 msgid "Add pdf file by upload button"
 msgstr "আপলোড বাটন দ্বারা পিডিএফ ফাইল আপলোড করুন"
 
-#: classes/metabox/general.php:49
+#: classes/metabox/general.php:55
 msgid "Add PDF URL"
 msgstr "পিডিএফ ইউআরএল লিংক করুন"
 
-#: classes/admin-settings.php:135
+#: classes/settings/support.php:50
 msgid "Add Review"
 msgstr "পর্যালোচনা যোগ করুন"
 
-#: classes/cpt-register.php:61
+#: classes/metabox/general.php:43
+msgid "Add this shortcode to any page or post to view pdf"
+msgstr "পিডিএফ দেখানোর জন্য যেকোনো পেজ বা পোস্টে এই শর্টকোডটি যুক্ত করুন"
+
+#: classes/cpt-register.php:76
+msgid "All Categories"
+msgstr "সব ক্যাটাগরি"
+
+#: classes/cpt-register.php:98
 msgid "All PDF"
 msgstr "সব পিডিএফ"
 
-#: classes/admin-settings.php:171
+#: classes/settings/general.php:92
 msgid "Archive Slug"
 msgstr "আর্কাইভ স্লাগ"
 
-#: classes/admin-settings.php:177
+#: classes/settings/general.php:109
 msgid "Archive Template"
 msgstr "আর্কাইভ টেম্পলেট"
 
-#: classes/admin-settings.php:165
+#: classes/settings/general.php:86
 msgid "Archive Title"
 msgstr "আর্কাইভ শিরোনাম"
 
-#: classes/cpt-register.php:27
+#: classes/elementor/widgets/archive-view.php:89
+msgid "ASC (Oldest First)"
+msgstr "ক্রমবর্ধমান (সবচেয়ে পুরোনো আগে)"
+
+#: classes/cpt-register.php:29
 msgid "Author"
 msgstr "লেখক"
 
-#: classes/functions.php:246
+#: classes/functions.php:242
 msgid "Back to overview"
 msgstr "ওভারভিউতে ফিরে যান"
 
-#: classes/admin-settings.php:136
+#: classes/settings/general.php:98
+msgid "Back to Overview Page"
+msgstr "ওভারভিউ পেজে ফিরে যান"
+
+#: classes/cpt-register.php:83 classes/metabox/categories.php:22
+msgid "Categories"
+msgstr "ক্যাটাগরি সমূহ"
+
+#: classes/elementor/widgets/archive-view.php:72
+msgid "Category"
+msgstr "ক্যাটাগরি"
+
+#: classes/metabox/categories.php:35
+msgid "Category Settings"
+msgstr "ক্যাটাগরি সেটিংস"
+
+#: classes/settings/shortcode.php:109
+msgid "Copy"
+msgstr "কপি/নকল"
+
+#: classes/settings/support.php:54
 msgid "Create a support ticket"
 msgstr "একটি সমর্থন টিকিট তৈরি করুন"
 
-#: classes/admin-settings.php:208
+#: classes/settings/general.php:176
 msgid "Dark Color"
 msgstr "গাঢ় রঙ"
 
-#: classes/cpt-register.php:28
+#: classes/template.php:43 classes/cpt-register.php:30
 msgid "Date"
 msgstr "তারিখ"
 
-#: classes/admin-settings.php:43
+#: classes/settings/general.php:119
+msgid "Default View 3D Flipbook"
+msgstr "ডিফল্ট ভিউ 3D ফ্লিপবুক"
+
+#: classes/insert-demo.php:31
 msgid "Demo Data imported successfully!"
 msgstr "ডেমো ডেটা সফলভাবে আমদানি করা হয়েছে!"
 
-#: classes/functions.php:226
+#. Description of the plugin
+msgid ""
+"Display PDFs as interactive 3D flipbooks or traditional viewers for E-Books, "
+"Manuals, Newsletters, and Reports."
+msgstr ""
+"পিডিএফগুলোকে ই-বুক, ম্যানুয়াল, নিউজলেটার এবং রিপোর্টের জন্য ইন্টারঅ্যাকটিভ "
+"৩ডি ফ্লিপবুক বা প্রচলিত ভিউয়ারে প্রদর্শন করুন।"
+
+#: classes/metabox/general.php:91
+msgid "Document size: "
+msgstr "ডকুমেন্টের সাইজ"
+
+#: classes/functions.php:214
 msgid "Download"
 msgstr "ডাউনলোড"
 
-#: classes/admin-settings.php:187 classes/metabox/general.php:63
+#: classes/metabox/general.php:69
 msgid "Download Button"
 msgstr "ডাউনলোড বাটন"
 
@@ -83,33 +146,85 @@ msgstr "ডাউনলোড বাটন"
 msgid "Download Enable"
 msgstr "ডাউনলোড সক্ষম করুন"
 
-#: classes/functions.php:226
-msgid "Download icon"
+#: classes/cpt-register.php:26
+msgid "Downloads"
 msgstr "ডাউনলোড"
 
-#: classes/options-setup.php:31
+#: classes/elementor/widgets/archive-view.php:90
+msgid "DSC (Newest First)"
+msgstr "অবনমন ক্রম (নতুনতম আগে)"
+
+#: classes/elementor/widgets/archive-view.php:45
+msgid "Ebook"
+msgstr "ই-বুক"
+
+#: classes/options-setup.php:29
 msgid "Ebook Template"
 msgstr "ইবুক টেমপ্লেট"
 
-#: classes/admin-settings.php:43
+#: classes/cpt-register.php:79
+msgid "Edit Category"
+msgstr "ক্যাটাগরি সম্পাদনা করুন"
+
+#: classes/insert-demo.php:31
 msgid "Failed to import data."
 msgstr "ডেটা আমদানি করতে ব্যর্থ হয়েছে৷"
 
-#: classes/cpt-register.php:26
+#: classes/metabox/general.php:100
+msgid "Failed to load preview. Please Upload a PDF."
+msgstr "প্রিভিউ লোড করতে ব্যর্থ হয়েছে। দয়া করে একটি পিডিএফ আপলোড করুন।"
+
+#: classes/settings/support.php:76
+msgid "Feature Description"
+msgstr "ফিচারের বিবরণ"
+
+#: classes/settings/support.php:61
+msgid "Feature Request Form"
+msgstr "ফিচার অনুরোধ ফর্ম"
+
+#: classes/cpt-register.php:28
 msgid "File Url"
 msgstr "ফাইল ইউআরএল"
 
-#: classes/metabox/general.php:21
+#: classes/template.php:331 classes/functions.php:138
+msgid "Flipbook"
+msgstr "ফ্লিপবুক"
+
+#: classes/metabox/general.php:20
 msgid "General"
 msgstr "সাধারণ"
 
-#: classes/admin-settings.php:135
+#: classes/metabox/general.php:37
+msgid "General Settings"
+msgstr "সাধারণ সেটিংস"
+
+#: classes/settings/shortcode.php:101
+msgid "Generate Shortcode"
+msgstr "শর্টকোড তৈরি করুন"
+
+#: classes/settings/support.php:48
 msgid "Give a review for your feedback"
 msgstr "আপনার প্রতিক্রিয়া জন্য একটি পর্যালোচনা দিন"
 
-#: classes/options-setup.php:29
+#: classes/elementor/widgets/archive-view.php:46
+msgid "Grid"
+msgstr "গ্রিড"
+
+#: classes/options-setup.php:27
 msgid "Grid Template"
 msgstr "গ্রিড টেমপ্লেট"
+
+#: classes/metabox/general.php:38
+msgid "Here you can add basic settings for your document."
+msgstr "এখানে আপনি আপনার ডকুমেন্টের জন্য মৌলিক সেটিংস যোগ করতে পারেন।"
+
+#: classes/metabox/categories.php:36
+msgid "Here you can set categories"
+msgstr "এখানে আপনি ক্যাটাগরি গুলো সেট করতে পারেন।"
+
+#: classes/metabox/template.php:28
+msgid "Here you can set tempate for the document in single view"
+msgstr "এখানে আপনি সিঙ্গল ভিউতে ডকুমেন্টের জন্য টেমপ্লেট সেট করতে পারেন।"
 
 #. Author URI of the plugin
 msgid "https://shahadat.com.bd"
@@ -119,97 +234,174 @@ msgstr "https://shahadat.com.bd"
 msgid "https://wordpress.org/plugins/pdf-embed-viewer"
 msgstr "https://wordpress.org/plugins/pdf-embed-viewer"
 
-#: classes/admin-settings.php:221
+#: classes/settings/general.php:189
 msgid "Import Demo"
 msgstr "ডেমো আমদানি করুন"
 
-#: classes/admin-settings.php:219
+#: classes/settings/general.php:187
 msgid "Import Demo Content"
 msgstr "ডেমো সামগ্রী আমদানি করুন"
 
-#: classes/admin-settings.php:215
+#: classes/elementor/widgets/archive-view.php:32
+#: classes/elementor/widgets/single-view.php:32
+msgid "Layout Settings"
+msgstr "লেআউট সেটিংস"
+
+#: classes/settings/general.php:183
 msgid "Light Color"
 msgstr "হালকা রং"
 
-#: classes/options-setup.php:28
+#: classes/elementor/widgets/archive-view.php:99
+msgid "Limit"
+msgstr "সীমা"
+
+#: classes/elementor/widgets/archive-view.php:47
+msgid "List"
+msgstr "তালিকা"
+
+#: classes/options-setup.php:26
 msgid "List Template"
 msgstr "টেমপ্লেট এর তালিকা"
 
-#: template/style/list.php:16 template/style/newsletter.php:27
+#: classes/metabox/general.php:98
+msgid "Loading preview..."
+msgstr "প্রিভিউ লোড হচ্ছে…"
+
+#: classes/template.php:167
 msgid "Month"
 msgstr "মাস"
 
-#: classes/cpt-register.php:62 classes/cpt-register.php:63
+#: classes/settings/support.php:45
+msgid "Need Help or Want to Share Your Experience?"
+msgstr "সাহায্য প্রয়োজন বা আপনার অভিজ্ঞতা শেয়ার করতে চান?"
+
+#: classes/cpt-register.php:82
+msgid "New Category Name"
+msgstr "নতুন বিভাগের নাম"
+
+#: classes/cpt-register.php:99 classes/cpt-register.php:100
 msgid "New PDF Embed"
 msgstr "নতুন PDF এম্বেড"
 
-#: classes/options-setup.php:30
+#: classes/elementor/widgets/archive-view.php:48
+msgid "Newsletter"
+msgstr "নিউজলেটার"
+
+#: classes/options-setup.php:28
 msgid "Newsletter Template"
 msgstr "নিউজলেটার টেমপ্লেট"
 
-#: template/single.php:48 template/single.php:57
+#: classes/template.php:320 classes/template.php:348
 msgid "Next "
 msgstr "পরবর্তী"
 
-#: classes/cpt-register.php:59 classes/cpt-register.php:60
-#: classes/cpt-register.php:67 classes/cpt-register.php:68
+#: classes/elementor/widgets/archive-view.php:116
+#: classes/elementor/widgets/archive-view.php:129
+#: classes/elementor/widgets/archive-view.php:142
+#: classes/elementor/widgets/archive-view.php:155
+msgid "No"
+msgstr "না"
+
+#: classes/elementor/widgets/single-view.php:88
+msgid "No PDF selected."
+msgstr "কোনো পিডিএফ নির্বাচন করা হয়নি।"
+
+#: classes/elementor/widgets/archive-view.php:85
+msgid "Order"
+msgstr "ক্রম"
+
+#: classes/cpt-register.php:77
+msgid "Parent Category"
+msgstr "মূল বিভাগ"
+
+#: classes/cpt-register.php:78
+msgid "Parent Category:"
+msgstr "মূল বিভাগ:"
+
+#: classes/cpt-register.php:96 classes/cpt-register.php:97
+#: classes/cpt-register.php:104 classes/cpt-register.php:105
 msgid "PDF Embed"
 msgstr "PDF এম্বেড"
 
-#: classes/admin-settings.php:54
+#: classes/admin-settings.php:29
 msgid "PDF Embed - Viewer"
 msgstr "PDF এম্বেড - ভিউয়ার"
 
-#. Name of the plugin
-msgid ""
-"PDF Embed E-Books | Newsletter | Reports | Annual Reports | Documentation | "
-"Manual Boooks"
-msgstr ""
-"পিডিএফ এম্বেড ইবুক | নিউজলেটার | রিপোর্ট | বার্ষিক প্রতিবেদন | ডকুমেন্টেশন | "
-"ম্যানুয়াল বই"
-
-#: classes/metabox-register.php:14
+#: classes/metabox-register.php:16
 msgid "PDF Embed Settings"
 msgstr "PDF এম্বেড সেটিংস"
 
-#: classes/cpt-register.php:58
+#: classes/cpt-register.php:95
 msgid "PDF Embed Viewer"
 msgstr "PDF এম্বেড ভিউয়ার"
 
-#: classes/options-setup.php:40
+#: classes/options-setup.php:38
 msgid "Pdf Embed Viewer"
 msgstr "PDF এম্বেড ভিউয়ার"
 
-#: classes/admin-settings.php:196
+#: classes/settings/support.php:38
+msgid "Please configure your email then try again."
+msgstr "দয়া করে আপনার ইমেইল কনফিগার করুন, তারপর আবার চেষ্টা করুন।"
+
+#: classes/metabox/general.php:84
+msgid "Preview Featured Image"
+msgstr "বৈশিষ্ট্যযুক্ত ইমেজ প্রিভিউ করুন"
+
+#: classes/settings/general.php:164
 msgid "Primary Color"
 msgstr "মৌলিক রঙ"
 
-#: classes/admin-settings.php:137
-msgid "raselsha@gmail.com"
-msgstr "raselsha@gmail.com"
-
-#: classes/functions.php:208
+#: classes/functions.php:186
 msgid "Read"
 msgstr "পড়ুন"
 
-#: template/style/list.php:17 template/style/newsletter.php:29
-msgid "Read/Download"
-msgstr "পড়ুন/ডাউনলোড করুন"
+#: classes/settings/shortcode.php:102
+msgid "Reset"
+msgstr "রিসেট করুন"
 
-#: classes/admin-settings.php:202
+#: classes/cpt-register.php:75
+msgid "Search Categories"
+msgstr "বিভাগ অনুসন্ধান করুন"
+
+#: classes/settings/general.php:170
 msgid "Secondary Color"
 msgstr "সেকেন্ডারি কালার"
 
-#: classes/admin-settings.php:137
-msgid "Send email"
-msgstr "ইমেইল পাঠান"
+#: classes/elementor/widgets/single-view.php:56
+msgid "Select a PDF"
+msgstr "একটি পিডিএফ নির্বাচন করুন"
 
-#: classes/admin-settings.php:55 classes/admin-settings.php:65
-#: classes/admin-settings.php:94
+#: classes/metabox/general.php:85
+msgid "Select any image to set as thumbnail from right."
+msgstr ""
+"ডান দিক থেকে থাম্বনেইল হিসেবে সেট করার জন্য কোনো একটি ইমেজ নির্বাচন করুন।"
+
+#: classes/elementor/widgets/archive-view.php:62
+msgid "Select Category"
+msgstr "বিভাগ নির্বাচন করুন"
+
+#: classes/settings/general.php:101
+msgid "Select Page"
+msgstr "পেজ নির্বাচন করুন"
+
+#: classes/elementor/widgets/single-view.php:41
+msgid "Select PDF Post"
+msgstr "পিডিএফ পোস্ট নির্বাচন করুন"
+
+#: classes/metabox/template.php:34
+msgid "Select Tempate"
+msgstr "টেমপ্লেট নির্বাচন করুন"
+
+#: classes/settings/support.php:82
+msgid "Send Request"
+msgstr "অনুরোধ পাঠান"
+
+#: classes/admin-settings.php:30 classes/admin-settings.php:40
+#: classes/settings/general.php:22
 msgid "Settings"
 msgstr "সেটিংস"
 
-#: classes/admin-settings.php:81
+#: classes/admin-settings.php:56
 msgid "Settings Saved!"
 msgstr "সেটিংস সংরক্ষিত!"
 
@@ -217,45 +409,111 @@ msgstr "সেটিংস সংরক্ষিত!"
 msgid "Shahadat Hossain"
 msgstr "শাহাদাত হোসাইন"
 
-#: classes/cpt-register.php:25 classes/admin-settings.php:95
-#: classes/metabox/general.php:36
+#: classes/settings/shortcode.php:106
+msgid "ShortCode"
+msgstr "শর্টকোড"
+
+#: classes/cpt-register.php:27 classes/metabox/general.php:42
+#: classes/settings/shortcode.php:19
 msgid "Shortcode"
 msgstr "শর্টকোড"
 
-#: classes/metabox/general.php:64
+#: classes/settings/shortcode.php:32
+msgid "Shortcode Generator"
+msgstr "শর্টকোড জেনারেটর"
+
+#: classes/settings/general.php:146
+#: classes/elementor/widgets/archive-view.php:126
+msgid "Show Download Button"
+msgstr "ডাউনলোড বাটন দেখান"
+
+#: classes/settings/general.php:155
+msgid "Show Download Counter"
+msgstr "ডাউনলোড কাউন্টার দেখান"
+
+#: classes/elementor/widgets/archive-view.php:152
+msgid "Show Downloading Count"
+msgstr "ডাউনলোডের সংখ্যা দেখান"
+
+#: classes/settings/general.php:128
+#: classes/elementor/widgets/archive-view.php:113
+msgid "Show Read Button"
+msgstr "রিড বাটন দেখান"
+
+#: classes/elementor/widgets/archive-view.php:139
+msgid "Show Reading Count"
+msgstr "পঠনের সংখ্যা দেখান"
+
+#: classes/settings/general.php:137
+msgid "Show Reading Counter"
+msgstr "পঠনের কাউন্টার দেখান"
+
+#: classes/metabox/general.php:70
 msgid "Show/Hide download Button in single page."
 msgstr "সিঙ্গেল পেজ এ ডাউনলোড বাটন দেখান অথবা বন্ধ রাখুন"
 
-#: classes/admin-settings.php:96
+#: classes/settings/support.php:19 classes/settings/support.php:56
 msgid "Support"
 msgstr "সাপোর্ট"
 
-#: classes/admin-settings.php:136
-msgid "support"
-msgstr "সাপোর্ট"
+#: classes/cpt-register.php:73
+msgctxt "taxonomy general name"
+msgid "Categories"
+msgstr "বিভাগসমূহ"
 
-#. Description of the plugin
-msgid ""
-"The plugin is designed to view and download PDF files in your wordpress "
-"website. Its allowing easy access to Documents, Newsletter, Ebook directly "
-"within web pages. With its user-friendly interface and customizable features,"
-" this plugin offers a hassle-free solution for displaying PDFs in webpage."
-msgstr ""
-"প্লাগইনটি আপনার ওয়ার্ডপ্রেস ওয়েবসাইটে পিডিএফ ফাইল দেখতে এবং ডাউনলোড করার "
-"জন্য ডিজাইন করা হয়েছে। এটি সরাসরি ওয়েব পেজের মধ্যে ডকুমেন্ট, নিউজলেটার, "
-"ইবুকে সহজে অ্যাক্সেসের অনুমতি দেয়। এর ব্যবহারকারী-বান্ধব ইন্টারফেস এবং "
-"কাস্টমাইজযোগ্য বৈশিষ্ট্যগুলির সাথে, এই প্লাগইনটি ওয়েবপেজে PDF প্রদর্শনের "
-"জন্য একটি ঝামেলা-মুক্ত সমাধান অফার করে।"
+#: classes/cpt-register.php:74
+msgctxt "taxonomy singular name"
+msgid "Category"
+msgstr "বিভাগ"
 
-#: template/style/list.php:15 template/style/newsletter.php:28
+#: classes/metabox/template.php:20 classes/metabox/template.php:33
+#: classes/elementor/widgets/archive-view.php:41
+msgid "Template"
+msgstr "টেমপ্লেট"
+
+#: classes/metabox/template.php:27
+msgid "Template Settings"
+msgstr "টেমপ্লেট সেটিংস"
+
+#: classes/settings/support.php:36
+msgid "Thank you! Your feature request has been sent."
+msgstr "ধন্যবাদ! আপনার ফিচার অনুরোধ পাঠানো হয়েছে।"
+
+#: classes/template.php:42 classes/template.php:168
 msgid "Title"
 msgstr "শিরোনাম"
 
-#: classes/metabox/general.php:55
+#: classes/metabox/general.php:92
+msgid "Total Pages: "
+msgstr "মোট পৃষ্ঠা:"
+
+#: classes/template.php:332 classes/functions.php:139
+msgid "Traditional"
+msgstr "প্রচলিত"
+
+#: classes/cpt-register.php:80
+msgid "Update Category"
+msgstr "বিভাগ আপডেট করুন"
+
+#: classes/metabox/general.php:61
 msgid "Upload"
 msgstr "আপলোড করুন"
 
-#: classes/metabox/general.php:37
-msgid "You can add the shortcode to any page or post for easy integration"
-msgstr ""
-"সহজ ইন্টিগ্রেশনের জন্য আপনি যেকোনো পৃষ্ঠা বা পোস্টে শর্টকোড যোগ করতে পারেন"
+#: classes/cpt-register.php:25
+msgid "Views"
+msgstr "দর্শন সংখ্যা"
+
+#: classes/elementor/widgets/archive-view.php:115
+#: classes/elementor/widgets/archive-view.php:128
+#: classes/elementor/widgets/archive-view.php:141
+#: classes/elementor/widgets/archive-view.php:154
+msgid "Yes"
+msgstr "হ্যাঁ"
+
+#: classes/settings/support.php:71
+msgid "Your Email"
+msgstr "আপনার ইমেইল"
+
+#: classes/settings/support.php:66
+msgid "Your Name"
+msgstr "আপনার নাম"

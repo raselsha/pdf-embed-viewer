@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PDF Embed Viewer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-01 17:24+0000\n"
+"POT-Creation-Date: 2025-08-14 13:35+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -16,67 +16,126 @@ msgstr ""
 "X-Loco-Version: 2.6.9; wp-6.5.3\n"
 "X-Domain: pdf-embed-viewer"
 
-#: template/single.php:47 template/single.php:56
+#: classes/template.php:319 classes/template.php:347
 msgid " Previous"
 msgstr ""
 
-#: classes/metabox/general.php:50
+#: classes/elementor/elementor.php:42
+msgid "3D Flipbook PDF Viewer"
+msgstr ""
+
+#. Name of the plugin
+msgid ""
+"3D Flipbook PDF Viewer & Embedder – E-Books, Manuals, Newsletters, Reports"
+msgstr ""
+
+#: classes/cpt-register.php:81
+msgid "Add New Category"
+msgstr ""
+
+#: classes/metabox/general.php:56
 msgid "Add pdf file by upload button"
 msgstr ""
 
-#: classes/metabox/general.php:49
+#: classes/metabox/general.php:55
 msgid "Add PDF URL"
 msgstr ""
 
-#: classes/admin-settings.php:135
+#: classes/settings/support.php:50
 msgid "Add Review"
 msgstr ""
 
-#: classes/cpt-register.php:61
+#: classes/metabox/general.php:43
+msgid "Add this shortcode to any page or post to view pdf"
+msgstr ""
+
+#: classes/cpt-register.php:76
+msgid "All Categories"
+msgstr ""
+
+#: classes/cpt-register.php:98
 msgid "All PDF"
 msgstr ""
 
-#: classes/admin-settings.php:171
+#: classes/settings/general.php:92
 msgid "Archive Slug"
 msgstr ""
 
-#: classes/admin-settings.php:177
+#: classes/settings/general.php:109
 msgid "Archive Template"
 msgstr ""
 
-#: classes/admin-settings.php:165
+#: classes/settings/general.php:86
 msgid "Archive Title"
 msgstr ""
 
-#: classes/cpt-register.php:27
+#: classes/elementor/widgets/archive-view.php:89
+msgid "ASC (Oldest First)"
+msgstr ""
+
+#: classes/cpt-register.php:29
 msgid "Author"
 msgstr ""
 
-#: classes/functions.php:246
+#: classes/functions.php:242
 msgid "Back to overview"
 msgstr ""
 
-#: classes/admin-settings.php:136
+#: classes/settings/general.php:98
+msgid "Back to Overview Page"
+msgstr ""
+
+#: classes/cpt-register.php:83 classes/metabox/categories.php:22
+msgid "Categories"
+msgstr ""
+
+#: classes/elementor/widgets/archive-view.php:72
+msgid "Category"
+msgstr ""
+
+#: classes/metabox/categories.php:35
+msgid "Category Settings"
+msgstr ""
+
+#: classes/settings/shortcode.php:109
+msgid "Copy"
+msgstr ""
+
+#: classes/settings/support.php:54
 msgid "Create a support ticket"
 msgstr ""
 
-#: classes/admin-settings.php:208
+#: classes/settings/general.php:176
 msgid "Dark Color"
 msgstr ""
 
-#: classes/cpt-register.php:28
+#: classes/template.php:43 classes/cpt-register.php:30
 msgid "Date"
 msgstr ""
 
-#: classes/admin-settings.php:43
+#: classes/settings/general.php:119
+msgid "Default View 3D Flipbook"
+msgstr ""
+
+#: classes/insert-demo.php:31
 msgid "Demo Data imported successfully!"
 msgstr ""
 
-#: classes/functions.php:226
+#. Description of the plugin
+msgid ""
+"Display PDFs as interactive 3D flipbooks or traditional viewers for E-Books, "
+"Manuals, Newsletters, and Reports."
+msgstr ""
+
+#: classes/metabox/general.php:91
+msgid "Document size: "
+msgstr ""
+
+#: classes/functions.php:214
 msgid "Download"
 msgstr ""
 
-#: classes/admin-settings.php:187 classes/metabox/general.php:63
+#: classes/metabox/general.php:69
 msgid "Download Button"
 msgstr ""
 
@@ -84,32 +143,84 @@ msgstr ""
 msgid "Download Enable"
 msgstr ""
 
-#: classes/functions.php:226
-msgid "Download icon"
-msgstr ""
-
-#: classes/options-setup.php:31
-msgid "Ebook Template"
-msgstr ""
-
-#: classes/admin-settings.php:43
-msgid "Failed to import data."
-msgstr ""
-
 #: classes/cpt-register.php:26
-msgid "File Url"
+msgid "Downloads"
 msgstr ""
 
-#: classes/metabox/general.php:21
-msgid "General"
+#: classes/elementor/widgets/archive-view.php:90
+msgid "DSC (Newest First)"
 msgstr ""
 
-#: classes/admin-settings.php:135
-msgid "Give a review for your feedback"
+#: classes/elementor/widgets/archive-view.php:45
+msgid "Ebook"
 msgstr ""
 
 #: classes/options-setup.php:29
+msgid "Ebook Template"
+msgstr ""
+
+#: classes/cpt-register.php:79
+msgid "Edit Category"
+msgstr ""
+
+#: classes/insert-demo.php:31
+msgid "Failed to import data."
+msgstr ""
+
+#: classes/metabox/general.php:100
+msgid "Failed to load preview. Please Upload a PDF."
+msgstr ""
+
+#: classes/settings/support.php:76
+msgid "Feature Description"
+msgstr ""
+
+#: classes/settings/support.php:61
+msgid "Feature Request Form"
+msgstr ""
+
+#: classes/cpt-register.php:28
+msgid "File Url"
+msgstr ""
+
+#: classes/template.php:331 classes/functions.php:138
+msgid "Flipbook"
+msgstr ""
+
+#: classes/metabox/general.php:20
+msgid "General"
+msgstr ""
+
+#: classes/metabox/general.php:37
+msgid "General Settings"
+msgstr ""
+
+#: classes/settings/shortcode.php:101
+msgid "Generate Shortcode"
+msgstr ""
+
+#: classes/settings/support.php:48
+msgid "Give a review for your feedback"
+msgstr ""
+
+#: classes/elementor/widgets/archive-view.php:46
+msgid "Grid"
+msgstr ""
+
+#: classes/options-setup.php:27
 msgid "Grid Template"
+msgstr ""
+
+#: classes/metabox/general.php:38
+msgid "Here you can add basic settings for your document."
+msgstr ""
+
+#: classes/metabox/categories.php:36
+msgid "Here you can set categories"
+msgstr ""
+
+#: classes/metabox/template.php:28
+msgid "Here you can set tempate for the document in single view"
 msgstr ""
 
 #. Author URI of the plugin
@@ -120,95 +231,173 @@ msgstr ""
 msgid "https://wordpress.org/plugins/pdf-embed-viewer"
 msgstr ""
 
-#: classes/admin-settings.php:221
+#: classes/settings/general.php:189
 msgid "Import Demo"
 msgstr ""
 
-#: classes/admin-settings.php:219
+#: classes/settings/general.php:187
 msgid "Import Demo Content"
 msgstr ""
 
-#: classes/admin-settings.php:215
+#: classes/elementor/widgets/archive-view.php:32
+#: classes/elementor/widgets/single-view.php:32
+msgid "Layout Settings"
+msgstr ""
+
+#: classes/settings/general.php:183
 msgid "Light Color"
 msgstr ""
 
-#: classes/options-setup.php:28
+#: classes/elementor/widgets/archive-view.php:99
+msgid "Limit"
+msgstr ""
+
+#: classes/elementor/widgets/archive-view.php:47
+msgid "List"
+msgstr ""
+
+#: classes/options-setup.php:26
 msgid "List Template"
 msgstr ""
 
-#: template/style/list.php:16 template/style/newsletter.php:27
+#: classes/metabox/general.php:98
+msgid "Loading preview..."
+msgstr ""
+
+#: classes/template.php:167
 msgid "Month"
 msgstr ""
 
-#: classes/cpt-register.php:62 classes/cpt-register.php:63
+#: classes/settings/support.php:45
+msgid "Need Help or Want to Share Your Experience?"
+msgstr ""
+
+#: classes/cpt-register.php:82
+msgid "New Category Name"
+msgstr ""
+
+#: classes/cpt-register.php:99 classes/cpt-register.php:100
 msgid "New PDF Embed"
 msgstr ""
 
-#: classes/options-setup.php:30
+#: classes/elementor/widgets/archive-view.php:48
+msgid "Newsletter"
+msgstr ""
+
+#: classes/options-setup.php:28
 msgid "Newsletter Template"
 msgstr ""
 
-#: template/single.php:48 template/single.php:57
+#: classes/template.php:320 classes/template.php:348
 msgid "Next "
 msgstr ""
 
-#: classes/cpt-register.php:59 classes/cpt-register.php:60
-#: classes/cpt-register.php:67 classes/cpt-register.php:68
+#: classes/elementor/widgets/archive-view.php:116
+#: classes/elementor/widgets/archive-view.php:129
+#: classes/elementor/widgets/archive-view.php:142
+#: classes/elementor/widgets/archive-view.php:155
+msgid "No"
+msgstr ""
+
+#: classes/elementor/widgets/single-view.php:88
+msgid "No PDF selected."
+msgstr ""
+
+#: classes/elementor/widgets/archive-view.php:85
+msgid "Order"
+msgstr ""
+
+#: classes/cpt-register.php:77
+msgid "Parent Category"
+msgstr ""
+
+#: classes/cpt-register.php:78
+msgid "Parent Category:"
+msgstr ""
+
+#: classes/cpt-register.php:96 classes/cpt-register.php:97
+#: classes/cpt-register.php:104 classes/cpt-register.php:105
 msgid "PDF Embed"
 msgstr ""
 
-#: classes/admin-settings.php:54
+#: classes/admin-settings.php:29
 msgid "PDF Embed - Viewer"
 msgstr ""
 
-#. Name of the plugin
-msgid ""
-"PDF Embed E-Books | Newsletter | Reports | Annual Reports | Documentation | "
-"Manual Boooks"
-msgstr ""
-
-#: classes/metabox-register.php:14
+#: classes/metabox-register.php:16
 msgid "PDF Embed Settings"
 msgstr ""
 
-#: classes/cpt-register.php:58
+#: classes/cpt-register.php:95
 msgid "PDF Embed Viewer"
 msgstr ""
 
-#: classes/options-setup.php:40
+#: classes/options-setup.php:38
 msgid "Pdf Embed Viewer"
 msgstr ""
 
-#: classes/admin-settings.php:196
+#: classes/settings/support.php:38
+msgid "Please configure your email then try again."
+msgstr ""
+
+#: classes/metabox/general.php:84
+msgid "Preview Featured Image"
+msgstr ""
+
+#: classes/settings/general.php:164
 msgid "Primary Color"
 msgstr ""
 
-#: classes/admin-settings.php:137
-msgid "raselsha@gmail.com"
-msgstr ""
-
-#: classes/functions.php:208
+#: classes/functions.php:186
 msgid "Read"
 msgstr ""
 
-#: template/style/list.php:17 template/style/newsletter.php:29
-msgid "Read/Download"
+#: classes/settings/shortcode.php:102
+msgid "Reset"
 msgstr ""
 
-#: classes/admin-settings.php:202
+#: classes/cpt-register.php:75
+msgid "Search Categories"
+msgstr ""
+
+#: classes/settings/general.php:170
 msgid "Secondary Color"
 msgstr ""
 
-#: classes/admin-settings.php:137
-msgid "Send email"
+#: classes/elementor/widgets/single-view.php:56
+msgid "Select a PDF"
 msgstr ""
 
-#: classes/admin-settings.php:55 classes/admin-settings.php:65
-#: classes/admin-settings.php:94
+#: classes/metabox/general.php:85
+msgid "Select any image to set as thumbnail from right."
+msgstr ""
+
+#: classes/elementor/widgets/archive-view.php:62
+msgid "Select Category"
+msgstr ""
+
+#: classes/settings/general.php:101
+msgid "Select Page"
+msgstr ""
+
+#: classes/elementor/widgets/single-view.php:41
+msgid "Select PDF Post"
+msgstr ""
+
+#: classes/metabox/template.php:34
+msgid "Select Tempate"
+msgstr ""
+
+#: classes/settings/support.php:82
+msgid "Send Request"
+msgstr ""
+
+#: classes/admin-settings.php:30 classes/admin-settings.php:40
+#: classes/settings/general.php:22
 msgid "Settings"
 msgstr ""
 
-#: classes/admin-settings.php:81
+#: classes/admin-settings.php:56
 msgid "Settings Saved!"
 msgstr ""
 
@@ -216,39 +405,111 @@ msgstr ""
 msgid "Shahadat Hossain"
 msgstr ""
 
-#: classes/cpt-register.php:25 classes/admin-settings.php:95
-#: classes/metabox/general.php:36
+#: classes/settings/shortcode.php:106
+msgid "ShortCode"
+msgstr ""
+
+#: classes/cpt-register.php:27 classes/metabox/general.php:42
+#: classes/settings/shortcode.php:19
 msgid "Shortcode"
 msgstr ""
 
-#: classes/metabox/general.php:64
+#: classes/settings/shortcode.php:32
+msgid "Shortcode Generator"
+msgstr ""
+
+#: classes/settings/general.php:146
+#: classes/elementor/widgets/archive-view.php:126
+msgid "Show Download Button"
+msgstr ""
+
+#: classes/settings/general.php:155
+msgid "Show Download Counter"
+msgstr ""
+
+#: classes/elementor/widgets/archive-view.php:152
+msgid "Show Downloading Count"
+msgstr ""
+
+#: classes/settings/general.php:128
+#: classes/elementor/widgets/archive-view.php:113
+msgid "Show Read Button"
+msgstr ""
+
+#: classes/elementor/widgets/archive-view.php:139
+msgid "Show Reading Count"
+msgstr ""
+
+#: classes/settings/general.php:137
+msgid "Show Reading Counter"
+msgstr ""
+
+#: classes/metabox/general.php:70
 msgid "Show/Hide download Button in single page."
 msgstr ""
 
-#: classes/admin-settings.php:96
+#: classes/settings/support.php:19 classes/settings/support.php:56
 msgid "Support"
 msgstr ""
 
-#: classes/admin-settings.php:136
-msgid "support"
+#: classes/cpt-register.php:73
+msgctxt "taxonomy general name"
+msgid "Categories"
 msgstr ""
 
-#. Description of the plugin
-msgid ""
-"The plugin is designed to view and download PDF files in your wordpress "
-"website. Its allowing easy access to Documents, Newsletter, Ebook directly "
-"within web pages. With its user-friendly interface and customizable features,"
-" this plugin offers a hassle-free solution for displaying PDFs in webpage."
+#: classes/cpt-register.php:74
+msgctxt "taxonomy singular name"
+msgid "Category"
 msgstr ""
 
-#: template/style/list.php:15 template/style/newsletter.php:28
+#: classes/metabox/template.php:20 classes/metabox/template.php:33
+#: classes/elementor/widgets/archive-view.php:41
+msgid "Template"
+msgstr ""
+
+#: classes/metabox/template.php:27
+msgid "Template Settings"
+msgstr ""
+
+#: classes/settings/support.php:36
+msgid "Thank you! Your feature request has been sent."
+msgstr ""
+
+#: classes/template.php:42 classes/template.php:168
 msgid "Title"
 msgstr ""
 
-#: classes/metabox/general.php:55
+#: classes/metabox/general.php:92
+msgid "Total Pages: "
+msgstr ""
+
+#: classes/template.php:332 classes/functions.php:139
+msgid "Traditional"
+msgstr ""
+
+#: classes/cpt-register.php:80
+msgid "Update Category"
+msgstr ""
+
+#: classes/metabox/general.php:61
 msgid "Upload"
 msgstr ""
 
-#: classes/metabox/general.php:37
-msgid "You can add the shortcode to any page or post for easy integration"
+#: classes/cpt-register.php:25
+msgid "Views"
+msgstr ""
+
+#: classes/elementor/widgets/archive-view.php:115
+#: classes/elementor/widgets/archive-view.php:128
+#: classes/elementor/widgets/archive-view.php:141
+#: classes/elementor/widgets/archive-view.php:154
+msgid "Yes"
+msgstr ""
+
+#: classes/settings/support.php:71
+msgid "Your Email"
+msgstr ""
+
+#: classes/settings/support.php:66
+msgid "Your Name"
 msgstr ""
