@@ -14,6 +14,11 @@ Display PDFs as interactive 3D flipbooks or standard viewers—ideal for eBooks,
 == Description ==
 **3D Flipbook PDF Viewer & Embedder** enables you to embed and display PDFs on your WordPress site in both traditional and interactive 3D Flipbook modes. Easily showcase documents, newsletters, and eBooks with read/download counters, customizable action buttons, and an intuitive interface. Elementor widgets are included for drag-and-drop embedding of single PDFs or archives. 🖱️
 
+
+https://www.youtube.com/watch?v=8EgfVxynlPo
+
+
+
 ## Archive View Templates Supported
 * **List** 📋
 * **Grid** 🟦
