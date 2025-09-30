@@ -21,13 +21,12 @@ class Metabox_General{
         <?php
     }
     public function tabs_content($post_id){
-        $embed_file = get_post_meta($post_id,'pdfev_meta_pdf_url',true);
+        $embed_file = \PDFEV_Functions::get_pdf_link();
         $embed_file =  $embed_file ? $embed_file :'';
         
         $check_download  = get_post_meta( $post_id, 'pdfev_meta_download', true );
         $check_download  = $check_download ? $check_download : 'yes';
         
-        $thumbnail = '';
         if ( has_post_thumbnail( $post_id ) ) {
             $thumbnail_url = get_the_post_thumbnail_url($post_id);
         }
