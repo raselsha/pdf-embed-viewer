@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PDF Embed Viewer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-14 15:15+0000\n"
+"POT-Creation-Date: 2025-09-30 13:33+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -33,11 +33,11 @@ msgstr ""
 msgid "Add New Category"
 msgstr ""
 
-#: classes/metabox/general.php:56
-msgid "Add pdf file by upload button"
+#: classes/metabox/general.php:55
+msgid "Add pdf fle by upload button (Remote file url can be used if permitted)"
 msgstr ""
 
-#: classes/metabox/general.php:55
+#: classes/metabox/general.php:54
 msgid "Add PDF URL"
 msgstr ""
 
@@ -45,7 +45,7 @@ msgstr ""
 msgid "Add Review"
 msgstr ""
 
-#: classes/metabox/general.php:43
+#: classes/metabox/general.php:42
 msgid "Add this shortcode to any page or post to view pdf"
 msgstr ""
 
@@ -81,7 +81,7 @@ msgstr ""
 msgid "Author"
 msgstr ""
 
-#: classes/functions.php:243
+#: classes/functions.php:282
 msgid "Back to overview"
 msgstr ""
 
@@ -128,15 +128,15 @@ msgid ""
 "Manuals, Newsletters, and Reports."
 msgstr ""
 
-#: classes/metabox/general.php:91
+#: classes/metabox/general.php:90
 msgid "Document size: "
 msgstr ""
 
-#: classes/functions.php:215
+#: classes/functions.php:254
 msgid "Download"
 msgstr ""
 
-#: classes/metabox/general.php:69 classes/settings/shortcode.php:78
+#: classes/metabox/general.php:68 classes/settings/shortcode.php:78
 msgid "Download Button"
 msgstr ""
 
@@ -180,7 +180,7 @@ msgstr ""
 msgid "Failed to import data."
 msgstr ""
 
-#: classes/metabox/general.php:100
+#: classes/metabox/general.php:99
 msgid "Failed to load preview. Please Upload a PDF."
 msgstr ""
 
@@ -196,7 +196,7 @@ msgstr ""
 msgid "File Url"
 msgstr ""
 
-#: classes/template.php:331 classes/functions.php:139
+#: classes/template.php:331 classes/functions.php:165
 msgid "Flipbook"
 msgstr ""
 
@@ -204,7 +204,7 @@ msgstr ""
 msgid "General"
 msgstr ""
 
-#: classes/metabox/general.php:37
+#: classes/metabox/general.php:36
 msgid "General Settings"
 msgstr ""
 
@@ -228,7 +228,7 @@ msgstr ""
 msgid "Grid Template"
 msgstr ""
 
-#: classes/metabox/general.php:38
+#: classes/metabox/general.php:37
 msgid "Here you can add basic settings for your document."
 msgstr ""
 
@@ -278,7 +278,7 @@ msgstr ""
 msgid "List Template"
 msgstr ""
 
-#: classes/metabox/general.php:98
+#: classes/metabox/general.php:97
 msgid "Loading preview..."
 msgstr ""
 
@@ -368,7 +368,7 @@ msgstr ""
 msgid "Please configure your email then try again."
 msgstr ""
 
-#: classes/metabox/general.php:84
+#: classes/metabox/general.php:83
 msgid "Preview Featured Image"
 msgstr ""
 
@@ -376,7 +376,7 @@ msgstr ""
 msgid "Primary Color"
 msgstr ""
 
-#: classes/functions.php:187
+#: classes/functions.php:226
 msgid "Read"
 msgstr ""
 
@@ -404,7 +404,7 @@ msgstr ""
 msgid "Select a PDF"
 msgstr ""
 
-#: classes/metabox/general.php:85
+#: classes/metabox/general.php:84
 msgid "Select any image to set as thumbnail from right."
 msgstr ""
 
@@ -446,7 +446,7 @@ msgstr ""
 msgid "ShortCode"
 msgstr ""
 
-#: classes/cpt-register.php:27 classes/metabox/general.php:42
+#: classes/cpt-register.php:27 classes/metabox/general.php:41
 #: classes/settings/shortcode.php:19
 msgid "Shortcode"
 msgstr ""
@@ -481,7 +481,7 @@ msgstr ""
 msgid "Show Reading Counter"
 msgstr ""
 
-#: classes/metabox/general.php:70
+#: classes/metabox/general.php:69
 msgid "Show/Hide download Button in single page."
 msgstr ""
 
@@ -517,11 +517,11 @@ msgstr ""
 msgid "Title"
 msgstr ""
 
-#: classes/metabox/general.php:92
+#: classes/metabox/general.php:91
 msgid "Total Pages: "
 msgstr ""
 
-#: classes/template.php:332 classes/functions.php:140
+#: classes/template.php:332 classes/functions.php:166
 msgid "Traditional"
 msgstr ""
 
@@ -529,7 +529,7 @@ msgstr ""
 msgid "Update Category"
 msgstr ""
 
-#: classes/metabox/general.php:61
+#: classes/metabox/general.php:60
 msgid "Upload"
 msgstr ""
 

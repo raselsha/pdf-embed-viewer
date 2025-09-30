@@ -52,7 +52,7 @@ class Metabox_General{
                 <label class="label">
                     <div>
                         <p><?php echo esc_html__( 'Add PDF URL', 'pdf-embed-viewer' )?></p>
-                        <span><?php echo esc_html__('Add pdf file by upload button','pdf-embed-viewer') ?></span>
+                        <span><?php echo esc_html__('Add pdf fle by upload button (Remote file url can be used if permitted)','pdf-embed-viewer') ?></span>
                     </div>
                     <div style="width: 55%;">
                         <input type="url" class="pdfev-emd-vwr-file" name="pdfev_meta_pdf_url" value="<?php echo $embed_file ? esc_attr($embed_file) : '' ;  ?>" placeholder="<?php echo esc_attr('https://example.com/filename.pdf'); ?>" required>

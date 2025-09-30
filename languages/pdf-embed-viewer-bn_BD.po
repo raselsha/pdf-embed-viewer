@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PDF Embed Viewer\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-06-03 11:24+0000\n"
-"PO-Revision-Date: 2025-08-14 15:20+0000\n"
+"PO-Revision-Date: 2025-09-30 13:35+0000\n"
 "Last-Translator: \n"
 "Language-Team: Bengali (Bangladesh)\n"
 "Language: bn_BD\n"
@@ -34,11 +34,11 @@ msgstr ""
 msgid "Add New Category"
 msgstr "নতুন একটি ক্যাটাগরি তৈরি করুন"
 
-#: classes/metabox/general.php:56
-msgid "Add pdf file by upload button"
-msgstr "আপলোড বাটন দ্বারা পিডিএফ ফাইল আপলোড করুন"
-
 #: classes/metabox/general.php:55
+msgid "Add pdf fle by upload button (Remote file url can be used if permitted)"
+msgstr "পিডিএফ ফাইল আপলোড করুন (প্রয়োজনে দূরবর্তী URL ব্যবহার করা যাবে)"
+
+#: classes/metabox/general.php:54
 msgid "Add PDF URL"
 msgstr "পিডিএফ ইউআরএল লিংক করুন"
 
@@ -46,7 +46,7 @@ msgstr "পিডিএফ ইউআরএল লিংক করুন"
 msgid "Add Review"
 msgstr "পর্যালোচনা যোগ করুন"
 
-#: classes/metabox/general.php:43
+#: classes/metabox/general.php:42
 msgid "Add this shortcode to any page or post to view pdf"
 msgstr "পিডিএফ দেখানোর জন্য যেকোনো পেজ বা পোস্টে এই শর্টকোডটি যুক্ত করুন"
 
@@ -82,7 +82,7 @@ msgstr "ক্রমবর্ধমান (সবচেয়ে পুরোন
 msgid "Author"
 msgstr "লেখক"
 
-#: classes/functions.php:243
+#: classes/functions.php:282
 msgid "Back to overview"
 msgstr "ওভারভিউতে ফিরে যান"
 
@@ -131,15 +131,15 @@ msgstr ""
 "পিডিএফগুলোকে ই-বুক, ম্যানুয়াল, নিউজলেটার এবং রিপোর্টের জন্য ইন্টারঅ্যাকটিভ "
 "৩ডি ফ্লিপবুক বা প্রচলিত ভিউয়ারে প্রদর্শন করুন।"
 
-#: classes/metabox/general.php:91
+#: classes/metabox/general.php:90
 msgid "Document size: "
 msgstr "ডকুমেন্টের সাইজ"
 
-#: classes/functions.php:215
+#: classes/functions.php:254
 msgid "Download"
 msgstr "ডাউনলোড"
 
-#: classes/metabox/general.php:69 classes/settings/shortcode.php:78
+#: classes/metabox/general.php:68 classes/settings/shortcode.php:78
 msgid "Download Button"
 msgstr "ডাউনলোড বাটন"
 
@@ -183,7 +183,7 @@ msgstr "ক্যাটাগরি সম্পাদনা করুন"
 msgid "Failed to import data."
 msgstr "ডেটা আমদানি করতে ব্যর্থ হয়েছে৷"
 
-#: classes/metabox/general.php:100
+#: classes/metabox/general.php:99
 msgid "Failed to load preview. Please Upload a PDF."
 msgstr "প্রিভিউ লোড করতে ব্যর্থ হয়েছে। দয়া করে একটি পিডিএফ আপলোড করুন।"
 
@@ -199,7 +199,7 @@ msgstr "ফিচার অনুরোধ ফর্ম"
 msgid "File Url"
 msgstr "ফাইল ইউআরএল"
 
-#: classes/template.php:331 classes/functions.php:139
+#: classes/template.php:331 classes/functions.php:165
 msgid "Flipbook"
 msgstr "ফ্লিপবুক"
 
@@ -207,7 +207,7 @@ msgstr "ফ্লিপবুক"
 msgid "General"
 msgstr "সাধারণ"
 
-#: classes/metabox/general.php:37
+#: classes/metabox/general.php:36
 msgid "General Settings"
 msgstr "সাধারণ সেটিংস"
 
@@ -231,7 +231,7 @@ msgstr "গ্রিড"
 msgid "Grid Template"
 msgstr "গ্রিড টেমপ্লেট"
 
-#: classes/metabox/general.php:38
+#: classes/metabox/general.php:37
 msgid "Here you can add basic settings for your document."
 msgstr "এখানে আপনি আপনার ডকুমেন্টের জন্য মৌলিক সেটিংস যোগ করতে পারেন।"
 
@@ -281,7 +281,7 @@ msgstr "তালিকা"
 msgid "List Template"
 msgstr "টেমপ্লেট এর তালিকা"
 
-#: classes/metabox/general.php:98
+#: classes/metabox/general.php:97
 msgid "Loading preview..."
 msgstr "প্রিভিউ লোড হচ্ছে…"
 
@@ -371,7 +371,7 @@ msgstr "PDF এম্বেড ভিউয়ার"
 msgid "Please configure your email then try again."
 msgstr "দয়া করে আপনার ইমেইল কনফিগার করুন, তারপর আবার চেষ্টা করুন।"
 
-#: classes/metabox/general.php:84
+#: classes/metabox/general.php:83
 msgid "Preview Featured Image"
 msgstr "বৈশিষ্ট্যযুক্ত ইমেজ প্রিভিউ করুন"
 
@@ -379,7 +379,7 @@ msgstr "বৈশিষ্ট্যযুক্ত ইমেজ প্রিভ�
 msgid "Primary Color"
 msgstr "মৌলিক রঙ"
 
-#: classes/functions.php:187
+#: classes/functions.php:226
 msgid "Read"
 msgstr "পড়ুন"
 
@@ -407,7 +407,7 @@ msgstr "সেকেন্ডারি কালার"
 msgid "Select a PDF"
 msgstr "একটি পিডিএফ নির্বাচন করুন"
 
-#: classes/metabox/general.php:85
+#: classes/metabox/general.php:84
 msgid "Select any image to set as thumbnail from right."
 msgstr ""
 "ডান দিক থেকে থাম্বনেইল হিসেবে সেট করার জন্য কোনো একটি ইমেজ নির্বাচন করুন।"
@@ -450,7 +450,7 @@ msgstr "শাহাদাত হোসাইন"
 msgid "ShortCode"
 msgstr "শর্টকোড"
 
-#: classes/cpt-register.php:27 classes/metabox/general.php:42
+#: classes/cpt-register.php:27 classes/metabox/general.php:41
 #: classes/settings/shortcode.php:19
 msgid "Shortcode"
 msgstr "শর্টকোড"
@@ -485,7 +485,7 @@ msgstr "পঠনের সংখ্যা দেখান"
 msgid "Show Reading Counter"
 msgstr "পঠনের কাউন্টার দেখান"
 
-#: classes/metabox/general.php:70
+#: classes/metabox/general.php:69
 msgid "Show/Hide download Button in single page."
 msgstr "সিঙ্গেল পেজ এ ডাউনলোড বাটন দেখান অথবা বন্ধ রাখুন"
 
@@ -521,11 +521,11 @@ msgstr "ধন্যবাদ! আপনার ফিচার অনুরো�
 msgid "Title"
 msgstr "শিরোনাম"
 
-#: classes/metabox/general.php:92
+#: classes/metabox/general.php:91
 msgid "Total Pages: "
 msgstr "মোট পৃষ্ঠা:"
 
-#: classes/template.php:332 classes/functions.php:140
+#: classes/template.php:332 classes/functions.php:166
 msgid "Traditional"
 msgstr "প্রচলিত"
 
@@ -533,7 +533,7 @@ msgstr "প্রচলিত"
 msgid "Update Category"
 msgstr "বিভাগ আপডেট করুন"
 
-#: classes/metabox/general.php:61
+#: classes/metabox/general.php:60
 msgid "Upload"
 msgstr "আপলোড করুন"
 

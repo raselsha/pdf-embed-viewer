@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PDF Embed Viewer\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-06-03 11:24+0000\n"
-"PO-Revision-Date: 2025-08-14 15:20+0000\n"
+"PO-Revision-Date: 2025-09-30 13:36+0000\n"
 "Last-Translator: \n"
 "Language-Team: French (France)\n"
 "Language: fr_FR\n"
@@ -27,17 +27,18 @@ msgstr "Visionneuse PDF 3D Flipbook"
 msgid ""
 "3D Flipbook PDF Viewer & Embedder – E-Books, Manuals, Newsletters, Reports"
 msgstr ""
-"Visionneuse et intégrateur PDF 3D Flipbook – E-Books, Manuels, Newsletters, Rapports"
+"Visionneuse et intégrateur PDF 3D Flipbook – E-Books, Manuels, Newsletters, "
+"Rapports"
 
 #: classes/cpt-register.php:81
 msgid "Add New Category"
 msgstr "Ajouter une nouvelle catégorie"
 
-#: classes/metabox/general.php:56
-msgid "Add pdf file by upload button"
-msgstr "Ajouter un fichier PDF via le bouton de téléchargement"
-
 #: classes/metabox/general.php:55
+msgid "Add pdf fle by upload button (Remote file url can be used if permitted)"
+msgstr "Ajouter un fichier PDF (URL distante autorisée si permis)"
+
+#: classes/metabox/general.php:54
 msgid "Add PDF URL"
 msgstr "Ajouter l’URL du PDF"
 
@@ -45,9 +46,11 @@ msgstr "Ajouter l’URL du PDF"
 msgid "Add Review"
 msgstr "Ajouter un avis"
 
-#: classes/metabox/general.php:43
+#: classes/metabox/general.php:42
 msgid "Add this shortcode to any page or post to view pdf"
-msgstr "Ajoutez ce shortcode à n’importe quelle page ou publication pour afficher le PDF"
+msgstr ""
+"Ajoutez ce shortcode à n’importe quelle page ou publication pour afficher le "
+"PDF"
 
 #: classes/cpt-register.php:76
 msgid "All Categories"
@@ -81,7 +84,7 @@ msgstr "ASC (le plus ancien d’abord)"
 msgid "Author"
 msgstr "Auteur"
 
-#: classes/functions.php:243
+#: classes/functions.php:282
 msgid "Back to overview"
 msgstr "Retour à l’aperçu"
 
@@ -127,17 +130,18 @@ msgid ""
 "Display PDFs as interactive 3D flipbooks or traditional viewers for E-Books, "
 "Manuals, Newsletters, and Reports."
 msgstr ""
-"Affichez les PDF sous forme de flipbooks 3D interactifs ou de visionneuses traditionnelles pour E-Books, Manuels, Newsletters et Rapports."
+"Affichez les PDF sous forme de flipbooks 3D interactifs ou de visionneuses "
+"traditionnelles pour E-Books, Manuels, Newsletters et Rapports."
 
-#: classes/metabox/general.php:91
+#: classes/metabox/general.php:90
 msgid "Document size: "
 msgstr "Taille du document :"
 
-#: classes/functions.php:215
+#: classes/functions.php:254
 msgid "Download"
 msgstr "Télécharger"
 
-#: classes/metabox/general.php:69 classes/settings/shortcode.php:78
+#: classes/metabox/general.php:68 classes/settings/shortcode.php:78
 msgid "Download Button"
 msgstr "Bouton de téléchargement"
 
@@ -181,7 +185,7 @@ msgstr "Modifier la catégorie"
 msgid "Failed to import data."
 msgstr "Échec de l’importation des données."
 
-#: classes/metabox/general.php:100
+#: classes/metabox/general.php:99
 msgid "Failed to load preview. Please Upload a PDF."
 msgstr "Échec du chargement de l’aperçu. Veuillez télécharger un PDF."
 
@@ -197,7 +201,7 @@ msgstr "Formulaire de demande de fonctionnalité"
 msgid "File Url"
 msgstr "URL du fichier"
 
-#: classes/template.php:331 classes/functions.php:139
+#: classes/template.php:331 classes/functions.php:165
 msgid "Flipbook"
 msgstr "Flipbook"
 
@@ -205,7 +209,7 @@ msgstr "Flipbook"
 msgid "General"
 msgstr "Général"
 
-#: classes/metabox/general.php:37
+#: classes/metabox/general.php:36
 msgid "General Settings"
 msgstr "Paramètres généraux"
 
@@ -229,13 +233,14 @@ msgstr "Grille"
 msgid "Grid Template"
 msgstr "Modèle Grille"
 
-#: classes/metabox/general.php:38
+#: classes/metabox/general.php:37
 msgid "Here you can add basic settings for your document."
 msgstr "Vous pouvez ajouter ici les paramètres de base pour votre document."
 
 #: classes/metabox/template.php:28
 msgid "Here you can set tempate for the document in single view"
-msgstr "Ici, vous pouvez définir le modèle pour le document en vue individuelle."
+msgstr ""
+"Ici, vous pouvez définir le modèle pour le document en vue individuelle."
 
 #. Author URI of the plugin
 msgid "https://shahadat.com.bd"
@@ -279,7 +284,7 @@ msgstr "Liste"
 msgid "List Template"
 msgstr "Modèle Liste"
 
-#: classes/metabox/general.php:98
+#: classes/metabox/general.php:97
 msgid "Loading preview..."
 msgstr "Chargement de l’aperçu…"
 
@@ -369,7 +374,7 @@ msgstr "Visionneuse d’intégration PDF"
 msgid "Please configure your email then try again."
 msgstr "Veuillez configurer votre e-mail puis réessayer."
 
-#: classes/metabox/general.php:84
+#: classes/metabox/general.php:83
 msgid "Preview Featured Image"
 msgstr "Aperçu de l’image à la une"
 
@@ -377,7 +382,7 @@ msgstr "Aperçu de l’image à la une"
 msgid "Primary Color"
 msgstr "Couleur principale"
 
-#: classes/functions.php:187
+#: classes/functions.php:226
 msgid "Read"
 msgstr "Lire"
 
@@ -405,7 +410,7 @@ msgstr "Couleur secondaire"
 msgid "Select a PDF"
 msgstr "Sélectionner un PDF"
 
-#: classes/metabox/general.php:85
+#: classes/metabox/general.php:84
 msgid "Select any image to set as thumbnail from right."
 msgstr "Sélectionnez une image à droite pour la définir comme miniature."
 
@@ -447,7 +452,7 @@ msgstr "Shahadat Hossain"
 msgid "ShortCode"
 msgstr "Shortcode"
 
-#: classes/cpt-register.php:27 classes/metabox/general.php:42
+#: classes/cpt-register.php:27 classes/metabox/general.php:41
 #: classes/settings/shortcode.php:19
 msgid "Shortcode"
 msgstr "Shortcode"
@@ -482,7 +487,7 @@ msgstr "Afficher le nombre de lectures"
 msgid "Show Reading Counter"
 msgstr "Afficher le compteur de lectures"
 
-#: classes/metabox/general.php:70
+#: classes/metabox/general.php:69
 msgid "Show/Hide download Button in single page."
 msgstr "Afficher/Masquer le bouton de téléchargement sur la page individuelle."
 
@@ -518,11 +523,11 @@ msgstr "Merci ! Votre demande de fonctionnalité a été envoyée."
 msgid "Title"
 msgstr "Titre"
 
-#: classes/metabox/general.php:92
+#: classes/metabox/general.php:91
 msgid "Total Pages: "
 msgstr "Nombre total de pages :"
 
-#: classes/template.php:332 classes/functions.php:140
+#: classes/template.php:332 classes/functions.php:166
 msgid "Traditional"
 msgstr "Traditionnel"
 
@@ -530,7 +535,7 @@ msgstr "Traditionnel"
 msgid "Update Category"
 msgstr "Mettre à jour la catégorie"
 
-#: classes/metabox/general.php:61
+#: classes/metabox/general.php:60
 msgid "Upload"
 msgstr "Télécharger"
 
@@ -557,4 +562,3 @@ msgstr "Votre e-mail"
 #: classes/settings/support.php:66
 msgid "Your Name"
 msgstr "Votre nom"
-
