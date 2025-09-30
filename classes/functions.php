@@ -14,7 +14,33 @@ if( ! class_exists('PDFEV_Functions') ){
         
         public function __construct() {
             add_action( 'plugins_loaded', ['PDFEV_Functions','load_plugin_textdomain'] );  
-            add_action( 'plugins_loaded', ['PDFEV_Functions','appsero_init_tracker'] );          
+            add_action( 'plugins_loaded', ['PDFEV_Functions','appsero_init_tracker'] ); 
+            add_action( 'init', [$this,'pdfev_proxy']);
+        }
+
+        public function pdfev_proxy() {
+            if (isset($_GET['pdfev_proxy'])) {
+                $url = esc_url_raw($_GET['pdfev_proxy']);
+
+                if (preg_match('/\.pdf$/i', $url)) {
+                    $response = wp_remote_get($url, ['timeout' => 60]);
+
+                    if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 200) {
+                        
+                        echo wp_remote_retrieve_body($response);
+                        header('Content-Type: application/pdf');
+                        header('Content-Disposition: inline; filename="proxy.pdf"');
+                        header('Accept-Ranges: bytes');
+                    } else {
+                        status_header(404);
+                        echo 'PDF could not be loaded.';
+                    }
+                } else {
+                    status_header(403);
+                    echo 'Invalid file type.';
+                }
+                exit;
+            }
         }
 
         public static function load_plugin_textdomain() {
@@ -129,7 +155,7 @@ if( ! class_exists('PDFEV_Functions') ){
         }
 
         public static function shortcode_view($post_id){
-            $link = get_post_meta($post_id, 'pdfev_meta_pdf_url', true );
+            $link = \PDFEV_Functions::get_pdf_link();
             $flipbook = get_option('pdfev_flipbook_status');
             $flipbook = $flipbook ? $flipbook : 'yes';
             ?>
@@ -163,11 +189,24 @@ if( ! class_exists('PDFEV_Functions') ){
             return 'DSC';
         }
         
-        public static function get_pdf_link(){
-            $link = get_post_meta( get_the_ID(), 'pdfev_meta_pdf_url', true );
-            $link = $link??'';
-            return $link;
+        public static function get_pdf_link() {
+            $link = get_post_meta(get_the_ID(), 'pdfev_meta_pdf_url', true);
+            $link = $link ?? '';
+
+            if (empty($link)) return '';
+
+            $site_host  = parse_url(home_url(), PHP_URL_HOST);
+            $pdf_host   = parse_url($link, PHP_URL_HOST);
+
+            // Remote → proxy it
+            if ($pdf_host && $site_host !== $pdf_host) {
+                return add_query_arg('pdfev_proxy', rawurlencode($link), home_url('/'));
+            }
+
+            // Local → return directly
+            return esc_url_raw($link);
         }
+
 
         public static function pdf_link(){
             $link = self::get_pdf_link();
