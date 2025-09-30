@@ -4,7 +4,7 @@ Contributors:      raselsha
 Requires at least: 3.0
 Tested up to:      6.8
 Requires PHP:      7.0
-Stable tag:        1.3.5
+Stable tag:        1.3.6
 License:           GPLv2 or later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 Tags:              3d-flipbook, ebook, flipbook, pdf-embed, elementor
@@ -98,6 +98,9 @@ Display a single PDF by post ID:
 - **Category Support**  
   Organize PDFs by category for easy browsing.
 
+- **Remote PDFs Support**  
+  Rmote Resource can be used like external server file can be used.
+
 - **Interactive Ebook View**  
   The `ebook` template features a hover-preview for a realistic book effect.
 
@@ -164,6 +167,9 @@ For more details, see the [Appsero Privacy Policy](https://appsero.com/privacy-p
 * French (fr_FR)
 
 == Changelog ==
+
+= 1.3.6 =
+* Remote pdf file can be used instead of uploaded. 
 
 = 1.3.5 =
 * github to wordpress release
@@ -298,6 +304,10 @@ Yes, the plugin includes Elementor widgets for both archive and single PDF views
 
 = Can I organize my PDFs by category? =
 Yes, you can assign categories to your PDFs, making it easy to organize and allow users to browse documents by topic or type.
+
+= Can I use my PDFs from a remote server? =
+Yes, you can add your remote server PDFs. File should be permitted from remote server to access.
+
 
 = How do I track how many times a PDF is read or downloaded? =
 The plugin automatically tracks reads and downloads. You can view the counts in the plugin settings and post list.
