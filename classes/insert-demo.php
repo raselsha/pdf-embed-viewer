@@ -12,6 +12,22 @@ class Insert_Demo {
 
     public function __construct() {
         add_action('wp_ajax_pdfev_import_demo_data', array($this,'import_demo_data')); 
+        add_action('admin_notices', [$this, 'show_import_notice']);
+    }
+
+    public static function show_import_notice(){
+        if ( get_option('pdfev_dummy_import_notice') ) {
+            ?>
+            <div class="notice notice-success is-dismissible">
+                <p><strong>PDFEV Plugin Activated!</strong> Dummy data import করতে চান? 
+                <input type="button" class="button-primary pdfev-import-demo-content" value="<?php _e('Import Demo','pdf-embed-viewer') ?>">
+                <a href="<?php echo admin_url('admin.php?page=pdfev-import'); ?>">Click here</a>
+                
+                <span class="demo-import-success"></span>
+                </p>
+            </div>
+            <?php
+        }
     }
 
     public function import_demo_data(){
@@ -193,6 +209,7 @@ class Insert_Demo {
                 ]);
             }
         }
+        // delete_option('pdfev_dummy_import_notice');
     }        
 }
 

@@ -150,7 +150,7 @@
 
 
   // =================Import Demo Content========
-  $(document).on('click','#pdfev-import-demo-content',function (e) {
+  $(document).on('click','.pdfev-import-demo-content',function (e) {
     e.preventDefault();
     $.ajax({
         url: pdfevAjax.ajaxurl,
@@ -160,16 +160,19 @@
             ajaxnonce: pdfevAjax.ajaxnonce,
             import_status: 'yes',
         },
+        beforeSend: function() {
+            $('.demo-import-success').html('<span class="pdfev-loader" aria-hidden="true"></span>');
+        },
         success: function(response) {
             
             if (response.success) {
-                $('#response-container').html(response.message); 
+                $('.demo-import-success').html(response.message); 
             } else {
-                $('#response-container').html('Error: ' + response.message); 
+                $('.demo-import-success').html('Error: ' + response.message); 
             }
         },
         error: function(xhr, status, error) {
-            $('#response-container').html('An error occurred: ' + error);
+            $('.demo-import-success').html('An error occurred: ' + error);
             console.log('Error:', error);
         }
     });

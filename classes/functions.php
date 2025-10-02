@@ -18,6 +18,26 @@ if( ! class_exists('PDFEV_Functions') ){
             add_action( 'init', [$this,'pdfev_proxy']);
         }
 
+        function dummy_import(){
+            settings_errors('my_plugin_notice');
+        }
+
+        function my_plugin_notice(){
+            if ( ! current_user_can( 'activate_plugins' ) ) {
+                return;
+            }
+            $screen = get_current_screen();
+            if ( isset( $screen->id ) && $screen->id !== 'plugins' ) {
+                return;
+            }
+            ?>
+            <div class="notice notice-info is-dismissible">
+                <p><?php echo sprintf( __( 'Thank you for activating PDF Embed Viewer! To get started, please visit the <a href="%s">settings page</a>.', 'pdf-embed-viewer' ), admin_url( 'edit.php?post_type=pdfev_embed_viewer&page=pdfev_settings' ) ); ?></p>
+            </div>
+            <?php
+        }
+
+
         public function pdfev_proxy() {
             if (isset($_GET['pdfev_proxy'])) {
                 $url = esc_url_raw($_GET['pdfev_proxy']);
@@ -108,7 +128,6 @@ if( ! class_exists('PDFEV_Functions') ){
             return $attachment;
         }
         
-
         public static function does_attachment_exist($filename) {
             global $wpdb;
 

@@ -324,4 +324,28 @@
   margin-top: 20px;
 }
 
+.demo-import-success {
+  color: green;
+}
+
+.pdfev-loader {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  border: 3px solid #ddd; /* outer border */
+  border-top: 3px solid #0073aa; /* WP blue (active part) */
+  border-radius: 50%;
+  animation: pdfev-spin 1s linear infinite;
+  vertical-align: middle;
+}
+
+@keyframes pdfev-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 /*# sourceMappingURL=admin.css.map */

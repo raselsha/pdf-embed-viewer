@@ -68,10 +68,12 @@ if( ! class_exists( 'PDFEV_Embed_Viewer' ) ){
 
         public static function activate(){
             update_option('rewrite_rules','');
+            update_option('pdfev_dummy_import_notice',true);
         }
 
         public static function deactivate(){
             flush_rewrite_rules();
+            
         }
 
         public static function uninstall(){

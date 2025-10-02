@@ -186,12 +186,12 @@ class General_Settings{
                 <tr>
                     <th scope="row"><?php esc_html_e('Import Demo Content','pdf-embed-viewer') ?></th>
                     <td> 
-                        <input type="button" class="button-primary"  id="pdfev-import-demo-content" value="<?php _e('Import Demo','pdf-embed-viewer') ?>">
+                        <input type="button" class="button-primary pdfev-import-demo-content" value="<?php _e('Import Demo','pdf-embed-viewer') ?>">
                         
                     </td>
                 </tr>
                 <tr>
-                    <td id="response-container" colspan="2" style="color: green;"></td>
+                    <td class="demo-import-success" colspan="2"></td>
                 </tr>
             </tbody>
             </table>
