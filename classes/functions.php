@@ -73,7 +73,7 @@ if( ! class_exists('PDFEV_Functions') ){
             if ( ! class_exists( 'Appsero\Client' ) ) {
             require_once PDFEV_Const_Path . '/vendor/appsero/src/Client.php';
             }
-            $client = new Appsero\Client( 'efdff7cb-2ab8-4e9a-a19f-9ca95f4a5b42', 'PDF Embed Viewer', __FILE__ );
+            $client = new Appsero\Client( 'efdff7cb-2ab8-4e9a-a19f-9ca95f4a5b42', '3D Flipbook PDF Viewer & Embedder Plugin Activated!', __FILE__ );
             $client->insights()->init();
 
         }

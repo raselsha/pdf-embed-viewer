@@ -4,7 +4,7 @@ Contributors:      raselsha
 Requires at least: 3.0
 Tested up to:      6.8
 Requires PHP:      7.0
-Stable tag:        1.3.6
+Stable tag:        1.3.7
 License:           GPLv2 or later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 Tags:              3d-flipbook, ebook, flipbook, pdf-embed, elementor
@@ -167,6 +167,9 @@ For more details, see the [Appsero Privacy Policy](https://appsero.com/privacy-p
 * French (fr_FR)
 
 == Changelog ==
+
+= 1.3.7 =
+* on plugin activation show dummy data import notice. 
 
 = 1.3.6 =
 * Remote pdf file can be used instead of uploaded. 

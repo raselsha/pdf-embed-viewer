@@ -19,17 +19,24 @@ class Insert_Demo {
         if ( get_option('pdfev_dummy_import_notice') ) {
             ?>
             <div class="notice notice-success is-dismissible">
-                <p><strong>PDFEV Plugin Activated!</strong> Dummy data import করতে চান? 
-                <input type="button" class="button-primary pdfev-import-demo-content" value="<?php _e('Import Demo','pdf-embed-viewer') ?>">
-                <a href="<?php echo admin_url('admin.php?page=pdfev-import'); ?>">Click here</a>
-                
-                <span class="demo-import-success"></span>
+                <p>
+                <strong><?php _e('3D Flipbook PDF Viewer & Embedder Activated!','pdf-embed-viewer') ?></strong>
+                <?php _e('Go to','pdf-embed-viewer') ?> 
+                <a href="<?php echo admin_url('admin.php?page=pdfev-import'); ?>"><?php _e('Settings','pdf-embed-viewer') ?></a>
+                <?php _e('Or','pdf-embed-viewer') ?>
+                 <span class="demo-import-success"></span> 
+                <input  type="button" class="button-primary pdfev-import-demo-content" value="<?php _e('Import Dummy data','pdf-embed-viewer') ?>"> 
                 </p>
             </div>
             <?php
+            delete_option('pdfev_dummy_import_notice');
         }
     }
 
+    public function mark_import_done(){
+        update_option('pdfev_dummy_import_done', true); // permanent flag
+        delete_option('pdfev_dummy_import_notice'); // import হয়ে গেলে notice আর দরকার নাই
+    }
     public function import_demo_data(){
         
         if( isset( $_POST['ajaxnonce'] ) ){
@@ -44,7 +51,7 @@ class Insert_Demo {
         // Prepare the response
         $response = array(
             'success' => $success, // This should be true or false based on the function result
-            'message' => $success ? __('Demo Data imported successfully!', 'pdf-embed-viewer') : __('Failed to import data.', 'pdf-embed-viewer')
+            'message' => $success ? __('Dummy Data imported successfully!', 'pdf-embed-viewer') : __('Failed to import data.', 'pdf-embed-viewer')
         );
         wp_send_json($response);
         wp_die(); // End AJAX request
@@ -209,7 +216,7 @@ class Insert_Demo {
                 ]);
             }
         }
-        // delete_option('pdfev_dummy_import_notice');
+        $this->mark_import_done();
     }        
 }
 

@@ -330,8 +330,8 @@
 
 .pdfev-loader {
   display: inline-block;
-  width: 24px;
-  height: 24px;
+  width: 20px;
+  height: 20px;
   border: 3px solid #ddd; /* outer border */
   border-top: 3px solid #0073aa; /* WP blue (active part) */
   border-radius: 50%;
