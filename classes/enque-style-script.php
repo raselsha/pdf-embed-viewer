@@ -42,7 +42,7 @@ class Enque_Style{
             // javascript ===
             wp_enqueue_script( 'pdf-frontend-script', PDFEV_Const_URL.'assets/js/frontend.js',['jquery'],PDFEV_Const_VERSION,true);
             wp_enqueue_script( 'pdf-three.min', PDFEV_Const_URL.'vendor/3dflipbook/js/three.min.js',['jquery'],PDFEV_Const_VERSION,true);
-            wp_enqueue_script( 'pdf-min', PDFEV_Const_URL.'vendor/3dflipbook/js/pdf.min.js',['jquery'],PDFEV_Const_VERSION,true);
+            wp_enqueue_script( 'pdf-min', PDFEV_Const_URL.'vendor/pdf/pdf.min.js',['jquery'],PDFEV_Const_VERSION,true);
             wp_enqueue_script( 'pdf-3dflipbook', PDFEV_Const_URL.'vendor/3dflipbook/js/3dflipbook.min.js',[],PDFEV_Const_VERSION,true);
             wp_enqueue_script( 'pdf-simple-jquery-pdf', PDFEV_Const_URL.'vendor/3dflipbook/js/simple-jquery-pdf.js',[],PDFEV_Const_VERSION,true);
             
@@ -61,7 +61,7 @@ class Enque_Style{
             wp_add_inline_script('pdf-3dflipbook', 'window.$ = window.jQuery;', 'before');
             wp_add_inline_script('pdf-3dflipbook', '
                 window.PDFJS_LOCALE = {
-                    pdfJsWorker: "' . esc_url(PDFEV_Const_URL . 'vendor/3dflipbook/js/pdf.worker.js') . '",
+                    pdfJsWorker: "' . esc_url(PDFEV_Const_URL . 'vendor/pdf/pdf.worker.min.js') . '",
                     pdfJsCMapUrl: "cmaps"
                 };
             ', 'before');
