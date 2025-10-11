@@ -168,6 +168,9 @@ For more details, see the [Appsero Privacy Policy](https://appsero.com/privacy-p
 
 == Changelog ==
 
+= 1.3.8 =
+* pdf.js and pdf.worker.js library update.
+
 = 1.3.7 =
 * on plugin activation show dummy data import notice. 
 
