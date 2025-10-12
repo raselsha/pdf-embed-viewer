@@ -10,7 +10,7 @@ namespace PDFEV;
 defined('ABSPATH') || exit;
 class Shortcode_Generator {
     public function __construct() {
-        add_action('pdfev_settings_tabs',array($this,'tabs'));
+        add_action('pdfev_settings_tabs',array($this,'tabs'),20,0);
         add_action('pdfev_settings_tabs_content',array($this,'tabs_content'));
         add_action('wp_ajax_pdfev_shortcode_generate', array($this,'shortcode_generate')); 
     }

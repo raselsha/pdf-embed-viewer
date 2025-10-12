@@ -11,7 +11,7 @@ defined('ABSPATH') || exit;
 
 class Support_Settings{
     public function __construct() {
-        add_action('pdfev_settings_tabs',array($this,'tabs'));
+        add_action('pdfev_settings_tabs',array($this,'tabs'),30,0);
         add_action('pdfev_settings_tabs_content',array($this,'tabs_content'));
     }
     public function tabs(){

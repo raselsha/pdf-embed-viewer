@@ -12,14 +12,14 @@ defined('ABSPATH') || exit;
 class General_Settings{
     public function __construct() {
         add_action( 'init', array($this,'save_options_data') );
-        add_action('pdfev_settings_tabs',array($this,'tabs'));
+        add_action('pdfev_settings_tabs',array($this,'tabs'),10,0);
         add_action('pdfev_settings_tabs_content',array($this,'tabs_content'));
     
     }
     
     public function tabs(){
         ?>
-        <button class="nav-tab active" data-tab-target="pdfev_emd_vwr_admin_tabs_settings"> <?php echo esc_html__('Settings','pdf-embed-viewer'); ?> </button>
+        <button class="nav-tab active" data-tab-target="pdfev_emd_vwr_admin_tabs_settings"> <?php echo esc_html__('General Settings','pdf-embed-viewer'); ?> </button>
         <?php
     }
     public function tabs_content(){
