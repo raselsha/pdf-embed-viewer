@@ -311,7 +311,7 @@ class Template{
             <h1><?php the_title();?></h1>
             <div class="action">
                 <?php \PDFEV_Functions::back_to_archive();?>
-                <?php \PDFEV_Functions::download_button_page_view(get_the_ID()); ?>
+                <?php \PDFEV_Functions::download_button_single_page_view(get_the_ID()); ?>
             </div>
         </div>
         
@@ -332,10 +332,10 @@ class Template{
                 <a class="button btn pdfev-show-traditional <?php echo esc_attr($flipbook=='yes'?'':'active'); ?>"><i class="fas fa-book"></i> <?php _e('Traditional','pdf-embed-viewer'); ?></a>
             </div>
             <div class="pdfev-3dbook-container" style="display: <?php echo esc_attr($flipbook=='yes'?'block':'none'); ?>;">
-                <div class="pdfev-3dbook-viewer" id="pdfev-3dbook-<?php echo esc_attr($post_id); ?>" data-id="<?php echo esc_attr($post_id); ?>" data-pdfev-url="<?php \PDFEV_Functions::pdf_link(); ?>"></div>                
+                <div class="pdfev-3dbook-viewer" id="pdfev-3dbook-<?php echo esc_attr($post_id); ?>" data-id="<?php echo esc_attr($post_id); ?>" data-pdfev-url="<?php \PDFEV_Functions::pdf_link($post_id); ?>"></div>                
             </div>
             <div class="pdfev-traditional-container" style="display: <?php echo esc_attr($flipbook=='yes'?'none':'block'); ?>;">
-                <iframe class="pdf-viewer" src="<?php \PDFEV_Functions::pdf_link(); ?>" frameborder="0"></iframe>
+                <iframe class="pdf-viewer" src="<?php \PDFEV_Functions::pdf_link($post_id); ?>" frameborder="0"></iframe>
             </div>
         </div>
     <?php

@@ -37,6 +37,7 @@ class Shortcode{
             }
         }
     }
+    
     public function archive_pdf_shortcode($atts) {
         // Set default attributes and merge with user-provided attributes
         $atts = shortcode_atts(
