@@ -167,6 +167,8 @@ For more details, see the [Appsero Privacy Policy](https://appsero.com/privacy-p
 * French (fr_FR)
 
 == Changelog ==
+= 1.3.9 =
+* fixed. shortcode for single item id missing issue.
 
 = 1.3.8 =
 * pdf.js and pdf.worker.js library update.
