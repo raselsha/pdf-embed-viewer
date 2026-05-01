@@ -185,10 +185,14 @@
       const order = document.getElementById("order").value;
       const read = document.getElementById("read").value;
       const download = document.getElementById("download").value;
+      const show_description = document.getElementById("show_description").value;
+      const show_author = document.getElementById("show_author").value;
+      const show_publisher = document.getElementById("show_publisher").value;
+      const show_year_version = document.getElementById("show_year_version").value;
       const reading_count = document.getElementById("reading_count").value;
       const downloading_count = document.getElementById("downloading_count").value;
 
-      const shortcode = `[pdfev_viewer template="${template}" limit="${limit}" order="${order}" read="${read}" download="${download}" reading_count="${reading_count}" downloading_count="${downloading_count}"]`;
+      const shortcode = `[pdfev_viewer template="${template}" category="${category}" limit="${limit}" order="${order}" read="${read}" download="${download}" reading_count="${reading_count}" downloading_count="${downloading_count}" show_description="${show_description}" show_author="${show_author}" show_publisher="${show_publisher}" show_year_version="${show_year_version}"]`;
 
       $.ajax({
           url: pdfevAjax.ajaxurl,
@@ -202,6 +206,10 @@
               order: order,
               read: read,
               download: download,
+              show_description: show_description,
+              show_author: show_author,
+              show_publisher: show_publisher,
+              show_year_version: show_year_version,
               reading_count: reading_count,
               downloading_count: downloading_count
           },
@@ -235,6 +243,10 @@
       $('#order').val('dsc');
       $('#read').val('yes');
       $('#download').val('yes');
+      $('#show_description').val('yes');
+      $('#show_author').val('yes');
+      $('#show_publisher').val('yes');
+      $('#show_year_version').val('yes');
       $('#reading_count').val('yes');
       $('#downloading_count').val('yes');
 

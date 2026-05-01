@@ -73,7 +73,10 @@ class Template{
                         $WpQuery->the_post();
                         ?>
                         <tr>
-                            <td><a href="<?php the_permalink(); ?>"><?php the_title();?></a></td>
+                            <td>
+                                <a href="<?php the_permalink(); ?>"><?php the_title();?></a>
+                                <?php \PDFEV_Functions::archive_item_meta($atts); ?>
+                            </td>
                             <td><?php the_time(get_option('date_format')); ?></td>
                             <td>
                                 <?php \PDFEV_Functions::read_button($atts); ?>
@@ -135,6 +138,7 @@ class Template{
                                 echo esc_html($trimmed_title);
                             ?>
                         </a></h2>
+                        <?php \PDFEV_Functions::archive_item_meta($atts); ?>
                         <div class="action">
                             <?php \PDFEV_Functions::read_button($atts); ?>
                             <?php \PDFEV_Functions::download_button($atts); ?>
@@ -205,7 +209,10 @@ class Template{
                                     ?>
                                     <tr>
                                         <td><?php the_time('F'); ?></td>
-                                        <td><a href="<?php the_permalink(); ?>"><?php the_title();?></a></td>
+                                        <td>
+                                            <a href="<?php the_permalink(); ?>"><?php the_title();?></a>
+                                            <?php \PDFEV_Functions::archive_item_meta($atts); ?>
+                                        </td>
                                         <td  style="text-align: right;">
                                             <?php \PDFEV_Functions::read_button($atts); ?>
                                             <?php \PDFEV_Functions::download_button($atts); ?>

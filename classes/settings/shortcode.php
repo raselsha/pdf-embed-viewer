@@ -83,6 +83,38 @@ class Shortcode_Generator {
                     </div>
 
                     <div class="form-group">
+                        <label for="show_description"><?php echo esc_html__('Show Description','pdf-embed-viewer'); ?></label>
+                        <select id="show_description">
+                            <option value="yes"><?php echo esc_html__('yes','pdf-embed-viewer'); ?></option>
+                            <option value="no"><?php echo esc_html__('no','pdf-embed-viewer'); ?></option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="show_author"><?php echo esc_html__('Show Author','pdf-embed-viewer'); ?></label>
+                        <select id="show_author">
+                            <option value="yes"><?php echo esc_html__('yes','pdf-embed-viewer'); ?></option>
+                            <option value="no"><?php echo esc_html__('no','pdf-embed-viewer'); ?></option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="show_publisher"><?php echo esc_html__('Show Publisher','pdf-embed-viewer'); ?></label>
+                        <select id="show_publisher">
+                            <option value="yes"><?php echo esc_html__('yes','pdf-embed-viewer'); ?></option>
+                            <option value="no"><?php echo esc_html__('no','pdf-embed-viewer'); ?></option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="show_year_version"><?php echo esc_html__('Show Year + Version','pdf-embed-viewer'); ?></label>
+                        <select id="show_year_version">
+                            <option value="yes"><?php echo esc_html__('yes','pdf-embed-viewer'); ?></option>
+                            <option value="no"><?php echo esc_html__('no','pdf-embed-viewer'); ?></option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
                         <label for="reading_count"><?php echo esc_html__('Reading Count','pdf-embed-viewer'); ?></label>
                         <select id="reading_count">
                             <option value="yes"><?php echo esc_html__('yes','pdf-embed-viewer'); ?></option>
@@ -104,7 +136,7 @@ class Shortcode_Generator {
                 </div>
                 <div class="shortcode-previewer">
                     <h2><?php echo esc_html__('ShortCode','pdf-embed-viewer'); ?></h2>
-                    <div id="pdfev-shortcode" class="pdfev-shortcode">[pdfev_viewer template="list" category="" limit="10" order="dsc" read="yes" download="yes" reading_count="yes" downloading_count="yes"]</div>
+                    <div id="pdfev-shortcode" class="pdfev-shortcode">[pdfev_viewer template="list" category="" limit="10" order="dsc" read="yes" download="yes" reading_count="yes" downloading_count="yes" show_description="yes" show_author="yes" show_publisher="yes" show_year_version="yes"]</div>
                     <!-- <div id="shortcode-previewer"></div> -->
                     <button id="pdfev-copy-shortcode"><?php echo esc_html__('Copy','pdf-embed-viewer'); ?></button>
                 </div>
@@ -122,10 +154,14 @@ class Shortcode_Generator {
         $download = isset($_POST['download']) ? sanitize_text_field($_POST['download']) : '';
         $reading_count = isset($_POST['reading_count']) ? sanitize_text_field($_POST['reading_count']) : '';
         $downloading_count = isset($_POST['downloading_count']) ? sanitize_text_field($_POST['downloading_count']) : '';
+        $show_description = isset($_POST['show_description']) ? sanitize_text_field($_POST['show_description']) : '';
+        $show_author = isset($_POST['show_author']) ? sanitize_text_field($_POST['show_author']) : '';
+        $show_publisher = isset($_POST['show_publisher']) ? sanitize_text_field($_POST['show_publisher']) : '';
+        $show_year_version = isset($_POST['show_year_version']) ? sanitize_text_field($_POST['show_year_version']) : '';
 
         $shortcode = sprintf(
-            '[pdfev_viewer template="%s" category="%s" limit="%d" order="%s" read="%s" download="%s" reading_count="%s" downloading_count="%s"]',
-            $template, $category, $limit, $order, $read, $download, $reading_count, $downloading_count
+            '[pdfev_viewer template="%s" category="%s" limit="%d" order="%s" read="%s" download="%s" reading_count="%s" downloading_count="%s" show_description="%s" show_author="%s" show_publisher="%s" show_year_version="%s"]',
+            $template, $category, $limit, $order, $read, $download, $reading_count, $downloading_count, $show_description, $show_author, $show_publisher, $show_year_version
         );
         
         

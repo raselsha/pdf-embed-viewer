@@ -21,6 +21,10 @@ class Shortcode{
         $atts = shortcode_atts(
             array(
                 'id' => '',
+                'show_description' => '',
+                'show_author' => '',
+                'show_publisher' => '',
+                'show_year_version' => '',
             ),
             $atts,
             'pdfev_embed_viewer'
@@ -32,7 +36,7 @@ class Shortcode{
             }
             else{
                 ob_start();
-                \PDFEV_Functions::shortcode_view($post_id);
+                \PDFEV_Functions::shortcode_view($post_id, $atts);
                 return ob_get_clean();
             }
         }
@@ -50,6 +54,10 @@ class Shortcode{
                 'download'  => '',
                 'reading_count' => '',
                 'downloading_count' => '',
+                'show_description' => '',
+                'show_author' => '',
+                'show_publisher' => '',
+                'show_year_version' => '',
             ),
             $atts,
             'pdfev_viewer'

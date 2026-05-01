@@ -87,8 +87,47 @@ class CPT{
             'query_var' => true,
             'rewrite' => [ 'slug' => 'pdfev_category' ],
         ];
-        // Set the custom post type for this taxonomy by passing it as the second argument
         register_taxonomy('pdfev_category', ['pdfev_embed_viewer'], $args);
+
+        $author_args = [
+            'hierarchical' => false,
+            'labels' => [
+                'name' => _x( 'Authors', 'taxonomy general name', 'pdf-embed-viewer' ),
+                'singular_name' => _x( 'Author', 'taxonomy singular name', 'pdf-embed-viewer' ),
+                'search_items' => __( 'Search Authors', 'pdf-embed-viewer' ),
+                'all_items' => __( 'All Authors', 'pdf-embed-viewer' ),
+                'edit_item' => __( 'Edit Author', 'pdf-embed-viewer' ),
+                'update_item' => __( 'Update Author', 'pdf-embed-viewer' ),
+                'add_new_item' => __( 'Add New Author', 'pdf-embed-viewer' ),
+                'new_item_name' => __( 'New Author Name', 'pdf-embed-viewer' ),
+                'menu_name' => __( 'Authors', 'pdf-embed-viewer' ),
+            ],
+            'show_ui' => true,
+            'show_admin_column' => true,
+            'query_var' => true,
+            'rewrite' => [ 'slug' => 'pdfev_author' ],
+        ];
+        register_taxonomy('pdfev_author', ['pdfev_embed_viewer'], $author_args);
+
+        $publisher_args = [
+            'hierarchical' => false,
+            'labels' => [
+                'name' => _x( 'Publishers', 'taxonomy general name', 'pdf-embed-viewer' ),
+                'singular_name' => _x( 'Publisher', 'taxonomy singular name', 'pdf-embed-viewer' ),
+                'search_items' => __( 'Search Publishers', 'pdf-embed-viewer' ),
+                'all_items' => __( 'All Publishers', 'pdf-embed-viewer' ),
+                'edit_item' => __( 'Edit Publisher', 'pdf-embed-viewer' ),
+                'update_item' => __( 'Update Publisher', 'pdf-embed-viewer' ),
+                'add_new_item' => __( 'Add New Publisher', 'pdf-embed-viewer' ),
+                'new_item_name' => __( 'New Publisher Name', 'pdf-embed-viewer' ),
+                'menu_name' => __( 'Publishers', 'pdf-embed-viewer' ),
+            ],
+            'show_ui' => true,
+            'show_admin_column' => true,
+            'query_var' => true,
+            'rewrite' => [ 'slug' => 'pdfev_publisher' ],
+        ];
+        register_taxonomy('pdfev_publisher', ['pdfev_embed_viewer'], $publisher_args);
     }
     public function create_post_type(){
         $labels = [

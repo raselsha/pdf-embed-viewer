@@ -175,12 +175,15 @@ if( ! class_exists('PDFEV_Functions') ){
             return $archive_template;
         }
 
-        public static function shortcode_view($post_id){
+        public static function shortcode_view($post_id, $atts = []){
             $link = \PDFEV_Functions::get_pdf_link($post_id);
             $flipbook = get_option('pdfev_flipbook_status');
             $flipbook = $flipbook ? $flipbook : 'yes';
             ?>
             <div class="pdfev-embed-viewer">
+                <?php if ( ! is_singular( PDFEV_Functions::get_cpt_name() ) ) : ?>
+                    <?php do_action('pdfev_template_single_meta', $atts); ?>
+                <?php endif; ?>
                 <div class="pdfev-display-switcher">
                     <div class="toggle-button">
                         <a class="button btn pdfev-show-flipbook <?php echo esc_attr($flipbook=='yes'?'active':''); ?>"><i class="fas fa-book-open"></i> <?php _e('Flipbook','pdf-embed-viewer'); ?></a>
@@ -307,6 +310,55 @@ if( ! class_exists('PDFEV_Functions') ){
             if($check_download == 'yes'):
                 self::get_download_button($atts);
             endif;
+        }
+
+        public static function archive_item_meta($atts=[]){
+            $show_description = isset($atts['show_description']) && $atts['show_description'] !== '' ? $atts['show_description'] : get_option('pdfev_show_description');
+            $show_author = isset($atts['show_author']) && $atts['show_author'] !== '' ? $atts['show_author'] : get_option('pdfev_show_author');
+            $show_publisher = isset($atts['show_publisher']) && $atts['show_publisher'] !== '' ? $atts['show_publisher'] : get_option('pdfev_show_publisher');
+            $show_year_version = isset($atts['show_year_version']) && $atts['show_year_version'] !== '' ? $atts['show_year_version'] : get_option('pdfev_show_year_version');
+
+            $meta_parts = [];
+
+            if ( $show_author === 'yes' ) {
+                $author_terms = wp_get_post_terms( get_the_ID(), 'pdfev_author', array( 'fields' => 'names' ) );
+                if ( ! empty( $author_terms ) ) {
+                    $meta_parts[] = sprintf( '<span class="pdfev-meta-author">%s</span>', esc_html( implode( ', ', $author_terms ) ) );
+                }
+            }
+
+            if ( $show_publisher === 'yes' ) {
+                $publisher_terms = wp_get_post_terms( get_the_ID(), 'pdfev_publisher', array( 'fields' => 'names' ) );
+                if ( ! empty( $publisher_terms ) ) {
+                    $meta_parts[] = sprintf( '<span class="pdfev-meta-publisher">%s</span>', esc_html( implode( ', ', $publisher_terms ) ) );
+                }
+            }
+
+            if ( $show_year_version === 'yes' ) {
+                $year = get_post_meta( get_the_ID(), 'pdfev_meta_published_year', true );
+                $version = get_post_meta( get_the_ID(), 'pdfev_meta_version', true );
+                $parts = [];
+                if ( ! empty( $year ) ) {
+                    $parts[] = sprintf( '%s', esc_html( $year ) );
+                }
+                if ( ! empty( $version ) ) {
+                    $parts[] = sprintf( '%s', esc_html( $version ) );
+                }
+                if ( ! empty( $parts ) ) {
+                    $meta_parts[] = sprintf( '<span class="pdfev-meta-year-version">%s</span>', esc_html( implode( ' | ', $parts ) ) );
+                }
+            }
+
+            if ( $show_description === 'yes' ) {
+                $description = get_post_meta( get_the_ID(), 'pdfev_meta_description', true );
+                if ( ! empty( $description ) ) {
+                    echo '<div class="pdfev-archive-description">' . wp_kses_post( wpautop( $description ) ) . '</div>';
+                }
+            }
+
+            if ( ! empty( $meta_parts ) ) {
+                echo '<div class="pdfev-archive-meta">' . implode( ' | ', $meta_parts ) . '</div>';
+            }
         }
 
         public static function back_to_archive(){
