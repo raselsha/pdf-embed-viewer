@@ -61,9 +61,9 @@ class Metabox_General{
                         <p><?php echo esc_html__( 'Shortcode', 'pdf-embed-viewer' )?></p>
                         <span><?php echo esc_html__('Add this shortcode to any page or post to view pdf','pdf-embed-viewer') ?></span>
                     </div>
-                    <div style="width: 50%; text-align:right;">
+                    <div class="pdfev-field-actions">
                         <code>
-                            <?php echo esc_html('[pdfev_embed_viewer id="'.get_the_ID().'"]') ?>
+                            <?php echo esc_html('[pdfev_embed_viewer id="' . get_the_ID() . '"]') ?>
                         </code>
                     </div>
                 </label>
@@ -74,7 +74,7 @@ class Metabox_General{
                         <p><?php echo esc_html__( 'Add PDF URL', 'pdf-embed-viewer' )?></p>
                         <span><?php echo esc_html__('Add pdf fle by upload button (Remote file url can be used if permitted)','pdf-embed-viewer') ?></span>
                     </div>
-                    <div style="width: 55%;">
+                    <div class="pdfev-field-control">
                         <input type="url" class="pdfev-emd-vwr-file" name="pdfev_meta_pdf_url" value="<?php echo $embed_file ? esc_attr($embed_file) : '' ;  ?>" placeholder="<?php echo esc_attr('https://example.com/filename.pdf'); ?>" required>
                         <button class='button pdfev-emd-vwr-upload'>
                             <i class="fa fa-paperclip" aria-hidden="true"></i> <?php esc_html_e('Upload','pdf-embed-viewer');?>
@@ -100,7 +100,7 @@ class Metabox_General{
                         <p><?php echo esc_html__( 'Document Description', 'pdf-embed-viewer' )?></p>
                         <span><?php echo esc_html__('Add a description for this PDF document similar to the default editor.','pdf-embed-viewer') ?></span>
                     </div>
-                    <div style="width: 100%;">
+                    <div class="pdfev-field-control pdfev-full-width">
                         <?php
                         wp_editor(
                             $description,
@@ -123,8 +123,8 @@ class Metabox_General{
                         <p><?php echo esc_html__( 'Author', 'pdf-embed-viewer' )?></p>
                         <span><?php echo esc_html__('Select an author. Author bio is stored as the author taxonomy term description.','pdf-embed-viewer') ?></span>
                     </div>
-                    <div style="width: 55%;">
-                        <select name="pdfev_meta_author" id="pdfev_meta_author" style="width:100%;">
+                    <div class="pdfev-field-control">
+                        <select name="pdfev_meta_author" id="pdfev_meta_author" class="pdfev-full-width">
                             <option value=""><?php esc_html_e('Select Author','pdf-embed-viewer'); ?></option>
                             <?php if ( ! is_wp_error( $authors ) && ! empty( $authors ) ) : foreach ( $authors as $author ) : ?>
                                 <option value="<?php echo absint( $author->term_id ); ?>" <?php selected( $selected_author, $author->term_id ); ?>><?php echo esc_html( $author->name ); ?></option>
@@ -139,8 +139,8 @@ class Metabox_General{
                         <p><?php echo esc_html__( 'Publisher', 'pdf-embed-viewer' )?></p>
                         <span><?php echo esc_html__('Select a publisher for this PDF.','pdf-embed-viewer') ?></span>
                     </div>
-                    <div style="width: 55%;">
-                        <select name="pdfev_meta_publisher" id="pdfev_meta_publisher" style="width:100%;">
+                    <div class="pdfev-field-control">
+                        <select name="pdfev_meta_publisher" id="pdfev_meta_publisher" class="pdfev-full-width">
                             <option value=""><?php esc_html_e('Select Publisher','pdf-embed-viewer'); ?></option>
                             <?php if ( ! is_wp_error( $publishers ) && ! empty( $publishers ) ) : foreach ( $publishers as $publisher ) : ?>
                                 <option value="<?php echo absint( $publisher->term_id ); ?>" <?php selected( $selected_publisher, $publisher->term_id ); ?>><?php echo esc_html( $publisher->name ); ?></option>
@@ -155,9 +155,9 @@ class Metabox_General{
                         <p><?php echo esc_html__( 'Published Year + Version', 'pdf-embed-viewer' )?></p>
                         <span><?php echo esc_html__('Add the published year and version for the PDF file.','pdf-embed-viewer') ?></span>
                     </div>
-                    <div style="width: 55%; display:flex; gap:10px;">
-                        <input type="number" min="1900" max="2100" name="pdfev_meta_published_year" value="<?php echo esc_attr($published_year); ?>" placeholder="<?php echo esc_attr('2026'); ?>" style="width:48%;">
-                        <input type="text" name="pdfev_meta_version" value="<?php echo esc_attr($version); ?>" placeholder="<?php echo esc_attr('1.0'); ?>" style="width:48%;">
+                    <div class="pdfev-field-control pdfev-inline-fields">
+                        <input type="number" min="1900" max="2100" name="pdfev_meta_published_year" value="<?php echo esc_attr($published_year); ?>" placeholder="<?php echo esc_attr('2026'); ?>" class="pdfev-half-width">
+                        <input type="text" name="pdfev_meta_version" value="<?php echo esc_attr($version); ?>" placeholder="<?php echo esc_attr('1.0'); ?>" class="pdfev-half-width">
                     </div>
                 </label>
             </section>

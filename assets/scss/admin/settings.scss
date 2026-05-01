@@ -101,6 +101,21 @@
             border: 1px solid #ddd; 
             border-radius: 8px; 
             margin-top: 20px;
+            margin-bottom: 30px;
+            h2{
+                margin-top: 0;
+            }
+            .pdfev-support-list{
+                list-style: disc;
+                padding-left: 20px;
+            }
+            .pdfev-support-form-wrap{
+                max-width: 500px;
+            }
+            .pdfev-full-width-input{
+                width: 100%;
+                box-sizing: border-box;
+            }
         }
     }
     

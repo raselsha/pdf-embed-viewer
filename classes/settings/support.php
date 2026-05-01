@@ -41,9 +41,9 @@ class Support_Settings{
     ?>
 
     <div class="pdfev-tab-content" data-tab="pdfev_emd_vwr_admin_tabs_support">
-        <div class="pdf-embed-viewer-support" style="margin-bottom: 30px;">
-            <h2 style="margin-top: 0;"><?php esc_html_e( 'Need Help or Want to Share Your Experience?', 'pdf-embed-viewer' ); ?></h2>
-            <ul style="list-style: disc; padding-left: 20px;">
+        <div class="pdf-embed-viewer-support">
+            <h2><?php esc_html_e( 'Need Help or Want to Share Your Experience?', 'pdf-embed-viewer' ); ?></h2>
+            <ul class="pdfev-support-list">
                 <li>
                     <?php esc_html_e( 'Give a review for your feedback', 'pdf-embed-viewer' ); ?> –
                     <a target="_blank" href="<?php echo esc_url( 'https://wordpress.org/support/plugin/pdf-embed-viewer/reviews/#new-post' ); ?>">
@@ -57,24 +57,24 @@ class Support_Settings{
                     </a>
                 </li>
             </ul>
-            <div style="max-width: 500px;">
+            <div class="pdfev-support-form-wrap">
                 <h2><?php esc_html_e( 'Feature Request Form', 'pdf-embed-viewer' ); ?></h2>
                 <form method="post">
                     <?php wp_nonce_field( 'pev_feature_request_action' ); ?>
 
                     <p>
                         <label for="feature_name"><?php esc_html_e( 'Your Name', 'pdf-embed-viewer' ); ?></label><br>
-                        <input type="text" id="feature_name" name="feature_name" required style="width: 100%;">
+                        <input type="text" id="feature_name" name="feature_name" required class="pdfev-full-width-input">
                     </p>
 
                     <p>
                         <label for="feature_email"><?php esc_html_e( 'Your Email', 'pdf-embed-viewer' ); ?></label><br>
-                        <input type="email" id="feature_email" name="feature_email" required style="width: 100%;">
+                        <input type="email" id="feature_email" name="feature_email" required class="pdfev-full-width-input">
                     </p>
 
                     <p>
                         <label for="feature_message"><?php esc_html_e( 'Feature Description', 'pdf-embed-viewer' ); ?></label><br>
-                        <textarea id="feature_message" name="feature_message" rows="5" required style="width: 100%;"></textarea>
+                        <textarea id="feature_message" name="feature_message" rows="5" required class="pdfev-full-width-input"></textarea>
                     </p>
 
                     <p>

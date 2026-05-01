@@ -33,7 +33,7 @@ class Metabox_Template{
                         <p><?php echo esc_html__( 'Template', 'pdf-embed-viewer' )?></p>
                         <span><?php echo esc_html__('Select Tempate','pdf-embed-viewer') ?></span>
                     </div>
-                    <div style="width: 50%; text-align:right;">
+                    <div class="pdfev-field-actions">
                         <select name="pdfev_meta_template" id="">
                             <option value="flipbook"><?php echo esc_html('Flipbook') ?></option>
                             <!-- <option value="traditional"><?php echo esc_html('Traditional') ?></option> -->

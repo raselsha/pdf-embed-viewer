@@ -124,6 +124,33 @@
   margin: 0;
   cursor: pointer;
 }
+#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs section .pdfev-field-actions {
+  width: 50%;
+  display: flex;
+  justify-content: flex-end;
+  text-align: right;
+}
+#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs section .pdfev-field-control {
+  width: 55%;
+}
+#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs section .pdfev-field-control.pdfev-full-width {
+  width: 100%;
+}
+#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs section .pdfev-inline-fields {
+  display: flex;
+  gap: 10px;
+}
+#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs section .pdfev-half-width {
+  width: 48%;
+}
+#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs section .pdfev-full-width,
+#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs section .pdfev-field-control select,
+#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs section .pdfev-field-control input,
+#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs section .pdfev-field-control textarea,
+#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs section .pdfev-full-width-input {
+  width: 100%;
+  box-sizing: border-box;
+}
 #pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs section input.pdfev-emd-vwr-file {
   width: 83%;
 }
@@ -322,6 +349,21 @@
   border: 1px solid #ddd;
   border-radius: 8px;
   margin-top: 20px;
+  margin-bottom: 30px;
+}
+.pdfev-embed-viewer .pdfev-tab-content .pdf-embed-viewer-support h2 {
+  margin-top: 0;
+}
+.pdfev-embed-viewer .pdfev-tab-content .pdf-embed-viewer-support .pdfev-support-list {
+  list-style: disc;
+  padding-left: 20px;
+}
+.pdfev-embed-viewer .pdfev-tab-content .pdf-embed-viewer-support .pdfev-support-form-wrap {
+  max-width: 500px;
+}
+.pdfev-embed-viewer .pdfev-tab-content .pdf-embed-viewer-support .pdfev-full-width-input {
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .demo-import-success {

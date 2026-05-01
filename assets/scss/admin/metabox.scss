@@ -70,6 +70,33 @@
                         cursor: pointer;
                     }
                 }
+                .pdfev-field-actions{
+                    width: 50%;
+                    display: flex;
+                    justify-content: flex-end;
+                    text-align: right;
+                }
+                .pdfev-field-control{
+                    width: 55%;
+                }
+                .pdfev-field-control.pdfev-full-width{
+                    width: 100%;
+                }
+                .pdfev-inline-fields{
+                    display: flex;
+                    gap: 10px;
+                }
+                .pdfev-half-width{
+                    width: 48%;
+                }
+                .pdfev-full-width,
+                .pdfev-field-control select,
+                .pdfev-field-control input,
+                .pdfev-field-control textarea,
+                .pdfev-full-width-input{
+                    width: 100%;
+                    box-sizing: border-box;
+                }
                 input.pdfev-emd-vwr-file{
                     width: 83%;
                 }
