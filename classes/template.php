@@ -289,6 +289,7 @@ class Template{
                                 echo esc_html($trimmed_title);
                             ?>
                             </a></h2>
+                            <?php \PDFEV_Functions::archive_item_meta($atts); ?>
                             <div class="action">
                                 <?php \PDFEV_Functions::read_button($atts); ?>
                                 <?php \PDFEV_Functions::download_button($atts); ?>
