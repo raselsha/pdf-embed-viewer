@@ -318,12 +318,13 @@ if( ! class_exists('PDFEV_Functions') ){
             $show_publisher = isset($atts['show_publisher']) && $atts['show_publisher'] !== '' ? $atts['show_publisher'] : get_option('pdfev_show_publisher');
             $show_year_version = isset($atts['show_year_version']) && $atts['show_year_version'] !== '' ? $atts['show_year_version'] : get_option('pdfev_show_year_version');
 
+            $author_html = '';
             $meta_parts = [];
 
             if ( $show_author === 'yes' ) {
                 $author_terms = wp_get_post_terms( get_the_ID(), 'pdfev_author', array( 'fields' => 'names' ) );
                 if ( ! empty( $author_terms ) ) {
-                    $meta_parts[] = sprintf( '<span class="pdfev-meta-author">%s</span>', esc_html( implode( ', ', $author_terms ) ) );
+                    $author_html = sprintf( '<div class="pdfev-archive-author">%s %s</div>', esc_html__( 'by', 'pdf-embed-viewer' ), esc_html( implode( ', ', $author_terms ) ) );
                 }
             }
 
@@ -347,6 +348,10 @@ if( ! class_exists('PDFEV_Functions') ){
                 if ( ! empty( $parts ) ) {
                     $meta_parts[] = sprintf( '<span class="pdfev-meta-year-version">%s</span>', esc_html( implode( ' | ', $parts ) ) );
                 }
+            }
+
+            if ( ! empty( $author_html ) ) {
+                echo $author_html;
             }
 
             if ( $show_description === 'yes' ) {

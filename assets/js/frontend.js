@@ -118,4 +118,81 @@ jQuery(document).ready(function ($) {
 
 
 })(jQuery);
+
+// ============load more for archive===========
+(function($) {
+  $(document).on('click', '.pdfev-load-more-button', function(e) {
+    e.preventDefault();
+    var $button = $(this);
+    var template = $button.data('template');
+    var nextPage = parseInt($button.data('next-page')) || 2;
+    var category = $button.data('category') || '';
+    var limit = $button.data('limit') || '';
+    var order = $button.data('order') || '';
+    var read = $button.data('read') || '';
+    var download = $button.data('download') || '';
+    var showDescription = $button.data('show-description') || '';
+    var showAuthor = $button.data('show-author') || '';
+    var showPublisher = $button.data('show-publisher') || '';
+    var showYearVersion = $button.data('show-year-version') || '';
+    var year = $button.data('year') || '';
+
+    $button.prop('disabled', true).text(pdfevFronend.load_more_loading_text || 'Loading...');
+
+    $.ajax({
+      url: pdfevFronend.ajaxurl,
+      type: 'POST',
+      dataType: 'json',
+      data: {
+        action: 'pdfev_load_more_archive',
+        ajaxnonce: pdfevFronend.ajaxnonce,
+        template: template,
+        page: nextPage,
+        category: category,
+        limit: limit,
+        order: order,
+        read: read,
+        download: download,
+        show_description: showDescription,
+        show_author: showAuthor,
+        show_publisher: showPublisher,
+        show_year_version: showYearVersion,
+        year: year,
+      },
+      success: function(response) {
+        if (response.success) {
+          var html = response.data.html || '';
+          if (template === 'list') {
+            $button.closest('.archive-list-style').append(html);
+          } else if (template === 'grid') {
+            $button.closest('.archive-grid-style').append(html);
+          } else if (template === 'newsletter') {
+            var target = $('#year-' + year).find('tbody');
+            if (target.length === 0) {
+              target = $('#year-' + year);
+            }
+            target.append(html);
+          } else if (template === 'ebook') {
+            $button.closest('.archive-ebook-style').append(html);
+          }
+
+          if (response.data.has_more) {
+            $button.data('current-page', response.data.next_page);
+            $button.data('next-page', response.data.next_page + 1);
+            $button.prop('disabled', false).text(pdfevFronend.load_more_text || 'Load More');
+          } else {
+            $button.hide();
+          }
+        } else {
+          $button.prop('disabled', false).text(pdfevFronend.load_more_text || 'Load More');
+          console.log(response.data || response);
+        }
+      },
+      error: function() {
+        $button.prop('disabled', false).text(pdfevFronend.load_more_text || 'Load More');
+      }
+    });
+  });
+})(jQuery);
+
 // ============metabox scripts========

@@ -33,59 +33,85 @@ class Template{
         <?php 
     }
 
+    public static function get_archive_query($atts = [], $paged = 1) {
+        $args = array(
+            'post_type'=> \PDFEV_Functions::get_cpt_name(),
+            'post_status' => 'publish',
+            'order' => isset($atts['order']) && $atts['order'] !== '' ? $atts['order'] : \PDFEV_Functions::get_post_order(),
+            'posts_per_page'=> isset($atts['limit']) && absint($atts['limit']) ? absint($atts['limit']) : get_option( 'posts_per_page' ),
+            'paged' => $paged,
+        );
+
+        if ( ! empty( $atts['category'] ) ) {
+            $field = 'slug';
+            if ( is_numeric( $atts['category'] ) ) {
+                $field = 'term_id';
+            } elseif ( strpos( $atts['category'], ' ' ) !== false ) {
+                $field = 'name';
+            }
+
+            $args['tax_query'] = array(
+                array(
+                    'taxonomy' => 'pdfev_category',
+                    'field'    => $field,
+                    'terms'    => $atts['category'],
+                ),
+            );
+        }
+
+        if ( ! empty( $atts['year'] ) ) {
+            $args['date_query'] = array(
+                array(
+                    'year' => absint($atts['year']),
+                ),
+            );
+        }
+
+        return new \WP_Query($args);
+    }
+
+    public static function render_archive_list_items($WpQuery, $atts = []){
+        if ( $WpQuery->have_posts() ) :
+            while ( $WpQuery->have_posts() ) : $WpQuery->the_post();
+                ?>
+                <div class="list-item">
+                    <div class="list-image">
+                        <a href="<?php echo esc_url( get_permalink() ); ?>">
+                            <?php the_post_thumbnail('medium'); ?>
+                        </a>
+                    </div>
+                    <div class="list-content">
+                        <h2><a href="<?php echo esc_url( get_permalink() ); ?>">
+                            <?php echo esc_html( get_the_title() ); ?>
+                        </a></h2>
+                        <div class="list-description">
+                            <?php echo esc_html( get_the_excerpt() ); ?>
+                        </div>
+                        <?php \PDFEV_Functions::archive_item_meta($atts); ?>
+                        <div class="list-actions">
+                            <?php \PDFEV_Functions::read_button($atts); ?>
+                            <?php \PDFEV_Functions::download_button($atts); ?>
+                        </div>
+                    </div>
+                </div>
+                <?php
+            endwhile;
+            wp_reset_postdata();
+        else:
+            echo '<div class="pdfev-no-results">' . esc_html__( 'No PDF found', 'pdf-embed-viewer' ) . '</div>';
+        endif;
+    }
+
     public function template_archive_list($atts=[]){
     ?>
     <div class="pdfev-embed-viewer">
         <div class="archive-list-style">
-            <table>
-                <tr>
-                    <th><?php echo esc_html__('Title','pdf-embed-viewer') ?></th>
-                    <th><?php echo esc_html__('Date','pdf-embed-viewer') ?></th>
-                    <th></th>
-                </tr>
-                <?php
-                    $paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
-                    $args = array(
-                        'post_type'=> \PDFEV_Functions::get_cpt_name(),
-                        'post_status' => 'publish',
-                        'order' => isset($atts['order'])? $atts['order'] : \PDFEV_Functions::get_post_order(),
-                        'posts_per_page'=> isset($atts['limit'])? $atts['limit'] : get_option( 'posts_per_page' ),
-                        'paged' => $paged
-                    );
-                    if ( ! empty( $atts['category'] ) ) {
-                        $field = 'slug';
-                        if ( is_numeric( $atts['category'] ) ) {
-                            $field = 'term_id';
-                        } elseif ( strpos( $atts['category'], ' ' ) !== false ) {
-                            $field = 'name';
-                        }
-
-                        $args['tax_query'] = array(
-                            array(
-                                'taxonomy' => 'pdfev_category',
-                                'field'    => $field,
-                                'terms'    => $atts['category'],
-                            ),
-                        );
-                    }
-                $WpQuery = new \WP_Query($args);    
-                    while ( $WpQuery->have_posts() ) :
-                        $WpQuery->the_post();
-                        ?>
-                        <tr>
-                            <td>
-                                <a href="<?php the_permalink(); ?>"><?php the_title();?></a>
-                                <?php \PDFEV_Functions::archive_item_meta($atts); ?>
-                            </td>
-                            <td><?php the_time(get_option('date_format')); ?></td>
-                            <td>
-                                <?php \PDFEV_Functions::read_button($atts); ?>
-                                <?php \PDFEV_Functions::download_button($atts); ?>
-                            </td>
-                        </tr>
-                <?php endwhile; ?>
-            </table>
-            <?php $this->pagination($WpQuery);?>
+            <?php
+                $paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
+                $WpQuery = self::get_archive_query($atts, $paged);
+                self::render_archive_list_items($WpQuery, $atts);
+            ?>
+            <?php $this->pagination($WpQuery, $atts);?>
         </div>
     </div>
     <?php 

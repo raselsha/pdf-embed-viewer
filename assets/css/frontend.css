@@ -234,50 +234,53 @@
   height: 1024px;
 }
 
-/*==================footer pagination================*/
+/*==================archive list style================*/
 .pdfev-embed-viewer .archive-list-style {
-  overflow-x: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
-.pdfev-embed-viewer .archive-list-style table {
-  text-align: left;
-  border-collapse: collapse;
-  transition: all 0.5s;
-  border: 1px solid var(--pdfev-secondary);
+.pdfev-embed-viewer .archive-list-style .list-item {
+  display: flex;
+  gap: 15px;
+  border: 1px solid var(--pdfev-light);
+  padding: 15px;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.pdfev-embed-viewer .archive-list-style .list-image {
+  flex-shrink: 0;
+  width: 120px;
+}
+.pdfev-embed-viewer .archive-list-style .list-image img {
   width: 100%;
-  overflow-x: auto;
+  height: auto;
+  border-radius: 4px;
 }
-.pdfev-embed-viewer .archive-list-style table th {
-  background: var(--pdfev-light);
-  padding: 0.5em;
-  border: 0;
-  border-bottom: 1px solid var(--pdfev-secondary);
+.pdfev-embed-viewer .archive-list-style .list-content {
+  flex: 1;
+}
+.pdfev-embed-viewer .archive-list-style .list-content h2 {
+  margin: 0 0 10px 0;
+  font-size: 1.2em;
+}
+.pdfev-embed-viewer .archive-list-style .list-content h2 a {
   color: var(--pdfev-dark);
 }
-.pdfev-embed-viewer .archive-list-style table th:first-child {
-  text-align: start;
-  width: 45%;
-}
-.pdfev-embed-viewer .archive-list-style table th:last-child {
-  text-align: end;
-}
-.pdfev-embed-viewer .archive-list-style table td {
-  padding: 0.5em;
+.pdfev-embed-viewer .archive-list-style .list-description {
+  margin-bottom: 10px;
   color: var(--pdfev-secondary);
-  font-weight: normal;
-  border: 0;
+  font-size: 0.9em;
 }
-.pdfev-embed-viewer .archive-list-style table td:first-child {
-  font-weight: bold;
-  text-align: start;
-  width: 45%;
+.pdfev-embed-viewer .archive-list-style .list-meta {
+  margin-bottom: 10px;
+  font-size: 0.8em;
+  color: var(--pdfev-secondary);
 }
-.pdfev-embed-viewer .archive-list-style table td:last-child {
-  text-align: end;
-  font-weight: normal;
-}
-.pdfev-embed-viewer .archive-list-style table tr:nth-child(odd) {
-  background: var(--pdfev-light);
-  border: 0;
+.pdfev-embed-viewer .archive-list-style .list-actions {
+  display: flex;
+  gap: 10px;
 }
 
 .pdfev-embed-viewer .archive-grid-style {

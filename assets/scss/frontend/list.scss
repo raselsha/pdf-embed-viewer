@@ -1,48 +1,105 @@
-
 .pdfev-embed-viewer{
     .archive-list-style{
-        overflow-x: auto;
-        table{
-            text-align: left;
-            border-collapse: collapse;
-            transition: all .5s;
-            border:1px solid  var(--pdfev-secondary);
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        .list-item{
+            display: flex;
+            gap: 15px;
+            border: 1px solid var(--pdfev-light);
+            padding: 18px;
+            border-radius: 12px;
+            background: #ffffff;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+
+        .list-image{
+            flex-shrink: 0;
+            width: 140px;
+            min-width: 140px;
+            border-radius: 8px;
+            overflow: hidden;
+            background: var(--pdfev-light);
+        }
+
+        .list-image img{
+            display: block;
             width: 100%;
-            overflow-x: auto;
-            th{
-                background: var(--pdfev-light);
-                padding: .5em;
-                border:0;
-                border-bottom: 1px solid  var(--pdfev-secondary);
-                color:var(--pdfev-dark);
-                &:first-child{
-                    text-align: start;
-                    width: 45%;
-                }
-                &:last-child{
-                    text-align: end;
-                }
+            height: auto;
+            object-fit: cover;
+        }
+
+        .list-content{
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .list-content h2{
+            margin: 0;
+            font-size: 1.2rem;
+            line-height: 1.3;
+        }
+
+        .list-content h2 a{
+            color: var(--pdfev-dark);
+        }
+
+        .list-description{
+            margin: 0;
+            color: var(--pdfev-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .list-meta{
+            color: var(--pdfev-secondary);
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+
+        .list-actions{
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .pdfev-archive-author{
+            color: var(--pdfev-secondary);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-top: -6px;
+            margin-bottom: 10px;
+        }
+
+        .pdfev-archive-meta{
+            color: var(--pdfev-secondary);
+            font-size: 0.85rem;
+            line-height: 1.5;
+            margin-bottom: 10px;
+        }
+
+        .pdfev-archive-description{
+            color: var(--pdfev-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .list-item{
+                flex-direction: column;
             }
-            td{
-                padding: .5em;
-                color: var(--pdfev-secondary);
-                font-weight: normal;
-                border:0;
-                &:first-child{
-                    font-weight: bold;
-                    text-align: start;
-                    width: 45%;
-                }
-                &:last-child{
-                    text-align: end;
-                    font-weight: normal;
-                }
+
+            .list-image{
+                width: 100%;
+                min-width: 100%;
             }
-            tr:nth-child(odd){
-                background: var(--pdfev-light);
-                border:0;
-            }
-        }   
-            
+        }
     }
 }
