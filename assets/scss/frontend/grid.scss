@@ -11,18 +11,19 @@
         .grid-item{
             width: 46%;
             border: 1px solid var(--pdfev-light);
+            padding: 10px;
             position: relative;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            align-items: center;
+            align-items: start;
             border-radius: 5px;
             box-shadow: 0 0 5px var(--pdfev-light);
             @media (min-width:768px) {
                 width: 30%;
             }
             @media (min-width:1024px) {
-                width: 23%;
+                width: 22%;
             }
             .date{
                 position: absolute;
@@ -58,8 +59,7 @@
             }
             
             h2{
-                padding: 10px;
-                font-size: 1rem;
+                font-size: .75rem;
                 font-weight: bold;
                 text-align: left;
                 width: 100%;
@@ -69,7 +69,6 @@
                 }
             }
             .action{
-                margin: 10px;
                 display: flex;
                 flex-direction: column;
                 justify-content: center;

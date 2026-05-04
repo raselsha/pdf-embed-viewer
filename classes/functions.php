@@ -346,7 +346,7 @@ if( ! class_exists('PDFEV_Functions') ){
                     $parts[] = sprintf( '%s', esc_html( $version ) );
                 }
                 if ( ! empty( $parts ) ) {
-                    $meta_parts[] = sprintf( '<span class="pdfev-meta-year-version">%s</span>', esc_html( implode( ' | ', $parts ) ) );
+                    $meta_parts[] = sprintf( '<span class="pdfev-meta-year-version">%s</span>', esc_html( implode( '•', $parts ) ) );
                 }
             }
 
@@ -362,7 +362,7 @@ if( ! class_exists('PDFEV_Functions') ){
             }
 
             if ( ! empty( $meta_parts ) ) {
-                echo '<div class="pdfev-archive-meta">' . implode( ' | ', $meta_parts ) . '</div>';
+                echo '<div class="pdfev-archive-meta">' . implode( '•', $meta_parts ) . '</div>';
             }
         }
 

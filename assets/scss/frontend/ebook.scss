@@ -2,19 +2,17 @@
   margin: 0 auto;
 
   .archive-ebook-style {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
 
     .grid-item {
         background-color: var(--pdfev-white);
         border-radius: 6px;
         overflow: visible;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);;
         display: flex;
         flex-direction: column;
-        padding:10px;
-
+        width: 252px;
         .image {
             width: 170px;
             height: 230px;
@@ -108,9 +106,9 @@
         justify-content: space-between;
 
         h2 {
-          font-size: 16px;
-          margin: 12px 0;
-          line-height: 1.4;
+          font-size: .875rem;
+          margin: 5px 0;
+          line-height: 1.1;
 
           a {
             color: var(--pdfev-dark);
@@ -120,7 +118,7 @@
 
         .action {
           display: flex;
-          gap: 0;
+          gap: 5px;
           flex-wrap: wrap;
 
           button {
