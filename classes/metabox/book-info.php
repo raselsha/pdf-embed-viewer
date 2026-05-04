@@ -2,7 +2,7 @@
 /**
  * @author Shahadat Hossain <raselsha@gmail.com>
  * @package pdf-embed-viewer
- * @version 1.0.0
+ * @edition 1.0.0
  */
 namespace PDFEV;
 defined('ABSPATH') || exit;
@@ -21,7 +21,7 @@ class Metabox_Book_Info{
     public function tabs_content($post_id){
         $description = get_post_meta( $post_id, 'pdfev_meta_description', true );
         $published_year = get_post_meta( $post_id, 'pdfev_meta_published_year', true );
-        $version = get_post_meta( $post_id, 'pdfev_meta_version', true );
+        $edition = get_post_meta( $post_id, 'pdfev_meta_edition', true );
 
         $selected_author = 0;
         $author_terms = wp_get_post_terms( $post_id, 'pdfev_author', array( 'fields' => 'ids' ) );
@@ -103,21 +103,21 @@ class Metabox_Book_Info{
                 <label class="label">
                     <div>
                         <p><?php echo esc_html__( 'Published Year', 'pdf-embed-viewer' )?></p>
-                        <span><?php echo esc_html__('Add the published year and version for the PDF file.','pdf-embed-viewer') ?></span>
+                        <span><?php echo esc_html__('Add the published year and edition for the PDF file.','pdf-embed-viewer') ?></span>
                     </div>
                     <div class="">
-                        <input type="number" min="1900" max="2100" name="pdfev_meta_published_year" value="<?php echo esc_attr($published_year); ?>" placeholder="<?php echo esc_attr('2026'); ?>" class="pdfev-half-width">
+                        <input type="number" min="1000" max="2100" name="pdfev_meta_published_year" value="<?php echo esc_attr($published_year); ?>" placeholder="<?php echo esc_attr('2026'); ?>" class="pdfev-half-width">
                     </div>
                 </label>
             </section>
             <section>
                 <label class="label">
                     <div>
-                        <p><?php echo esc_html__( 'Published Version', 'pdf-embed-viewer' )?></p>
-                        <span><?php echo esc_html__('Add the published year and version for the PDF file.','pdf-embed-viewer') ?></span>
+                        <p><?php echo esc_html__( 'Published Edition', 'pdf-embed-viewer' )?></p>
+                        <span><?php echo esc_html__('Add the published year and edition for the PDF file.','pdf-embed-viewer') ?></span>
                     </div>
                     <div class="">
-                        <input type="text" name="pdfev_meta_version" value="<?php echo esc_attr($version); ?>" placeholder="<?php echo esc_attr('1.0'); ?>" class="pdfev-half-width">
+                        <input type="text" name="pdfev_meta_edition" value="<?php echo esc_attr($edition); ?>" placeholder="<?php echo esc_attr('1.0'); ?>" class="pdfev-half-width">
                     </div>
                 </label>
             </section>
@@ -156,8 +156,8 @@ class Metabox_Book_Info{
             $published_year = isset( $_POST['pdfev_meta_published_year'] ) ? sanitize_text_field($_POST['pdfev_meta_published_year']) : '';
             update_post_meta( $post_id, 'pdfev_meta_published_year', $published_year );
 
-            $version = isset( $_POST['pdfev_meta_version'] ) ? sanitize_text_field($_POST['pdfev_meta_version']) : '';
-            update_post_meta( $post_id, 'pdfev_meta_version', $version );
+            $edition = isset( $_POST['pdfev_meta_edition'] ) ? sanitize_text_field($_POST['pdfev_meta_edition']) : '';
+            update_post_meta( $post_id, 'pdfev_meta_edition', $edition );
 
             $author_term = isset( $_POST['pdfev_meta_author'] ) ? absint( $_POST['pdfev_meta_author'] ) : 0;
             if ( $author_term ) {

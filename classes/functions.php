@@ -337,7 +337,7 @@ if( ! class_exists('PDFEV_Functions') ){
 
             if ( $show_year_version === 'yes' ) {
                 $year = get_post_meta( get_the_ID(), 'pdfev_meta_published_year', true );
-                $version = get_post_meta( get_the_ID(), 'pdfev_meta_version', true );
+                $version = get_post_meta( get_the_ID(), 'pdfev_meta_edition', true );
                 $parts = [];
                 if ( ! empty( $year ) ) {
                     $parts[] = sprintf( '%s', esc_html( $year ) );

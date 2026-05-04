@@ -78,7 +78,7 @@ class Insert_Demo {
                     'pdfev_meta_download',
                     'pdfev_meta_description',
                     'pdfev_meta_published_year',
-                    'pdfev_meta_version',
+                    'pdfev_meta_edition',
                     'pdfev_meta_filesize',
                     'pdfev_meta_total_pages',
                 ];
@@ -182,7 +182,7 @@ class Insert_Demo {
                     'pdfev_meta_download' => 'yes',
                     'pdfev_meta_description' => 'A thrilling wilderness adventure about a domesticated dog who returns to the wild and finds his true destiny.',
                     'pdfev_meta_published_year' => '1903',
-                    'pdfev_meta_version' => '1.0',
+                    'pdfev_meta_edition' => '1.0',
                 ],
             ],
             [
@@ -197,7 +197,7 @@ class Insert_Demo {
                     'pdfev_meta_download' => 'yes',
                     'pdfev_meta_description' => 'A timeless tragic love story between two young lovers from feuding families in Verona.',
                     'pdfev_meta_published_year' => '1597',
-                    'pdfev_meta_version' => '1.1',
+                    'pdfev_meta_edition' => '1.1',
                 ],
             ],
             [
@@ -212,7 +212,7 @@ class Insert_Demo {
                     'pdfev_meta_download' => 'yes',
                     'pdfev_meta_description' => 'A collection of detective stories featuring the brilliant Sherlock Holmes and his partner Dr. Watson.',
                     'pdfev_meta_published_year' => '1892',
-                    'pdfev_meta_version' => '2.0',
+                    'pdfev_meta_edition' => '2.0',
                 ],
             ],
             [
@@ -227,7 +227,7 @@ class Insert_Demo {
                     'pdfev_meta_download' => 'yes',
                     'pdfev_meta_description' => 'The story of a young woman who inherits a mansion and learns about wealth, independence, and love.',
                     'pdfev_meta_published_year' => '1916',
-                    'pdfev_meta_version' => '1.0',
+                    'pdfev_meta_edition' => '1.0',
                 ],
             ],
             [
@@ -242,7 +242,7 @@ class Insert_Demo {
                     'pdfev_meta_download' => 'yes',
                     'pdfev_meta_description' => 'A magical journey through Oz with Dorothy and her friends as they seek the Wizard\'s help.',
                     'pdfev_meta_published_year' => '1900',
-                    'pdfev_meta_version' => '1.2',
+                    'pdfev_meta_edition' => '1.2',
                 ],
             ],
             [
@@ -257,7 +257,7 @@ class Insert_Demo {
                     'pdfev_meta_download' => 'yes',
                     'pdfev_meta_description' => 'The classic tale of Peter Pan, Wendy, and the adventures in Neverland.',
                     'pdfev_meta_published_year' => '1911',
-                    'pdfev_meta_version' => '1.0',
+                    'pdfev_meta_edition' => '1.0',
                 ],
             ],
         ];

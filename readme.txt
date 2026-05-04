@@ -4,7 +4,7 @@ Contributors:      raselsha
 Requires at least: 3.0
 Tested up to:      6.8
 Requires PHP:      7.0
-Stable tag:        1.3.10
+Stable tag:        1.4.0
 License:           GPLv2 or later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 Tags:              3d-flipbook, ebook, flipbook, pdf-embed, elementor
@@ -166,6 +166,10 @@ For more details, see the [Appsero Privacy Policy](https://appsero.com/privacy-p
 * French (fr_FR)
 
 == Changelog ==
+= 1.4.0 =
+* Author, Description, Published Year, Published Edition fields Added.
+* Global setting to display/hide of these info settings added.
+
 = 1.3.9 =
 * fixed. shortcode for single item id missing issue.
 
