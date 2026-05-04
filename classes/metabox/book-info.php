@@ -73,7 +73,7 @@ class Metabox_Book_Info{
                         <p><?php echo esc_html__( 'Author', 'pdf-embed-viewer' )?></p>
                         <span><?php echo esc_html__('Select an author. Author bio is stored as the author taxonomy term description.','pdf-embed-viewer') ?></span>
                     </div>
-                    <div class="pdfev-field-control">
+                    <div class="">
                         <select name="pdfev_meta_author" id="pdfev_meta_author" class="">
                             <option value=""><?php esc_html_e('Select Author','pdf-embed-viewer'); ?></option>
                             <?php if ( ! is_wp_error( $authors ) && ! empty( $authors ) ) : foreach ( $authors as $author ) : ?>
@@ -89,7 +89,7 @@ class Metabox_Book_Info{
                         <p><?php echo esc_html__( 'Publisher', 'pdf-embed-viewer' )?></p>
                         <span><?php echo esc_html__('Select a publisher for this PDF.','pdf-embed-viewer') ?></span>
                     </div>
-                    <div class="pdfev-field-control">
+                    <div class="">
                         <select name="pdfev_meta_publisher" id="pdfev_meta_publisher" class="">
                             <option value=""><?php esc_html_e('Select Publisher','pdf-embed-viewer'); ?></option>
                             <?php if ( ! is_wp_error( $publishers ) && ! empty( $publishers ) ) : foreach ( $publishers as $publisher ) : ?>
@@ -105,7 +105,7 @@ class Metabox_Book_Info{
                         <p><?php echo esc_html__( 'Published Year', 'pdf-embed-viewer' )?></p>
                         <span><?php echo esc_html__('Add the published year and version for the PDF file.','pdf-embed-viewer') ?></span>
                     </div>
-                    <div class="pdfev-field-control pdfev-inline-fields">
+                    <div class="">
                         <input type="number" min="1900" max="2100" name="pdfev_meta_published_year" value="<?php echo esc_attr($published_year); ?>" placeholder="<?php echo esc_attr('2026'); ?>" class="pdfev-half-width">
                     </div>
                 </label>
@@ -116,7 +116,7 @@ class Metabox_Book_Info{
                         <p><?php echo esc_html__( 'Published Version', 'pdf-embed-viewer' )?></p>
                         <span><?php echo esc_html__('Add the published year and version for the PDF file.','pdf-embed-viewer') ?></span>
                     </div>
-                    <div class="pdfev-field-control pdfev-inline-fields">
+                    <div class="">
                         <input type="text" name="pdfev_meta_version" value="<?php echo esc_attr($version); ?>" placeholder="<?php echo esc_attr('1.0'); ?>" class="pdfev-half-width">
                     </div>
                 </label>
