@@ -2,7 +2,7 @@
 
 Contributors:      raselsha
 Requires at least: 3.0
-Tested up to:      6.8
+Tested up to:      6.9
 Requires PHP:      7.0
 Stable tag:        1.4.0
 License:           GPLv2 or later
@@ -169,6 +169,7 @@ For more details, see the [Appsero Privacy Policy](https://appsero.com/privacy-p
 = 1.4.0 =
 * Author, Description, Published Year, Published Edition fields Added.
 * Global setting to display/hide of these info settings added.
+* all template design updated with buttons.
 
 = 1.3.9 =
 * fixed. shortcode for single item id missing issue.
