@@ -143,14 +143,6 @@
 #pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs section .pdfev-half-width {
   width: 48%;
 }
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs section .pdfev-full-width,
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs section .pdfev-field-control select,
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs section .pdfev-field-control input,
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs section .pdfev-field-control textarea,
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs section .pdfev-full-width-input {
-  width: 100%;
-  box-sizing: border-box;
-}
 #pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs section input.pdfev-emd-vwr-file {
   width: 83%;
 }
