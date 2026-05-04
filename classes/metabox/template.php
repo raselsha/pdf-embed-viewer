@@ -17,7 +17,7 @@ class Metabox_Template{
     }
     public function tabs($post_id){
         ?>
-            <li class="pdfev-tab" data-tab-target="pdfev-tabs-template"> <i class="fas fa-book-open"></i> <?php esc_html_e('Template','pdf-embed-viewer'); ?></li>
+            <li class="pdfev-tab" data-tab-target="pdfev-tabs-template"> <i class="fas fa-box"></i> <?php esc_html_e('Template','pdf-embed-viewer'); ?></li>
         <?php
     }
     public function tabs_content($post_id){
