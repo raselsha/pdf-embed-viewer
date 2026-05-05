@@ -82,8 +82,11 @@ class General_Settings{
         $show_publisher = get_option('pdfev_show_publisher');
         $show_publisher = $show_publisher ? $show_publisher : 'yes';
 
-        $show_year_version = get_option('pdfev_show_year_version');
-        $show_year_version = $show_year_version ? $show_year_version : 'yes';
+        $show_year = get_option('pdfev_show_year');
+        $show_year = $show_year ? $show_year : 'yes';
+
+        $show_edition = get_option('pdfev_show_edition');
+        $show_edition = $show_edition ? $show_edition : 'yes';
 
         $colors         = get_option('pdfev_css_colors');         
         $primary        = $colors['primary'] ? $colors['primary']:'#c79f62';
@@ -200,10 +203,20 @@ class General_Settings{
                     </td>
                 </tr>
                 <tr>
-                    <th><?php echo esc_html__( 'Show Published Year + Version', 'pdf-embed-viewer' )?></th>
+                    <th><?php echo esc_html__( 'Show Published Year', 'pdf-embed-viewer' )?></th>
                     <td>
                         <label class="switch">
-                            <input type="checkbox" name="pdfev_show_year_version" value="<?php echo esc_attr($show_year_version); ?>" <?php echo esc_attr(($show_year_version=='yes')?'checked':''); ?>>
+                            <input type="checkbox" name="pdfev_show_year" value="yes" <?php checked($show_year, 'yes'); ?>>
+                            <span class="slider"></span>
+                        </label>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th><?php echo esc_html__( 'Show Published Edition', 'pdf-embed-viewer' )?></th>
+                    <td>
+                        <label class="switch">
+                            <input type="checkbox" name="pdfev_show_edition" value="yes" <?php checked($show_edition, 'yes'); ?>>
                             <span class="slider"></span>
                         </label>
                     </td>
@@ -265,7 +278,8 @@ class General_Settings{
             $show_description   = isset( $_POST['pdfev_show_description'] ) ? sanitize_text_field($_POST['pdfev_show_description']): 'no';
             $show_author        = isset( $_POST['pdfev_show_author'] ) ? sanitize_text_field($_POST['pdfev_show_author']): 'no';
             $show_publisher     = isset( $_POST['pdfev_show_publisher'] ) ? sanitize_text_field($_POST['pdfev_show_publisher']): 'no';
-            $show_year_version  = isset( $_POST['pdfev_show_year_version'] ) ? sanitize_text_field($_POST['pdfev_show_year_version']): 'no';
+            $show_year     = isset($_POST['pdfev_show_year']) ? 'yes' : 'no';
+            $show_edition  = isset($_POST['pdfev_show_edition']) ? 'yes' : 'no';
             $primary            = isset( $_POST['pdfev_css_colors']['primary'] ) ? sanitize_hex_color($_POST['pdfev_css_colors']['primary']) : '';
             $secondary          = isset( $_POST['pdfev_css_colors']['secondary'] ) ? sanitize_hex_color($_POST['pdfev_css_colors']['secondary']) : '';
             $dark               = isset( $_POST['pdfev_css_colors']['dark'] ) ? sanitize_hex_color($_POST['pdfev_css_colors']['dark'])  : '';
@@ -288,7 +302,8 @@ class General_Settings{
             update_option('pdfev_show_description',$show_description);
             update_option('pdfev_show_author',$show_author);
             update_option('pdfev_show_publisher',$show_publisher);
-            update_option('pdfev_show_year_version',$show_year_version);
+            update_option('pdfev_show_year', $show_year);
+            update_option('pdfev_show_edition', $show_edition);
             update_option('pdfev_css_colors',$colors );                
         }
     }
