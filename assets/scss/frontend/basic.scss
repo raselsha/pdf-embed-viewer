@@ -46,7 +46,19 @@
         font-weight: normal;
         text-decoration: none;
         font-size: 14px;
-        
+    }
+    .btn{
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+    }
+    .pdfev-load-more-wrap{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+        width: 100%;
     }
     .toggle-button{
         a{

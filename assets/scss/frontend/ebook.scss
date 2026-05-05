@@ -2,6 +2,12 @@
   margin: 0 auto;
 
   .archive-ebook-style {
+    > .pdfev-load-more-items{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
     display: flex;
     flex-wrap: wrap;
     gap: 10px;

@@ -1,12 +1,14 @@
 
 .pdfev-embed-viewer{
     .archive-grid-style{
-        display: flex;
-        justify-content:center;
-        flex-wrap: wrap;
-        gap: 20px;
-        @media (min-width:1024px) {
-            justify-content: start;
+        > .pdfev-load-more-items{
+            display: flex;
+            justify-content:center;
+            flex-wrap: wrap;
+            gap: 20px;
+            @media (min-width:1024px) {
+                justify-content: start;
+            }
         }
         .grid-item{
             width: 46%;

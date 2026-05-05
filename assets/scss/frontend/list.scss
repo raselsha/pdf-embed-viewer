@@ -1,5 +1,11 @@
 .pdfev-embed-viewer{
     .archive-list-style{
+        > .pdfev-load-more-items{
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
         display: flex;
         flex-direction: column;
         gap: 20px;

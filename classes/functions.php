@@ -18,6 +18,8 @@ if( ! class_exists('PDFEV_Functions') ){
             add_action( 'plugins_loaded', ['PDFEV_Functions','load_plugin_textdomain'] );  
             add_action( 'plugins_loaded', ['PDFEV_Functions','appsero_init_tracker'] ); 
             add_action( 'init', [$this,'pdfev_proxy']);
+            add_action( 'wp_ajax_pdfev_load_more_archive', ['PDFEV_Functions','load_more_archive'] );
+            add_action( 'wp_ajax_nopriv_pdfev_load_more_archive', ['PDFEV_Functions','load_more_archive'] );
         }
 
         function dummy_import(){
@@ -256,6 +258,98 @@ if( ! class_exists('PDFEV_Functions') ){
             if ( is_post_type_archive( 'pdfev_embed_viewer' ) ) {
                 echo isset($archive_title) ? esc_html($archive_title) : '';
             }
+        }
+
+        public static function load_more_archive(){
+            check_ajax_referer( 'pdf_ajax_nonce', 'ajaxnonce', true );
+
+            $template = isset($_POST['template']) ? sanitize_text_field(wp_unslash($_POST['template'])) : 'list';
+            $paged = isset($_POST['page']) ? absint($_POST['page']) : 1;
+            $category = isset($_POST['category']) ? sanitize_text_field(wp_unslash($_POST['category'])) : '';
+            $limit = isset($_POST['limit']) ? absint($_POST['limit']) : '';
+            $order = isset($_POST['order']) ? sanitize_text_field(wp_unslash($_POST['order'])) : '';
+            $read = isset($_POST['read']) ? sanitize_text_field(wp_unslash($_POST['read'])) : '';
+            $download = isset($_POST['download']) ? sanitize_text_field(wp_unslash($_POST['download'])) : '';
+            $show_description = isset($_POST['show_description']) ? sanitize_text_field(wp_unslash($_POST['show_description'])) : '';
+            $show_author = isset($_POST['show_author']) ? sanitize_text_field(wp_unslash($_POST['show_author'])) : '';
+            $show_publisher = isset($_POST['show_publisher']) ? sanitize_text_field(wp_unslash($_POST['show_publisher'])) : '';
+            $show_year_version = isset($_POST['show_year_version']) ? sanitize_text_field(wp_unslash($_POST['show_year_version'])) : '';
+            $year = isset($_POST['year']) ? sanitize_text_field(wp_unslash($_POST['year'])) : '';
+
+            $atts = array(
+                'category' => $category,
+                'limit' => $limit,
+                'order' => $order,
+                'read' => $read,
+                'download' => $download,
+                'show_description' => $show_description,
+                'show_author' => $show_author,
+                'show_publisher' => $show_publisher,
+                'show_year_version' => $show_year_version,
+                'year' => $year,
+            );
+
+            $args = array(
+                'post_type' => self::get_cpt_name(),
+                'post_status' => 'publish',
+                'order' => $order ? $order : self::get_post_order(),
+                'posts_per_page' => $limit ? $limit : get_option( 'posts_per_page' ),
+                'paged' => $paged,
+            );
+
+            if ( ! empty( $category ) ) {
+                $field = 'slug';
+                if ( is_numeric( $category ) ) {
+                    $field = 'term_id';
+                } elseif ( strpos( $category, ' ' ) !== false ) {
+                    $field = 'name';
+                }
+
+                $args['tax_query'] = array(
+                    array(
+                        'taxonomy' => 'pdfev_category',
+                        'field' => $field,
+                        'terms' => $category,
+                    ),
+                );
+            }
+
+            if ( ! empty( $year ) ) {
+                $args['date_query'] = array(
+                    array(
+                        'year' => absint($year),
+                    ),
+                );
+            }
+
+            $query = new \WP_Query( $args );
+            ob_start();
+
+            switch ( $template ) {
+                case 'list':
+                    \PDFEV\Template::render_archive_list_items( $query, $atts );
+                    break;
+                case 'grid':
+                    \PDFEV\Template::render_archive_grid_items( $query, $atts );
+                    break;
+                case 'ebook':
+                    \PDFEV\Template::render_archive_ebook_items( $query, $atts );
+                    break;
+                case 'newsletter':
+                    \PDFEV\Template::render_archive_newsletter_items( $query, $atts );
+                    break;
+                default:
+                    \PDFEV\Template::render_archive_list_items( $query, $atts );
+                    break;
+            }
+
+            $html = ob_get_clean();
+            $has_more = $query->max_num_pages > $paged;
+            wp_send_json_success(array(
+                'html' => $html,
+                'has_more' => $has_more,
+                'next_page' => $paged,
+            ));
         }
 
         public static function get_read_button($atts=[]){

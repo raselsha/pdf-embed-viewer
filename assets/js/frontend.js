@@ -163,19 +163,18 @@ jQuery(document).ready(function ($) {
         if (response.success) {
           var html = response.data.html || '';
           if (template === 'list') {
-            $button.closest('.archive-list-style').append(html);
+            $button.closest('.archive-list-style').find('.pdfev-load-more-items').append(html);
           } else if (template === 'grid') {
-            $button.closest('.archive-grid-style').append(html);
+            $button.closest('.archive-grid-style').find('.pdfev-load-more-items').append(html);
+          } else if (template === 'ebook') {
+            $button.closest('.archive-ebook-style').find('.pdfev-load-more-items').append(html);
           } else if (template === 'newsletter') {
             var target = $('#year-' + year).find('tbody');
             if (target.length === 0) {
               target = $('#year-' + year);
             }
             target.append(html);
-          } else if (template === 'ebook') {
-            $button.closest('.archive-ebook-style').append(html);
           }
-
           if (response.data.has_more) {
             $button.data('current-page', response.data.next_page);
             $button.data('next-page', response.data.next_page + 1);

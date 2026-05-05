@@ -215,23 +215,6 @@ class CPT{
         endif;
         return $years;
     }
-            
-    public static  function pagination_bar( $query_wp ) 
-    {
-        $pages = $query_wp->max_num_pages;
-        $big = 999999999; // need an unlikely integer
-        if ($pages > 1)
-        {
-            $page_current = max(1, get_query_var('paged'));
-            $links = paginate_links(array(
-                'base' => str_replace( $big, '%#%', get_pagenum_link( $big ) ),
-                'format' => '?paged=%#%',
-                'current' => $page_current,
-                'total' => $pages,
-            ));
-            echo wp_kses_post($links);
-        }
-    }
 }
 
 new \PDFEV\CPT();
