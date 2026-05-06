@@ -134,8 +134,8 @@ jQuery(document).ready(function ($) {
     var showDescription = $button.data('show-description') || '';
     var showAuthor = $button.data('show-author') || '';
     var showPublisher = $button.data('show-publisher') || '';
-    var showYearVersion = $button.data('show-year-version') || '';
-    var year = $button.data('year') || '';
+    var showYear = $button.data('show-year') || 'yes';
+    var showEdition = $button.data('show-edition') || 'yes';
 
     $button.prop('disabled', true).text(pdfevFronend.load_more_loading_text || 'Loading...');
 
@@ -156,8 +156,8 @@ jQuery(document).ready(function ($) {
         show_description: showDescription,
         show_author: showAuthor,
         show_publisher: showPublisher,
-        show_year_version: showYearVersion,
-        year: year,
+        show_year: showYear,
+        show_edition: showEdition,
       },
       success: function(response) {
         if (response.success) {

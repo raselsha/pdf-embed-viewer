@@ -273,8 +273,8 @@ if( ! class_exists('PDFEV_Functions') ){
             $show_description = isset($_POST['show_description']) ? sanitize_text_field(wp_unslash($_POST['show_description'])) : '';
             $show_author = isset($_POST['show_author']) ? sanitize_text_field(wp_unslash($_POST['show_author'])) : '';
             $show_publisher = isset($_POST['show_publisher']) ? sanitize_text_field(wp_unslash($_POST['show_publisher'])) : '';
-            $show_year_version = isset($_POST['show_year_version']) ? sanitize_text_field(wp_unslash($_POST['show_year_version'])) : '';
-            $year = isset($_POST['year']) ? sanitize_text_field(wp_unslash($_POST['year'])) : '';
+            $show_year = isset($_POST['show_year']) ? sanitize_text_field(wp_unslash($_POST['show_year'])) : '';
+            $show_edition = isset($_POST['show_edition']) ? sanitize_text_field(wp_unslash($_POST['show_edition'])) : '';
 
             $atts = array(
                 'category' => $category,
@@ -285,8 +285,8 @@ if( ! class_exists('PDFEV_Functions') ){
                 'show_description' => $show_description,
                 'show_author' => $show_author,
                 'show_publisher' => $show_publisher,
-                'show_year_version' => $show_year_version,
-                'year' => $year,
+                'show_year' => $show_year,
+                'show_edition' => $show_edition,
             );
 
             $args = array(
@@ -408,94 +408,95 @@ if( ! class_exists('PDFEV_Functions') ){
 
         public static function archive_item_meta($atts = []){
 
-    $show_description = isset($atts['show_description']) && $atts['show_description'] !== '' 
-        ? $atts['show_description'] 
-        : get_option('pdfev_show_description');
+            $show_description = isset($atts['show_description']) && $atts['show_description'] !== '' 
+                ? $atts['show_description'] 
+                : get_option('pdfev_show_description');
 
-    $show_author = isset($atts['show_author']) && $atts['show_author'] !== '' 
-        ? $atts['show_author'] 
-        : get_option('pdfev_show_author');
+            $show_author = isset($atts['show_author']) && $atts['show_author'] !== '' 
+                ? $atts['show_author'] 
+                : get_option('pdfev_show_author');
 
-    $show_publisher = isset($atts['show_publisher']) && $atts['show_publisher'] !== '' 
-        ? $atts['show_publisher'] 
-        : get_option('pdfev_show_publisher');
+            $show_publisher = isset($atts['show_publisher']) && $atts['show_publisher'] !== '' 
+                ? $atts['show_publisher'] 
+                : get_option('pdfev_show_publisher');
 
-    // ✅ NEW (split করা)
-    $show_year = isset($atts['show_year']) && $atts['show_year'] !== '' 
-        ? $atts['show_year'] 
-        : get_option('pdfev_show_year');
+            // ✅ NEW (split করা)
+            $show_year = isset($atts['show_year']) && $atts['show_year'] !== '' 
+                ? $atts['show_year'] 
+                : get_option('pdfev_show_year');
 
-    $show_edition = isset($atts['show_edition']) && $atts['show_edition'] !== '' 
-        ? $atts['show_edition'] 
-        : get_option('pdfev_show_edition');
+            $show_edition = isset($atts['show_edition']) && $atts['show_edition'] !== '' 
+                ? $atts['show_edition'] 
+                : get_option('pdfev_show_edition');
 
 
-    $author_html = '';
-    $meta_parts = [];
+            $author_html = '';
+            $meta_parts = [];
 
-    // ✅ Author
-    if ($show_author === 'yes') {
-        $author_terms = wp_get_post_terms(get_the_ID(), 'pdfev_author', ['fields' => 'names']);
-        if (!empty($author_terms)) {
-            $author_html = sprintf(
-                '<div class="pdfev-archive-author">%s %s</div>',
-                esc_html__('by', 'pdf-embed-viewer'),
-                esc_html(implode(', ', $author_terms))
-            );
+            // ✅ Author
+            if ($show_author === 'yes') {
+                $author_terms = wp_get_post_terms(get_the_ID(), 'pdfev_author', ['fields' => 'names']);
+                if (!empty($author_terms)) {
+                    $author_html = sprintf(
+                        '<div class="pdfev-archive-author">%s %s</div>',
+                        esc_html__('by', 'pdf-embed-viewer'),
+                        esc_html(implode(', ', $author_terms))
+                    );
+                }
+            }
+
+            // ✅ Publisher
+            if ($show_publisher === 'yes') {
+                $publisher_terms = wp_get_post_terms(get_the_ID(), 'pdfev_publisher', ['fields' => 'names']);
+                if (!empty($publisher_terms)) {
+                    $meta_parts[] = sprintf(
+                        '<span class="pdfev-meta-publisher">%s</span>',
+                        esc_html(implode(', ', $publisher_terms))
+                    );
+                }
+            }
+
+            // ✅ NEW: Year
+            if ($show_year === 'yes') {
+                $year = get_post_meta(get_the_ID(), 'pdfev_meta_published_year', true);
+                if (!empty($year)) {
+                    $meta_parts[] = sprintf(
+                        '<span class="pdfev-meta-year">%s</span>',
+                        esc_html($year)
+                    );
+                }
+            }
+
+            // ✅ NEW: Edition
+            if ($show_edition === 'yes') {
+                $edition = get_post_meta(get_the_ID(), 'pdfev_meta_edition', true);
+                if (!empty($edition)) {
+                    $meta_parts[] = sprintf(
+                        '<span class="pdfev-meta-edition">%s</span>',
+                        esc_html($edition)
+                    );
+                }
+            }
+
+            // ✅ Output
+
+            if (!empty($author_html)) {
+                echo $author_html;
+            }
+
+            if ($show_description === 'yes') {
+                $description = get_post_meta(get_the_ID(), 'pdfev_meta_description', true);
+                if (!empty($description)) {
+                    echo '<div class="pdfev-archive-description">' . wp_kses_post(wpautop($description)) . '</div>';
+                }
+            }
+
+            if (!empty($meta_parts)) {
+                echo '<div class="pdfev-archive-meta">' . implode(' • ', $meta_parts) . '</div>';
+            }
         }
-    }
 
-    // ✅ Publisher
-    if ($show_publisher === 'yes') {
-        $publisher_terms = wp_get_post_terms(get_the_ID(), 'pdfev_publisher', ['fields' => 'names']);
-        if (!empty($publisher_terms)) {
-            $meta_parts[] = sprintf(
-                '<span class="pdfev-meta-publisher">%s</span>',
-                esc_html(implode(', ', $publisher_terms))
-            );
-        }
-    }
-
-    // ✅ NEW: Year
-    if ($show_year === 'yes') {
-        $year = get_post_meta(get_the_ID(), 'pdfev_meta_published_year', true);
-        if (!empty($year)) {
-            $meta_parts[] = sprintf(
-                '<span class="pdfev-meta-year">%s</span>',
-                esc_html($year)
-            );
-        }
-    }
-
-    // ✅ NEW: Edition
-    if ($show_edition === 'yes') {
-        $edition = get_post_meta(get_the_ID(), 'pdfev_meta_edition', true);
-        if (!empty($edition)) {
-            $meta_parts[] = sprintf(
-                '<span class="pdfev-meta-edition">%s</span>',
-                esc_html($edition)
-            );
-        }
-    }
-
-    // ✅ Output
-
-    if (!empty($author_html)) {
-        echo $author_html;
-    }
-
-    if ($show_description === 'yes') {
-        $description = get_post_meta(get_the_ID(), 'pdfev_meta_description', true);
-        if (!empty($description)) {
-            echo '<div class="pdfev-archive-description">' . wp_kses_post(wpautop($description)) . '</div>';
-        }
-    }
-
-    if (!empty($meta_parts)) {
-        echo '<div class="pdfev-archive-meta">' . implode(' • ', $meta_parts) . '</div>';
-    }
-}
-
+        
         public static function back_to_archive(){
             $shortcode_page_url  = get_option('pdfev_shortcode_page_url');
             $archive_link = get_post_type_archive_link(PDFEV_Functions::get_cpt_name());

@@ -215,8 +215,8 @@ class Template{
                 data-show-description="<?php echo esc_attr($atts['show_description'] ?? ''); ?>"
                 data-show-author="<?php echo esc_attr($atts['show_author'] ?? ''); ?>"
                 data-show-publisher="<?php echo esc_attr($atts['show_publisher'] ?? ''); ?>"
-                data-show-year-version="<?php echo esc_attr($atts['show_year_version'] ?? ''); ?>"
-                data-year="<?php echo esc_attr($year); ?>"
+                data-show-year="<?php echo esc_attr($atts['show_year'] ?? 'yes'); ?>"
+                data-show-edition="<?php echo esc_attr($atts['show_edition'] ?? 'yes'); ?>"
             >
                 <?php echo esc_html__( 'Load More', 'pdf-embed-viewer' ); ?>
             </button>

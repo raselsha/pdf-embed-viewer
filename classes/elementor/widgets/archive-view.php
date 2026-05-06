@@ -118,12 +118,11 @@ class PDFEV_Grid_Widget extends Widget_Base {
 				'default' => 'yes',
 			]
 		);
-
-		// Download toggle
+		// Reading count toggle
 		$this->add_control(
-			'download',
+			'reading_count',
 			[
-				'label' => __( 'Show Download Button', 'pdf-embed-viewer' ),
+				'label' => __( 'Show Reading Count', 'pdf-embed-viewer' ),
 				'type' => Controls_Manager::SWITCHER,
 				'yes' => __( 'Yes', 'pdf-embed-viewer' ),
 				'no' => __( 'No', 'pdf-embed-viewer' ),
@@ -132,11 +131,11 @@ class PDFEV_Grid_Widget extends Widget_Base {
 			]
 		);
 
-		// Reading count toggle
+		// Download toggle
 		$this->add_control(
-			'reading_count',
+			'download',
 			[
-				'label' => __( 'Show Reading Count', 'pdf-embed-viewer' ),
+				'label' => __( 'Show Download Button', 'pdf-embed-viewer' ),
 				'type' => Controls_Manager::SWITCHER,
 				'yes' => __( 'Yes', 'pdf-embed-viewer' ),
 				'no' => __( 'No', 'pdf-embed-viewer' ),
@@ -167,7 +166,7 @@ class PDFEV_Grid_Widget extends Widget_Base {
 		$settings = $this->get_settings_for_display();
 		// Build shortcode string
 		$shortcode = sprintf(
-			'[pdfev_viewer template="%s" category="%s" limit="%d" order="%s" read="%s" download="%s" reading_count="%s" downloading_count="%s"]',
+			'[pdfev_viewer template="%s" category="%s" limit="%d" order="%s" read="%s" download="%s" reading_count="%s" downloading_count="%s" show_description="no" show_author="no" show_publisher="no" show_year="no" show_edition="no"]',
 			esc_attr( $settings['template'] ),
 			esc_attr( $settings['category'] ),
 			intval( $settings['limit'] ),

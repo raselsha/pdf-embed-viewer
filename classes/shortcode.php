@@ -24,7 +24,8 @@ class Shortcode{
                 'show_description' => '',
                 'show_author' => '',
                 'show_publisher' => '',
-                'show_year_version' => '',
+                'show_year'           => 'yes',
+                'show_edition'        => 'yes',
             ),
             $atts,
             'pdfev_embed_viewer'
@@ -57,7 +58,8 @@ class Shortcode{
                 'show_description' => '',
                 'show_author' => '',
                 'show_publisher' => '',
-                'show_year_version' => '',
+                'show_year'           => 'yes',
+                'show_edition'        => 'yes',
             ),
             $atts,
             'pdfev_viewer'
