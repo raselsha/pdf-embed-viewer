@@ -406,59 +406,95 @@ if( ! class_exists('PDFEV_Functions') ){
             endif;
         }
 
-        public static function archive_item_meta($atts=[]){
-            $show_description = isset($atts['show_description']) && $atts['show_description'] !== '' ? $atts['show_description'] : get_option('pdfev_show_description');
-            $show_author = isset($atts['show_author']) && $atts['show_author'] !== '' ? $atts['show_author'] : get_option('pdfev_show_author');
-            $show_publisher = isset($atts['show_publisher']) && $atts['show_publisher'] !== '' ? $atts['show_publisher'] : get_option('pdfev_show_publisher');
-            $show_year_version = isset($atts['show_year_version']) && $atts['show_year_version'] !== '' ? $atts['show_year_version'] : get_option('pdfev_show_year_version');
+        public static function archive_item_meta($atts = []){
 
-            $author_html = '';
-            $meta_parts = [];
+    $show_description = isset($atts['show_description']) && $atts['show_description'] !== '' 
+        ? $atts['show_description'] 
+        : get_option('pdfev_show_description');
 
-            if ( $show_author === 'yes' ) {
-                $author_terms = wp_get_post_terms( get_the_ID(), 'pdfev_author', array( 'fields' => 'names' ) );
-                if ( ! empty( $author_terms ) ) {
-                    $author_html = sprintf( '<div class="pdfev-archive-author">%s %s</div>', esc_html__( 'by', 'pdf-embed-viewer' ), esc_html( implode( ', ', $author_terms ) ) );
-                }
-            }
+    $show_author = isset($atts['show_author']) && $atts['show_author'] !== '' 
+        ? $atts['show_author'] 
+        : get_option('pdfev_show_author');
 
-            if ( $show_publisher === 'yes' ) {
-                $publisher_terms = wp_get_post_terms( get_the_ID(), 'pdfev_publisher', array( 'fields' => 'names' ) );
-                if ( ! empty( $publisher_terms ) ) {
-                    $meta_parts[] = sprintf( '<span class="pdfev-meta-publisher">%s</span>', esc_html( implode( ', ', $publisher_terms ) ) );
-                }
-            }
+    $show_publisher = isset($atts['show_publisher']) && $atts['show_publisher'] !== '' 
+        ? $atts['show_publisher'] 
+        : get_option('pdfev_show_publisher');
 
-            if ( $show_year_version === 'yes' ) {
-                $year = get_post_meta( get_the_ID(), 'pdfev_meta_published_year', true );
-                $version = get_post_meta( get_the_ID(), 'pdfev_meta_edition', true );
-                $parts = [];
-                if ( ! empty( $year ) ) {
-                    $parts[] = sprintf( '%s', esc_html( $year ) );
-                }
-                if ( ! empty( $version ) ) {
-                    $parts[] = sprintf( '%s', esc_html( $version ) );
-                }
-                if ( ! empty( $parts ) ) {
-                    $meta_parts[] = sprintf( '<span class="pdfev-meta-year-version">%s</span>', esc_html( implode( '•', $parts ) ) );
-                }
-            }
+    // ✅ NEW (split করা)
+    $show_year = isset($atts['show_year']) && $atts['show_year'] !== '' 
+        ? $atts['show_year'] 
+        : get_option('pdfev_show_year');
 
-            if ( ! empty( $author_html ) ) {
-                echo $author_html;
-            }
+    $show_edition = isset($atts['show_edition']) && $atts['show_edition'] !== '' 
+        ? $atts['show_edition'] 
+        : get_option('pdfev_show_edition');
 
-            if ( $show_description === 'yes' ) {
-                $description = get_post_meta( get_the_ID(), 'pdfev_meta_description', true );
-                if ( ! empty( $description ) ) {
-                    echo '<div class="pdfev-archive-description">' . wp_kses_post( wpautop( $description ) ) . '</div>';
-                }
-            }
 
-            if ( ! empty( $meta_parts ) ) {
-                echo '<div class="pdfev-archive-meta">' . implode( '•', $meta_parts ) . '</div>';
-            }
+    $author_html = '';
+    $meta_parts = [];
+
+    // ✅ Author
+    if ($show_author === 'yes') {
+        $author_terms = wp_get_post_terms(get_the_ID(), 'pdfev_author', ['fields' => 'names']);
+        if (!empty($author_terms)) {
+            $author_html = sprintf(
+                '<div class="pdfev-archive-author">%s %s</div>',
+                esc_html__('by', 'pdf-embed-viewer'),
+                esc_html(implode(', ', $author_terms))
+            );
         }
+    }
+
+    // ✅ Publisher
+    if ($show_publisher === 'yes') {
+        $publisher_terms = wp_get_post_terms(get_the_ID(), 'pdfev_publisher', ['fields' => 'names']);
+        if (!empty($publisher_terms)) {
+            $meta_parts[] = sprintf(
+                '<span class="pdfev-meta-publisher">%s</span>',
+                esc_html(implode(', ', $publisher_terms))
+            );
+        }
+    }
+
+    // ✅ NEW: Year
+    if ($show_year === 'yes') {
+        $year = get_post_meta(get_the_ID(), 'pdfev_meta_published_year', true);
+        if (!empty($year)) {
+            $meta_parts[] = sprintf(
+                '<span class="pdfev-meta-year">%s</span>',
+                esc_html($year)
+            );
+        }
+    }
+
+    // ✅ NEW: Edition
+    if ($show_edition === 'yes') {
+        $edition = get_post_meta(get_the_ID(), 'pdfev_meta_edition', true);
+        if (!empty($edition)) {
+            $meta_parts[] = sprintf(
+                '<span class="pdfev-meta-edition">%s</span>',
+                esc_html($edition)
+            );
+        }
+    }
+
+    // ✅ Output
+
+    if (!empty($author_html)) {
+        echo $author_html;
+    }
+
+    if ($show_description === 'yes') {
+        $description = get_post_meta(get_the_ID(), 'pdfev_meta_description', true);
+        if (!empty($description)) {
+            echo '<div class="pdfev-archive-description">' . wp_kses_post(wpautop($description)) . '</div>';
+        }
+    }
+
+    if (!empty($meta_parts)) {
+        echo '<div class="pdfev-archive-meta">' . implode(' • ', $meta_parts) . '</div>';
+    }
+}
 
         public static function back_to_archive(){
             $shortcode_page_url  = get_option('pdfev_shortcode_page_url');
