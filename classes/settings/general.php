@@ -206,7 +206,7 @@ class General_Settings{
                     <th><?php echo esc_html__( 'Show Published Year', 'pdf-embed-viewer' )?></th>
                     <td>
                         <label class="switch">
-                            <input type="checkbox" name="pdfev_show_year" value="yes" <?php checked($show_year, 'yes'); ?>>
+                            <input type="checkbox" name="pdfev_show_year" value="<?php echo esc_attr($show_year); ?>" <?php echo esc_attr(($show_year=='yes')?'checked':''); ?>>
                             <span class="slider"></span>
                         </label>
                     </td>
@@ -216,7 +216,7 @@ class General_Settings{
                     <th><?php echo esc_html__( 'Show Published Edition', 'pdf-embed-viewer' )?></th>
                     <td>
                         <label class="switch">
-                            <input type="checkbox" name="pdfev_show_edition" value="yes" <?php checked($show_edition, 'yes'); ?>>
+                            <input type="checkbox" name="pdfev_show_edition" value="<?php echo esc_attr($show_edition); ?>" <?php echo esc_attr(($show_edition=='yes')?'checked':''); ?>>
                             <span class="slider"></span>
                         </label>
                     </td>
@@ -278,8 +278,8 @@ class General_Settings{
             $show_description   = isset( $_POST['pdfev_show_description'] ) ? sanitize_text_field($_POST['pdfev_show_description']): 'no';
             $show_author        = isset( $_POST['pdfev_show_author'] ) ? sanitize_text_field($_POST['pdfev_show_author']): 'no';
             $show_publisher     = isset( $_POST['pdfev_show_publisher'] ) ? sanitize_text_field($_POST['pdfev_show_publisher']): 'no';
-            $show_year     = isset($_POST['pdfev_show_year']) ? 'yes' : 'no';
-            $show_edition  = isset($_POST['pdfev_show_edition']) ? 'yes' : 'no';
+            $show_year          = isset($_POST['pdfev_show_year']) ? sanitize_text_field($_POST['pdfev_show_year']) : 'no';
+            $show_edition       = isset($_POST['pdfev_show_edition']) ? sanitize_text_field($_POST['pdfev_show_edition']) : 'no';
             $primary            = isset( $_POST['pdfev_css_colors']['primary'] ) ? sanitize_hex_color($_POST['pdfev_css_colors']['primary']) : '';
             $secondary          = isset( $_POST['pdfev_css_colors']['secondary'] ) ? sanitize_hex_color($_POST['pdfev_css_colors']['secondary']) : '';
             $dark               = isset( $_POST['pdfev_css_colors']['dark'] ) ? sanitize_hex_color($_POST['pdfev_css_colors']['dark'])  : '';
