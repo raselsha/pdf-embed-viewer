@@ -64,12 +64,27 @@ Use `[pdfev_viewer]` to display a list, grid, ebook, or newsletter-style archive
 - `downloading_count`  
   Show download counter: `yes`, `no` (default: `yes`)
 
+- `show_description`  
+  Show description: `yes`, `no` (default: `yes`)
+
+- `show_author`  
+  Show author: `yes`, `no` (default: `yes`)
+
+- `show_publisher`  
+  Show publisher: `yes`, `no` (default: `yes`)
+
+- `show_year`  
+  Show published year: `yes`, `no` (default: `yes`)
+
+- `show_edition`  
+  Show edition: `yes`, `no` (default: `yes`)
+
 **Examples:**
 
-- `[pdfev_viewer template="list" limit="10" order="dsc" read="yes" download="yes" reading_count="yes" downloading_count="yes"]`
-- `[pdfev_viewer template="grid"]`
-- `[pdfev_viewer template="ebook" limit="10" order="asc" read="yes" download="yes"]`
-- `[pdfev_viewer template="newsletter" limit="30" order="dsc"]`
+- `[pdfev_viewer template="grid" limit="10" order="dsc" read="yes" download="yes" reading_count="yes" downloading_count="yes" show_description="yes" show_author="yes" show_publisher="yes" show_year="yes" show_edition="yes"]`
+- `[pdfev_viewer template="list"]`
+- `[pdfev_viewer template="ebook"]`
+- `[pdfev_viewer template="newsletter"]`
 
 ### Single PDF Shortcode
 
