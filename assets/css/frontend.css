@@ -52,12 +52,14 @@
   font-weight: normal;
   text-decoration: none;
   font-size: 14px;
+  border: 0;
 }
 .pdfev-embed-viewer .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  gap: 5px;
 }
 .pdfev-embed-viewer .pdfev-load-more-wrap {
   display: flex;
@@ -65,6 +67,9 @@
   align-items: center;
   margin-top: 20px;
   width: 100%;
+}
+.pdfev-embed-viewer .pdfev-load-more-button {
+  padding: 5px 10px;
 }
 .pdfev-embed-viewer .toggle-button a {
   background: none;

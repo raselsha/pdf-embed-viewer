@@ -136,7 +136,7 @@ jQuery(document).ready(function ($) {
     var showPublisher = $button.data('show-publisher') || '';
     var showYear = $button.data('show-year') || '';
     var showEdition = $button.data('show-edition') || '';
-
+    var year = $button.data('year') || '';
     $button.prop('disabled', true).text(pdfevFronend.load_more_loading_text || 'Loading...');
 
     $.ajax({
