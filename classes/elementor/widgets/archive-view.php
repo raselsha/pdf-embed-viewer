@@ -157,6 +157,67 @@ class PDFEV_Grid_Widget extends Widget_Base {
 			]
 		);
 
+		// Show Description
+		$this->add_control(
+			'description',
+			[
+				'label' => __( 'Show Description', 'pdf-embed-viewer' ),
+				'type' => Controls_Manager::SWITCHER,
+				'yes' => __( 'Yes', 'pdf-embed-viewer' ),
+				'no' => __( 'No', 'pdf-embed-viewer' ),
+				'return_value' => 'yes',
+				'default' => 'no',
+			]
+		);
+		// Author toggle
+		$this->add_control(
+			'author',
+			[
+				'label' => __( 'Show Author', 'pdf-embed-viewer' ),
+				'type' => Controls_Manager::SWITCHER,
+				'yes' => __( 'Yes', 'pdf-embed-viewer' ),
+				'no' => __( 'No', 'pdf-embed-viewer' ),
+				'return_value' => 'yes',
+				'default' => 'no',
+			]
+		);
+		// Publisher toggle
+		$this->add_control(
+			'publisher',
+			[
+				'label' => __( 'Show Publisher', 'pdf-embed-viewer' ),
+				'type' => Controls_Manager::SWITCHER,
+				'yes' => __( 'Yes', 'pdf-embed-viewer' ),
+				'no' => __( 'No', 'pdf-embed-viewer' ),
+				'return_value' => 'yes',
+				'default' => 'no',
+			]
+		);
+
+		// Published Year toggle
+		$this->add_control(
+			'year',
+			[
+				'label' => __( 'Show Published Year', 'pdf-embed-viewer' ),
+				'type' => Controls_Manager::SWITCHER,
+				'yes' => __( 'Yes', 'pdf-embed-viewer' ),
+				'no' => __( 'No', 'pdf-embed-viewer' ),
+				'return_value' => 'yes',
+				'default' => 'no',
+			]
+		);
+		// edition toggle
+		$this->add_control(
+			'edition',
+			[
+				'label' => __( 'Show Edition', 'pdf-embed-viewer' ),
+				'type' => Controls_Manager::SWITCHER,
+				'yes' => __( 'Yes', 'pdf-embed-viewer' ),
+				'no' => __( 'No', 'pdf-embed-viewer' ),
+				'return_value' => 'yes',
+				'default' => 'no',
+			]
+		);
 		$this->end_controls_section();
 
 	
@@ -166,15 +227,20 @@ class PDFEV_Grid_Widget extends Widget_Base {
 		$settings = $this->get_settings_for_display();
 		// Build shortcode string
 		$shortcode = sprintf(
-			'[pdfev_viewer template="%s" category="%s" limit="%d" order="%s" read="%s" download="%s" reading_count="%s" downloading_count="%s" show_description="no" show_author="no" show_publisher="no" show_year="no" show_edition="no"]',
+			'[pdfev_viewer template="%s" category="%s" limit="%d" order="%s" read="%s" download="%s" reading_count="%s" downloading_count="%s" show_description="%s" show_author="%s" show_publisher="%s" show_year="%s" show_edition="%s"]',
 			esc_attr( $settings['template'] ),
 			esc_attr( $settings['category'] ),
 			intval( $settings['limit'] ),
 			esc_attr( $settings['order'] ),
-			esc_attr( $settings['read'] ?'yes':'no' ),
-			esc_attr( $settings['download'] ?'yes':'no' ),
-			esc_attr( $settings['reading_count'] ?'yes':'no' ),
-			esc_attr( $settings['downloading_count'] ?'yes':'no' )
+			esc_attr( $settings['read'] ),
+			esc_attr( $settings['download'] ),
+			esc_attr( $settings['reading_count']  ),
+			esc_attr( $settings['downloading_count'] ),
+			esc_attr( $settings['description']  ),
+			esc_attr( $settings['author'] ),
+			esc_attr( $settings['publisher']),
+			esc_attr( $settings['year'] ),
+			esc_attr( $settings['edition'] ),
 		);
 		// Output
 		echo do_shortcode( $shortcode );
