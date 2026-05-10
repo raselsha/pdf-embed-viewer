@@ -4,7 +4,7 @@ Contributors:      raselsha
 Requires at least: 3.0
 Tested up to:      6.9
 Requires PHP:      7.0
-Stable tag:        1.4.0
+Stable tag:        1.4.1
 License:           GPLv2 or later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 Tags:              3d-flipbook, ebook, flipbook, pdf-embed, elementor
@@ -84,6 +84,9 @@ Display a single PDF by post ID:
 
 - **Multiple Archive Templates**  
   Display your PDFs in `list`, `grid`, `ebook`, or `newsletter` layouts.
+
+- **Document Meta Visibility Controls**  
+  Show or hide document Description, Author, Publisher, Published Year, and Edition information from settings.
 
 - **Flexible Shortcodes**  
   Use shortcodes to control layout, buttons, counters, and more.
@@ -170,6 +173,15 @@ For more details, see the [Appsero Privacy Policy](https://appsero.com/privacy-p
 * Author, Description, Published Year, Published Edition fields Added.
 * Global setting to display/hide of these info settings added.
 * all template design updated with buttons.
+
+= 1.4.1 =
+* pagination upgrade to ajax load more.
+
+= 1.4.0 =
+* description,author,publisher,published year, Edition settings feature added.
+
+= 1.4.0 =
+* autho,publisher,published,year settings feature added.
 
 = 1.3.9 =
 * fixed. shortcode for single item id missing issue.

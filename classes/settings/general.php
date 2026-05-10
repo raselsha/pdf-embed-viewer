@@ -65,28 +65,28 @@ class General_Settings{
         $archive_read = $archive_read ? $archive_read : 'no';
 
         $reading_counter =  get_option('pdfev_reading_counter');
-        $reading_counter = $reading_counter ? $reading_counter : 'yes';
+        $reading_counter = $reading_counter ? $reading_counter : 'no';
         
         $archive_download =  get_option('pdfev_archive_download');
         $archive_download = $archive_download ? $archive_download : 'no';
 
         $download_counter =  get_option('pdfev_download_counter');
-        $download_counter = $download_counter ? $download_counter : 'yes';
+        $download_counter = $download_counter ? $download_counter : 'no';
 
         $show_description = get_option('pdfev_show_description');
-        $show_description = $show_description ? $show_description : 'yes';
+        $show_description = $show_description ? $show_description : 'no';
 
         $show_author = get_option('pdfev_show_author');
-        $show_author = $show_author ? $show_author : 'yes';
+        $show_author = $show_author ? $show_author : 'no';
 
         $show_publisher = get_option('pdfev_show_publisher');
-        $show_publisher = $show_publisher ? $show_publisher : 'yes';
+        $show_publisher = $show_publisher ? $show_publisher : 'no';
 
         $show_year = get_option('pdfev_show_year');
-        $show_year = $show_year ? $show_year : 'yes';
+        $show_year = $show_year ? $show_year : 'no';
 
         $show_edition = get_option('pdfev_show_edition');
-        $show_edition = $show_edition ? $show_edition : 'yes';
+        $show_edition = $show_edition ? $show_edition : 'no';
 
         $colors         = get_option('pdfev_css_colors');         
         $primary        = $colors['primary'] ? $colors['primary']:'#c79f62';
