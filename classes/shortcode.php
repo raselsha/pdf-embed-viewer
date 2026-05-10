@@ -58,8 +58,8 @@ class Shortcode{
                 'show_description' => '',
                 'show_author' => '',
                 'show_publisher' => '',
-                'show_year'           => 'yes',
-                'show_edition'        => 'yes',
+                'show_year'           => '',
+                'show_edition'        => '',
             ),
             $atts,
             'pdfev_viewer'
