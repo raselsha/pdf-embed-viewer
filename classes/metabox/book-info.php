@@ -15,7 +15,7 @@ class Metabox_Book_Info{
     }
      public function tabs($post_id){
         ?>
-            <li class="pdfev-tab " data-tab-target="pdfev-tabs-book-info"> <i class="fas fa-book-open"></i> <?php esc_html_e('Book Info','pdf-embed-viewer'); ?></li>
+            <li class="pdfev-tab " data-tab-target="pdfev-tabs-book-info"> <i class="fas fa-book-open"></i> <?php esc_html_e('E-Book Info','pdf-embed-viewer'); ?></li>
         <?php
     }
     public function tabs_content($post_id){
@@ -41,8 +41,8 @@ class Metabox_Book_Info{
         ?>
         <div class="pdfev-tab-content" data-tab="pdfev-tabs-book-info">
             <?php wp_nonce_field( 'pdfev_emd_vwr_metabox_nonce', 'pdfev_emd_vwr_metabox_nonce' ); ?>
-            <h2 class="title"><?php _e('General Settings','pdf-embed-viewer'); ?></h2>
-            <p><?php _e('Here you can add basic settings for your document.','pdf-embed-viewer'); ?></p>
+            <h2 class="title"><?php _e('Book Information Settings','pdf-embed-viewer'); ?></h2>
+            <p><?php _e('Here you can add book\'s author, publisher and other information.','pdf-embed-viewer'); ?></p>
 
             <section>
                 <label class="label">

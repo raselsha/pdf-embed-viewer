@@ -407,7 +407,7 @@ if( ! class_exists('PDFEV_Functions') ){
         }
 
         public static function archive_item_meta($atts = []){
-
+           
             $show_description = isset($atts['show_description']) && $atts['show_description'] !== '' 
                 ? $atts['show_description'] 
                 : get_option('pdfev_show_description');
@@ -443,6 +443,7 @@ if( ! class_exists('PDFEV_Functions') ){
                         esc_html(implode(', ', $author_terms))
                     );
                 }
+
             }
 
             // ✅ Publisher
