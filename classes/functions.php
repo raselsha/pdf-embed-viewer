@@ -126,6 +126,7 @@ if( ! class_exists('PDFEV_Functions') ){
                 return [
                     'id'  => $attachment_id,
                     'url' => wp_get_attachment_url($attachment_id),
+                    'filesize' => file_exists($file_path) ? filesize($file_path) : 0,
                 ];
             }
         

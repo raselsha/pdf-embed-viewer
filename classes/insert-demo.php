@@ -67,6 +67,8 @@ class Insert_Demo {
             $pdf_attached = \PDFEV_Functions::insert_media( $dummy_data['pdf_file'] );
             $image_attached = \PDFEV_Functions::insert_media($dummy_data['image_file']);
             $dummy_data['meta_data']['pdfev_meta_pdf_url'] = $pdf_attached['url'];
+            $dummy_data['meta_data']['pdfev_meta_filesize'] = $pdf_attached['filesize'] ?? 0;
+            
             $post_id = wp_insert_post([
                 'post_title' => $dummy_data['title'],
                 'post_status' => 'publish',
