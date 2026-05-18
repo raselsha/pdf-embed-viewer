@@ -4,7 +4,7 @@ Contributors:      raselsha
 Requires at least: 3.0
 Tested up to:      6.9
 Requires PHP:      7.0
-Stable tag:        1.4.1
+Stable tag:        1.4.2
 License:           GPLv2 or later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 Tags:              3d-flipbook, ebook, flipbook, pdf-embed, elementor
@@ -184,19 +184,17 @@ For more details, see the [Appsero Privacy Policy](https://appsero.com/privacy-p
 * French (fr_FR)
 
 == Changelog ==
-= 1.4.0 =
-* Author, Description, Published Year, Published Edition fields Added.
-* Global setting to display/hide of these info settings added.
-* all template design updated with buttons.
+
+= 1.4.2 =
+* file size and pages count added with settings.
 
 = 1.4.1 =
 * pagination upgrade to ajax load more.
 
 = 1.4.0 =
-* description,author,publisher,published year, Edition settings feature added.
-
-= 1.4.0 =
-* autho,publisher,published,year settings feature added.
+* Author, Description, Published Year, Published Edition fields Added.
+* Global setting to display/hide of these info settings added.
+* all template design updated with buttons.
 
 = 1.3.9 =
 * fixed. shortcode for single item id missing issue.
