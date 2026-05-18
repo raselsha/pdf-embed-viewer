@@ -60,6 +60,8 @@ class Shortcode{
                 'show_publisher' => '',
                 'show_year'           => '',
                 'show_edition'        => '',
+                'show_total_pages'        => '',
+                'show_filesize'        => '',
             ),
             $atts,
             'pdfev_viewer'

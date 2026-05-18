@@ -83,7 +83,7 @@
             $('.pdfev-filesize').html(fileSizeDisplay);
             $('.pdfev-totalpage').html(totalPages + ' Pages');
 
-            $('#pdfev_meta_filesize').val(fileSizeDisplay);
+            $('#pdfev_meta_filesize').val(fileSizeBytes);
             $('#pdfev_meta_total_pages').val(totalPages);
 
             container.html('');

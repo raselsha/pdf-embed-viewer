@@ -275,6 +275,8 @@ if( ! class_exists('PDFEV_Functions') ){
             $show_publisher = isset($_POST['show_publisher']) ? sanitize_text_field(wp_unslash($_POST['show_publisher'])) : '';
             $show_year = isset($_POST['show_year']) ? sanitize_text_field(wp_unslash($_POST['show_year'])) : '';
             $show_edition = isset($_POST['show_edition']) ? sanitize_text_field(wp_unslash($_POST['show_edition'])) : '';
+            $show_total_pages = isset($_POST['show_total_pages']) ? sanitize_text_field(wp_unslash($_POST['show_total_pages'])) : '';
+            $show_filesize = isset($_POST['show_filesize']) ? sanitize_text_field(wp_unslash($_POST['show_filesize'])) : '';
 
             $atts = array(
                 'category' => $category,
@@ -287,6 +289,8 @@ if( ! class_exists('PDFEV_Functions') ){
                 'show_publisher' => $show_publisher,
                 'show_year' => $show_year,
                 'show_edition' => $show_edition,
+                'show_total_pages' => $show_total_pages,
+                'show_filesize' => $show_filesize,
             );
 
             $args = array(
@@ -415,6 +419,14 @@ if( ! class_exists('PDFEV_Functions') ){
             $show_author = isset($atts['show_author']) && $atts['show_author'] !== '' 
                 ? $atts['show_author'] 
                 : get_option('pdfev_show_author');
+            
+            $show_total_pages = isset($atts['show_total_pages']) && $atts['show_total_pages'] !== '' 
+                ? $atts['show_total_pages'] 
+                : get_option('pdfev_show_total_pages');
+
+            $show_filesize = isset($atts['show_filesize']) && $atts['show_filesize'] !== '' 
+                ? $atts['show_filesize'] 
+                : get_option('pdfev_show_filesize');
 
             $show_publisher = isset($atts['show_publisher']) && $atts['show_publisher'] !== '' 
                 ? $atts['show_publisher'] 
@@ -430,20 +442,51 @@ if( ! class_exists('PDFEV_Functions') ){
                 : get_option('pdfev_show_edition');
 
 
-            $author_html = '';
+            $author_html = [];
             $meta_parts = [];
 
             // ✅ Author
             if ($show_author === 'yes') {
                 $author_terms = wp_get_post_terms(get_the_ID(), 'pdfev_author', ['fields' => 'names']);
                 if (!empty($author_terms)) {
-                    $author_html = sprintf(
-                        '<div class="pdfev-archive-author">%s %s</div>',
+                    $author_html[] = sprintf(
+                        '<span class="pdfev-meta-author">%s %s</span>',
                         esc_html__('by', 'pdf-embed-viewer'),
                         esc_html(implode(', ', $author_terms))
                     );
                 }
+                
+                
+            }
 
+            if ($show_total_pages === 'yes') {
+                $total_pages = get_post_meta(get_the_ID(), 'pdfev_meta_total_pages', true);
+                if (!empty($total_pages)) {
+                    $total_pages = $total_pages . ' ' . esc_html__('Pages', 'pdf-embed-viewer');
+                } else {
+                    $total_pages = '';
+                }
+                if (!empty($total_pages)) {
+                    $author_html[] = sprintf(
+                        '<span class="pdfev-meta-total-pages">%s</span>',
+                        esc_html($total_pages)
+                    );
+                }
+            }
+
+            if ($show_filesize === 'yes') {
+                $pdfev_size = get_post_meta(get_the_ID(), 'pdfev_meta_filesize', true);
+                if (!empty($pdfev_size)) {
+                    $pdfev_size = PDFEV_Functions::convert_file_size($pdfev_size);
+                } else {
+                    $pdfev_size = '';
+                }
+                if (!empty($pdfev_size)) {
+                    $author_html[] = sprintf(
+                        '<span class="pdfev-meta-filesize">%s</span>',
+                        esc_html($pdfev_size)
+                    );
+                }
             }
 
             // ✅ Publisher
@@ -482,7 +525,7 @@ if( ! class_exists('PDFEV_Functions') ){
             // ✅ Output
 
             if (!empty($author_html)) {
-                echo $author_html;
+                echo '<div class="pdfev-archive-meta">' . implode(' • ', $author_html) . '</div>';
             }
 
             if ($show_description === 'yes') {
@@ -508,7 +551,16 @@ if( ! class_exists('PDFEV_Functions') ){
                
             <?php
         }
-
+        public static function convert_file_size($bytes){
+            $bytes = (float) $bytes;
+            if ($bytes <= 0) {
+                return '0 KB';
+            }
+            if ($bytes >= 1024 * 1024) {
+                return number_format($bytes / (1024 * 1024), 2) . ' MB';
+            }
+            return number_format($bytes / 1024, 2) . ' KB';
+        }
     }
     
     new PDFEV_Functions();
