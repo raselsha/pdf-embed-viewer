@@ -195,8 +195,10 @@
       const show_edition = document.getElementById("show_edition").value;
       const reading_count = document.getElementById("reading_count").value;
       const downloading_count = document.getElementById("downloading_count").value;
+      const show_total_pages = document.getElementById("show_total_pages").value;
+      const show_filesize = document.getElementById("show_filesize").value;
 
-      const shortcode = `[pdfev_viewer template="${template}" category="${category}" limit="${limit}" order="${order}" read="${read}" download="${download}" reading_count="${reading_count}" downloading_count="${downloading_count}" show_description="${show_description}" show_author="${show_author}" show_publisher="${show_publisher}" show_year="${show_year}" show_edition="${show_edition}"]`;
+      const shortcode = `[pdfev_viewer template="${template}" category="${category}" limit="${limit}" order="${order}" read="${read}" download="${download}" reading_count="${reading_count}" downloading_count="${downloading_count}" show_description="${show_description}" show_author="${show_author}" show_publisher="${show_publisher}" show_year="${show_year}" show_edition="${show_edition}" show_total_pages="${show_total_pages}" show_filesize="${show_filesize}"]`;
 
       $.ajax({
           url: pdfevAjax.ajaxurl,
@@ -216,7 +218,9 @@
               show_year:show_year,
               show_edition:show_edition,
               reading_count: reading_count,
-              downloading_count: downloading_count
+              downloading_count: downloading_count,
+              show_total_pages: show_total_pages,
+              show_filesize: show_filesize
           },
           beforeSend: function () {
               // $('#shortcode-previewer').html('<div class="pdfev-loading">Generating preview...</div>');
@@ -255,6 +259,8 @@
       $('#show_edition').val('yes');
       $('#reading_count').val('yes');
       $('#downloading_count').val('yes');
+      $('#show_total_pages').val('yes');
+      $('#show_filesize').val('yes');
 
       pdfevGenerateShortcode(); // Trigger generation with default values
   });

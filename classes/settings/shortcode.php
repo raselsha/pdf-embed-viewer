@@ -138,13 +138,29 @@ class Shortcode_Generator {
                         </select>
                     </div>
 
+                    <div class="form-group">
+                        <label for="show_total_pages"><?php echo esc_html__('Show Total Pages','pdf-embed-viewer'); ?></label>
+                        <select id="show_total_pages">
+                            <option value="yes"><?php echo esc_html__('yes','pdf-embed-viewer'); ?></option>
+                            <option value="no"><?php echo esc_html__('no','pdf-embed-viewer'); ?></option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="show_filesize"><?php echo esc_html__('Show Filesize','pdf-embed-viewer'); ?></label>
+                        <select id="show_filesize">
+                            <option value="yes"><?php echo esc_html__('yes','pdf-embed-viewer'); ?></option>
+                            <option value="no"><?php echo esc_html__('no','pdf-embed-viewer'); ?></option>
+                        </select>
+                    </div>
+
                     <button id="pdfev-shortcode-generate"><?php echo esc_html__('Generate Shortcode','pdf-embed-viewer'); ?></button>
                     <button id="pdfev-shortcode-reset" type="button"><?php echo esc_html__('Reset','pdf-embed-viewer'); ?></button>
                     
                 </div>
                 <div class="shortcode-previewer">
                     <h2><?php echo esc_html__('ShortCode','pdf-embed-viewer'); ?></h2>
-                    <div id="pdfev-shortcode" class="pdfev-shortcode">[pdfev_viewer template="list" category="" limit="10" order="dsc" read="yes" download="yes" reading_count="yes" downloading_count="yes" show_description="yes" show_author="yes" show_publisher="yes" show_year="yes" show_edition="yes"]</div>
+                    <div id="pdfev-shortcode" class="pdfev-shortcode">[pdfev_viewer template="list" category="" limit="10" order="dsc" read="yes" download="yes" reading_count="yes" downloading_count="yes" show_description="yes" show_author="yes" show_publisher="yes" show_year="yes" show_edition="yes" show_total_pages="yes" show_filesize="yes"]</div>
                     <!-- <div id="shortcode-previewer"></div> -->
                     <button id="pdfev-copy-shortcode"><?php echo esc_html__('Copy','pdf-embed-viewer'); ?></button>
                 </div>
@@ -167,10 +183,11 @@ class Shortcode_Generator {
         $show_publisher = isset($_POST['show_publisher']) ? sanitize_text_field($_POST['show_publisher']) : '';
         $show_year = isset($_POST['show_year']) ? sanitize_text_field($_POST['show_year']) : 'yes';
         $show_edition = isset($_POST['show_edition']) ? sanitize_text_field($_POST['show_edition']) : 'yes';
-
+        $show_total_pages = isset($_POST['show_total_pages']) ? sanitize_text_field($_POST['show_total_pages']) : 'yes';
+        $show_filesize = isset($_POST['show_filesize']) ? sanitize_text_field($_POST['show_filesize']) : 'yes';
         $shortcode = sprintf(
-            '[pdfev_viewer template="%s" category="%s" limit="%d" order="%s" read="%s" download="%s" reading_count="%s" downloading_count="%s" show_description="%s" show_author="%s" show_publisher="%s" show_year="%s" show_edition="%s"]',
-            $template, $category, $limit, $order, $read, $download, $reading_count, $downloading_count, $show_description, $show_author, $show_publisher, $show_year, $show_edition
+            '[pdfev_viewer template="%s" category="%s" limit="%d" order="%s" read="%s" download="%s" reading_count="%s" downloading_count="%s" show_description="%s" show_author="%s" show_publisher="%s" show_year="%s" show_edition="%s" show_total_pages="%s" show_filesize="%s"]',
+            $template, $category, $limit, $order, $read, $download, $reading_count, $downloading_count, $show_description, $show_author, $show_publisher, $show_year, $show_edition, $show_total_pages, $show_filesize
         );
         
         
