@@ -132,6 +132,7 @@ class Insert_Demo {
                 'HarperCollins',
                 'Vintage',
                 'Random House',
+                'Scholastic',
             ],
             'categories' => [
                 'Adventure',
