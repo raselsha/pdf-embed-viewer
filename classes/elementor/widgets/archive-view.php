@@ -218,6 +218,30 @@ class PDFEV_Grid_Widget extends Widget_Base {
 				'default' => 'no',
 			]
 		);
+		// edition toggle
+		$this->add_control(
+			'file_size',
+			[
+				'label' => __( 'Show File Size', 'pdf-embed-viewer' ),
+				'type' => Controls_Manager::SWITCHER,
+				'yes' => __( 'Yes', 'pdf-embed-viewer' ),
+				'no' => __( 'No', 'pdf-embed-viewer' ),
+				'return_value' => 'yes',
+				'default' => 'no',
+			]
+		);
+		// edition toggle
+		$this->add_control(
+			'total_pages',
+			[
+				'label' => __( 'Show Total Pages', 'pdf-embed-viewer' ),
+				'type' => Controls_Manager::SWITCHER,
+				'yes' => __( 'Yes', 'pdf-embed-viewer' ),
+				'no' => __( 'No', 'pdf-embed-viewer' ),
+				'return_value' => 'yes',
+				'default' => 'no',
+			]
+		);
 		$this->end_controls_section();
 
 	
@@ -227,7 +251,7 @@ class PDFEV_Grid_Widget extends Widget_Base {
 		$settings = $this->get_settings_for_display();
 		// Build shortcode string
 		$shortcode = sprintf(
-			'[pdfev_viewer template="%s" category="%s" limit="%d" order="%s" read="%s" download="%s" reading_count="%s" downloading_count="%s" show_description="%s" show_author="%s" show_publisher="%s" show_year="%s" show_edition="%s"]',
+			'[pdfev_viewer template="%s" category="%s" limit="%d" order="%s" read="%s" download="%s" reading_count="%s" downloading_count="%s" show_description="%s" show_author="%s" show_publisher="%s" show_year="%s" show_edition="%s" show_filesize="%s" show_total_pages="%s"]',
 			esc_attr( $settings['template'] ),
 			esc_attr( $settings['category'] ),
 			intval( $settings['limit'] ),
@@ -241,6 +265,8 @@ class PDFEV_Grid_Widget extends Widget_Base {
 			esc_attr( $settings['publisher']),
 			esc_attr( $settings['year'] ),
 			esc_attr( $settings['edition'] ),
+			esc_attr( $settings['file_size'] ),
+			esc_attr( $settings['total_pages'])
 		);
 		// Output
 		echo do_shortcode( $shortcode );

@@ -47,7 +47,7 @@ class Shortcode{
         // Set default attributes and merge with user-provided attributes
         $atts = shortcode_atts(
             array(
-                'template'  => 'list',
+                'template'  => 'grid',
                 'category'  => '',
                 'limit'     => '',
                 'order'     => '',
