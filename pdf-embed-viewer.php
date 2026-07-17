@@ -1,14 +1,14 @@
 <?php
 /**
  * Plugin Name: 3D Flipbook PDF Viewer & Embedder – E-Books, Manuals, Newsletters, Reports
- * Plugin URI: https://wordpress.org/plugins/pdf-embed-viewer
+ * Plugin URI: https://lieusoft.com
  * Description: Display PDFs as interactive 3D flipbooks or traditional viewers for E-Books, Manuals, Newsletters, and Reports.
  * Version: 1.4.2
  * Stable Tag: trunk
  * Requires at least: 3.0
  * Requires PHP:      7.0
  * Author: Shahadat Hossain
- * Author URI: https://shahadat.com.bd
+ * Author URI: https://lieusoft.com
  * License: GPL v2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: pdf-embed-viewer
