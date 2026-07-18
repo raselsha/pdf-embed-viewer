@@ -12,6 +12,21 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Verify version consistency
+        run: |
+          TAG_VERSION="${GITHUB_REF_NAME#v}"
+          FILE_VERSION=$(grep -m1 "Version:" pdf-embed-viewer.php | sed -E 's/.*Version:[[:space:]]*([0-9.]+).*/\1/')
+          STABLE_TAG=$(grep -m1 "Stable tag:" readme.txt | sed -E 's/.*Stable tag:[[:space:]]*([0-9.]+).*/\1/')
+
+          echo "Git tag:               $TAG_VERSION"
+          echo "pdf-embed-viewer.php:  $FILE_VERSION"
+          echo "readme.txt Stable tag: $STABLE_TAG"
+
+          if [ "$TAG_VERSION" != "$FILE_VERSION" ] || [ "$TAG_VERSION" != "$STABLE_TAG" ]; then
+            echo "::error::Version mismatch — git tag ($TAG_VERSION), Version header ($FILE_VERSION), and Stable tag ($STABLE_TAG) must all match exactly. Bump pdf-embed-viewer.php and readme.txt before tagging a release."
+            exit 1
+          fi
+
       - name: WordPress Plugin Deploy
         uses: 10up/action-wordpress-plugin-deploy@stable
         env:
