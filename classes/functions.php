@@ -44,27 +44,63 @@ if( ! class_exists('PDFEV_Functions') ){
 
         public function pdfev_proxy() {
             if (isset($_GET['pdfev_proxy'])) {
-                $url = esc_url_raw($_GET['pdfev_proxy']);
+                $url = esc_url_raw(wp_unslash($_GET['pdfev_proxy']));
 
-                if (preg_match('/\.pdf$/i', $url)) {
-                    $response = wp_remote_get($url, ['timeout' => 60]);
-
-                    if (!is_wp_error($response) && wp_remote_retrieve_response_code($response) === 200) {
-                        
-                        echo wp_remote_retrieve_body($response);
-                        header('Content-Type: application/pdf');
-                        header('Content-Disposition: inline; filename="proxy.pdf"');
-                        header('Accept-Ranges: bytes');
-                    } else {
-                        status_header(404);
-                        echo 'PDF could not be loaded.';
-                    }
-                } else {
+                if (! self::is_allowed_proxy_url($url)) {
                     status_header(403);
                     echo 'Invalid file type.';
+                    exit;
                 }
+
+                $response = wp_remote_get($url, ['timeout' => 60]);
+
+                if (is_wp_error($response) || wp_remote_retrieve_response_code($response) !== 200) {
+                    status_header(404);
+                    echo 'PDF could not be loaded.';
+                    exit;
+                }
+
+                $content_type = wp_remote_retrieve_header($response, 'content-type');
+                if (stripos((string) $content_type, 'pdf') === false) {
+                    status_header(415);
+                    echo 'Remote file is not a PDF.';
+                    exit;
+                }
+
+                header('Content-Type: application/pdf');
+                header('Content-Disposition: inline; filename="proxy.pdf"');
+                header('Accept-Ranges: bytes');
+                echo wp_remote_retrieve_body($response);
                 exit;
             }
+        }
+
+        /**
+         * Only allow proxying http(s) URLs that end in .pdf (path, not query
+         * string) and that don't resolve to a private/reserved/loopback IP,
+         * to prevent the proxy from being used for SSRF against internal
+         * services or cloud metadata endpoints.
+         */
+        public static function is_allowed_proxy_url($url) {
+            $scheme = wp_parse_url($url, PHP_URL_SCHEME);
+            $host   = wp_parse_url($url, PHP_URL_HOST);
+            $path   = wp_parse_url($url, PHP_URL_PATH);
+
+            if (empty($host) || ! in_array($scheme, ['http', 'https'], true)) {
+                return false;
+            }
+
+            if (empty($path) || ! preg_match('/\.pdf$/i', $path)) {
+                return false;
+            }
+
+            $ip = filter_var($host, FILTER_VALIDATE_IP) ? $host : gethostbyname($host);
+
+            if (! filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) {
+                return false;
+            }
+
+            return true;
         }
 
         public static function load_plugin_textdomain() {

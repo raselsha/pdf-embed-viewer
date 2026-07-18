@@ -38,17 +38,17 @@ class CPT{
                 echo esc_url(get_post_meta($post_id,'pdfev_meta_pdf_url',true));
             break;
             case 'pdfev_meta_download':
-                echo esc_html__(get_post_meta($post_id,'pdfev_meta_download',true),'pdf-embed-viewer');
+                echo esc_html(get_post_meta($post_id,'pdfev_meta_download',true));
             break;
             case 'pdfev_meta_downloads_count':
                 $downloads = get_post_meta($post_id,'pdfev_meta_downloads_count',true);
                 $downloads = $downloads?$downloads:0;
-                echo esc_html__($downloads,'pdf-embed-viewer');
+                echo esc_html($downloads);
             break;
             case 'pdfev_meta_views_count':
                 $views = get_post_meta($post_id,'pdfev_meta_views_count',true);
                 $views = $views?$views:0;
-                echo esc_html__($views,'pdf-embed-viewer');
+                echo esc_html($views);
             break;
             case 'shortcode_column':
                 echo esc_html('[pdfev_embed_viewer id="'.get_the_ID().'"]');

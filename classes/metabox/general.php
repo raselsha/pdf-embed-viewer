@@ -119,6 +119,9 @@ class Metabox_General{
                 $image_data = base64_decode($image_data);
                 if ($image_data === false) return;
 
+                // Verify the decoded bytes are actually an image, not just a declared type.
+                if (@getimagesizefromstring($image_data) === false) return;
+
                 // Save to uploads folder
                 $upload_dir = wp_upload_dir();
                 $filename = 'pdfev-featured-' . time() . '.' . $type;
@@ -146,35 +149,34 @@ class Metabox_General{
 
     public function save_post($post_id){
 
-            if( isset( $_POST['pdfev_emd_vwr_metabox_nonce'] ) ){
-                if( ! wp_verify_nonce( sanitize_text_field( wp_unslash ( $_POST['pdfev_emd_vwr_metabox_nonce'] ) ) , 'pdfev_emd_vwr_metabox_nonce' ) ){
-                    return;
-                }
-            }
-
             if( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ){
                 return;
             }
 
-            if( isset($_POST['post_type']) && $_POST['post_type'] === 'pdfev_embed_viewer' ){
-                if( ! current_user_can('edit_page',$post_id) ){
-                    return;
-                }
-                elseif( ! current_user_can('edit_post',$post_id) ){
-                    return;
-                }
-            } 
-            
+            if( ! isset($_POST['post_type']) || $_POST['post_type'] !== 'pdfev_embed_viewer' ){
+                return;
+            }
+
+            if( ! isset( $_POST['pdfev_emd_vwr_metabox_nonce'] )
+                || ! wp_verify_nonce( sanitize_text_field( wp_unslash ( $_POST['pdfev_emd_vwr_metabox_nonce'] ) ) , 'pdfev_emd_vwr_metabox_nonce' )
+            ){
+                return;
+            }
+
+            if( ! current_user_can('edit_page',$post_id) || ! current_user_can('edit_post',$post_id) ){
+                return;
+            }
+
             if ( ! empty( $_POST['pdfev_featured_image'] ) ) {
                 $image_data = $_POST['pdfev_featured_image'];
                 $this->save_featured_image( $post_id, $image_data );
             }
-            
-            if( isset($_POST['action']) and $_POST['action']=='editpost' ){                    
+
+            if( isset($_POST['action']) and $_POST['action']=='editpost' ){
 
                 $file_url  = isset( $_POST['pdfev_meta_pdf_url'] ) ? sanitize_url($_POST['pdfev_meta_pdf_url']) : '';
                 update_post_meta( $post_id, 'pdfev_meta_pdf_url', $file_url );
-                
+
                 $check_download  = isset( $_POST['pdfev_meta_download'] ) ? sanitize_text_field($_POST['pdfev_meta_download']) : 'no';
                 update_post_meta( $post_id, 'pdfev_meta_download', $check_download );
 

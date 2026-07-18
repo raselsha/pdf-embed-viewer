@@ -16,9 +16,13 @@ defined('ABSPATH') || exit;
         }  
 
         public function track_dowload_counts() {
-            if (isset($_POST['post_id'])) {
-                $this->set_file_download_count($_POST['post_id']);
-                $download_count = $this->get_download_count($_POST['post_id']);
+            check_ajax_referer( 'pdf_ajax_nonce', 'ajaxnonce' );
+
+            $post_id = isset($_POST['post_id']) ? absint($_POST['post_id']) : 0;
+
+            if ($post_id) {
+                $this->set_file_download_count($post_id);
+                $download_count = $this->get_download_count($post_id);
                 wp_send_json_success(array(
                     'message' => 'Download count incremented successfully!',
                     'download_count' => $download_count
@@ -26,7 +30,6 @@ defined('ABSPATH') || exit;
             } else {
                 wp_send_json_error('Invalid Post ID');
             }
-            die;
         }
 
         public function get_download_count($post_id) {
