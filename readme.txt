@@ -4,7 +4,7 @@ Contributors:      raselsha
 Requires at least: 3.0
 Tested up to:      6.9
 Requires PHP:      7.0
-Stable tag:        1.4.2
+Stable tag:        1.4.4
 License:           GPLv2 or later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 Tags:              3d-flipbook, ebook, flipbook, pdf-embed, elementor
@@ -184,6 +184,12 @@ For more details, see the [Appsero Privacy Policy](https://appsero.com/privacy-p
 * French (fr_FR)
 
 == Changelog ==
+
+= 1.4.4 =
+* Security fix: PDF proxy endpoint could be used to reach internal/private network addresses; now restricted to public http(s) hosts and verified PDF responses only.
+* Security fix: post save and download-counter requests are now properly nonce-verified.
+* Fixed: admin list columns for download/view counts no longer routed through translation lookups.
+* Fixed: featured image upload now verifies the file is a real image before saving.
 
 = 1.4.2 =
 * file size and pages count added with settings.
