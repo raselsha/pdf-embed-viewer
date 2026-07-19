@@ -1,135 +1,736 @@
-.pdfev-embed-viewer{
-    .nav-tab{
-        cursor: pointer;
-        float: left;
-        border: 1px solid #c3c4c7;
-        border-bottom: none;
-        margin-left: .5em;
-        padding: 5px 10px;
-        font-size: 14px;
-        line-height: 1.71428571;
-        font-weight: 600;
-        background: #dcdcde;
-        color: #50575e;
-        text-decoration: none;
-        white-space: nowrap;
-        &.active {
-            display: block;
-            border-bottom: 1px solid #f0f0f1;
-            background: #f0f0f1;
-            color: #000;
-            margin-bottom: -1px;
-            box-shadow: none;
+// Scoped to .pdfev-settings-page (not the shared .pdfev-embed-viewer class, which the
+// post-edit metabox also uses) so these page-chrome rules never leak into the metabox UI.
+//
+// #wpbody-content qualifier bumps specificity above wp-admin/css/common.css's own
+// `.wrap { margin: 10px 20px 0 2px; }` (same 0,1,0 specificity as a bare `.pdfev-settings-page`
+// rule) so our centered/wider layout always wins regardless of stylesheet print order.
+#wpbody-content .pdfev-settings-page{
+    // ===========design tokens (admin UI only, independent of frontend brand colors)==========
+    --pdfev-admin-accent: #3858e9;
+    --pdfev-admin-accent-hover: #2f47c4;
+    --pdfev-admin-ink: #1d2327;
+    --pdfev-admin-muted: #64748b;
+    --pdfev-admin-border: #e2e4e9;
+    --pdfev-admin-surface: #ffffff;
+    --pdfev-admin-bg: #f6f7f9;
+    --pdfev-admin-danger: #d63638;
+    --pdfev-admin-radius: 10px;
+    --pdfev-admin-radius-sm: 6px;
+    --pdfev-admin-shadow: 0 1px 2px rgba(16, 24, 40, .04);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, Helvetica, Arial, sans-serif;
+    background: var(--pdfev-admin-bg);
+    margin: 20px auto 40px;
+    padding: 20px 24px 40px;
+    max-width: 1360px;
+    width: auto;
+
+    * {
+        box-sizing: border-box;
+    }
+
+    // ===========page header==========
+    .pdfev-header{
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        background: var(--pdfev-admin-surface);
+        border: 1px solid var(--pdfev-admin-border);
+        border-radius: var(--pdfev-admin-radius);
+        box-shadow: var(--pdfev-admin-shadow);
+        padding: 22px 24px;
+        margin-bottom: 20px;
+
+        .pdfev-header-icon{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            min-width: 44px;
+            border-radius: var(--pdfev-admin-radius-sm);
+            background: rgba(56, 88, 233, .1);
+            color: var(--pdfev-admin-accent);
+            font-size: 22px;
+
+            &::before{
+                width: 22px;
+                height: 22px;
+            }
+        }
+
+        .pdfev-header-text{
+            flex: 1;
+
+            h1{
+                margin: 0 0 4px;
+                font-size: 20px;
+                font-weight: 600;
+                color: var(--pdfev-admin-ink);
+                line-height: 1.3;
+            }
+
+            p{
+                margin: 0;
+                font-size: 13px;
+                color: var(--pdfev-admin-muted);
+            }
+        }
+
+        .pdfev-header-version{
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--pdfev-admin-muted);
+            background: var(--pdfev-admin-bg);
+            border: 1px solid var(--pdfev-admin-border);
+            border-radius: 999px;
+            padding: 4px 10px;
+            white-space: nowrap;
         }
     }
-    .pdfev-tab-content{
+
+    // ===========tab nav==========
+    .pdfev-tabs{
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        background: var(--pdfev-admin-surface);
+        border: 1px solid var(--pdfev-admin-border);
+        border-radius: var(--pdfev-admin-radius);
+        box-shadow: var(--pdfev-admin-shadow);
+        padding: 6px;
+        margin-bottom: 20px;
+
+        .nav-tab{
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            float: none;
+            border: none;
+            margin: 0;
+            padding: 8px 14px;
+            font-size: 13px;
+            line-height: 1.4;
+            font-weight: 500;
+            background: transparent;
+            color: var(--pdfev-admin-muted);
+            border-radius: var(--pdfev-admin-radius-sm);
+            transition: background .15s ease, color .15s ease;
+
+            .dashicons{
+                width: 16px;
+                height: 16px;
+                font-size: 16px;
+            }
+
+            &:hover{
+                background: var(--pdfev-admin-bg);
+                color: var(--pdfev-admin-ink);
+            }
+
+            &.active {
+                display: inline-flex;
+                background: var(--pdfev-admin-accent);
+                color: #fff;
+                margin-bottom: 0;
+                box-shadow: none;
+
+                &:hover{
+                    background: var(--pdfev-admin-accent);
+                }
+            }
+        }
+    }
+
+    .pdfev-tab-panels{
+        .pdfev-tab-content{
+            display: none;
+            &.active {
+                display: block;
+            }
+        }
+    }
+
+    // ===========cards==========
+    .pdfev-card{
+        background: var(--pdfev-admin-surface);
+        border: 1px solid var(--pdfev-admin-border);
+        border-radius: var(--pdfev-admin-radius);
+        box-shadow: var(--pdfev-admin-shadow);
+        margin-bottom: 16px;
+        overflow: hidden;
+
+        .pdfev-card-header{
+            padding: 18px 24px;
+            border-bottom: 1px solid var(--pdfev-admin-border);
+
+            h2{
+                margin: 0 0 4px;
+                font-size: 14px;
+                font-weight: 600;
+                color: var(--pdfev-admin-ink);
+            }
+
+            p{
+                margin: 0;
+                font-size: 13px;
+                color: var(--pdfev-admin-muted);
+            }
+        }
+
+        .pdfev-card-body{
+            padding: 20px 24px;
+        }
+    }
+
+    // ===========general tab: sidebar + section panel==========
+    .pdfev-settings-shell{
+        display: grid;
+        grid-template-columns: 240px 1fr;
+        gap: 20px;
+        align-items: start;
+
+        @media (max-width: 960px){
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .pdfev-settings-sidebar{
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        background: var(--pdfev-admin-surface);
+        border: 1px solid var(--pdfev-admin-border);
+        border-radius: var(--pdfev-admin-radius);
+        box-shadow: var(--pdfev-admin-shadow);
+        padding: 8px;
+        position: sticky;
+        top: 32px;
+
+        @media (max-width: 960px){
+            position: static;
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+    }
+
+    .pdfev-section-nav{
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+        border: none;
+        background: transparent;
+        text-align: left;
+        padding: 10px 12px;
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--pdfev-admin-muted);
+        border-radius: var(--pdfev-admin-radius-sm);
+        cursor: pointer;
+        transition: background .15s ease, color .15s ease;
+
+        .dashicons{
+            width: 16px;
+            height: 16px;
+            font-size: 16px;
+            color: var(--pdfev-admin-muted);
+        }
+
+        &:hover{
+            background: var(--pdfev-admin-bg);
+            color: var(--pdfev-admin-ink);
+        }
+
+        &.active{
+            background: rgba(56, 88, 233, .1);
+            color: var(--pdfev-admin-accent);
+
+            .dashicons{
+                color: var(--pdfev-admin-accent);
+            }
+        }
+    }
+
+    .pdfev-settings-panel{
+        background: var(--pdfev-admin-surface);
+        border: 1px solid var(--pdfev-admin-border);
+        border-radius: var(--pdfev-admin-radius);
+        box-shadow: var(--pdfev-admin-shadow);
+        overflow: hidden;
+    }
+
+    .pdfev-settings-section{
         display: none;
-        padding: 10px;
-        &.active {
+        &.active{
             display: block;
         }
-        .pdfev-shortcode-generaor{
-            display: flex;
-            padding: 10px;
-            gap:50px;
-            .shortcode-sidebar{
-                border: 1px solid #333;
-                width: 30%;
-                padding: 10px;
-            }
-            .shortcode-previewer{
-                border: 1px solid #333;
-                width: 70%;
-                padding: 10px;
-                text-align: center;
-                .pdfev-loading::after {
-                    content: '';
-                    display: inline-block;
-                    margin-left: 10px;
-                    width: 16px;
-                    height: 16px;
-                    border: 2px solid #ccc;
-                    border-top: 2px solid #333;
-                    border-radius: 50%;
-                    animation: spin 0.6s linear infinite;
-                }
+    }
 
-                @keyframes spin {
-                    0% { transform: rotate(0deg); }
-                    100% { transform: rotate(360deg); }
-                }
+    .pdfev-section-header{
+        padding: 18px 24px;
+        border-bottom: 1px solid var(--pdfev-admin-border);
+
+        h2{
+            margin: 0 0 4px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--pdfev-admin-ink);
+        }
+
+        p{
+            margin: 0;
+            font-size: 13px;
+            color: var(--pdfev-admin-muted);
+        }
+    }
+
+    .pdfev-section-body{
+        padding: 20px 24px;
+    }
+
+    // ===========field rows==========
+    .pdfev-field-row{
+        display: grid;
+        grid-template-columns: 220px 1fr;
+        align-items: center;
+        gap: 16px;
+        padding: 8px 0;
+        min-height: 36px;
+
+        &:not(:last-child){
+            border-bottom: 1px solid var(--pdfev-admin-border);
+        }
+
+        .pdfev-field-label{
+            label{
+                display: block;
+                font-size: 13px;
+                font-weight: 500;
+                color: var(--pdfev-admin-ink);
             }
-            h2 {
+
+            span{
+                display: block;
+                margin-top: 2px;
+                font-size: 12px;
+                line-height: 1.4;
+                color: var(--pdfev-admin-muted);
+            }
+        }
+
+        .pdfev-field-control{
+            max-width: 340px;
+        }
+
+        &.pdfev-field-row--stacked{
+            display: block;
+            border-bottom: none;
+            padding: 0 0 12px;
+            min-height: 0;
+
+            label{
+                display: block;
+                margin-bottom: 6px;
+                font-size: 13px;
+                font-weight: 500;
+                color: var(--pdfev-admin-ink);
+            }
+        }
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="number"],
+    select,
+    textarea{
+        width: 100%;
+        border: 1px solid var(--pdfev-admin-border);
+        border-radius: var(--pdfev-admin-radius-sm);
+        padding: 5px 10px;
+        min-height: 30px;
+        font-size: 13px;
+        line-height: 1.4;
+        color: var(--pdfev-admin-ink);
+        background: var(--pdfev-admin-surface);
+        transition: border-color .15s ease, box-shadow .15s ease;
+
+        &:focus{
+            outline: none;
+            border-color: var(--pdfev-admin-accent);
+            box-shadow: 0 0 0 3px rgba(56, 88, 233, .12);
+        }
+    }
+
+    textarea{
+        min-height: 80px;
+        line-height: 1.5;
+    }
+
+    // ===========toggle rows/grid==========
+    .pdfev-toggle-grid{
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 2px;
+
+        &.pdfev-toggle-grid--compact{
+            grid-template-columns: repeat(2, 1fr);
+            column-gap: 32px;
+
+            @media (max-width: 782px){
+                grid-template-columns: 1fr;
+            }
+        }
+    }
+
+    .pdfev-toggle-row{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 9px 0;
+        min-height: 32px;
+        border-bottom: 1px solid var(--pdfev-admin-border);
+
+        &:last-child{
+            border-bottom: none;
+        }
+
+        .pdfev-toggle-row-label{
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .pdfev-toggle-row-title{
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--pdfev-admin-ink);
+        }
+
+        .pdfev-toggle-row-desc{
+            font-size: 12px;
+            line-height: 1.4;
+            color: var(--pdfev-admin-muted);
+        }
+    }
+
+    // ===========color grid==========
+    .pdfev-color-grid{
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+
+        @media (max-width: 782px){
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .pdfev-color-item{
+            label{
+                display: block;
+                font-size: 12px;
+                font-weight: 500;
+                color: var(--pdfev-admin-ink);
+            }
+
+            span{
+                display: block;
+                margin: 2px 0 6px;
+                font-size: 11.5px;
+                line-height: 1.4;
+                color: var(--pdfev-admin-muted);
+            }
+
+            // WP sets the swatch color as an inline background-color on .wp-color-result itself
+            // (via JS), so it always fills the whole button — we can't shrink that inline style
+            // from CSS. Instead we pin the "Select Color" label as an absolutely-positioned panel
+            // that covers everything except a fixed-width strip on the left, so the swatch color
+            // only ever shows through that reserved strip, regardless of the button's own width.
+            .wp-picker-container{
+                display: block;
+            }
+
+            .wp-color-result.button{
+                position: relative;
+                width: 100%;
+                min-height: 34px;
+                padding: 0;
+                border: 1px solid var(--pdfev-admin-border);
+                border-radius: var(--pdfev-admin-radius-sm);
+                box-shadow: none;
+                overflow: hidden;
+            }
+
+            .wp-color-result-text{
+                position: absolute;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 40px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
                 margin: 0;
-                margin-bottom: 20px;
+                padding: 0 10px;
+                background: var(--pdfev-admin-surface);
+                border-left: 1px solid var(--pdfev-admin-border);
+                color: var(--pdfev-admin-ink);
+                font-size: 12px;
+                line-height: normal;
             }
-            .form-group {
-                margin-bottom: 15px;
+
+            input.wp-color-picker{
+                width: 100%;
+                margin-top: 8px;
+                font-size: 12.5px;
+            }
+
+            .wp-picker-clear.button{
+                margin-top: 6px;
+            }
+        }
+    }
+
+    // ===========demo import==========
+    .pdfev-demo-import{
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    // ===========buttons==========
+    .pdfev-form-footer{
+        margin-top: 4px;
+    }
+
+    .pdfev-btn,
+    .pdfev-card-body .button-primary,
+    .pdfev-form-footer .button-primary{
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        height: auto;
+        border: 1px solid transparent;
+        border-radius: var(--pdfev-admin-radius-sm);
+        padding: 8px 16px;
+        font-size: 13px;
+        font-weight: 500;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background .15s ease, border-color .15s ease, color .15s ease;
+
+        .dashicons{
+            width: 16px;
+            height: 16px;
+            font-size: 16px;
+        }
+    }
+
+    .pdfev-btn-primary,
+    .pdfev-card-body .button-primary,
+    .pdfev-form-footer .button-primary{
+        background: var(--pdfev-admin-accent);
+        border-color: var(--pdfev-admin-accent);
+        color: #fff;
+        text-shadow: none;
+        box-shadow: none;
+
+        &:hover{
+            background: var(--pdfev-admin-accent-hover);
+            border-color: var(--pdfev-admin-accent-hover);
+            color: #fff;
+        }
+    }
+
+    .pdfev-btn-secondary{
+        background: var(--pdfev-admin-surface);
+        border-color: var(--pdfev-admin-border);
+        color: var(--pdfev-admin-ink);
+
+        &:hover{
+            background: var(--pdfev-admin-bg);
+        }
+    }
+
+    .pdfev-btn-ghost{
+        background: transparent;
+        border-color: var(--pdfev-admin-border);
+        color: var(--pdfev-admin-muted);
+
+        &:hover{
+            background: var(--pdfev-admin-bg);
+            color: var(--pdfev-admin-ink);
+        }
+    }
+
+    // ===========shortcode generator==========
+    .pdfev-shortcode-generaor{
+        display: grid;
+        grid-template-columns: 420px 1fr;
+        gap: 16px;
+        align-items: start;
+
+        @media (max-width: 960px){
+            grid-template-columns: 1fr;
+        }
+
+        .shortcode-sidebar,
+        .shortcode-previewer{
+            background: var(--pdfev-admin-surface);
+            border: 1px solid var(--pdfev-admin-border);
+            border-radius: var(--pdfev-admin-radius);
+            box-shadow: var(--pdfev-admin-shadow);
+            overflow: hidden;
+        }
+
+        .shortcode-previewer{
+            text-align: left;
+            align-self: stretch;
+
+            .pdfev-loading::after {
+                content: '';
+                display: inline-block;
+                margin-left: 10px;
+                width: 16px;
+                height: 16px;
+                border: 2px solid var(--pdfev-admin-border);
+                border-top: 2px solid var(--pdfev-admin-accent);
+                border-radius: 50%;
+                animation: spin 0.6s linear infinite;
+            }
+
+            @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
+        }
+
+        .form-group {
+            margin-bottom: 12px;
+
+            .form-group-row{
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                select, input {
-                width:300px;
-                font-size: 14px;
-                }
+                gap: 12px;
             }
-            
-            .pdfev-shortcode{
-                background: #f4f4f4;
-                border: 1px solid #ccc;
-                padding: 10px;
-                margin-top: 20px;
-                font-family: monospace;
-                font-size: 15px;
+
+            label{
+                font-size: 13px;
+                font-weight: 500;
+                color: var(--pdfev-admin-ink);
+                white-space: nowrap;
             }
-            button {
-            margin-top: 15px;
-            padding: 10px 15px;
-            background: #0073aa;
-            border: none;
-            color: #fff;
-            font-size: 14px;
-            cursor: pointer;
+
+            select, input {
+                width: 220px;
+                font-size: 13px;
             }
-            button:hover {
-            background: #005f8d;
+
+            .form-group-desc{
+                display: block;
+                margin-top: 4px;
+                font-size: 11.5px;
+                line-height: 1.4;
+                color: var(--pdfev-admin-muted);
             }
         }
-        .pdf-embed-viewer-support{
-            padding: 20px; 
-            background: #f9f9f9; 
-            border: 1px solid #ddd; 
-            border-radius: 8px; 
-            margin-top: 20px;
-            margin-bottom: 30px;
-            h2{
-                margin-top: 0;
-            }
-            .pdfev-support-list{
-                list-style: disc;
-                padding-left: 20px;
-            }
-            .pdfev-support-form-wrap{
-                max-width: 500px;
-            }
-            .pdfev-full-width-input{
-                width: 100%;
-                box-sizing: border-box;
-            }
+
+        .pdfev-shortcode-actions{
+            display: flex;
+            gap: 8px;
+            margin-top: 18px;
+        }
+
+        .pdfev-shortcode{
+            background: var(--pdfev-admin-bg);
+            border: 1px solid var(--pdfev-admin-border);
+            border-radius: var(--pdfev-admin-radius-sm);
+            padding: 14px;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+            font-size: 12.5px;
+            line-height: 1.6;
+            color: var(--pdfev-admin-ink);
+            word-break: break-word;
+        }
+
+        button.pdfev-btn{
+            margin-top: 14px;
         }
     }
-    
+
+    // ===========support tab==========
+    .pdf-embed-viewer-support{
+        margin-top: 4px;
+        margin-bottom: 4px;
+
+        .pdfev-support-links{
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            align-items: start;
+
+            @media (max-width: 960px){
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .pdfev-support-list{
+            list-style: none;
+            margin: 0;
+            padding: 0;
+
+            li{
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                padding: 10px 0;
+                border-bottom: 1px solid var(--pdfev-admin-border);
+                font-size: 13px;
+                color: var(--pdfev-admin-ink);
+
+                &:last-child{
+                    border-bottom: none;
+                }
+
+                .dashicons{
+                    color: var(--pdfev-admin-accent);
+                }
+
+                span:nth-child(2){
+                    flex: 1;
+                }
+
+                a{
+                    color: var(--pdfev-admin-accent);
+                    text-decoration: none;
+                    font-weight: 500;
+                    white-space: nowrap;
+
+                    &:hover{
+                        color: var(--pdfev-admin-accent-hover);
+                    }
+                }
+            }
+        }
+
+        .pdfev-full-width-input{
+            width: 100%;
+            box-sizing: border-box;
+        }
+    }
 }
 
 .demo-import-success{
-    color: green;
+    font-size: 13px;
+    color: #1a7f37;
 }
 .pdfev-loader {
   display: inline-block;
-  width: 20px;
-  height: 20px;
-  border: 3px solid #ddd;      /* outer border */
-  border-top: 3px solid #0073aa; /* WP blue (active part) */
+  width: 16px;
+  height: 16px;
+  border: 2px solid #ddd;
+  border-top: 2px solid var(--pdfev-admin-accent, #0073aa);
   border-radius: 50%;
   animation: pdfev-spin 1s linear infinite;
   vertical-align: middle;

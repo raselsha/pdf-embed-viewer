@@ -16,14 +16,18 @@ class Enque_Style{
 
     public function backend_style(){
         wp_enqueue_style('pdfev-font-awesome',PDFEV_Const_URL.'vendor/font-awesome/font-awesome.min.css',[],PDFEV_Const_VERSION,'all');
-        
-        wp_enqueue_style('main',PDFEV_Const_URL.'assets/css/admin.css',['wp-color-picker'],PDFEV_Const_VERSION,'all');
-        wp_enqueue_media(); 
-        
+
+        $admin_css_path = PDFEV_Const_Path.'assets/css/admin.css';
+        $admin_css_ver = file_exists($admin_css_path) ? filemtime($admin_css_path) : PDFEV_Const_VERSION;
+        wp_enqueue_style('main',PDFEV_Const_URL.'assets/css/admin.css',['wp-color-picker'],$admin_css_ver,'all');
+        wp_enqueue_media();
+
         wp_enqueue_script( 'pdfjs', PDFEV_Const_URL.'vendor/pdf/pdf.min.js', [], PDFEV_Const_VERSION, true );
         wp_enqueue_script( 'pdfjs-worker', PDFEV_Const_URL.'vendor/pdf/pdf.worker.min.js', [], PDFEV_Const_VERSION, true );
 
-        wp_enqueue_script( 'pdf-embed-viewer', PDFEV_Const_URL.'assets/js/admin.js', ['jquery','wp-color-picker','jquery-ui-core'], PDFEV_Const_VERSION, false );
+        $admin_js_path = PDFEV_Const_Path.'assets/js/admin.js';
+        $admin_js_ver = file_exists($admin_js_path) ? filemtime($admin_js_path) : PDFEV_Const_VERSION;
+        wp_enqueue_script( 'pdf-embed-viewer', PDFEV_Const_URL.'assets/js/admin.js', ['jquery','wp-color-picker','jquery-ui-core'], $admin_js_ver, false );
         wp_localize_script('pdf-embed-viewer', 'pdfevAjax', array(
             'ajaxurl' => admin_url('admin-ajax.php'),
             'ajaxnonce'=> wp_create_nonce('pdf_ajax_nonce'),

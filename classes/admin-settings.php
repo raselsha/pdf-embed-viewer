@@ -62,13 +62,31 @@ class Admin_Settings{
     }
 
     public function settings_html_layout(){
+        /*
+         * WP core's admin JS (common.js) relocates any .notice/.updated/.error to right after
+         * the first h1/h2 it finds inside .wrap when no .wp-header-end marker exists. Our own
+         * <h1> lives nested inside .pdfev-header, so without this marker, notices (e.g. the
+         * Appsero opt-in) would get injected inside that card instead. Placed as a sibling
+         * before .wrap (not inside it) so relocated notices render outside our padded/centered
+         * container, at native WP admin width, instead of squeezed into it.
+         */
         ?>
-        <div class="wrap admin-wrap pdfev-embed-viewer">
-            <h2><?php get_admin_page_title(); ?></h2>
-            <h2 class="nav-tab-wrapper">
-                <?php do_action('pdfev_settings_tabs'); ?>                
-            </h2>
-            <?php do_action('pdfev_settings_tabs_content'); ?>
+        <span class="wp-header-end"></span>
+        <div class="wrap pdfev-embed-viewer pdfev-settings-page">
+            <div class="pdfev-header">
+                <span class="pdfev-header-icon dashicons dashicons-media-document" aria-hidden="true"></span>
+                <div class="pdfev-header-text">
+                    <h1><?php echo esc_html__('PDF Embed Viewer', 'pdf-embed-viewer'); ?></h1>
+                    <p><?php echo esc_html__('Configure your flipbook viewer, shortcodes, and display options.', 'pdf-embed-viewer'); ?></p>
+                </div>
+                <span class="pdfev-header-version">v<?php echo esc_html(defined('PDFEV_Const_VERSION') ? PDFEV_Const_VERSION : ''); ?></span>
+            </div>
+            <div class="pdfev-tabs" role="tablist">
+                <?php do_action('pdfev_settings_tabs'); ?>
+            </div>
+            <div class="pdfev-tab-panels">
+                <?php do_action('pdfev_settings_tabs_content'); ?>
+            </div>
         </div>
         <?php
     }

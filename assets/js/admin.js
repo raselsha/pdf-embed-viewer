@@ -3,13 +3,47 @@
   $(document).ready(function() {
     $('.pdfev-color-field').wpColorPicker();
   });
-  // ===========tab=================
+  // ===========tab (persists across reload via localStorage)=================
+  // Only the top-level settings-page tabs (.nav-tab) persist — the post-edit metabox
+  // reuses the same [data-tab-target] convention (li.pdfev-tab) but shouldn't share the
+  // same storage key, or clicking a metabox tab would clobber the remembered settings tab.
+  var pdfevTabStorageKey = 'pdfevActiveTab';
   $(document).on('click','[data-tab-target]',function(){
     $('[data-tab-target]').removeClass('active');
     $(this).addClass('active');
     var target = $(this).data('tab-target');
     $('.pdfev-tab-content').removeClass('active');
-    $('[data-tab="' + target + '"]').addClass('active'); 
+    $('[data-tab="' + target + '"]').addClass('active');
+    if ($(this).hasClass('nav-tab')) {
+      try { localStorage.setItem(pdfevTabStorageKey, target); } catch (e) {}
+    }
+  });
+
+  // ===========settings sidebar sections (persists across reload)=================
+  var pdfevSectionStorageKey = 'pdfevActiveSection';
+  $(document).on('click','[data-section-target]',function(){
+    $('[data-section-target]').removeClass('active');
+    $(this).addClass('active');
+    var target = $(this).data('section-target');
+    $('.pdfev-settings-section').removeClass('active');
+    $('[data-section="' + target + '"]').addClass('active');
+    try { localStorage.setItem(pdfevSectionStorageKey, target); } catch (e) {}
+  });
+
+  // restore last active tab/section on page load, if any was saved
+  $(document).ready(function(){
+    try {
+      var savedTab = localStorage.getItem(pdfevTabStorageKey);
+      if (savedTab) {
+        var $tabBtn = $('.nav-tab[data-tab-target="' + savedTab + '"]');
+        if ($tabBtn.length) { $tabBtn.trigger('click'); }
+      }
+      var savedSection = localStorage.getItem(pdfevSectionStorageKey);
+      if (savedSection) {
+        var $sectionBtn = $('[data-section-target="' + savedSection + '"]');
+        if ($sectionBtn.length) { $sectionBtn.trigger('click'); }
+      }
+    } catch (e) {}
   });
 
   // ============toggle switch=======
@@ -276,19 +310,20 @@
     selection.removeAllRanges();
     selection.addRange(range);
 
+    var label = $(this).find('.pdfev-btn-label');
     try {
         const successful = document.execCommand('copy');
         if (successful) {
-            $(this).text('Copied!');
+            label.text('Copied!');
             setTimeout(() => {
-                $(this).text('Copy');
+                label.text('Copy');
             }, 1500);
         } else {
-            $(this).text('Failed!');
+            label.text('Failed!');
         }
     } catch (err) {
         console.error('Copy failed', err);
-        $(this).text('Error!');
+        label.text('Error!');
     }
 
     selection.removeAllRanges();

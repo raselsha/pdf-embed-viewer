@@ -1,116 +1,299 @@
-
+// Scoped to #pdfev-embed-viewer (the postbox WP wraps our metabox in) with its own local
+// design tokens — deliberately not sharing settings.scss's #wpbody-content .pdfev-settings-page
+// tokens, since custom properties only cascade to descendants of the element they're set on,
+// and this postbox lives in a completely different part of the post-edit-screen DOM.
 #pdfev-embed-viewer{
+    --pdfev-mb-accent: #3858e9;
+    --pdfev-mb-accent-hover: #2f47c4;
+    --pdfev-mb-ink: #1d2327;
+    --pdfev-mb-muted: #64748b;
+    --pdfev-mb-border: #e2e4e9;
+    --pdfev-mb-surface: #ffffff;
+    --pdfev-mb-bg: #f6f7f9;
+    --pdfev-mb-radius: 8px;
+    --pdfev-mb-radius-sm: 5px;
+
     .inside{
         margin: 0;
         padding: 0;
+
         #pdfev-embed-metabox-tabs{
             display: flex;
-            justify-content: space-between;
+            align-items: flex-start;
+            gap: 16px;
+            background-color: var(--pdfev-mb-bg);
+            padding: 16px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, Helvetica, Arial, sans-serif;
 
-            aside{
-                width: 20%;
-                background-color: $light;
+            * {
+                box-sizing: border-box;
+            }
+
+            .pdfev-metabox-sidebar{
+                width: 220px;
+                min-width: 220px;
+                background-color: var(--pdfev-mb-surface);
+                border: 1px solid var(--pdfev-mb-border);
+                border-radius: var(--pdfev-mb-radius);
+                box-shadow: 0 1px 2px rgba(16, 24, 40, .04);
+
                 ul{
                     margin: 0;
-                    padding: 20px;
-                    padding-right: 0;
+                    padding: 12px;
                     list-style: none;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 2px;
+
                     li.pdfev-tab{
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
                         margin: 0;
-                        padding: 10px;
-                        border-bottom: 1px solid $gray;
-                        font-size: 16px;
-                        font-weight: normal;
-                        color: $dark;
-                        border-left: 2px solid transparent;
+                        padding: 10px 12px;
+                        border-radius: var(--pdfev-mb-radius-sm);
+                        font-size: 13px;
+                        font-weight: 500;
+                        color: var(--pdfev-mb-muted);
+                        border-left: none;
                         cursor: pointer;
-                        &.active{
-                            background-color: $white;
-                            border-left: 2px solid $primary;
+                        transition: background .15s ease, color .15s ease;
+
+                        .dashicons{
+                            width: 16px;
+                            height: 16px;
+                            font-size: 16px;
+                            color: var(--pdfev-mb-muted);
                         }
-                        i{
-                            padding: 0 10px;
-                            color: $primary;
+
+                        &:hover{
+                            background-color: rgba(0, 0, 0, .03);
+                            color: var(--pdfev-mb-ink);
+                        }
+
+                        &.active{
+                            background-color: rgba(56, 88, 233, .1);
+                            color: var(--pdfev-mb-accent);
+
+                            .dashicons{
+                                color: var(--pdfev-mb-accent);
+                            }
                         }
                     }
                 }
             }
 
-            .content{
-                width: 80%;
-                padding: 2% 5%;
+            .pdfev-metabox-content{
+                flex: 1;
+                min-width: 0;
+                background-color: var(--pdfev-mb-surface);
+                border: 1px solid var(--pdfev-mb-border);
+                border-radius: var(--pdfev-mb-radius);
+                box-shadow: 0 1px 2px rgba(16, 24, 40, .04);
+                overflow: hidden;
+
                 .pdfev-tab-content{
                     display: none;
                     &.active {
                         display: block;
                     }
-                    h2{
-                        font-size: 20px;
-                        font-weight: bold;
-                        padding: 0;
+                }
+            }
+
+            .pdfev-metabox-section-header{
+                padding: 18px 24px;
+                border-bottom: 1px solid var(--pdfev-mb-border);
+
+                h2{
+                    margin: 0 0 4px;
+                    padding: 0;
+                    font-size: 15px;
+                    font-weight: 600;
+                    color: var(--pdfev-mb-ink);
+                }
+
+                p{
+                    margin: 0;
+                    font-size: 13px;
+                    color: var(--pdfev-mb-muted);
+                }
+            }
+
+            .pdfev-metabox-section-body{
+                padding: 4px 24px 20px;
+            }
+
+            .pdfev-metabox-field{
+                display: grid;
+                grid-template-columns: 260px 1fr;
+                align-items: center;
+                gap: 16px;
+                padding: 14px 0;
+
+                &:not(:last-child){
+                    border-bottom: 1px solid var(--pdfev-mb-border);
+                }
+
+                &.pdfev-metabox-field--stacked{
+                    display: block;
+
+                    .pdfev-metabox-field-control{
+                        margin-top: 10px;
                     }
+                }
+
+                .pdfev-metabox-field-label{
                     p{
-                        margin-top: 0;
+                        margin: 0 0 2px;
+                        font-size: 13px;
+                        font-weight: 500;
+                        color: var(--pdfev-mb-ink);
+                    }
+
+                    span{
+                        display: block;
+                        font-size: 12px;
+                        color: var(--pdfev-mb-muted);
+                        font-weight: normal;
+                    }
+                }
+
+                .pdfev-metabox-field-control{
+                    &.pdfev-metabox-field-control--inline{
+                        display: flex;
+                        gap: 8px;
+
+                        input.pdfev-emd-vwr-file{
+                            flex: 1;
+                        }
+                    }
+
+                    code{
+                        display: inline-block;
+                        background: var(--pdfev-mb-bg);
+                        border: 1px solid var(--pdfev-mb-border);
+                        border-radius: var(--pdfev-mb-radius-sm);
+                        padding: 6px 10px;
+                        font-size: 12.5px;
+                        color: var(--pdfev-mb-ink);
+                    }
+
+                    input[type="text"],
+                    input[type="url"],
+                    input[type="number"],
+                    select{
+                        width: 100%;
+                        max-width: 420px;
+                        border: 1px solid var(--pdfev-mb-border);
+                        border-radius: var(--pdfev-mb-radius-sm);
+                        padding: 5px 10px;
+                        min-height: 30px;
+                        font-size: 13px;
+                        line-height: 1.4;
+                        color: var(--pdfev-mb-ink);
+
+                        &:focus{
+                            outline: none;
+                            border-color: var(--pdfev-mb-accent);
+                            box-shadow: 0 0 0 3px rgba(56, 88, 233, .12);
+                        }
+                    }
+
+                    .button.pdfev-emd-vwr-upload{
+                        display: inline-flex;
+                        align-items: center;
+                        gap: 6px;
+                        white-space: nowrap;
+
+                        .dashicons{
+                            width: 16px;
+                            height: 16px;
+                            font-size: 16px;
+                        }
                     }
                 }
             }
 
-            section{
-                border: 1px solid $light;
-                margin-top: -1px;
-                padding: 15px 10px;
-                .label{
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                    p{
-                        color: $secondary;
-                        font-weight: bold;
-                        margin: 0;
-                        cursor: pointer;
+            // ===========toggle switch button==========
+            .switch {
+                position: relative;
+                display: inline-block;
+                width: 40px;
+                height: 22px;
+                margin: 0;
+                flex-shrink: 0;
+
+                input {
+                    opacity: 0;
+                    width: 0;
+                    height: 0;
+                }
+
+                .slider {
+                    position: absolute;
+                    cursor: pointer;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    border-radius: 999px;
+                    background-color: #d0d3d9;
+                    transition: background-color .2s ease;
+
+                    &:before {
+                        position: absolute;
+                        content: "";
+                        height: 16px;
+                        width: 16px;
+                        left: 3px;
+                        top: 3px;
+                        border-radius: 50%;
+                        background-color: #fff;
+                        box-shadow: 0 1px 2px rgba(16, 24, 40, .2);
+                        transition: transform .2s ease;
                     }
                 }
-                .pdfev-field-actions{
-                    width: 50%;
-                    display: flex;
-                    justify-content: flex-end;
-                    text-align: right;
-                }
-                .pdfev-field-control{
-                    width: 55%;
-                }
-                .pdfev-inline-fields{
-                    display: flex;
-                    gap: 10px;
+
+                input:checked + .slider {
+                    background-color: var(--pdfev-mb-accent);
+                    &:before{
+                        transform: translateX(18px);
+                    }
                 }
 
-
-                input.pdfev-emd-vwr-file{
-                    width: 83%;
+                input:focus-visible + .slider {
+                    box-shadow: 0 0 0 3px rgba(56, 88, 233, .25);
                 }
             }
 
-            .pdfev-preview-area{
+            .pdfev-metabox-preview-area{
                 display: flex;
-                gap:10px;
+                gap: 16px;
+                margin-top: 6px;
+
                 .warning{
                     text-align: center;
                     padding-top: 100px;
-                    color:  red;
+                    color: #d63638;
+                    font-size: 13px;
                 }
+
                 #pdfev-document-preview{
                     display: none;
                     width: 75%;
                     height: 400px;
                     overflow: auto;
-                    border: 1px solid var(--pdfev-light);
-                    box-sizing: border-box;
+                    border: 1px solid var(--pdfev-mb-border);
+                    border-radius: var(--pdfev-mb-radius);
+                    background: var(--pdfev-mb-surface);
+
                     .preview-thumbnail{
                         margin: 5px;
                         display: inline-block;
                         text-align: center;
                         position: relative;
                         cursor: pointer;
+
                         &::before{
                             display: none;
                             content: 'Click to set Fetured image';
@@ -124,17 +307,21 @@
                             color: skyblue;
                             box-sizing: border-box;
                         }
+
                         &:hover::before{
                             display: block;
                         }
+
                         .page-number{
                             font-family: 12px;
                             text-align: center;
                         }
                     }
+
                     canvas{
                         border: 1px solid #ddd;
                     }
+
                     .pdfev-loader-wrapper {
                         display: flex;
                         flex-direction: column;
@@ -142,16 +329,15 @@
                         align-items: center;
                         min-height: 200px;
                         text-align: center;
-                        color: #555;
-                        font-family: sans-serif;
+                        color: var(--pdfev-mb-muted);
                     }
 
                     .pdfev-spinner {
-                        border: 6px solid #f3f3f3;
-                        border-top: 6px solid #007cba; /* WP blue */
+                        border: 4px solid #f3f3f3;
+                        border-top: 4px solid var(--pdfev-mb-accent);
                         border-radius: 50%;
-                        width: 40px;
-                        height: 40px;
+                        width: 32px;
+                        height: 32px;
                         animation: pdfev-spin 1s linear infinite;
                         margin-bottom: 10px;
                     }
@@ -160,21 +346,25 @@
                         0% { transform: rotate(0deg); }
                         100% { transform: rotate(360deg); }
                     }
-
                 }
+
                 .pdfev-featured-image-area{
                     width: 25%;
                     display: flex;
                     flex-direction: column;
-                    align-items: center;
-                    gap:10px;
-                    justify-content: start;
-                    background-color: var(--pdfev-light);
-                    padding: 10px;
-                    border-radius: 10px;
+                    align-items: stretch;
+                    gap: 8px;
+                    background-color: var(--pdfev-mb-bg);
+                    border: 1px solid var(--pdfev-mb-border);
+                    padding: 14px;
+                    border-radius: var(--pdfev-mb-radius);
+                    font-size: 12.5px;
+                    color: var(--pdfev-mb-muted);
+
                     #pdfev-featured-image-preview{
                         width: 100%;
-                        display:none;
+                        border-radius: var(--pdfev-mb-radius-sm);
+                        display: none;
                     }
                 }
             }

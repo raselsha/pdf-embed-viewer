@@ -19,18 +19,23 @@ class General_Settings{
     
     public function tabs(){
         ?>
-        <button class="nav-tab active" data-tab-target="pdfev_emd_vwr_admin_tabs_settings"> <?php echo esc_html__('General Settings','pdf-embed-viewer'); ?> </button>
+        <button class="nav-tab active" data-tab-target="pdfev_emd_vwr_admin_tabs_settings">
+            <span class="dashicons dashicons-admin-generic" aria-hidden="true"></span>
+            <?php echo esc_html__('General Settings','pdf-embed-viewer'); ?>
+        </button>
         <?php
     }
     public function tabs_content(){
         ?>
         <div class="pdfev-tab-content active" data-tab="pdfev_emd_vwr_admin_tabs_settings">
-            <form action="" method="post">
+            <form action="" method="post" class="pdfev-settings-form">
                 <?php wp_nonce_field( 'pdfev_emd_vwr_options_nonce', 'pdfev_emd_vwr_options_nonce' ); ?>
                 <?php $this->options_fields(); ?>
-                <?php submit_button(); ?>
+                <div class="pdfev-form-footer">
+                    <?php submit_button( __( 'Save Changes', 'pdf-embed-viewer' ), 'primary', 'submit', false ); ?>
+                </div>
             </form>
-        </div> 
+        </div>
         <?php
     }
 
@@ -100,190 +105,179 @@ class General_Settings{
         $dark           = $colors['dark']?$colors['dark']:'#333333';
         $light          = $colors['light']?$colors['light']:'#e5e5e5';
 
+        $sections = [
+            'archive'  => ['icon' => 'admin-links',     'label' => __('Archive Page', 'pdf-embed-viewer')],
+            'display'  => ['icon' => 'visibility',       'label' => __('Display & Behavior', 'pdf-embed-viewer')],
+            'metadata' => ['icon' => 'info',             'label' => __('Book Metadata', 'pdf-embed-viewer')],
+            'colors'   => ['icon' => 'admin-appearance', 'label' => __('Brand Colors', 'pdf-embed-viewer')],
+            'demo'     => ['icon' => 'database-import',  'label' => __('Demo Content', 'pdf-embed-viewer')],
+        ];
         ?>
-            <table class="form-table" role="presentation">
-                <tbody>
-                    <tr>
-                        <th scope="row"><?php esc_html_e('Archive Title','pdf-embed-viewer') ?></th>
-                        <td>
-                            <input type="text" name="pdfev_archive_title" placeholder="Pdf Embed Viewer" value="<?php echo esc_attr($archive_title); ?>">
-                        </td>
-                    </tr>
-                    <tr>
-                        <th><?php echo esc_html__( 'Archive Slug', 'pdf-embed-viewer' )?></th>
-                        <td>
-                            <input type="text" name="pdfev_archive_slug" placeholder="pdf-embed-viewer" value="<?php echo esc_attr($archive_slug); ?>">
-                        </td>
-                    </tr>
-                    <tr>
-                        <th><?php echo esc_html__( 'Back to Overview Page', 'pdf-embed-viewer' )?></th>
-                        <td>
-                            <select name="pdfev_shortcode_page_url">
-                                <option value=""><?php echo esc_html__('Select Page','pdf-embed-viewer'); ?></option>
-                                <?php foreach($page_lists as $value): ?>
-                                <option value="<?php echo esc_attr($value['slug']); ?>" <?php selected($value['slug'], $shortcode_page_url); ?>><?php echo esc_html($value['title']); ?></option>
-                                <?php endforeach; ?>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th><?php echo esc_html__( 'Archive Template', 'pdf-embed-viewer' )?></th>
-                        <td>
-                            <select name="pdfev_archive_template">
-                                <?php foreach($template_lists as $key => $value): ?>
-                                <option value="<?php echo esc_attr($key); ?>" <?php echo $key==$template? esc_attr('selected'):'' ?>><?php echo esc_attr($value); ?></option>
-                                <?php endforeach; ?>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th><?php echo esc_html__( 'Default View 3D Flipbook', 'pdf-embed-viewer' )?></th>
-                        <td>
-                            <label class="switch">
-                                <input type="checkbox" name="pdfev_flipbook_status" value="<?php echo esc_attr($flipbook); ?>" <?php echo esc_attr(($flipbook=='yes')?'checked':''); ?>>
-                                <span class="slider"></span>
-                            </label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th><?php echo esc_html__( 'Show Read Button', 'pdf-embed-viewer' )?></th>
-                        <td>
-                            <label class="switch">
-                                <input type="checkbox" name="pdfev_archive_read" value="<?php echo esc_attr($archive_read); ?>" <?php echo esc_attr(($archive_read=='yes')?'checked':''); ?>>
-                                <span class="slider"></span>
-                            </label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th><?php echo esc_html__( 'Show Reading Counter', 'pdf-embed-viewer' )?></th>
-                        <td>
-                            <label class="switch">
-                                <input type="checkbox" name="pdfev_reading_counter" value="<?php echo esc_attr($reading_counter); ?>" <?php echo esc_attr(($reading_counter=='yes')?'checked':''); ?>>
-                                <span class="slider"></span>
-                            </label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th><?php echo esc_html__( 'Show Download Button', 'pdf-embed-viewer' )?></th>
-                        <td>
-                            <label class="switch">
-                                <input type="checkbox" name="pdfev_archive_download" value="<?php echo esc_attr($archive_download); ?>" <?php echo esc_attr(($archive_download=='yes')?'checked':''); ?>>
-                                <span class="slider"></span>
-                            </label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th><?php echo esc_html__( 'Show Download Counter', 'pdf-embed-viewer' )?></th>
-                        <td>
-                            <label class="switch">
-                                <input type="checkbox" name="pdfev_download_counter" value="<?php echo esc_attr($download_counter); ?>" <?php echo esc_attr(($download_counter=='yes')?'checked':''); ?>>
-                                <span class="slider"></span>
-                            </label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th><?php echo esc_html__( 'Show Description', 'pdf-embed-viewer' )?></th>
-                        <td>
-                            <label class="switch">
-                                <input type="checkbox" name="pdfev_show_description" value="<?php echo esc_attr($show_description); ?>" <?php echo esc_attr(($show_description=='yes')?'checked':''); ?>>
-                                <span class="slider"></span>
-                            </label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th><?php echo esc_html__( 'Show Author', 'pdf-embed-viewer' )?></th>
-                        <td>
-                            <label class="switch">
-                                <input type="checkbox" name="pdfev_show_author" value="<?php echo esc_attr($show_author); ?>" <?php echo esc_attr(($show_author=='yes')?'checked':''); ?>>
-                                <span class="slider"></span>
-                            </label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th><?php echo esc_html__( 'Show Publisher', 'pdf-embed-viewer' )?></th>
-                        <td>
-                            <label class="switch">
-                                <input type="checkbox" name="pdfev_show_publisher" value="<?php echo esc_attr($show_publisher); ?>" <?php echo esc_attr(($show_publisher=='yes')?'checked':''); ?>>
-                                <span class="slider"></span>
-                            </label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th><?php echo esc_html__( 'Show Published Year', 'pdf-embed-viewer' )?></th>
-                        <td>
-                            <label class="switch">
-                                <input type="checkbox" name="pdfev_show_year" value="<?php echo esc_attr($show_year); ?>" <?php echo esc_attr(($show_year=='yes')?'checked':''); ?>>
-                                <span class="slider"></span>
-                            </label>
-                        </td>
-                    </tr>
+        <div class="pdfev-settings-shell">
+            <aside class="pdfev-settings-sidebar">
+                <?php foreach ($sections as $section_key => $section): ?>
+                <button type="button" class="pdfev-section-nav<?php echo ($section_key === 'archive') ? ' active' : ''; ?>" data-section-target="<?php echo esc_attr($section_key); ?>">
+                    <span class="dashicons dashicons-<?php echo esc_attr($section['icon']); ?>" aria-hidden="true"></span>
+                    <?php echo esc_html($section['label']); ?>
+                </button>
+                <?php endforeach; ?>
+            </aside>
 
-                    <tr>
-                        <th><?php echo esc_html__( 'Show Published Edition', 'pdf-embed-viewer' )?></th>
-                        <td>
-                            <label class="switch">
-                                <input type="checkbox" name="pdfev_show_edition" value="<?php echo esc_attr($show_edition); ?>" <?php echo esc_attr(($show_edition=='yes')?'checked':''); ?>>
-                                <span class="slider"></span>
-                            </label>
-                        </td>
-                    </tr>
+            <div class="pdfev-settings-panel">
+                <div class="pdfev-settings-section active" data-section="archive">
+                    <div class="pdfev-section-header">
+                        <h2><?php esc_html_e('Archive Page', 'pdf-embed-viewer'); ?></h2>
+                        <p><?php esc_html_e('Where and how your PDF archive is displayed.', 'pdf-embed-viewer'); ?></p>
+                    </div>
+                    <div class="pdfev-section-body">
+                        <div class="pdfev-field-row">
+                            <div class="pdfev-field-label">
+                                <label for="pdfev_archive_title"><?php esc_html_e('Archive Title', 'pdf-embed-viewer'); ?></label>
+                                <span><?php esc_html_e('The heading shown at the top of your PDF archive page.', 'pdf-embed-viewer'); ?></span>
+                            </div>
+                            <div class="pdfev-field-control">
+                                <input type="text" id="pdfev_archive_title" name="pdfev_archive_title" placeholder="Pdf Embed Viewer" value="<?php echo esc_attr($archive_title); ?>">
+                            </div>
+                        </div>
+                        <div class="pdfev-field-row">
+                            <div class="pdfev-field-label">
+                                <label for="pdfev_archive_slug"><?php esc_html_e('Archive Slug', 'pdf-embed-viewer'); ?></label>
+                                <span><?php esc_html_e('The URL path used for the archive page, e.g. /pdf-embed-viewer/.', 'pdf-embed-viewer'); ?></span>
+                            </div>
+                            <div class="pdfev-field-control">
+                                <input type="text" id="pdfev_archive_slug" name="pdfev_archive_slug" placeholder="pdf-embed-viewer" value="<?php echo esc_attr($archive_slug); ?>">
+                            </div>
+                        </div>
+                        <div class="pdfev-field-row">
+                            <div class="pdfev-field-label">
+                                <label for="pdfev_shortcode_page_url"><?php esc_html_e('Back to Overview Page', 'pdf-embed-viewer'); ?></label>
+                                <span><?php esc_html_e('Page to link back to from a single PDF view.', 'pdf-embed-viewer'); ?></span>
+                            </div>
+                            <div class="pdfev-field-control">
+                                <select id="pdfev_shortcode_page_url" name="pdfev_shortcode_page_url">
+                                    <option value=""><?php echo esc_html__('Select Page','pdf-embed-viewer'); ?></option>
+                                    <?php foreach($page_lists as $value): ?>
+                                    <option value="<?php echo esc_attr($value['slug']); ?>" <?php selected($value['slug'], $shortcode_page_url); ?>><?php echo esc_html($value['title']); ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="pdfev-field-row">
+                            <div class="pdfev-field-label">
+                                <label for="pdfev_archive_template"><?php esc_html_e('Archive Template', 'pdf-embed-viewer'); ?></label>
+                                <span><?php esc_html_e('Layout style used to display PDFs on the archive page.', 'pdf-embed-viewer'); ?></span>
+                            </div>
+                            <div class="pdfev-field-control">
+                                <select id="pdfev_archive_template" name="pdfev_archive_template">
+                                    <?php foreach($template_lists as $key => $value): ?>
+                                    <option value="<?php echo esc_attr($key); ?>" <?php echo $key==$template? esc_attr('selected'):'' ?>><?php echo esc_attr($value); ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-                    <tr>
-                        <th><?php echo esc_html__( 'Show Total Pages', 'pdf-embed-viewer' )?></th>
-                        <td>
-                            <label class="switch">
-                                <input type="checkbox" name="pdfev_show_total_pages" value="<?php echo esc_attr($show_total_pages); ?>" <?php echo esc_attr(($show_total_pages=='yes')?'checked':''); ?>>
-                                <span class="slider"></span>
-                            </label>
-                        </td>
-                    </tr>
+                <div class="pdfev-settings-section" data-section="display">
+                    <div class="pdfev-section-header">
+                        <h2><?php esc_html_e('Display & Behavior', 'pdf-embed-viewer'); ?></h2>
+                        <p><?php esc_html_e('Toggle the viewer, buttons, and counters shown on the frontend.', 'pdf-embed-viewer'); ?></p>
+                    </div>
+                    <div class="pdfev-section-body pdfev-toggle-grid">
+                        <?php
+                        $this->toggle_row('pdfev_flipbook_status', __('Default View: 3D Flipbook', 'pdf-embed-viewer'), $flipbook, __('Open PDFs in the interactive 3D flipbook viewer instead of a plain iframe.', 'pdf-embed-viewer'));
+                        $this->toggle_row('pdfev_archive_read', __('Show Read Button', 'pdf-embed-viewer'), $archive_read, __('Display a Read button on each PDF card in the archive.', 'pdf-embed-viewer'));
+                        $this->toggle_row('pdfev_reading_counter', __('Show Reading Counter', 'pdf-embed-viewer'), $reading_counter, __('Track and display how many times each PDF has been viewed.', 'pdf-embed-viewer'));
+                        $this->toggle_row('pdfev_archive_download', __('Show Download Button', 'pdf-embed-viewer'), $archive_download, __('Display a Download button on each PDF card in the archive.', 'pdf-embed-viewer'));
+                        $this->toggle_row('pdfev_download_counter', __('Show Download Counter', 'pdf-embed-viewer'), $download_counter, __('Track and display how many times each PDF has been downloaded.', 'pdf-embed-viewer'));
+                        ?>
+                    </div>
+                </div>
 
-                    <tr>
-                        <th><?php echo esc_html__( 'Show Filesize', 'pdf-embed-viewer' )?></th>
-                        <td>
-                            <label class="switch">
-                                <input type="checkbox" name="pdfev_show_filesize" value="<?php echo esc_attr($show_filesize); ?>" <?php echo esc_attr(($show_filesize=='yes')?'checked':''); ?>>
-                                <span class="slider"></span>
-                            </label>
-                        </td>
-                    </tr>
+                <div class="pdfev-settings-section" data-section="metadata">
+                    <div class="pdfev-section-header">
+                        <h2><?php esc_html_e('Book Metadata Display', 'pdf-embed-viewer'); ?></h2>
+                        <p><?php esc_html_e('Choose which book details appear alongside each PDF.', 'pdf-embed-viewer'); ?></p>
+                    </div>
+                    <div class="pdfev-section-body pdfev-toggle-grid pdfev-toggle-grid--compact">
+                        <?php
+                        $this->toggle_row('pdfev_show_description', __('Show Description', 'pdf-embed-viewer'), $show_description, __('Display the document description on archive and single views.', 'pdf-embed-viewer'));
+                        $this->toggle_row('pdfev_show_author', __('Show Author', 'pdf-embed-viewer'), $show_author, __('Display the assigned author.', 'pdf-embed-viewer'));
+                        $this->toggle_row('pdfev_show_publisher', __('Show Publisher', 'pdf-embed-viewer'), $show_publisher, __('Display the assigned publisher.', 'pdf-embed-viewer'));
+                        $this->toggle_row('pdfev_show_year', __('Show Published Year', 'pdf-embed-viewer'), $show_year, __('Display the year the document was published.', 'pdf-embed-viewer'));
+                        $this->toggle_row('pdfev_show_edition', __('Show Published Edition', 'pdf-embed-viewer'), $show_edition, __('Display the edition or version of the document.', 'pdf-embed-viewer'));
+                        $this->toggle_row('pdfev_show_total_pages', __('Show Total Pages', 'pdf-embed-viewer'), $show_total_pages, __('Display the total number of pages in the document.', 'pdf-embed-viewer'));
+                        $this->toggle_row('pdfev_show_filesize', __('Show Filesize', 'pdf-embed-viewer'), $show_filesize, __('Display the file size of the PDF.', 'pdf-embed-viewer'));
+                        ?>
+                    </div>
+                </div>
 
-                    <tr>
-                        <th scope="row"><?php esc_html_e('Primary Color','pdf-embed-viewer') ?></th>
-                        <td>
-                            <input class="pdfev-color-field" type="text" name="pdfev_css_colors[primary]" value="<?php echo esc_attr($primary); ?>">     
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row"><?php esc_html_e('Secondary Color','pdf-embed-viewer') ?></th>
-                        <td>
-                            <input class="pdfev-color-field" type="text"  name="pdfev_css_colors[secondary]"  value="<?php echo esc_attr($secondary); ?>">         
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row"><?php esc_html_e('Dark Color','pdf-embed-viewer') ?></th>
-                        <td>
-                            <input  class="pdfev-color-field" type="text"  name="pdfev_css_colors[dark]" value="<?php echo esc_attr($dark); ?>">
-                                
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row"><?php esc_html_e('Light Color','pdf-embed-viewer') ?></th>
-                        <td> <input class="pdfev-color-field" type="text"  name="pdfev_css_colors[light]" value="<?php echo esc_attr($light); ?>"></td>
-                    </tr>
-                    <tr>
-                        <th scope="row"><?php esc_html_e('Import Demo Content','pdf-embed-viewer') ?></th>
-                        <td> 
-                            <input type="button" class="button-primary pdfev-import-demo-content" value="<?php _e('Import Demo','pdf-embed-viewer') ?>">
-                            
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="demo-import-success" colspan="2"></td>
-                    </tr>
-                </tbody>
-            </table>
+                <div class="pdfev-settings-section" data-section="colors">
+                    <div class="pdfev-section-header">
+                        <h2><?php esc_html_e('Brand Colors', 'pdf-embed-viewer'); ?></h2>
+                        <p><?php esc_html_e('These colors are used across the frontend viewer and buttons.', 'pdf-embed-viewer'); ?></p>
+                    </div>
+                    <div class="pdfev-section-body pdfev-color-grid">
+                        <div class="pdfev-color-item">
+                            <label for="pdfev_color_primary"><?php esc_html_e('Primary', 'pdf-embed-viewer'); ?></label>
+                            <span><?php esc_html_e('Main accent color used for buttons and highlights.', 'pdf-embed-viewer'); ?></span>
+                            <input id="pdfev_color_primary" class="pdfev-color-field" type="text" name="pdfev_css_colors[primary]" value="<?php echo esc_attr($primary); ?>">
+                        </div>
+                        <div class="pdfev-color-item">
+                            <label for="pdfev_color_secondary"><?php esc_html_e('Secondary', 'pdf-embed-viewer'); ?></label>
+                            <span><?php esc_html_e('Supporting color used for secondary text and elements.', 'pdf-embed-viewer'); ?></span>
+                            <input id="pdfev_color_secondary" class="pdfev-color-field" type="text" name="pdfev_css_colors[secondary]" value="<?php echo esc_attr($secondary); ?>">
+                        </div>
+                        <div class="pdfev-color-item">
+                            <label for="pdfev_color_dark"><?php esc_html_e('Dark', 'pdf-embed-viewer'); ?></label>
+                            <span><?php esc_html_e('Used for headings and high-contrast text.', 'pdf-embed-viewer'); ?></span>
+                            <input id="pdfev_color_dark" class="pdfev-color-field" type="text" name="pdfev_css_colors[dark]" value="<?php echo esc_attr($dark); ?>">
+                        </div>
+                        <div class="pdfev-color-item">
+                            <label for="pdfev_color_light"><?php esc_html_e('Light', 'pdf-embed-viewer'); ?></label>
+                            <span><?php esc_html_e('Used for backgrounds and subtle borders.', 'pdf-embed-viewer'); ?></span>
+                            <input id="pdfev_color_light" class="pdfev-color-field" type="text" name="pdfev_css_colors[light]" value="<?php echo esc_attr($light); ?>">
+                        </div>
+                    </div>
+                </div>
 
+                <div class="pdfev-settings-section" data-section="demo">
+                    <div class="pdfev-section-header">
+                        <h2><?php esc_html_e('Demo Content', 'pdf-embed-viewer'); ?></h2>
+                        <p><?php esc_html_e('Populate the plugin with sample books to preview templates.', 'pdf-embed-viewer'); ?></p>
+                    </div>
+                    <div class="pdfev-section-body">
+                        <div class="pdfev-field-row">
+                            <div class="pdfev-field-label">
+                                <label><?php esc_html_e('Import Demo Content', 'pdf-embed-viewer'); ?></label>
+                                <span><?php esc_html_e('Adds sample PDFs, categories, and metadata so you can preview the archive templates.', 'pdf-embed-viewer'); ?></span>
+                            </div>
+                            <div class="pdfev-field-control pdfev-demo-import">
+                                <input type="button" class="button-primary pdfev-import-demo-content" value="<?php echo esc_attr__('Import Demo', 'pdf-embed-viewer'); ?>">
+                                <span class="demo-import-success"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <?php
+    }
+
+    public function toggle_row($name, $label, $value, $description = ''){
+        ?>
+        <div class="pdfev-toggle-row">
+            <div class="pdfev-toggle-row-label">
+                <span class="pdfev-toggle-row-title"><?php echo esc_html($label); ?></span>
+                <?php if ($description) : ?>
+                <span class="pdfev-toggle-row-desc"><?php echo esc_html($description); ?></span>
+                <?php endif; ?>
+            </div>
+            <label class="switch">
+                <input type="checkbox" name="<?php echo esc_attr($name); ?>" value="<?php echo esc_attr($value); ?>" <?php echo esc_attr(($value == 'yes') ? 'checked' : ''); ?>>
+                <span class="slider"></span>
+            </label>
+        </div>
         <?php
     }
 

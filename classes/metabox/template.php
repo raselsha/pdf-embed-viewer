@@ -17,30 +17,34 @@ class Metabox_Template{
     }
     public function tabs($post_id){
         ?>
-            <li class="pdfev-tab" data-tab-target="pdfev-tabs-template"> <i class="fas fa-box"></i> <?php esc_html_e('Template','pdf-embed-viewer'); ?></li>
+            <li class="pdfev-tab" data-tab-target="pdfev-tabs-template">
+                <span class="dashicons dashicons-art" aria-hidden="true"></span>
+                <?php esc_html_e('Template','pdf-embed-viewer'); ?>
+            </li>
         <?php
     }
     public function tabs_content($post_id){
-        
+
         ?>
         <div class="pdfev-tab-content" data-tab="pdfev-tabs-template">
-            <h2 class="title"><?php _e('Template Settings','pdf-embed-viewer'); ?></h2>
-            <p><?php _e('Here you can set tempate for the document in single view','pdf-embed-viewer'); ?></p>
-            
-            <section>
-                <label class="label">
-                    <div>
+            <div class="pdfev-metabox-section-header">
+                <h2><?php _e('Template Settings','pdf-embed-viewer'); ?></h2>
+                <p><?php _e('Here you can set tempate for the document in single view','pdf-embed-viewer'); ?></p>
+            </div>
+            <div class="pdfev-metabox-section-body">
+                <div class="pdfev-metabox-field">
+                    <div class="pdfev-metabox-field-label">
                         <p><?php echo esc_html__( 'Template', 'pdf-embed-viewer' )?></p>
                         <span><?php echo esc_html__('Select Tempate','pdf-embed-viewer') ?></span>
                     </div>
-                    <div class="pdfev-field-actions">
-                        <select name="pdfev_meta_template" id="">
+                    <div class="pdfev-metabox-field-control">
+                        <select name="pdfev_meta_template" id="pdfev_meta_template">
                             <option value="flipbook"><?php echo esc_html('Flipbook') ?></option>
                             <!-- <option value="traditional"><?php echo esc_html('Traditional') ?></option> -->
                         </select>
                     </div>
-                </label>
-            </section>
+                </div>
+            </div>
         </div>
 
         <?php

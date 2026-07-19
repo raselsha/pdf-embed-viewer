@@ -16,7 +16,10 @@ class Support_Settings{
     }
     public function tabs(){
     ?>
-        <button class="nav-tab" data-tab-target="pdfev_emd_vwr_admin_tabs_support"> <?php echo esc_html__('Support','pdf-embed-viewer'); ?> </button>
+        <button class="nav-tab" data-tab-target="pdfev_emd_vwr_admin_tabs_support">
+            <span class="dashicons dashicons-sos" aria-hidden="true"></span>
+            <?php echo esc_html__('Support','pdf-embed-viewer'); ?>
+        </button>
     <?php
     }
     public function tabs_content() {
@@ -42,47 +45,64 @@ class Support_Settings{
 
     <div class="pdfev-tab-content" data-tab="pdfev_emd_vwr_admin_tabs_support">
         <div class="pdf-embed-viewer-support">
-            <h2><?php esc_html_e( 'Need Help or Want to Share Your Experience?', 'pdf-embed-viewer' ); ?></h2>
-            <ul class="pdfev-support-list">
-                <li>
-                    <?php esc_html_e( 'Give a review for your feedback', 'pdf-embed-viewer' ); ?> –
-                    <a target="_blank" href="<?php echo esc_url( 'https://wordpress.org/support/plugin/pdf-embed-viewer/reviews/#new-post' ); ?>">
-                        <?php esc_html_e( 'Add Review', 'pdf-embed-viewer' ); ?>
-                    </a>
-                </li>
-                <li>
-                    <?php esc_html_e( 'Create a support ticket', 'pdf-embed-viewer' ); ?> –
-                    <a target="_blank" href="<?php echo esc_url( 'https://wordpress.org/support/plugin/pdf-embed-viewer/' ); ?>">
-                        <?php esc_html_e( 'Support', 'pdf-embed-viewer' ); ?>
-                    </a>
-                </li>
-            </ul>
-            <div class="pdfev-support-form-wrap">
-                <h2><?php esc_html_e( 'Feature Request Form', 'pdf-embed-viewer' ); ?></h2>
-                <form method="post">
-                    <?php wp_nonce_field( 'pev_feature_request_action' ); ?>
+            <div class="pdfev-support-links">
+                <div class="pdfev-card">
+                    <div class="pdfev-card-header">
+                        <h2><?php esc_html_e( 'Need Help or Want to Share Your Experience?', 'pdf-embed-viewer' ); ?></h2>
+                        <p><?php esc_html_e( 'A few quick ways to reach us.', 'pdf-embed-viewer' ); ?></p>
+                    </div>
+                    <div class="pdfev-card-body">
+                        <ul class="pdfev-support-list">
+                            <li>
+                                <span class="dashicons dashicons-star-filled" aria-hidden="true"></span>
+                                <span><?php esc_html_e( 'Give a review for your feedback', 'pdf-embed-viewer' ); ?></span>
+                                <a target="_blank" href="<?php echo esc_url( 'https://wordpress.org/support/plugin/pdf-embed-viewer/reviews/#new-post' ); ?>">
+                                    <?php esc_html_e( 'Add Review', 'pdf-embed-viewer' ); ?> &rarr;
+                                </a>
+                            </li>
+                            <li>
+                                <span class="dashicons dashicons-format-chat" aria-hidden="true"></span>
+                                <span><?php esc_html_e( 'Create a support ticket', 'pdf-embed-viewer' ); ?></span>
+                                <a target="_blank" href="<?php echo esc_url( 'https://wordpress.org/support/plugin/pdf-embed-viewer/' ); ?>">
+                                    <?php esc_html_e( 'Support', 'pdf-embed-viewer' ); ?> &rarr;
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
 
-                    <p>
-                        <label for="feature_name"><?php esc_html_e( 'Your Name', 'pdf-embed-viewer' ); ?></label><br>
-                        <input type="text" id="feature_name" name="feature_name" required class="pdfev-full-width-input">
-                    </p>
+                <div class="pdfev-card pdfev-support-form-wrap">
+                    <div class="pdfev-card-header">
+                        <h2><?php esc_html_e( 'Feature Request Form', 'pdf-embed-viewer' ); ?></h2>
+                        <p><?php esc_html_e( 'Tell us what you would like to see next.', 'pdf-embed-viewer' ); ?></p>
+                    </div>
+                    <div class="pdfev-card-body">
+                        <form method="post">
+                            <?php wp_nonce_field( 'pev_feature_request_action' ); ?>
 
-                    <p>
-                        <label for="feature_email"><?php esc_html_e( 'Your Email', 'pdf-embed-viewer' ); ?></label><br>
-                        <input type="email" id="feature_email" name="feature_email" required class="pdfev-full-width-input">
-                    </p>
+                            <div class="pdfev-field-row pdfev-field-row--stacked">
+                                <label for="feature_name"><?php esc_html_e( 'Your Name', 'pdf-embed-viewer' ); ?></label>
+                                <input type="text" id="feature_name" name="feature_name" required class="pdfev-full-width-input">
+                            </div>
 
-                    <p>
-                        <label for="feature_message"><?php esc_html_e( 'Feature Description', 'pdf-embed-viewer' ); ?></label><br>
-                        <textarea id="feature_message" name="feature_message" rows="5" required class="pdfev-full-width-input"></textarea>
-                    </p>
+                            <div class="pdfev-field-row pdfev-field-row--stacked">
+                                <label for="feature_email"><?php esc_html_e( 'Your Email', 'pdf-embed-viewer' ); ?></label>
+                                <input type="email" id="feature_email" name="feature_email" required class="pdfev-full-width-input">
+                            </div>
 
-                    <p>
-                        <button type="submit" name="pev_feature_request_submit" class="button button-primary">
-                            <?php esc_html_e( 'Send Request', 'pdf-embed-viewer' ); ?>
-                        </button>
-                    </p>
-                </form>
+                            <div class="pdfev-field-row pdfev-field-row--stacked">
+                                <label for="feature_message"><?php esc_html_e( 'Feature Description', 'pdf-embed-viewer' ); ?></label>
+                                <textarea id="feature_message" name="feature_message" rows="5" required class="pdfev-full-width-input"></textarea>
+                            </div>
+
+                            <div class="pdfev-form-footer">
+                                <button type="submit" name="pev_feature_request_submit" class="pdfev-btn pdfev-btn-primary">
+                                    <?php esc_html_e( 'Send Request', 'pdf-embed-viewer' ); ?>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

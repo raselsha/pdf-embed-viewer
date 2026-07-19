@@ -20,17 +20,17 @@ class Metabox{
         $post_id = $post->ID;
     ?>
         <main class="pdfev-embed-viewer" id="pdfev-embed-metabox-tabs">
-            <aside>
+            <aside class="pdfev-metabox-sidebar">
                 <ul>
                     <?php do_action('pdfev_metabox_tabs',$post_id); ?>
                 </ul>
             </aside>
-            <div class="content">
+            <div class="content pdfev-metabox-content">
                 <?php do_action('pdfev_metabox_tabs_content',$post_id); ?>
             </div>
         </main>
     <?php
-    }           
+    }
 }
 new \PDFEV\Metabox();
     

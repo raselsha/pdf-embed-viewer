@@ -17,7 +17,10 @@ class Metabox_General{
     }
     public function tabs($post_id){
         ?>
-            <li class="pdfev-tab active" data-tab-target="pdfev-tabs-general"> <i class="fas fa-tools"></i> <?php esc_html_e('General','pdf-embed-viewer'); ?></li>
+            <li class="pdfev-tab active" data-tab-target="pdfev-tabs-general">
+                <span class="dashicons dashicons-admin-generic" aria-hidden="true"></span>
+                <?php esc_html_e('General','pdf-embed-viewer'); ?>
+            </li>
         <?php
     }
     public function tabs_content($post_id){
@@ -37,73 +40,71 @@ class Metabox_General{
         ?>
         <div class="pdfev-tab-content active" data-tab="pdfev-tabs-general">
             <?php wp_nonce_field( 'pdfev_emd_vwr_metabox_nonce', 'pdfev_emd_vwr_metabox_nonce' ); ?>
-            <h2 class="title"><?php _e('General Settings','pdf-embed-viewer'); ?></h2>
-            <p><?php _e('Here you can add basic settings for your document.','pdf-embed-viewer'); ?></p>
-            <section>
-                <label class="label">
-                    <div>
+            <div class="pdfev-metabox-section-header">
+                <h2><?php _e('General Settings','pdf-embed-viewer'); ?></h2>
+                <p><?php _e('Here you can add basic settings for your document.','pdf-embed-viewer'); ?></p>
+            </div>
+            <div class="pdfev-metabox-section-body">
+                <div class="pdfev-metabox-field">
+                    <div class="pdfev-metabox-field-label">
                         <p><?php echo esc_html__( 'Shortcode', 'pdf-embed-viewer' )?></p>
                         <span><?php echo esc_html__('Add this shortcode to any page or post to view pdf','pdf-embed-viewer') ?></span>
                     </div>
-                    <div class="pdfev-field-actions">
+                    <div class="pdfev-metabox-field-control">
                         <code>
                             <?php echo esc_html('[pdfev_embed_viewer id="' . get_the_ID() . '"]') ?>
                         </code>
                     </div>
-                </label>
-            </section>
-            <section>
-                <label class="label">
-                    <div>
+                </div>
+                <div class="pdfev-metabox-field">
+                    <div class="pdfev-metabox-field-label">
                         <p><?php echo esc_html__( 'Add PDF URL', 'pdf-embed-viewer' )?></p>
                         <span><?php echo esc_html__('Add pdf fle by upload button (Remote file url can be used if permitted)','pdf-embed-viewer') ?></span>
                     </div>
-                    <div class="pdfev-field-control">
+                    <div class="pdfev-metabox-field-control pdfev-metabox-field-control--inline">
                         <input type="url" class="pdfev-emd-vwr-file" name="pdfev_meta_pdf_url" value="<?php echo $embed_file ? esc_attr($embed_file) : '' ;  ?>" placeholder="<?php echo esc_attr('https://example.com/filename.pdf'); ?>" required>
                         <button class='button pdfev-emd-vwr-upload'>
-                            <i class="fa fa-paperclip" aria-hidden="true"></i> <?php esc_html_e('Upload','pdf-embed-viewer');?>
+                            <span class="dashicons dashicons-paperclip" aria-hidden="true"></span> <?php esc_html_e('Upload','pdf-embed-viewer');?>
                         </button>
                     </div>
-                </label>
-            </section>
-            <section>
-                <label class="label">
-                    <div>
+                </div>
+                <div class="pdfev-metabox-field">
+                    <div class="pdfev-metabox-field-label">
                         <p><?php echo esc_html__( 'Download Button', 'pdf-embed-viewer' )?></p>
                         <span><?php echo esc_html__('Show/Hide download Button in single page.','pdf-embed-viewer') ?></span>
                     </div>
-                    <label class="switch">
-                        <input type="checkbox" name="pdfev_meta_download" value="<?php echo esc_attr($check_download); ?>" <?php echo esc_attr(($check_download=='yes')?'checked':''); ?>>
-                        <span class="slider"></span>
-                    </label>
-                </label>
-            </section>
-            <section class="pdfev-preview-area">
-                
-                <div class="pdfev-featured-image-area">
-                    <label class="label">
-                        <div>
+                    <div class="pdfev-metabox-field-control">
+                        <label class="switch">
+                            <input type="checkbox" name="pdfev_meta_download" value="<?php echo esc_attr($check_download); ?>" <?php echo esc_attr(($check_download=='yes')?'checked':''); ?>>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="pdfev-metabox-preview-area">
+                    <div class="pdfev-featured-image-area">
+                        <div class="pdfev-metabox-field-label">
                             <p><?php echo esc_html__( 'Preview Featured Image', 'pdf-embed-viewer' )?></p>
                             <span><?php echo esc_html__('Select any image to set as thumbnail from right.','pdf-embed-viewer') ?></span>
                         </div>
-                    </label>
-                    <div id="pdfev-featured-image" data-status="<?php echo isset($thumbnail_url)?'yes':'no';?>" data-url="<?php echo isset($thumbnail_url)?$thumbnail_url:'';?>">
-                        <input type="hidden" id="pdfev-featured-image-data" name="pdfev_featured_image">
-                        <input type="hidden" name="pdfev_meta_filesize" id="pdfev_meta_filesize" value="<?php echo esc_attr($filesize); ?>">
-                        <input type="hidden" name="pdfev_meta_total_pages" id="pdfev_meta_total_pages" value="<?php echo esc_attr($total_pages); ?>">
-                        <img id="pdfev-featured-image-preview" src="<?php echo esc_attr(isset($thumbnail_url)?$thumbnail_url:'');?>">
-                        <div><?php _e('Document size: ','pdf-embed-viewer'); ?><strong class="pdfev-filesize"></strong></div>
-                        <div><?php _e('Total Pages: ','pdf-embed-viewer'); ?><strong class="pdfev-totalpage"></strong></div>
-                    </div> 
-                </div>
-                <div id="pdfev-document-preview">
-                    <div class="pdfev-loader-wrapper">
-                        <div class="pdfev-spinner"></div>
-                        <p><?php echo __('Loading preview...','pdf-embed-viewer') ?></p>
+                        <div id="pdfev-featured-image" data-status="<?php echo isset($thumbnail_url)?'yes':'no';?>" data-url="<?php echo isset($thumbnail_url)?$thumbnail_url:'';?>">
+                            <input type="hidden" id="pdfev-featured-image-data" name="pdfev_featured_image">
+                            <input type="hidden" name="pdfev_meta_filesize" id="pdfev_meta_filesize" value="<?php echo esc_attr($filesize); ?>">
+                            <input type="hidden" name="pdfev_meta_total_pages" id="pdfev_meta_total_pages" value="<?php echo esc_attr($total_pages); ?>">
+                            <img id="pdfev-featured-image-preview" src="<?php echo esc_attr(isset($thumbnail_url)?$thumbnail_url:'');?>">
+                            <div><?php _e('Document size: ','pdf-embed-viewer'); ?><strong class="pdfev-filesize"></strong></div>
+                            <div><?php _e('Total Pages: ','pdf-embed-viewer'); ?><strong class="pdfev-totalpage"></strong></div>
+                        </div>
                     </div>
-                    <p class="warning"><?php echo __('Failed to load preview. Please Upload a PDF.','pdf-embed-viewer') ?></p>
+                    <div id="pdfev-document-preview">
+                        <div class="pdfev-loader-wrapper">
+                            <div class="pdfev-spinner"></div>
+                            <p><?php echo __('Loading preview...','pdf-embed-viewer') ?></p>
+                        </div>
+                        <p class="warning"><?php echo __('Failed to load preview. Please Upload a PDF.','pdf-embed-viewer') ?></p>
+                    </div>
                 </div>
-            </section>
+            </div>
         </div>
 
         <?php

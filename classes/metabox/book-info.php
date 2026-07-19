@@ -15,7 +15,10 @@ class Metabox_Book_Info{
     }
      public function tabs($post_id){
         ?>
-            <li class="pdfev-tab " data-tab-target="pdfev-tabs-book-info"> <i class="fas fa-book-open"></i> <?php esc_html_e('E-Book Info','pdf-embed-viewer'); ?></li>
+            <li class="pdfev-tab" data-tab-target="pdfev-tabs-book-info">
+                <span class="dashicons dashicons-book" aria-hidden="true"></span>
+                <?php esc_html_e('E-Book Info','pdf-embed-viewer'); ?>
+            </li>
         <?php
     }
     public function tabs_content($post_id){
@@ -41,16 +44,17 @@ class Metabox_Book_Info{
         ?>
         <div class="pdfev-tab-content" data-tab="pdfev-tabs-book-info">
             <?php wp_nonce_field( 'pdfev_emd_vwr_metabox_nonce', 'pdfev_emd_vwr_metabox_nonce' ); ?>
-            <h2 class="title"><?php _e('Book Information Settings','pdf-embed-viewer'); ?></h2>
-            <p><?php _e('Here you can add book\'s author, publisher and other information.','pdf-embed-viewer'); ?></p>
-
-            <section>
-                <label class="label">
-                    <div>
+            <div class="pdfev-metabox-section-header">
+                <h2><?php _e('Book Information Settings','pdf-embed-viewer'); ?></h2>
+                <p><?php _e('Here you can add book\'s author, publisher and other information.','pdf-embed-viewer'); ?></p>
+            </div>
+            <div class="pdfev-metabox-section-body">
+                <div class="pdfev-metabox-field pdfev-metabox-field--stacked">
+                    <div class="pdfev-metabox-field-label">
                         <p><?php echo esc_html__( 'Document Description', 'pdf-embed-viewer' )?></p>
                         <span><?php echo esc_html__('Add a description for this PDF document similar to the default editor.','pdf-embed-viewer') ?></span>
                     </div>
-                    <div class="pdfev-field-control pdfev-full-width">
+                    <div class="pdfev-metabox-field-control">
                         <?php
                         wp_editor(
                             $description,
@@ -65,62 +69,54 @@ class Metabox_Book_Info{
                         );
                         ?>
                     </div>
-                </label>
-            </section>
-            <section>
-                <label class="label">
-                    <div>
+                </div>
+                <div class="pdfev-metabox-field">
+                    <div class="pdfev-metabox-field-label">
                         <p><?php echo esc_html__( 'Author', 'pdf-embed-viewer' )?></p>
                         <span><?php echo esc_html__('Select an author. Author bio is stored as the author taxonomy term description.','pdf-embed-viewer') ?></span>
                     </div>
-                    <div class="">
-                        <select name="pdfev_meta_author" id="pdfev_meta_author" class="">
+                    <div class="pdfev-metabox-field-control">
+                        <select name="pdfev_meta_author" id="pdfev_meta_author">
                             <option value=""><?php esc_html_e('Select Author','pdf-embed-viewer'); ?></option>
                             <?php if ( ! is_wp_error( $authors ) && ! empty( $authors ) ) : foreach ( $authors as $author ) : ?>
                                 <option value="<?php echo absint( $author->term_id ); ?>" <?php selected( $selected_author, $author->term_id ); ?>><?php echo esc_html( $author->name ); ?></option>
                             <?php endforeach; endif; ?>
                         </select>
                     </div>
-                </label>
-            </section>
-            <section>
-                <label class="label">
-                    <div>
+                </div>
+                <div class="pdfev-metabox-field">
+                    <div class="pdfev-metabox-field-label">
                         <p><?php echo esc_html__( 'Publisher', 'pdf-embed-viewer' )?></p>
                         <span><?php echo esc_html__('Select a publisher for this PDF.','pdf-embed-viewer') ?></span>
                     </div>
-                    <div class="">
-                        <select name="pdfev_meta_publisher" id="pdfev_meta_publisher" class="">
+                    <div class="pdfev-metabox-field-control">
+                        <select name="pdfev_meta_publisher" id="pdfev_meta_publisher">
                             <option value=""><?php esc_html_e('Select Publisher','pdf-embed-viewer'); ?></option>
                             <?php if ( ! is_wp_error( $publishers ) && ! empty( $publishers ) ) : foreach ( $publishers as $publisher ) : ?>
                                 <option value="<?php echo absint( $publisher->term_id ); ?>" <?php selected( $selected_publisher, $publisher->term_id ); ?>><?php echo esc_html( $publisher->name ); ?></option>
                             <?php endforeach; endif; ?>
                         </select>
                     </div>
-                </label>
-            </section>
-            <section>
-                <label class="label">
-                    <div>
+                </div>
+                <div class="pdfev-metabox-field">
+                    <div class="pdfev-metabox-field-label">
                         <p><?php echo esc_html__( 'Published Year', 'pdf-embed-viewer' )?></p>
                         <span><?php echo esc_html__('Add the published year and edition for the PDF file.','pdf-embed-viewer') ?></span>
                     </div>
-                    <div class="">
-                        <input type="number" min="1000" max="2100" name="pdfev_meta_published_year" value="<?php echo esc_attr($published_year); ?>" placeholder="<?php echo esc_attr('2026'); ?>" class="pdfev-half-width">
+                    <div class="pdfev-metabox-field-control">
+                        <input type="number" min="1000" max="2100" name="pdfev_meta_published_year" value="<?php echo esc_attr($published_year); ?>" placeholder="<?php echo esc_attr('2026'); ?>">
                     </div>
-                </label>
-            </section>
-            <section>
-                <label class="label">
-                    <div>
+                </div>
+                <div class="pdfev-metabox-field">
+                    <div class="pdfev-metabox-field-label">
                         <p><?php echo esc_html__( 'Published Edition', 'pdf-embed-viewer' )?></p>
                         <span><?php echo esc_html__('Add the published year and edition for the PDF file.','pdf-embed-viewer') ?></span>
                     </div>
-                    <div class="">
-                        <input type="text" name="pdfev_meta_edition" value="<?php echo esc_attr($edition); ?>" placeholder="<?php echo esc_attr('1.0'); ?>" class="pdfev-half-width">
+                    <div class="pdfev-metabox-field-control">
+                        <input type="text" name="pdfev_meta_edition" value="<?php echo esc_attr($edition); ?>" placeholder="<?php echo esc_attr('1.0'); ?>">
                     </div>
-                </label>
-            </section>
+                </div>
+            </div>
         </div>
 
         <?php
