@@ -3,6 +3,53 @@
   $(document).ready(function() {
     $('.pdfev-color-field').wpColorPicker();
   });
+
+  // ===========custom select dropdown=================
+  // Drives a styled listbox off a visually-hidden native <select> (kept for form submission).
+  function pdfevCloseSelects() {
+    $('.pdfev-select-options').prop('hidden', true);
+    $('.pdfev-select-trigger').removeClass('pdfev-select-open').attr('aria-expanded', 'false');
+  }
+
+  $(document).on('click', '.pdfev-select-trigger', function (e) {
+    e.preventDefault();
+    var $trigger = $(this);
+    var $wrap = $trigger.closest('.pdfev-select');
+    var $list = $wrap.find('.pdfev-select-options');
+    var isOpen = !$list.prop('hidden');
+
+    pdfevCloseSelects();
+
+    if (!isOpen) {
+      $list.prop('hidden', false);
+      $trigger.addClass('pdfev-select-open').attr('aria-expanded', 'true');
+    }
+  });
+
+  $(document).on('click', '.pdfev-select-options li', function () {
+    var $li = $(this);
+    var $wrap = $li.closest('.pdfev-select');
+    var value = $li.attr('data-value');
+
+    $wrap.find('.pdfev-select-options li').removeAttr('aria-selected');
+    $li.attr('aria-selected', 'true');
+    $wrap.find('.pdfev-select-value').text($li.text());
+    $wrap.find('.pdfev-select-native').val(value).trigger('change');
+
+    pdfevCloseSelects();
+  });
+
+  $(document).on('click', function (e) {
+    if (!$(e.target).closest('.pdfev-select').length) {
+      pdfevCloseSelects();
+    }
+  });
+
+  $(document).on('keydown', function (e) {
+    if (e.key === 'Escape') {
+      pdfevCloseSelects();
+    }
+  });
   // ===========tab (persists across reload via localStorage)=================
   // Only the top-level settings-page tabs (.nav-tab) persist — the post-edit metabox
   // reuses the same [data-tab-target] convention (li.pdfev-tab) but shouldn't share the

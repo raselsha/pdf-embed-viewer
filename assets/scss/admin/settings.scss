@@ -257,7 +257,10 @@
         border: 1px solid var(--pdfev-admin-border);
         border-radius: var(--pdfev-admin-radius);
         box-shadow: var(--pdfev-admin-shadow);
-        overflow: hidden;
+        // No overflow:hidden here (unlike .pdfev-card) — this panel hosts the custom select
+        // dropdown, which is position:absolute and would get clipped by an overflow-hidden
+        // ancestor regardless of z-index. Safe to omit: header/body share the same background,
+        // so there's nothing that needs corner-clipping to the panel's border-radius.
     }
 
     .pdfev-settings-section{
@@ -365,6 +368,101 @@
     textarea{
         min-height: 80px;
         line-height: 1.5;
+    }
+
+    // ===========custom select dropdown==========
+    // Native <select> popup lists can't be restyled cross-browser, so we drive a custom
+    // styled listbox off a visually-hidden native <select> (kept for form submission/value).
+    .pdfev-select{
+        position: relative;
+
+        .pdfev-select-native{
+            display: none;
+        }
+
+        .pdfev-select-trigger{
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            border: 1px solid var(--pdfev-admin-border);
+            border-radius: var(--pdfev-admin-radius-sm);
+            padding: 5px 10px;
+            min-height: 30px;
+            font-size: 13px;
+            line-height: 1.4;
+            color: var(--pdfev-admin-ink);
+            background: var(--pdfev-admin-surface);
+            cursor: pointer;
+            text-align: left;
+            transition: border-color .15s ease, box-shadow .15s ease;
+
+            .dashicons{
+                width: 14px;
+                height: 14px;
+                font-size: 14px;
+                color: var(--pdfev-admin-muted);
+                transition: transform .15s ease;
+                flex-shrink: 0;
+            }
+
+            &:hover{
+                border-color: var(--pdfev-admin-muted);
+            }
+
+            &:focus{
+                outline: none;
+                border-color: var(--pdfev-admin-accent);
+                box-shadow: 0 0 0 3px rgba(56, 88, 233, .12);
+            }
+
+            &.pdfev-select-open .dashicons{
+                transform: rotate(180deg);
+            }
+        }
+
+        .pdfev-select-value{
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .pdfev-select-options{
+            position: absolute;
+            z-index: 20;
+            top: calc(100% + 4px);
+            left: 0;
+            right: 0;
+            margin: 0;
+            padding: 4px;
+            list-style: none;
+            max-height: 240px;
+            overflow-y: auto;
+            background: var(--pdfev-admin-surface);
+            border: 1px solid var(--pdfev-admin-border);
+            border-radius: var(--pdfev-admin-radius-sm);
+            box-shadow: 0 8px 16px rgba(16, 24, 40, .12);
+
+            li{
+                padding: 7px 10px;
+                font-size: 13px;
+                line-height: 1.4;
+                color: var(--pdfev-admin-ink);
+                border-radius: var(--pdfev-admin-radius-sm);
+                cursor: pointer;
+
+                &:hover{
+                    background: var(--pdfev-admin-bg);
+                }
+
+                &[aria-selected="true"]{
+                    background: rgba(56, 88, 233, .1);
+                    color: var(--pdfev-admin-accent);
+                    font-weight: 500;
+                }
+            }
+        }
     }
 
     // ===========toggle rows/grid==========

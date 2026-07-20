@@ -15,10 +15,19 @@ jQuery(document).ready(function ($) {
 
 
 (function($) {
-  // This is the click event for the download button counter
+  // This is the click event for the download button counter. In Pro "Hide File
+  // URL" mode, the button has no real href (data-protected="yes") — the actual
+  // download link is minted fresh by this same AJAX call and only then
+  // navigated to, instead of being a static link sitting in the page.
   $(document).on('click','.download-btn',function(e){
-    var post_id = $(this).data('post-id');
     var $button = $(this);
+    var post_id = $button.data('post-id');
+    var isProtected = $button.attr('data-protected') === 'yes';
+
+    if (isProtected) {
+      e.preventDefault();
+    }
+
     $.ajax({
         url: pdfevFronend.ajaxurl,
         type: 'POST',
@@ -29,9 +38,12 @@ jQuery(document).ready(function ($) {
         },
         success: function(response) {
           if (response.success) {
-            $button.find('.pdfev-download-counter').html(response.data.download_count); 
+            $button.find('.pdfev-download-counter').html(response.data.download_count);
+            if (isProtected && response.data.download_url) {
+              window.location.href = response.data.download_url;
+            }
           } else {
-            $button.find('.pdfev-download-counter').html('Error: ' + response.data.download_count); 
+            $button.find('.pdfev-download-counter').html('Error: ' + response.data.download_count);
           }
       },
       error: function(xhr, status, error) {
@@ -76,6 +88,12 @@ jQuery(document).ready(function ($) {
 
       if (!pdfURL) return;
 
+      // Pro flipbook options — free/unlicensed installs never receive
+      // pdfevFronend.flipbookOptions at all, so proOptions stays {} and the
+      // $.extend below is a no-op, leaving today's defaults untouched.
+      let proOptions = pdfevFronend.flipbookOptions || {};
+      let skinFile = proOptions.skinFile || "short-black-book-view.css";
+
       let options = {
         pdf: pdfURL,
         page: 1, // or customize per book
@@ -99,8 +117,8 @@ jQuery(document).ready(function ($) {
                 data: jsData.urls["css/font-awesome.min.css"],
               },
               {
-                url: pdfevFronend.pdfevurl + "vendor/3dflipbook/css/short-black-book-view.css",
-                data: jsData.urls["css/short-black-book-view.css"],
+                url: pdfevFronend.pdfevurl + "vendor/3dflipbook/css/" + skinFile,
+                data: jsData.urls["css/" + skinFile],
               },
             ],
             sounds: {
@@ -111,6 +129,13 @@ jQuery(document).ready(function ($) {
           };
         },
       };
+
+      // Deep-merge Pro options on top of the defaults above. proOptions has no
+      // "template" key so the function above is left untouched; skinFile isn't
+      // a real FlipBook() option (only used to pick the styles[] entry above),
+      // so it's stripped back off before handing the object to FlipBook().
+      $.extend(true, options, proOptions);
+      delete options.skinFile;
 
       $viewer.FlipBook(options);
     });
