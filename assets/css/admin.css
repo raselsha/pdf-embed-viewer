@@ -881,6 +881,56 @@
   align-items: center;
   gap: 12px;
 }
+#wpbody-content .pdfev-settings-page .pdfev-pro-badge {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 1px 7px;
+  border-radius: 999px;
+  background: rgba(56, 88, 233, 0.12);
+  color: var(--pdfev-admin-accent);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  vertical-align: middle;
+}
+#wpbody-content .pdfev-settings-page .pdfev-locked {
+  opacity: 0.55;
+}
+#wpbody-content .pdfev-settings-page .pdfev-locked .pdfev-select-trigger,
+#wpbody-content .pdfev-settings-page .pdfev-locked input,
+#wpbody-content .pdfev-settings-page .pdfev-locked select,
+#wpbody-content .pdfev-settings-page .pdfev-locked textarea {
+  cursor: not-allowed;
+}
+#wpbody-content .pdfev-settings-page .pdfev-locked .pdfev-select-options {
+  pointer-events: none;
+}
+#wpbody-content .pdfev-settings-page .pdfev-pro-upsell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  padding: 10px 14px;
+  border: 1px solid rgba(56, 88, 233, 0.25);
+  border-radius: var(--pdfev-admin-radius-sm);
+  background: rgba(56, 88, 233, 0.06);
+  font-size: 13px;
+  color: var(--pdfev-admin-ink);
+}
+#wpbody-content .pdfev-settings-page .pdfev-pro-upsell .dashicons {
+  color: var(--pdfev-admin-accent);
+}
+#wpbody-content .pdfev-settings-page .pdfev-pro-upsell a {
+  margin-left: auto;
+  color: var(--pdfev-admin-accent);
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+}
+#wpbody-content .pdfev-settings-page .pdfev-pro-upsell a:hover {
+  color: var(--pdfev-admin-accent-hover);
+}
 #wpbody-content .pdfev-settings-page .pdfev-form-footer {
   margin-top: 4px;
 }

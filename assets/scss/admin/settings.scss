@@ -596,6 +596,68 @@
         gap: 12px;
     }
 
+    // ===========pro gating (badge/lock/upsell)==========
+    // Cosmetic only — the real enforcement is server-side in
+    // General_Settings::save_options_data() and, for these specific features,
+    // again at render/endpoint time in PDFEV_Functions.
+    .pdfev-pro-badge{
+        display: inline-block;
+        margin-left: 6px;
+        padding: 1px 7px;
+        border-radius: 999px;
+        background: rgba(56, 88, 233, .12);
+        color: var(--pdfev-admin-accent);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: .04em;
+        text-transform: uppercase;
+        vertical-align: middle;
+    }
+
+    .pdfev-locked{
+        opacity: .55;
+
+        .pdfev-select-trigger,
+        input,
+        select,
+        textarea{
+            cursor: not-allowed;
+        }
+
+        .pdfev-select-options{
+            pointer-events: none;
+        }
+    }
+
+    .pdfev-pro-upsell{
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 16px;
+        padding: 10px 14px;
+        border: 1px solid rgba(56, 88, 233, .25);
+        border-radius: var(--pdfev-admin-radius-sm);
+        background: rgba(56, 88, 233, .06);
+        font-size: 13px;
+        color: var(--pdfev-admin-ink);
+
+        .dashicons{
+            color: var(--pdfev-admin-accent);
+        }
+
+        a{
+            margin-left: auto;
+            color: var(--pdfev-admin-accent);
+            font-weight: 600;
+            text-decoration: none;
+            white-space: nowrap;
+
+            &:hover{
+                color: var(--pdfev-admin-accent-hover);
+            }
+        }
+    }
+
     // ===========buttons==========
     .pdfev-form-footer{
         margin-top: 4px;

@@ -18,7 +18,6 @@ if( ! class_exists('PDFEV_Functions') ){
             add_action( 'plugins_loaded', ['PDFEV_Functions','load_plugin_textdomain'] );  
             add_action( 'plugins_loaded', ['PDFEV_Functions','appsero_init_tracker'] ); 
             add_action( 'init', [$this,'pdfev_proxy']);
-            add_action( 'init', [$this,'stream_pdf']);
             add_action( 'wp_ajax_pdfev_load_more_archive', ['PDFEV_Functions','load_more_archive'] );
             add_action( 'wp_ajax_nopriv_pdfev_load_more_archive', ['PDFEV_Functions','load_more_archive'] );
         }
@@ -104,315 +103,15 @@ if( ! class_exists('PDFEV_Functions') ){
             return true;
         }
 
-        /**
-         * Get (or lazily generate) the secret used to sign local-file stream tokens.
-         * Idempotent — safe to call from activation and as a lazy fallback for
-         * installs upgrading from a version that predates this feature.
-         *
-         * @return string
-         */
-        public static function get_stream_secret() {
-            $secret = get_option( 'pdfev_stream_secret' );
-            if ( empty( $secret ) ) {
-                $secret = wp_generate_password( 64, false );
-                update_option( 'pdfev_stream_secret', $secret, false );
-            }
-            return $secret;
-        }
-
-        /**
-         * Stable (non-expiring) token identifying a post's PDF for the stream
-         * endpoint, so the real file path never has to appear in page HTML.
-         * Intentionally non-expiring (unlike a download token would be): it gets
-         * baked into cacheable page HTML via data-pdfev-url, so an expiring token
-         * would break the viewer for anyone served from a page cache after expiry.
-         * Functionally as permanent/public as the existing pdfev_proxy endpoint —
-         * it just never reveals the real path.
-         *
-         * @param int $post_id
-         * @return string
-         */
-        public static function get_stream_token( $post_id ) {
-            return hash_hmac( 'sha256', (string) $post_id, self::get_stream_secret() );
-        }
-
-        /**
-         * Resolve a same-host PDF URL to a real filesystem path, but only if it
-         * safely resolves within the uploads directory. pdfev_meta_pdf_url is a
-         * free-text field (not guaranteed to be an actual media-library upload),
-         * so this must not allow arbitrary local file reads — mirrors the
-         * whitelist mindset of is_allowed_proxy_url() above, for local paths.
-         *
-         * @param string $url
-         * @return string|false Real filesystem path, or false if not safely resolvable.
-         */
-        public static function resolve_local_pdf_path( $url ) {
-            $upload_dir = wp_upload_dir();
-            if ( ! empty( $upload_dir['error'] ) || empty( $url ) ) {
-                return false;
-            }
-
-            $base_url = $upload_dir['baseurl'];
-            $base_dir = $upload_dir['basedir'];
-
-            if ( strpos( $url, $base_url ) !== 0 ) {
-                return false;
-            }
-
-            $relative_path = substr( $url, strlen( $base_url ) );
-            $candidate     = $base_dir . $relative_path;
-
-            $real_base = realpath( $base_dir );
-            $real_path = realpath( $candidate );
-
-            if ( ! $real_base || ! $real_path || strpos( $real_path, $real_base ) !== 0 ) {
-                return false;
-            }
-
-            if ( ! preg_match( '/\.pdf$/i', $real_path ) ) {
-                return false;
-            }
-
-            return $real_path;
-        }
-
-        /**
-         * Stream a local PDF file to the browser, with basic single-range HTTP
-         * Range support (pdf.js never sends multi-range requests, so that's all
-         * that's needed) — without it, protected-mode PDFs would be noticeably
-         * slower to open than today's direct-URL serving (which the webserver
-         * itself serves with full Range support). Exits when done.
-         *
-         * @param string $path        Real filesystem path (already validated by the caller).
-         * @param string $disposition 'inline' or 'attachment'.
-         * @param string $filename    Filename suggested to the browser.
-         */
-        public static function send_pdf_file( $path, $disposition = 'inline', $filename = 'document.pdf' ) {
-            $size  = filesize( $path );
-            $start = 0;
-            $end   = $size - 1;
-            $status = 200;
-
-            $range_header = isset( $_SERVER['HTTP_RANGE'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_RANGE'] ) ) : '';
-
-            if ( $range_header && preg_match( '/bytes=(\d*)-(\d*)/', $range_header, $matches ) ) {
-                $start = ( '' === $matches[1] ) ? 0 : (int) $matches[1];
-                $end   = ( '' === $matches[2] ) ? $size - 1 : (int) $matches[2];
-                $end   = min( $end, $size - 1 );
-
-                if ( $start > $end || $start >= $size ) {
-                    status_header( 416 );
-                    header( 'Content-Range: bytes */' . $size );
-                    exit;
-                }
-
-                $status = 206;
-            }
-
-            $length = $end - $start + 1;
-
-            status_header( $status );
-            header( 'Content-Type: application/pdf' );
-            header( 'Content-Disposition: ' . $disposition . '; filename="' . sanitize_file_name( $filename ) . '"' );
-            header( 'Accept-Ranges: bytes' );
-            header( 'Content-Length: ' . $length );
-
-            if ( 206 === $status ) {
-                header( 'Content-Range: bytes ' . $start . '-' . $end . '/' . $size );
-            }
-
-            $handle = fopen( $path, 'rb' );
-            if ( ! $handle ) {
-                status_header( 500 );
-                exit;
-            }
-
-            fseek( $handle, $start );
-            $bytes_left = $length;
-
-            while ( $bytes_left > 0 && ! feof( $handle ) ) {
-                $read = min( 8192, $bytes_left );
-                echo fread( $handle, $read );
-                $bytes_left -= $read;
-                flush();
-            }
-
-            fclose( $handle );
-            exit;
-        }
-
-        /**
-         * Serves a local PDF through a token-gated URL instead of its real path,
-         * when Pro "Hide File URL" protection mode is active. See get_pdf_link().
-         */
-        public function stream_pdf() {
-            if ( ! isset( $_GET['pdfev_stream'] ) ) {
-                return;
-            }
-
-            $mode = ( isset( $_GET['mode'] ) && 'download' === $_GET['mode'] ) ? 'download' : 'view';
-
-            if ( 'download' === $mode ) {
-                $this->stream_pdf_download();
-                return;
-            }
-
-            $this->stream_pdf_view();
-        }
-
-        /**
-         * Extra deterrent layer on top of the token/transient checks: reject
-         * requests without a same-site Referer, so a URL copied straight into a
-         * new tab/address bar (browsers never send a Referer for that kind of
-         * navigation) is blocked, while pdf.js's own in-page fetch of the same
-         * URL — and this plugin's own JS-driven download navigation — both carry
-         * the current page as Referer and keep working. Not foolproof against a
-         * deliberately crafted Referer header (e.g. via curl); it raises the bar
-         * against casual copy/paste and link sharing, nothing more.
-         *
-         * @return bool
-         */
-        public static function has_same_site_referer() {
-            $referer = isset( $_SERVER['HTTP_REFERER'] ) ? esc_url_raw( wp_unslash( $_SERVER['HTTP_REFERER'] ) ) : '';
-            if ( empty( $referer ) ) {
-                return false;
-            }
-
-            $referer_host = wp_parse_url( $referer, PHP_URL_HOST );
-            $site_host    = wp_parse_url( home_url(), PHP_URL_HOST );
-
-            return $referer_host && $site_host && $referer_host === $site_host;
-        }
-
-        /**
-         * Serves a local PDF inline through the permanent, cache-safe view token.
-         * See get_pdf_link() / get_stream_token().
-         */
-        protected function stream_pdf_view() {
-            $post_id = isset( $_GET['id'] ) ? absint( $_GET['id'] ) : 0;
-            $token   = isset( $_GET['token'] ) ? sanitize_text_field( wp_unslash( $_GET['token'] ) ) : '';
-
-            if ( ! $post_id || ! $token || ! hash_equals( self::get_stream_token( $post_id ), $token ) ) {
-                status_header( 403 );
-                echo 'Invalid request.';
-                exit;
-            }
-
-            if ( ! self::has_same_site_referer() ) {
-                status_header( 403 );
-                echo 'Direct access to this link is not allowed.';
-                exit;
-            }
-
-            // Re-check live, not just whatever was true when the token was minted —
-            // a lapsed license must stop serving immediately.
-            if ( ! self::is_pro() || get_option( 'pdfev_pro_protection_mode' ) !== 'stream' ) {
-                status_header( 403 );
-                echo 'Protected delivery is not enabled.';
-                exit;
-            }
-
-            $meta_url = get_post_meta( $post_id, 'pdfev_meta_pdf_url', true );
-            $path     = $meta_url ? self::resolve_local_pdf_path( $meta_url ) : false;
-
-            if ( ! $path ) {
-                status_header( 404 );
-                echo 'PDF could not be located.';
-                exit;
-            }
-
-            self::send_pdf_file( $path, 'inline', 'document.pdf' );
-        }
-
-        /**
-         * Serves a local PDF as an attachment download, gated by a single-use,
-         * short-lived transient token minted on-demand by
-         * Count_Manager::track_dowload_counts() — see get_protected_download_url().
-         * Unlike the view token, this one is deliberately expiring/one-time since
-         * it's requested via admin-ajax.php at click-time (always live PHP, never
-         * cached), not baked into cacheable page HTML.
-         */
-        protected function stream_pdf_download() {
-            $token   = isset( $_GET['token'] ) ? sanitize_text_field( wp_unslash( $_GET['token'] ) ) : '';
-            $post_id = $token ? get_transient( 'pdfev_dl_' . $token ) : false;
-
-            if ( ! $post_id ) {
-                status_header( 403 );
-                echo 'This download link has expired or already been used.';
-                exit;
-            }
-
-            delete_transient( 'pdfev_dl_' . $token ); // single-use
-
-            if ( ! self::has_same_site_referer() ) {
-                status_header( 403 );
-                echo 'Direct access to this link is not allowed.';
-                exit;
-            }
-
-            // Re-check live, same reasoning as stream_pdf_view().
-            if ( ! self::is_pro() || get_option( 'pdfev_pro_protection_mode' ) !== 'stream' ) {
-                status_header( 403 );
-                echo 'Protected delivery is not enabled.';
-                exit;
-            }
-
-            $meta_url = get_post_meta( $post_id, 'pdfev_meta_pdf_url', true );
-            $path     = $meta_url ? self::resolve_local_pdf_path( $meta_url ) : false;
-
-            if ( ! $path ) {
-                status_header( 404 );
-                echo 'PDF could not be located.';
-                exit;
-            }
-
-            $filename = sanitize_title( get_the_title( $post_id ) );
-            $filename = $filename ? $filename . '.pdf' : 'document.pdf';
-
-            self::send_pdf_file( $path, 'attachment', $filename );
-        }
-
-        /**
-         * Mint a fresh, single-use, short-lived (60s) download token for a
-         * post's PDF, when Pro "Hide File URL" protection is active. Returns
-         * null when not applicable (free tier, protection off, or the file
-         * doesn't resolve to a safe local path) — callers fall back to a normal
-         * direct download in that case.
-         *
-         * @param int $post_id
-         * @return string|null
-         */
-        public static function get_protected_download_url( $post_id ) {
-            if ( ! self::is_pro() || get_option( 'pdfev_pro_protection_mode' ) !== 'stream' ) {
-                return null;
-            }
-
-            $meta_url = get_post_meta( $post_id, 'pdfev_meta_pdf_url', true );
-            if ( ! $meta_url || ! self::resolve_local_pdf_path( $meta_url ) ) {
-                return null;
-            }
-
-            $token = wp_generate_password( 32, false );
-            set_transient( 'pdfev_dl_' . $token, $post_id, 60 );
-
-            return add_query_arg(
-                [
-                    'pdfev_stream' => 1,
-                    'mode'         => 'download',
-                    'token'        => $token,
-                ],
-                home_url( '/' )
-            );
-        }
-
         public static function load_plugin_textdomain() {
             $plugin_dir = basename( dirname( __DIR__ ) ) . "/languages/";
 			load_plugin_textdomain( 'pdf-embed-viewer', false, $plugin_dir );
         }
 
         /**
-         * Cached Appsero\Client instance, so license()/insights() (and the hooks their
-         * constructors register) aren't re-created on every is_pro() call.
+         * Cached Appsero\Client instance, so insights() isn't re-created on every call.
+         * Used only for this plugin's own opt-in telemetry — licensing is handled
+         * entirely by the separate pdf-embed-viewer-pro add-on's own Appsero project.
          *
          * @var \Appsero\Client|null
          */
@@ -439,70 +138,9 @@ if( ! class_exists('PDFEV_Functions') ){
             return self::$appsero_client;
         }
 
-        /**
-         * Whether this install has a valid, active Pro license.
-         *
-         * @return bool
-         */
-        public static function is_pro() {
-            return (bool) self::get_appsero_client()->license()->is_valid();
-        }
-
-        /**
-         * Default values for the Pro flipbook display options (pdfev_flipbook_pro_options).
-         * Chosen to match today's hardcoded behavior in assets/js/frontend.js, so
-         * enabling Pro alone (without touching these settings) doesn't change the
-         * frontend experience until an admin actually adjusts something.
-         *
-         * @return array
-         */
-        public static function get_flipbook_pro_defaults() {
-            return [
-                'sound'             => 'yes',
-                'autoplay'          => 'no',
-                'autoplay_duration' => 5000,
-                'page_mode'         => 'full',
-                'rtl'               => 'no',
-                'background_color'  => '',
-                'style'             => 'volume',
-                'skin'              => 'black-short',
-                'show_print'        => 'yes',
-                'show_fullscreen'   => 'yes',
-                'show_toc'          => 'yes',
-                'show_share'        => 'yes',
-                'zoom_default'      => 1,
-                'zoom_min'          => 0.5,
-                'zoom_max'          => 3,
-            ];
-        }
-
-        /**
-         * Maps the "skin" setting to the actual vendor CSS filename under
-         * vendor/3dflipbook/css/. Single source of truth reused by the settings
-         * dropdown (general.php) and the CSS-content injection (enque-style-script.php).
-         *
-         * @return array
-         */
-        public static function get_flipbook_skin_map() {
-            return [
-                'black-short' => 'short-black-book-view.css',
-                'black-full'  => 'black-book-view.css',
-                'white-short' => 'short-white-book-view.css',
-                'white-full'  => 'white-book-view.css',
-            ];
-        }
-
         public static function appsero_init_tracker() {
             $client = self::get_appsero_client();
             $client->insights()->init();
-
-            $client->license()->add_settings_page( [
-                'type'        => 'submenu',
-                'page_title'  => __( 'Manage License', 'pdf-embed-viewer' ),
-                'menu_title'  => __( 'Manage License', 'pdf-embed-viewer' ),
-                'capability'  => 'manage_options',
-                'parent_slug' => 'edit.php?post_type=' . self::get_cpt_name(),
-            ] );
         }
 
         public static function insert_media($file_path) {
@@ -660,18 +298,12 @@ if( ! class_exists('PDFEV_Functions') ){
                 return add_query_arg('pdfev_proxy', rawurlencode($link), home_url('/'));
             }
 
-            // Local, Pro "Hide File URL" mode → serve through a token-gated URL
-            // instead of the real path. Falls through to the direct URL below for
-            // free installs, non-local files, or files outside the uploads dir.
-            if (self::is_pro() && get_option('pdfev_pro_protection_mode') === 'stream' && self::resolve_local_pdf_path($link)) {
-                return add_query_arg(
-                    [
-                        'pdfev_stream' => 1,
-                        'id'           => $post_id,
-                        'token'        => self::get_stream_token($post_id),
-                    ],
-                    home_url('/')
-                );
+            // Let an add-on (e.g. pdf-embed-viewer-pro) replace the direct local URL
+            // with a protected one (falls back to the direct URL below when no
+            // add-on hooks in, or when it returns false for this post/file).
+            $protected_link = apply_filters('pdfev_local_pdf_link', false, $post_id, $link);
+            if ($protected_link) {
+                return $protected_link;
             }
 
             // Local → return directly
@@ -824,13 +456,19 @@ if( ! class_exists('PDFEV_Functions') ){
             $download_counter = isset($atts['downloading_count']) && $atts['downloading_count']!='' ? $atts['downloading_count'] : get_option('pdfev_download_counter');
             $post_id = isset($atts['post_id']) ? $atts['post_id'] : get_the_ID();
 
-            // In Pro "Hide File URL" mode, the download link is generated fresh
-            // (single-use, short-lived) on click via AJAX instead of being a
-            // static href in the page — see get_protected_download_url() and
-            // the .download-btn click handler in assets/js/frontend.js.
-            $protected = self::is_pro() && get_option('pdfev_pro_protection_mode') === 'stream';
+            // Default (free-tier) attributes: a direct link with the browser
+            // `download` attribute. An add-on (e.g. pdf-embed-viewer-pro) can
+            // override this via filter to render a protected, on-demand-generated
+            // download link instead — see the .download-btn click handler in
+            // assets/js/frontend.js, which already reacts generically to
+            // data-protected/response.download_url without knowing why.
+            $attrs = apply_filters('pdfev_download_button_attrs', [
+                'href'           => esc_url(self::get_pdf_link($post_id)),
+                'download'       => sanitize_title(get_the_title($post_id)),
+                'data_protected' => false,
+            ], $post_id);
         ?>
-            <a class="button btn download-btn" href="<?php echo $protected ? '#' : esc_url(self::get_pdf_link($post_id)); ?>" data-post-id="<?php echo esc_attr($post_id); ?>" <?php echo $protected ? 'data-protected="yes"' : 'download="' . esc_attr(sanitize_title(get_the_title($post_id))) . '"'; ?>>
+            <a class="button btn download-btn" href="<?php echo !empty($attrs['data_protected']) ? '#' : esc_url($attrs['href']); ?>" data-post-id="<?php echo esc_attr($post_id); ?>" <?php echo !empty($attrs['data_protected']) ? 'data-protected="yes"' : (!empty($attrs['download']) ? 'download="' . esc_attr($attrs['download']) . '"' : ''); ?>>
                 <i class="fas fa-cloud-download-alt"></i>
                 <?php echo esc_html__('Download','pdf-embed-viewer'); ?>
                 <?php if($download_counter=='yes'): ?>

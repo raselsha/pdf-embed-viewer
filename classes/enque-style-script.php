@@ -76,55 +76,15 @@ class Enque_Style{
                 };
             ', 'before');
 
-            // Pro flipbook display options — never built/localized for a
-            // de-licensed install, so a lapsed license's frontend JS never even
-            // receives this config (belt-and-suspenders alongside the PHP
-            // is_pro() rechecks elsewhere).
-            if (\PDFEV_Functions::is_pro()) {
-                $flipbook_pro = wp_parse_args(get_option('pdfev_flipbook_pro_options', []), \PDFEV_Functions::get_flipbook_pro_defaults());
-                $skin_map     = \PDFEV_Functions::get_flipbook_skin_map();
-                $skin_file    = isset($skin_map[$flipbook_pro['skin']]) ? $skin_map[$flipbook_pro['skin']] : $skin_map['black-short'];
-
-                $flipbook_pro_js = [
-                    'rtl'              => $flipbook_pro['rtl'] === 'yes',
-                    'style'            => $flipbook_pro['style'],
-                    'singlePageMode'   => $flipbook_pro['page_mode'],
-                    'autoPlayDuration' => (int) $flipbook_pro['autoplay_duration'],
-                    'skinFile'         => $skin_file,
-                    'controlsProps'    => [
-                        'scale' => [
-                            'default' => (float) $flipbook_pro['zoom_default'],
-                            'min'     => (float) $flipbook_pro['zoom_min'],
-                            'max'     => (float) $flipbook_pro['zoom_max'],
-                        ],
-                        'actions' => [
-                            'cmdSounds'     => ['active' => $flipbook_pro['sound'] === 'yes'],
-                            'cmdAutoPlay'   => ['active' => $flipbook_pro['autoplay'] === 'yes'],
-                            'cmdPrint'      => ['active' => $flipbook_pro['show_print'] === 'yes'],
-                            'cmdFullScreen' => ['active' => $flipbook_pro['show_fullscreen'] === 'yes'],
-                            'cmdToc'        => ['active' => $flipbook_pro['show_toc'] === 'yes'],
-                            'cmdShare'      => ['active' => $flipbook_pro['show_share'] === 'yes'],
-                        ],
-                    ],
-                ];
-
-                if (!empty($flipbook_pro['background_color'])) {
-                    $flipbook_pro_js['backgroundColor'] = $flipbook_pro['background_color'];
-                }
-
-                // Only the default skin's CSS ships in the vendor's static jsData
-                // blob (vendor/3dflipbook/js/simple-jquery-pdf.js) — inject the
-                // other variants' actual file contents at runtime when a
-                // different skin is selected.
-                if ($skin_file !== $skin_map['black-short']) {
-                    $skin_path = PDFEV_Const_Path . 'vendor/3dflipbook/css/' . $skin_file;
-                    if (file_exists($skin_path)) {
-                        $skin_css = file_get_contents($skin_path);
-                        $inline   = 'window.jsData = window.jsData || {urls: {}}; window.jsData.urls[' . wp_json_encode('css/' . $skin_file) . '] = ' . wp_json_encode($skin_css) . ';';
-                        wp_add_inline_script('pdf-simple-jquery-pdf', $inline, 'after');
-                    }
-                }
-            }
+            // Lets an add-on (e.g. pdf-embed-viewer-pro) contribute extra data to
+            // merge into the localized frontend script object (e.g.
+            // flipbookOptions) and enqueue any inline scripts it needs (e.g.
+            // injecting an alternate skin's CSS into the 3dflipbook vendor
+            // library's jsData blob — see pdf-embed-viewer-pro's own hook).
+            // Deliberately called *inside* this guard, not after it, so an
+            // add-on's own license check only ever runs on PDF-relevant pages,
+            // not site-wide — this is exactly where the old Pro-only code sat.
+            $flipbook_pro_js = apply_filters('pdfev_frontend_localize_data', $flipbook_pro_js);
         }
 
         $pdfev_frontend_data = array(

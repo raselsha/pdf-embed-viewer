@@ -29,13 +29,10 @@ defined('ABSPATH') || exit;
                     'download_count' => $download_count,
                 );
 
-                // In Pro "Hide File URL" mode, mint a fresh single-use download
-                // link in this same request instead of the button linking directly
-                // to the file — see PDFEV_Functions::get_protected_download_url().
-                $download_url = \PDFEV_Functions::get_protected_download_url($post_id);
-                if ($download_url) {
-                    $response['download_url'] = $download_url;
-                }
+                // Lets an add-on (e.g. pdf-embed-viewer-pro) add a fresh, on-demand
+                // download link (or anything else) to this same AJAX response,
+                // instead of the button linking directly to the file.
+                $response = apply_filters('pdfev_download_ajax_response', $response, $post_id);
 
                 wp_send_json_success($response);
             } else {

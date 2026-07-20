@@ -105,20 +105,15 @@ class General_Settings{
         $dark           = $colors['dark']?$colors['dark']:'#333333';
         $light          = $colors['light']?$colors['light']:'#e5e5e5';
 
-        $protection_mode = get_option('pdfev_pro_protection_mode');
-        $protection_mode = $protection_mode ? $protection_mode : 'direct';
-
-        $flipbook_pro = wp_parse_args(get_option('pdfev_flipbook_pro_options', []), \PDFEV_Functions::get_flipbook_pro_defaults());
-
-        $sections = [
-            'archive'    => ['icon' => 'admin-links',     'label' => __('Archive Page', 'pdf-embed-viewer')],
-            'display'    => ['icon' => 'visibility',       'label' => __('Display & Behavior', 'pdf-embed-viewer')],
-            'metadata'   => ['icon' => 'info',             'label' => __('Book Metadata', 'pdf-embed-viewer')],
-            'colors'     => ['icon' => 'admin-appearance', 'label' => __('Brand Colors', 'pdf-embed-viewer')],
-            'protection' => ['icon' => 'shield',           'label' => __('Protection', 'pdf-embed-viewer')],
-            'flipbook'   => ['icon' => 'book-alt',         'label' => __('Flipbook (Pro)', 'pdf-embed-viewer')],
-            'demo'       => ['icon' => 'database-import',  'label' => __('Demo Content', 'pdf-embed-viewer')],
-        ];
+        // Lets an add-on (e.g. pdf-embed-viewer-pro) insert its own sidebar nav
+        // entries (typically before 'demo', so "Demo Content" stays last).
+        $sections = apply_filters('pdfev_settings_sections', [
+            'archive'  => ['icon' => 'admin-links',     'label' => __('Archive Page', 'pdf-embed-viewer')],
+            'display'  => ['icon' => 'visibility',       'label' => __('Display & Behavior', 'pdf-embed-viewer')],
+            'metadata' => ['icon' => 'info',             'label' => __('Book Metadata', 'pdf-embed-viewer')],
+            'colors'   => ['icon' => 'admin-appearance', 'label' => __('Brand Colors', 'pdf-embed-viewer')],
+            'demo'     => ['icon' => 'database-import',  'label' => __('Demo Content', 'pdf-embed-viewer')],
+        ]);
         ?>
         <div class="pdfev-settings-shell">
             <aside class="pdfev-settings-sidebar">
@@ -245,160 +240,6 @@ class General_Settings{
                     </div>
                 </div>
 
-                <div class="pdfev-settings-section" data-section="protection">
-                    <div class="pdfev-section-header">
-                        <h2><?php esc_html_e('Protection', 'pdf-embed-viewer'); ?></h2>
-                        <p><?php esc_html_e('Control how PDF files are delivered to visitors.', 'pdf-embed-viewer'); ?></p>
-                    </div>
-                    <div class="pdfev-section-body">
-                        <div class="pdfev-field-row">
-                            <div class="pdfev-field-label">
-                                <label for="pdfev_pro_protection_mode"><?php esc_html_e('File Delivery', 'pdf-embed-viewer'); ?></label>
-                                <span><?php esc_html_e('Hide the direct file URL from page source and serve PDFs through a protected link instead.', 'pdf-embed-viewer'); ?></span>
-                            </div>
-                            <div class="pdfev-field-control">
-                                <?php
-                                $this->render_custom_select(
-                                    'pdfev_pro_protection_mode',
-                                    'pdfev_pro_protection_mode',
-                                    [
-                                        'direct' => __('Direct URL (default)', 'pdf-embed-viewer'),
-                                        'stream' => __('Hide File URL (Pro)', 'pdf-embed-viewer'),
-                                    ],
-                                    $protection_mode
-                                );
-                                ?>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="pdfev-settings-section" data-section="flipbook">
-                    <div class="pdfev-section-header">
-                        <h2><?php esc_html_e('Flipbook (Pro)', 'pdf-embed-viewer'); ?></h2>
-                        <p><?php esc_html_e('Fine-tune how the 3D flipbook viewer looks and behaves.', 'pdf-embed-viewer'); ?></p>
-                    </div>
-                    <div class="pdfev-section-body pdfev-toggle-grid pdfev-toggle-grid--compact">
-                        <?php
-                        $this->toggle_row('pdfev_flipbook_pro_options[sound]', __('Page-Flip Sound', 'pdf-embed-viewer'), $flipbook_pro['sound'], __('Play a sound effect when a page is turned.', 'pdf-embed-viewer'));
-                        $this->toggle_row('pdfev_flipbook_pro_options[autoplay]', __('Autoplay Button', 'pdf-embed-viewer'), $flipbook_pro['autoplay'], __('Show a button that automatically turns pages.', 'pdf-embed-viewer'));
-                        $this->toggle_row('pdfev_flipbook_pro_options[rtl]', __('Right-to-Left Reading', 'pdf-embed-viewer'), $flipbook_pro['rtl'], __('Turn pages right-to-left, for RTL languages.', 'pdf-embed-viewer'));
-                        $this->toggle_row('pdfev_flipbook_pro_options[show_print]', __('Show Print Button', 'pdf-embed-viewer'), $flipbook_pro['show_print'], __('Let visitors print the document from the viewer toolbar.', 'pdf-embed-viewer'));
-                        $this->toggle_row('pdfev_flipbook_pro_options[show_fullscreen]', __('Show Full Screen Button', 'pdf-embed-viewer'), $flipbook_pro['show_fullscreen'], __('Let visitors open the viewer in full screen.', 'pdf-embed-viewer'));
-                        $this->toggle_row('pdfev_flipbook_pro_options[show_toc]', __('Show Table of Contents', 'pdf-embed-viewer'), $flipbook_pro['show_toc'], __('Show the bookmarks/thumbnails/search panel.', 'pdf-embed-viewer'));
-                        $this->toggle_row('pdfev_flipbook_pro_options[show_share]', __('Show Share Button', 'pdf-embed-viewer'), $flipbook_pro['show_share'], __('Let visitors share a link to the document.', 'pdf-embed-viewer'));
-                        ?>
-                    </div>
-                    <div class="pdfev-section-body">
-                        <div class="pdfev-field-row">
-                            <div class="pdfev-field-label">
-                                <label for="pdfev_flipbook_autoplay_duration"><?php esc_html_e('Autoplay Interval (ms)', 'pdf-embed-viewer'); ?></label>
-                                <span><?php esc_html_e('Time between automatic page turns, in milliseconds.', 'pdf-embed-viewer'); ?></span>
-                            </div>
-                            <div class="pdfev-field-control">
-                                <input type="number" id="pdfev_flipbook_autoplay_duration" name="pdfev_flipbook_pro_options[autoplay_duration]" min="1000" step="500" value="<?php echo esc_attr($flipbook_pro['autoplay_duration']); ?>">
-                            </div>
-                        </div>
-                        <div class="pdfev-field-row">
-                            <div class="pdfev-field-label">
-                                <label for="pdfev_flipbook_page_mode"><?php esc_html_e('Page Mode', 'pdf-embed-viewer'); ?></label>
-                                <span><?php esc_html_e('Show one page at a time, or a two-page spread.', 'pdf-embed-viewer'); ?></span>
-                            </div>
-                            <div class="pdfev-field-control">
-                                <?php
-                                $this->render_custom_select(
-                                    'pdfev_flipbook_page_mode',
-                                    'pdfev_flipbook_pro_options[page_mode]',
-                                    [
-                                        'full' => __('Single Page', 'pdf-embed-viewer'),
-                                        'half' => __('Two-Page Spread', 'pdf-embed-viewer'),
-                                    ],
-                                    $flipbook_pro['page_mode']
-                                );
-                                ?>
-                            </div>
-                        </div>
-                        <div class="pdfev-field-row">
-                            <div class="pdfev-field-label">
-                                <label for="pdfev_flipbook_style"><?php esc_html_e('Book Style', 'pdf-embed-viewer'); ?></label>
-                                <span><?php esc_html_e('The overall shape/physics preset for the flipbook.', 'pdf-embed-viewer'); ?></span>
-                            </div>
-                            <div class="pdfev-field-control">
-                                <?php
-                                $this->render_custom_select(
-                                    'pdfev_flipbook_style',
-                                    'pdfev_flipbook_pro_options[style]',
-                                    [
-                                        'volume'             => __('Volume', 'pdf-embed-viewer'),
-                                        'flat'               => __('Flat', 'pdf-embed-viewer'),
-                                        'volume-paddings'    => __('Volume with Paddings', 'pdf-embed-viewer'),
-                                        'volume-unrolling'   => __('Volume Unrolling', 'pdf-embed-viewer'),
-                                    ],
-                                    $flipbook_pro['style']
-                                );
-                                ?>
-                            </div>
-                        </div>
-                        <div class="pdfev-field-row">
-                            <div class="pdfev-field-label">
-                                <label for="pdfev_flipbook_skin"><?php esc_html_e('Theme / Skin', 'pdf-embed-viewer'); ?></label>
-                                <span><?php esc_html_e('Toolbar color scheme and layout.', 'pdf-embed-viewer'); ?></span>
-                            </div>
-                            <div class="pdfev-field-control">
-                                <?php
-                                $this->render_custom_select(
-                                    'pdfev_flipbook_skin',
-                                    'pdfev_flipbook_pro_options[skin]',
-                                    [
-                                        'black-short' => __('Dark, Compact Toolbar', 'pdf-embed-viewer'),
-                                        'black-full'  => __('Dark, Full Toolbar', 'pdf-embed-viewer'),
-                                        'white-short' => __('Light, Compact Toolbar', 'pdf-embed-viewer'),
-                                        'white-full'  => __('Light, Full Toolbar', 'pdf-embed-viewer'),
-                                    ],
-                                    $flipbook_pro['skin']
-                                );
-                                ?>
-                            </div>
-                        </div>
-                        <div class="pdfev-field-row">
-                            <div class="pdfev-field-label">
-                                <label for="pdfev_flipbook_background_color"><?php esc_html_e('Background Color', 'pdf-embed-viewer'); ?></label>
-                                <span><?php esc_html_e('Leave blank to use the skin\'s default background.', 'pdf-embed-viewer'); ?></span>
-                            </div>
-                            <div class="pdfev-field-control">
-                                <input id="pdfev_flipbook_background_color" class="pdfev-color-field" type="text" name="pdfev_flipbook_pro_options[background_color]" value="<?php echo esc_attr($flipbook_pro['background_color']); ?>">
-                            </div>
-                        </div>
-                        <div class="pdfev-field-row">
-                            <div class="pdfev-field-label">
-                                <label for="pdfev_flipbook_zoom_default"><?php esc_html_e('Default Zoom', 'pdf-embed-viewer'); ?></label>
-                                <span><?php esc_html_e('Zoom level when the viewer first opens (1 = 100%).', 'pdf-embed-viewer'); ?></span>
-                            </div>
-                            <div class="pdfev-field-control">
-                                <input type="number" id="pdfev_flipbook_zoom_default" name="pdfev_flipbook_pro_options[zoom_default]" min="0.1" step="0.1" value="<?php echo esc_attr($flipbook_pro['zoom_default']); ?>">
-                            </div>
-                        </div>
-                        <div class="pdfev-field-row">
-                            <div class="pdfev-field-label">
-                                <label for="pdfev_flipbook_zoom_min"><?php esc_html_e('Minimum Zoom', 'pdf-embed-viewer'); ?></label>
-                                <span><?php esc_html_e('Smallest zoom level visitors can zoom out to.', 'pdf-embed-viewer'); ?></span>
-                            </div>
-                            <div class="pdfev-field-control">
-                                <input type="number" id="pdfev_flipbook_zoom_min" name="pdfev_flipbook_pro_options[zoom_min]" min="0.1" step="0.1" value="<?php echo esc_attr($flipbook_pro['zoom_min']); ?>">
-                            </div>
-                        </div>
-                        <div class="pdfev-field-row">
-                            <div class="pdfev-field-label">
-                                <label for="pdfev_flipbook_zoom_max"><?php esc_html_e('Maximum Zoom', 'pdf-embed-viewer'); ?></label>
-                                <span><?php esc_html_e('Largest zoom level visitors can zoom in to.', 'pdf-embed-viewer'); ?></span>
-                            </div>
-                            <div class="pdfev-field-control">
-                                <input type="number" id="pdfev_flipbook_zoom_max" name="pdfev_flipbook_pro_options[zoom_max]" min="0.1" step="0.1" value="<?php echo esc_attr($flipbook_pro['zoom_max']); ?>">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                 <div class="pdfev-settings-section" data-section="demo">
                     <div class="pdfev-section-header">
                         <h2><?php esc_html_e('Demo Content', 'pdf-embed-viewer'); ?></h2>
@@ -417,12 +258,22 @@ class General_Settings{
                         </div>
                     </div>
                 </div>
+
+                <?php
+                // Lets an add-on (e.g. pdf-embed-viewer-pro) render its own extra
+                // settings section(s) here, using this class's own toggle_row() /
+                // render_custom_select() / render_pro_badge() / render_pro_upsell_banner()
+                // helpers — same visual language, no markup/CSS duplication. Has
+                // WordPress-core precedent: WP_Widget::form() passes $this through
+                // do_action_ref_array('in_widget_form', ...) for the same reason.
+                do_action('pdfev_settings_extra_sections', $this);
+                ?>
             </div>
         </div>
         <?php
     }
 
-    public function render_custom_select($id, $name, $options, $selected = '', $placeholder = ''){
+    public function render_custom_select($id, $name, $options, $selected = '', $placeholder = '', $locked = false){
         $selected_label = $placeholder;
         foreach ($options as $value => $label) {
             if ((string) $value === (string) $selected) {
@@ -431,8 +282,8 @@ class General_Settings{
             }
         }
         ?>
-        <div class="pdfev-select">
-            <select id="<?php echo esc_attr($id); ?>" name="<?php echo esc_attr($name); ?>" class="pdfev-select-native">
+        <div class="pdfev-select<?php echo $locked ? ' pdfev-locked' : ''; ?>">
+            <select id="<?php echo esc_attr($id); ?>" name="<?php echo esc_attr($name); ?>" class="pdfev-select-native" <?php disabled($locked); ?>>
                 <?php if ($placeholder !== '') : ?>
                 <option value=""><?php echo esc_html($placeholder); ?></option>
                 <?php endif; ?>
@@ -440,7 +291,7 @@ class General_Settings{
                 <option value="<?php echo esc_attr($value); ?>" <?php selected((string) $value, (string) $selected); ?>><?php echo esc_html($label); ?></option>
                 <?php endforeach; ?>
             </select>
-            <button type="button" class="pdfev-select-trigger" aria-haspopup="listbox" aria-expanded="false">
+            <button type="button" class="pdfev-select-trigger" aria-haspopup="listbox" aria-expanded="false" <?php disabled($locked); ?>>
                 <span class="pdfev-select-value"><?php echo esc_html($selected_label); ?></span>
                 <span class="dashicons dashicons-arrow-down-alt2" aria-hidden="true"></span>
             </button>
@@ -456,19 +307,51 @@ class General_Settings{
         <?php
     }
 
-    public function toggle_row($name, $label, $value, $description = ''){
+    public function toggle_row($name, $label, $value, $description = '', $locked = false){
         ?>
-        <div class="pdfev-toggle-row">
+        <div class="pdfev-toggle-row<?php echo $locked ? ' pdfev-locked' : ''; ?>">
             <div class="pdfev-toggle-row-label">
-                <span class="pdfev-toggle-row-title"><?php echo esc_html($label); ?></span>
+                <span class="pdfev-toggle-row-title"><?php echo esc_html($label); ?><?php $this->render_pro_badge($locked); ?></span>
                 <?php if ($description) : ?>
                 <span class="pdfev-toggle-row-desc"><?php echo esc_html($description); ?></span>
                 <?php endif; ?>
             </div>
             <label class="switch">
-                <input type="checkbox" name="<?php echo esc_attr($name); ?>" value="<?php echo esc_attr($value); ?>" <?php echo esc_attr(($value == 'yes') ? 'checked' : ''); ?>>
+                <input type="checkbox" name="<?php echo esc_attr($name); ?>" value="<?php echo esc_attr($value); ?>" <?php echo esc_attr(($value == 'yes') ? 'checked' : ''); ?> <?php disabled($locked); ?>>
                 <span class="slider"></span>
             </label>
+        </div>
+        <?php
+    }
+
+    /**
+     * Small "PRO" badge appended next to a field's label when it's locked
+     * (i.e. the current install isn't licensed). Purely cosmetic — the real
+     * enforcement is server-side in save_options_data() and, for these
+     * specific Pro features, again at render/endpoint time in functions.php.
+     */
+    public function render_pro_badge($locked){
+        if ($locked) {
+            echo ' <span class="pdfev-pro-badge">' . esc_html__('PRO', 'pdf-embed-viewer') . '</span>';
+        }
+    }
+
+    /**
+     * Small upsell banner an add-on can show at the top of its own Pro-gated
+     * section when unlicensed. This class has no licensing/Appsero knowledge
+     * of its own — the caller (e.g. pdf-embed-viewer-pro) supplies its own
+     * "Manage License" URL and, optionally, a custom message.
+     *
+     * @param string $license_url URL to the add-on's license-activation page.
+     * @param string $message     Optional custom message; falls back to a generic one.
+     */
+    public function render_pro_upsell_banner($license_url, $message = ''){
+        $message = $message !== '' ? $message : __('These settings require an active Pro license.', 'pdf-embed-viewer');
+        ?>
+        <div class="pdfev-pro-upsell">
+            <span class="dashicons dashicons-lock" aria-hidden="true"></span>
+            <span><?php echo esc_html($message); ?></span>
+            <a href="<?php echo esc_url($license_url); ?>"><?php esc_html_e('Activate License', 'pdf-embed-viewer'); ?></a>
         </div>
         <?php
     }
@@ -478,7 +361,16 @@ class General_Settings{
             if( ! wp_verify_nonce( sanitize_text_field( wp_unslash ( $_POST['pdfev_emd_vwr_options_nonce'] ) ) , 'pdfev_emd_vwr_options_nonce' ) ){
                 return;
             }
-            
+
+            if( ! current_user_can( 'manage_options' ) ){
+                return;
+            }
+
+            // Lets an add-on (e.g. pdf-embed-viewer-pro) save its own settings in
+            // this same request. Nonce + capability are already verified above,
+            // so the add-on's callback doesn't need to re-check either.
+            do_action('pdfev_save_extra_options', $_POST);
+
             $archive_title      = isset( $_POST['pdfev_archive_title'] ) ? sanitize_text_field($_POST['pdfev_archive_title']): 'Pdf Embed Viewer';
             $archive_slug       = isset( $_POST['pdfev_archive_slug'] ) ? sanitize_text_field(sanitize_title($_POST['pdfev_archive_slug'])): 'pdf-embed-viewer';
             $shortcode_page_url = isset( $_POST['pdfev_shortcode_page_url'] ) ? sanitize_text_field($_POST['pdfev_shortcode_page_url']): '';
@@ -495,30 +387,6 @@ class General_Settings{
             $show_edition       = isset($_POST['pdfev_show_edition']) ? sanitize_text_field($_POST['pdfev_show_edition']) : 'no';
             $show_total_pages   = isset($_POST['pdfev_show_total_pages']) ? sanitize_text_field($_POST['pdfev_show_total_pages']) : 'no';
             $show_filesize      = isset($_POST['pdfev_show_filesize']) ? sanitize_text_field($_POST['pdfev_show_filesize']) : 'no';
-
-            $protection_mode    = isset($_POST['pdfev_pro_protection_mode']) && in_array($_POST['pdfev_pro_protection_mode'], ['direct', 'stream'], true) ? $_POST['pdfev_pro_protection_mode'] : 'direct';
-
-            $flipbook_pro_input = isset($_POST['pdfev_flipbook_pro_options']) && is_array($_POST['pdfev_flipbook_pro_options']) ? wp_unslash($_POST['pdfev_flipbook_pro_options']) : [];
-            $flipbook_style_options = ['volume', 'flat', 'volume-paddings', 'volume-unrolling'];
-            $flipbook_skin_options  = array_keys(\PDFEV_Functions::get_flipbook_skin_map());
-
-            $flipbook_pro = [
-                'sound'             => (isset($flipbook_pro_input['sound']) && $flipbook_pro_input['sound'] === 'yes') ? 'yes' : 'no',
-                'autoplay'          => (isset($flipbook_pro_input['autoplay']) && $flipbook_pro_input['autoplay'] === 'yes') ? 'yes' : 'no',
-                'autoplay_duration' => isset($flipbook_pro_input['autoplay_duration']) ? max(1000, absint($flipbook_pro_input['autoplay_duration'])) : 5000,
-                'page_mode'         => (isset($flipbook_pro_input['page_mode']) && in_array($flipbook_pro_input['page_mode'], ['full', 'half'], true)) ? $flipbook_pro_input['page_mode'] : 'full',
-                'rtl'               => (isset($flipbook_pro_input['rtl']) && $flipbook_pro_input['rtl'] === 'yes') ? 'yes' : 'no',
-                'background_color'  => isset($flipbook_pro_input['background_color']) && $flipbook_pro_input['background_color'] !== '' ? sanitize_hex_color($flipbook_pro_input['background_color']) : '',
-                'style'             => (isset($flipbook_pro_input['style']) && in_array($flipbook_pro_input['style'], $flipbook_style_options, true)) ? $flipbook_pro_input['style'] : 'volume',
-                'skin'              => (isset($flipbook_pro_input['skin']) && in_array($flipbook_pro_input['skin'], $flipbook_skin_options, true)) ? $flipbook_pro_input['skin'] : 'black-short',
-                'show_print'        => (isset($flipbook_pro_input['show_print']) && $flipbook_pro_input['show_print'] === 'yes') ? 'yes' : 'no',
-                'show_fullscreen'   => (isset($flipbook_pro_input['show_fullscreen']) && $flipbook_pro_input['show_fullscreen'] === 'yes') ? 'yes' : 'no',
-                'show_toc'          => (isset($flipbook_pro_input['show_toc']) && $flipbook_pro_input['show_toc'] === 'yes') ? 'yes' : 'no',
-                'show_share'        => (isset($flipbook_pro_input['show_share']) && $flipbook_pro_input['show_share'] === 'yes') ? 'yes' : 'no',
-                'zoom_default'      => isset($flipbook_pro_input['zoom_default']) ? (float) $flipbook_pro_input['zoom_default'] : 1,
-                'zoom_min'          => isset($flipbook_pro_input['zoom_min']) ? (float) $flipbook_pro_input['zoom_min'] : 0.5,
-                'zoom_max'          => isset($flipbook_pro_input['zoom_max']) ? (float) $flipbook_pro_input['zoom_max'] : 3,
-            ];
 
             $primary            = isset( $_POST['pdfev_css_colors']['primary'] ) ? sanitize_hex_color($_POST['pdfev_css_colors']['primary']) : '';
             $secondary          = isset( $_POST['pdfev_css_colors']['secondary'] ) ? sanitize_hex_color($_POST['pdfev_css_colors']['secondary']) : '';
@@ -547,8 +415,6 @@ class General_Settings{
             update_option('pdfev_show_edition', $show_edition);
             update_option('pdfev_show_total_pages', $show_total_pages);
             update_option('pdfev_show_filesize', $show_filesize);
-            update_option('pdfev_pro_protection_mode', $protection_mode);
-            update_option('pdfev_flipbook_pro_options', $flipbook_pro);
             update_option('pdfev_css_colors',$colors );
         }
     }
