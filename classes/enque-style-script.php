@@ -41,7 +41,24 @@ class Enque_Style{
 
         $flipbook_pro_js = [];
 
-        if(is_singular( 'pdfev_embed_viewer') || is_post_type_archive( 'pdfev_embed_viewer') || shortcode_exists('pdfev_viewer') ){
+        $is_pdf_page = is_singular('pdfev_embed_viewer') || is_post_type_archive('pdfev_embed_viewer');
+
+        // shortcode_exists() only tells us the tag is registered, not that this
+        // page actually uses it (it's always registered) — check the current
+        // post for real usage instead, so assets don't load site-wide.
+        if( ! $is_pdf_page && is_singular() ){
+            $post = get_post();
+            if( $post && ( has_shortcode($post->post_content, 'pdfev_viewer') || has_shortcode($post->post_content, 'pdfev_embed_viewer') ) ){
+                $is_pdf_page = true;
+            } else if( $post ){
+                $elementor_data = get_post_meta($post->ID, '_elementor_data', true);
+                if( $elementor_data && ( strpos($elementor_data, 'pdfev-single-view') !== false || strpos($elementor_data, 'pdfev-archive-view') !== false ) ){
+                    $is_pdf_page = true;
+                }
+            }
+        }
+
+        if( $is_pdf_page ){
             // css ===
             wp_enqueue_style('pdfev-font-awesome',PDFEV_Const_URL.'vendor/font-awesome/font-awesome.min.css',[],PDFEV_Const_VERSION,'all');
             wp_enqueue_style('pdfev-frontend-style',PDFEV_Const_URL.'assets/css/frontend.css',[],PDFEV_Const_VERSION,'all');
