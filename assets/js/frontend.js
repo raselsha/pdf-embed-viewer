@@ -78,66 +78,124 @@ jQuery(document).ready(function ($) {
   // ===initialize the flipbook===
   $(document).ready(function(){
     initializeFlipbook();
+    initializeProtectedIframes();
   });
-  
+
+  // Pro "Hide File URL" mode: fetches the (stable, permanent) stream token
+  // via ajax instead of it ever being printed into the page's own markup,
+  // then fetches the actual PDF bytes itself and hands the viewer/iframe a
+  // blob: URL instead of the real one. A blob: URL only resolves inside the
+  // document that created it — copy/pasting it into a new tab (or a
+  // different browser entirely) fails, unlike a plain token URL which stays
+  // reusable anywhere the same-site Referer check can be satisfied. Not
+  // proof against a deliberately scripted request replaying a stolen
+  // Referer header — this raises the bar against casual copy/paste and
+  // "view source" link sharing, nothing more.
+  function fetchProtectedBlobUrl(post_id, callback) {
+    $.post(pdfevFronend.ajaxurl, {
+      action: 'pdfev_get_stream_token',
+      ajaxnonce: pdfevFronend.ajaxnonce,
+      post_id: post_id,
+    }).done(function (response) {
+      if (!response.success || !response.data || !response.data.url) {
+        callback(null);
+        return;
+      }
+      fetch(response.data.url, { credentials: 'same-origin' })
+        .then(function (res) {
+          if (!res.ok) throw new Error('Protected PDF fetch failed');
+          return res.blob();
+        })
+        .then(function (blob) {
+          callback(URL.createObjectURL(blob));
+        })
+        .catch(function () {
+          callback(null);
+        });
+    }).fail(function () {
+      callback(null);
+    });
+  }
+
+  function initializeProtectedIframes() {
+    $('.pdf-viewer[data-pdfev-protected="yes"]').each(function () {
+      let $iframe = $(this);
+      let post_id = $iframe.data('id');
+      fetchProtectedBlobUrl(post_id, function (blobUrl) {
+        if (blobUrl) $iframe.attr('src', blobUrl);
+      });
+    });
+  }
+
   function initializeFlipbook() {
       $('.pdfev-3dbook-viewer').each(function () {
       let $viewer = $(this);
       let post_id = $viewer.data('id');
       let pdfURL = $viewer.data('pdfev-url');
+      let isProtected = $viewer.data('pdfev-protected') === 'yes';
 
-      if (!pdfURL) return;
+      if (!pdfURL && !isProtected) return;
 
-      // Pro flipbook options — free/unlicensed installs never receive
-      // pdfevFronend.flipbookOptions at all, so proOptions stays {} and the
-      // $.extend below is a no-op, leaving today's defaults untouched.
-      let proOptions = pdfevFronend.flipbookOptions || {};
-      let skinFile = proOptions.skinFile || "short-black-book-view.css";
+      function startFlipbook(resolvedUrl) {
+        // Pro flipbook options — free/unlicensed installs never receive
+        // pdfevFronend.flipbookOptions at all, so proOptions stays {} and the
+        // $.extend below is a no-op, leaving today's defaults untouched.
+        let proOptions = pdfevFronend.flipbookOptions || {};
+        let skinFile = proOptions.skinFile || "short-black-book-view.css";
 
-      let options = {
-        pdf: pdfURL,
-        page: 1, // or customize per book
-        template: function () {
-          return {
-            html: [
-              {
-                url: pdfevFronend.pdfevurl + "vendor/3dflipbook/templates/default-book-view.html",
-                data: jsData.urls["templates/default-book-view.html"],
+        let options = {
+          pdf: resolvedUrl,
+          page: 1, // or customize per book
+          template: function () {
+            return {
+              html: [
+                {
+                  url: pdfevFronend.pdfevurl + "vendor/3dflipbook/templates/default-book-view.html",
+                  data: jsData.urls["templates/default-book-view.html"],
+                },
+              ],
+              script: [
+                {
+                  url: pdfevFronend.pdfevurl + "vendor/3dflipbook/js/default-book-view.js",
+                  data: jsData.urls["js/default-book-view.js"],
+                },
+              ],
+              styles: [
+                {
+                  url: pdfevFronend.pdfevurl + "vendor/3dflipbook/css/font-awesome.min.css",
+                  data: jsData.urls["css/font-awesome.min.css"],
+                },
+                {
+                  url: pdfevFronend.pdfevurl + "vendor/3dflipbook/css/" + skinFile,
+                  data: jsData.urls["css/" + skinFile],
+                },
+              ],
+              sounds: {
+                startFlip: pdfevFronend.pdfevurl + "vendor/3dflipbook/sounds/start-flip.mp3",
+                endFlip: pdfevFronend.pdfevurl + "vendor/3dflipbook/sounds/end-flip.mp3",
               },
-            ],
-            script: [
-              {
-                url: pdfevFronend.pdfevurl + "vendor/3dflipbook/js/default-book-view.js",
-                data: jsData.urls["js/default-book-view.js"],
-              },
-            ],
-            styles: [
-              {
-                url: pdfevFronend.pdfevurl + "vendor/3dflipbook/css/font-awesome.min.css",
-                data: jsData.urls["css/font-awesome.min.css"],
-              },
-              {
-                url: pdfevFronend.pdfevurl + "vendor/3dflipbook/css/" + skinFile,
-                data: jsData.urls["css/" + skinFile],
-              },
-            ],
-            sounds: {
-              startFlip: pdfevFronend.pdfevurl + "vendor/3dflipbook/sounds/start-flip.mp3",
-              endFlip: pdfevFronend.pdfevurl + "vendor/3dflipbook/sounds/end-flip.mp3",
-            },
-            init: undefined,
-          };
-        },
-      };
+              init: undefined,
+            };
+          },
+        };
 
-      // Deep-merge Pro options on top of the defaults above. proOptions has no
-      // "template" key so the function above is left untouched; skinFile isn't
-      // a real FlipBook() option (only used to pick the styles[] entry above),
-      // so it's stripped back off before handing the object to FlipBook().
-      $.extend(true, options, proOptions);
-      delete options.skinFile;
+        // Deep-merge Pro options on top of the defaults above. proOptions has no
+        // "template" key so the function above is left untouched; skinFile isn't
+        // a real FlipBook() option (only used to pick the styles[] entry above),
+        // so it's stripped back off before handing the object to FlipBook().
+        $.extend(true, options, proOptions);
+        delete options.skinFile;
 
-      $viewer.FlipBook(options);
+        $viewer.FlipBook(options);
+      }
+
+      if (isProtected) {
+        fetchProtectedBlobUrl(post_id, function (blobUrl) {
+          if (blobUrl) startFlipbook(blobUrl);
+        });
+      } else {
+        startFlipbook(pdfURL);
+      }
     });
   }
 

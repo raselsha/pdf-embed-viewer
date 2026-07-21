@@ -241,6 +241,12 @@ if( ! class_exists('PDFEV_Functions') ){
 
         public static function shortcode_view($post_id, $atts = []){
             $link = \PDFEV_Functions::get_pdf_link($post_id);
+            // Let an add-on (e.g. pdf-embed-viewer-pro) say "don't print a
+            // working URL into this page's markup at all" — its JS then fetches
+            // one on demand instead, so nothing in view-source/DOM inspection
+            // is a link a copy/paste can reuse elsewhere.
+            $is_protected = apply_filters('pdfev_pdf_is_protected', false, $post_id);
+            $display_link = $is_protected ? '' : $link;
             $flipbook = get_option('pdfev_flipbook_status');
             $flipbook = $flipbook ? $flipbook : 'yes';
             ?>
@@ -259,10 +265,10 @@ if( ! class_exists('PDFEV_Functions') ){
                         ?>
                     </div>
                     <div class="pdfev-3dbook-container" style="display: <?php echo esc_attr($flipbook=='yes'?'block':'none'); ?>;">
-                        <div class="pdfev-3dbook-viewer" id="pdfev-3dbook-<?php echo esc_attr($post_id); ?>" data-id="<?php echo esc_attr($post_id); ?>" data-pdfev-url="<?php echo esc_attr($link); ?>"></div>                
+                        <div class="pdfev-3dbook-viewer" id="pdfev-3dbook-<?php echo esc_attr($post_id); ?>" data-id="<?php echo esc_attr($post_id); ?>" data-pdfev-url="<?php echo esc_attr($display_link); ?>" <?php echo $is_protected ? 'data-pdfev-protected="yes"' : ''; ?>></div>
                     </div>
                     <div class="pdfev-traditional-container" style="display: <?php echo esc_attr($flipbook=='yes'?'none':'block'); ?>;">
-                        <iframe class="pdf-viewer" src="<?php echo esc_attr($link); ?>" frameborder="0"></iframe>
+                        <iframe class="pdf-viewer" data-id="<?php echo esc_attr($post_id); ?>" src="<?php echo esc_attr($display_link); ?>" <?php echo $is_protected ? 'data-pdfev-protected="yes"' : ''; ?> frameborder="0"></iframe>
                     </div>
                 </div>
             </div>
