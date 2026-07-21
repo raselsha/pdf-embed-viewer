@@ -79,7 +79,21 @@ class Admin_Settings{
                     <h1><?php echo esc_html__('PDF Embed Viewer', 'pdf-embed-viewer'); ?></h1>
                     <p><?php echo esc_html__('Configure your flipbook viewer, shortcodes, and display options.', 'pdf-embed-viewer'); ?></p>
                 </div>
-                <span class="pdfev-header-version">v<?php echo esc_html(defined('PDFEV_Const_VERSION') ? PDFEV_Const_VERSION : ''); ?></span>
+                <div class="pdfev-header-actions">
+                    <span class="pdfev-header-version">v<?php echo esc_html(defined('PDFEV_Const_VERSION') ? PDFEV_Const_VERSION : ''); ?></span>
+                    <?php
+                    /*
+                     * Submits the General Settings tab's form (#pdfev-settings-form) via the
+                     * HTML5 form="" attribute, without needing this shared page header to live
+                     * inside that tab-specific <form> itself. Harmless on other tabs too — it
+                     * just submits the same settings form regardless of which tab is showing.
+                     */
+                    ?>
+                    <button type="submit" form="pdfev-settings-form" class="pdfev-btn pdfev-btn-primary pdfev-header-save">
+                        <span class="dashicons dashicons-yes" aria-hidden="true"></span>
+                        <?php esc_html_e('Save Changes', 'pdf-embed-viewer'); ?>
+                    </button>
+                </div>
             </div>
             <div class="pdfev-tabs" role="tablist">
                 <?php do_action('pdfev_settings_tabs'); ?>

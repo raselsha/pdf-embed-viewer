@@ -28,7 +28,7 @@ class General_Settings{
     public function tabs_content(){
         ?>
         <div class="pdfev-tab-content active" data-tab="pdfev_emd_vwr_admin_tabs_settings">
-            <form action="" method="post" class="pdfev-settings-form">
+            <form action="" method="post" id="pdfev-settings-form" class="pdfev-settings-form">
                 <?php wp_nonce_field( 'pdfev_emd_vwr_options_nonce', 'pdfev_emd_vwr_options_nonce' ); ?>
                 <?php $this->options_fields(); ?>
                 <div class="pdfev-form-footer">

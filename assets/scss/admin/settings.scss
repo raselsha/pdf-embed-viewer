@@ -76,6 +76,12 @@
             }
         }
 
+        .pdfev-header-actions{
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
         .pdfev-header-version{
             font-size: 12px;
             font-weight: 500;
@@ -663,7 +669,11 @@
 
     // ===========buttons==========
     .pdfev-form-footer{
-        margin-top: 4px;
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 20px;
+        padding-top: 16px;
+        border-top: 1px solid var(--pdfev-admin-border);
     }
 
     .pdfev-btn,
@@ -687,6 +697,19 @@
             height: 16px;
             font-size: 16px;
         }
+    }
+
+    // The bottom Save button is the single primary action for the whole
+    // page — a bit more substantial than the compact in-card buttons
+    // (e.g. "Import Demo") so it reads as the form's main CTA.
+    .pdfev-form-footer .button-primary,
+    .pdfev-header-save{
+        padding: 10px 22px;
+        font-size: 13.5px;
+    }
+
+    .pdfev-header-save{
+        flex-shrink: 0;
     }
 
     .pdfev-btn-primary,

@@ -443,6 +443,11 @@
   font-size: 13px;
   color: var(--pdfev-admin-muted);
 }
+#wpbody-content .pdfev-settings-page .pdfev-header .pdfev-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
 #wpbody-content .pdfev-settings-page .pdfev-header .pdfev-header-version {
   font-size: 12px;
   font-weight: 500;
@@ -932,7 +937,11 @@
   color: var(--pdfev-admin-accent-hover);
 }
 #wpbody-content .pdfev-settings-page .pdfev-form-footer {
-  margin-top: 4px;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--pdfev-admin-border);
 }
 #wpbody-content .pdfev-settings-page .pdfev-btn,
 #wpbody-content .pdfev-settings-page .pdfev-card-body .button-primary,
@@ -956,6 +965,14 @@
   width: 16px;
   height: 16px;
   font-size: 16px;
+}
+#wpbody-content .pdfev-settings-page .pdfev-form-footer .button-primary,
+#wpbody-content .pdfev-settings-page .pdfev-header-save {
+  padding: 10px 22px;
+  font-size: 13.5px;
+}
+#wpbody-content .pdfev-settings-page .pdfev-header-save {
+  flex-shrink: 0;
 }
 #wpbody-content .pdfev-settings-page .pdfev-btn-primary,
 #wpbody-content .pdfev-settings-page .pdfev-card-body .button-primary,
