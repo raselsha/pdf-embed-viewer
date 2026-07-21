@@ -4,7 +4,7 @@ Contributors:      raselsha
 Requires at least: 3.0
 Tested up to:      6.9
 Requires PHP:      7.0
-Stable tag:        1.4.4
+Stable tag:        1.5.0
 License:           GPLv2 or later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 Tags:              3d-flipbook, ebook, flipbook, pdf-embed, elementor
@@ -184,6 +184,12 @@ For more details, see the [Appsero Privacy Policy](https://appsero.com/privacy-p
 * French (fr_FR)
 
 == Changelog ==
+
+= 1.5.0 =
+* Redesigned the settings page and the PDF editor screen with a modern sidebar-navigation layout, cards, toggles, and styled dropdowns.
+* Security: settings save now also verifies the current user's capability, not just the nonce.
+* Fixed: flipbook scripts and styles were being loaded on every page of the site instead of only pages that actually display a PDF viewer.
+* Added extensibility hooks so an official Pro add-on can offer secure PDF delivery and extra flipbook display options, without modifying this plugin's files.
 
 = 1.4.4 =
 * Security fix: PDF proxy endpoint could be used to reach internal/private network addresses; now restricted to public http(s) hosts and verified PDF responses only.
