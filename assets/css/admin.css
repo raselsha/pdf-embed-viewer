@@ -642,7 +642,7 @@
   font-weight: 500;
   color: var(--pdfev-admin-ink);
 }
-#wpbody-content .pdfev-settings-page .pdfev-field-row .pdfev-field-label span {
+#wpbody-content .pdfev-settings-page .pdfev-field-row .pdfev-field-label > span {
   display: block;
   margin-top: 2px;
   font-size: 12px;

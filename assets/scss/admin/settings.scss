@@ -313,7 +313,10 @@
                 color: var(--pdfev-admin-ink);
             }
 
-            span{
+            // Direct-child only — a label can contain its own nested
+            // .pdfev-pro-badge span, which must stay inline, not become a
+            // block-level bar underneath the label text.
+            > span{
                 display: block;
                 margin-top: 2px;
                 font-size: 12px;

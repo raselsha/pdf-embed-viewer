@@ -110,7 +110,7 @@ class General_Settings{
         $sections = apply_filters('pdfev_settings_sections', [
             'archive'  => ['icon' => 'admin-links',     'label' => __('Archive Page', 'pdf-embed-viewer')],
             'display'  => ['icon' => 'visibility',       'label' => __('Display & Behavior', 'pdf-embed-viewer')],
-            'metadata' => ['icon' => 'info',             'label' => __('Book Metadata', 'pdf-embed-viewer')],
+            'metadata' => ['icon' => 'book',             'label' => __('Book Details', 'pdf-embed-viewer')],
             'colors'   => ['icon' => 'admin-appearance', 'label' => __('Brand Colors', 'pdf-embed-viewer')],
             'demo'     => ['icon' => 'database-import',  'label' => __('Demo Content', 'pdf-embed-viewer')],
         ]);
@@ -121,6 +121,9 @@ class General_Settings{
                 <button type="button" class="pdfev-section-nav<?php echo ($section_key === 'archive') ? ' active' : ''; ?>" data-section-target="<?php echo esc_attr($section_key); ?>">
                     <span class="dashicons dashicons-<?php echo esc_attr($section['icon']); ?>" aria-hidden="true"></span>
                     <?php echo esc_html($section['label']); ?>
+                    <?php if (!empty($section['badge'])) : ?>
+                    <span class="pdfev-pro-badge"><?php echo esc_html($section['badge']); ?></span>
+                    <?php endif; ?>
                 </button>
                 <?php endforeach; ?>
             </aside>
@@ -195,7 +198,7 @@ class General_Settings{
 
                 <div class="pdfev-settings-section" data-section="metadata">
                     <div class="pdfev-section-header">
-                        <h2><?php esc_html_e('Book Metadata Display', 'pdf-embed-viewer'); ?></h2>
+                        <h2><?php esc_html_e('Book Details', 'pdf-embed-viewer'); ?></h2>
                         <p><?php esc_html_e('Choose which book details appear alongside each PDF.', 'pdf-embed-viewer'); ?></p>
                     </div>
                     <div class="pdfev-section-body pdfev-toggle-grid pdfev-toggle-grid--compact">
