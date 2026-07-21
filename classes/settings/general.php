@@ -32,7 +32,10 @@ class General_Settings{
                 <?php wp_nonce_field( 'pdfev_emd_vwr_options_nonce', 'pdfev_emd_vwr_options_nonce' ); ?>
                 <?php $this->options_fields(); ?>
                 <div class="pdfev-form-footer">
-                    <?php submit_button( __( 'Save Changes', 'pdf-embed-viewer' ), 'primary', 'submit', false ); ?>
+                    <button type="submit" name="submit" id="submit" class="pdfev-btn pdfev-btn-primary pdfev-header-save">
+                        <span class="dashicons dashicons-yes" aria-hidden="true"></span>
+                        <?php esc_html_e('Save Changes', 'pdf-embed-viewer'); ?>
+                    </button>
                 </div>
             </form>
         </div>

@@ -677,8 +677,7 @@
     }
 
     .pdfev-btn,
-    .pdfev-card-body .button-primary,
-    .pdfev-form-footer .button-primary{
+    .pdfev-card-body .button-primary{
         display: inline-flex;
         align-items: center;
         gap: 6px;
@@ -699,22 +698,18 @@
         }
     }
 
-    // The bottom Save button is the single primary action for the whole
-    // page — a bit more substantial than the compact in-card buttons
-    // (e.g. "Import Demo") so it reads as the form's main CTA.
-    .pdfev-form-footer .button-primary,
+    // The Save button (both the header and footer copies share this class)
+    // is the single primary action for the whole page — a bit more
+    // substantial than compact in-card buttons like "Import Demo", so it
+    // reads as the form's main CTA.
     .pdfev-header-save{
         padding: 10px 22px;
         font-size: 13.5px;
-    }
-
-    .pdfev-header-save{
         flex-shrink: 0;
     }
 
     .pdfev-btn-primary,
-    .pdfev-card-body .button-primary,
-    .pdfev-form-footer .button-primary{
+    .pdfev-card-body .button-primary{
         background: var(--pdfev-admin-accent);
         border-color: var(--pdfev-admin-accent);
         color: #fff;

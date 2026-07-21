@@ -944,8 +944,7 @@
   border-top: 1px solid var(--pdfev-admin-border);
 }
 #wpbody-content .pdfev-settings-page .pdfev-btn,
-#wpbody-content .pdfev-settings-page .pdfev-card-body .button-primary,
-#wpbody-content .pdfev-settings-page .pdfev-form-footer .button-primary {
+#wpbody-content .pdfev-settings-page .pdfev-card-body .button-primary {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -960,23 +959,18 @@
   transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
 }
 #wpbody-content .pdfev-settings-page .pdfev-btn .dashicons,
-#wpbody-content .pdfev-settings-page .pdfev-card-body .button-primary .dashicons,
-#wpbody-content .pdfev-settings-page .pdfev-form-footer .button-primary .dashicons {
+#wpbody-content .pdfev-settings-page .pdfev-card-body .button-primary .dashicons {
   width: 16px;
   height: 16px;
   font-size: 16px;
 }
-#wpbody-content .pdfev-settings-page .pdfev-form-footer .button-primary,
 #wpbody-content .pdfev-settings-page .pdfev-header-save {
   padding: 10px 22px;
   font-size: 13.5px;
-}
-#wpbody-content .pdfev-settings-page .pdfev-header-save {
   flex-shrink: 0;
 }
 #wpbody-content .pdfev-settings-page .pdfev-btn-primary,
-#wpbody-content .pdfev-settings-page .pdfev-card-body .button-primary,
-#wpbody-content .pdfev-settings-page .pdfev-form-footer .button-primary {
+#wpbody-content .pdfev-settings-page .pdfev-card-body .button-primary {
   background: var(--pdfev-admin-accent);
   border-color: var(--pdfev-admin-accent);
   color: #fff;
@@ -984,8 +978,7 @@
   box-shadow: none;
 }
 #wpbody-content .pdfev-settings-page .pdfev-btn-primary:hover,
-#wpbody-content .pdfev-settings-page .pdfev-card-body .button-primary:hover,
-#wpbody-content .pdfev-settings-page .pdfev-form-footer .button-primary:hover {
+#wpbody-content .pdfev-settings-page .pdfev-card-body .button-primary:hover {
   background: var(--pdfev-admin-accent-hover);
   border-color: var(--pdfev-admin-accent-hover);
   color: #fff;
