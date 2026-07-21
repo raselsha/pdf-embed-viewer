@@ -1,7 +1,10 @@
 (function($){
   // ===========color picker=================
   $(document).ready(function() {
-    $('.pdfev-color-field').wpColorPicker();
+    // wpColorPicker() builds its own clickable swatch button in front of the
+    // original input — disabling the input alone doesn't disable that button,
+    // so locked/Pro fields must be excluded here rather than left clickable.
+    $('.pdfev-color-field:not(:disabled)').wpColorPicker();
   });
 
   // ===========custom select dropdown=================
