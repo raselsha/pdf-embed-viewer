@@ -350,17 +350,17 @@
   });
 
   //  ====copy shortcode====
-  $(document).on('click','#pdfev-copy-shortcode',function (e) {
-    e.preventDefault();
+  function pdfevCopyElementText($button, targetElementId) {
     const range = document.createRange();
     const selection = window.getSelection();
-    const element = document.getElementById('pdfev-shortcode');
+    const element = document.getElementById(targetElementId);
+    if (!element) return;
 
     range.selectNodeContents(element);
     selection.removeAllRanges();
     selection.addRange(range);
 
-    var label = $(this).find('.pdfev-btn-label');
+    var label = $button.find('.pdfev-btn-label');
     try {
         const successful = document.execCommand('copy');
         if (successful) {
@@ -377,7 +377,17 @@
     }
 
     selection.removeAllRanges();
+  }
+
+  $(document).on('click','#pdfev-copy-shortcode',function (e) {
+    e.preventDefault();
+    pdfevCopyElementText($(this), 'pdfev-shortcode');
   });
-  
+
+  $(document).on('click','#pdfev-copy-single-shortcode',function (e) {
+    e.preventDefault();
+    pdfevCopyElementText($(this), 'pdfev-single-shortcode');
+  });
+
 
 })(jQuery);

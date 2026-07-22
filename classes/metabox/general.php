@@ -53,10 +53,12 @@ class Metabox_General{
                         <p><?php echo esc_html__( 'Shortcode', 'pdf-embed-viewer' )?></p>
                         <span><?php echo esc_html__('Add this shortcode to any page or post to view pdf','pdf-embed-viewer') ?></span>
                     </div>
-                    <div class="pdfev-metabox-field-control">
-                        <code>
-                            <?php echo esc_html('[pdfev_embed_viewer id="' . get_the_ID() . '"]') ?>
-                        </code>
+                    <div class="pdfev-metabox-field-control pdfev-metabox-field-control--inline">
+                        <code id="pdfev-single-shortcode"><?php echo esc_html('[pdfev_embed_viewer id="' . get_the_ID() . '"]') ?></code>
+                        <button type="button" id="pdfev-copy-single-shortcode" class="pdfev-btn pdfev-btn-secondary">
+                            <span class="dashicons dashicons-clipboard" aria-hidden="true"></span>
+                            <span class="pdfev-btn-label"><?php echo esc_html__('Copy', 'pdf-embed-viewer'); ?></span>
+                        </button>
                     </div>
                 </div>
                 <div class="pdfev-metabox-field">

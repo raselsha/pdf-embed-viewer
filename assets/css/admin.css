@@ -193,8 +193,10 @@
 #pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-field .pdfev-metabox-field-control.pdfev-metabox-field-control--inline {
   display: flex;
   gap: 8px;
+  align-items: center;
 }
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-field .pdfev-metabox-field-control.pdfev-metabox-field-control--inline input.pdfev-emd-vwr-file {
+#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-field .pdfev-metabox-field-control.pdfev-metabox-field-control--inline input.pdfev-emd-vwr-file,
+#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-field .pdfev-metabox-field-control.pdfev-metabox-field-control--inline code {
   flex: 1;
 }
 #pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-field .pdfev-metabox-field-control code {

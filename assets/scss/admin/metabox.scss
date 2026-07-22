@@ -162,8 +162,10 @@
                     &.pdfev-metabox-field-control--inline{
                         display: flex;
                         gap: 8px;
+                        align-items: center;
 
-                        input.pdfev-emd-vwr-file{
+                        input.pdfev-emd-vwr-file,
+                        code{
                             flex: 1;
                         }
                     }
