@@ -170,6 +170,7 @@ jQuery(document).ready(function ($) {
       let post_id = $viewer.data('id');
       let pdfURL = $viewer.data('pdfev-url');
       let isProtected = $viewer.data('pdfev-protected') === 'yes';
+      let docRtl = $viewer.data('pdfev-rtl') === 'yes';
 
       if (!pdfURL && !isProtected) return;
 
@@ -222,6 +223,12 @@ jQuery(document).ready(function ($) {
         // so it's stripped back off before handing the object to FlipBook().
         $.extend(true, options, proOptions);
         delete options.skinFile;
+
+        // Per-document Reading Direction (metabox, free tier) always wins over
+        // Pro's site-wide RTL toggle — a document's language direction is a
+        // property of that document, not something one global setting can
+        // get right for every book on a multilingual site.
+        options.rtl = docRtl;
 
         // Bypass 3dflipbook's own normalizeUrl() bug (see fetchProtectedPdf's
         // comment above) by giving pdf.js the already-fetched bytes directly

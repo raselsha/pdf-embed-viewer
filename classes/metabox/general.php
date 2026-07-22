@@ -30,6 +30,9 @@ class Metabox_General{
         $check_download  = get_post_meta( $post_id, 'pdfev_meta_download', true );
         $check_download  = $check_download ? $check_download : 'yes';
 
+        $rtl = get_post_meta( $post_id, 'pdfev_meta_rtl', true );
+        $rtl = $rtl ? $rtl : 'no';
+
         $filesize = get_post_meta( $post_id, 'pdfev_meta_filesize', true );
         $total_pages = get_post_meta( $post_id, 'pdfev_meta_total_pages', true );
 
@@ -76,6 +79,19 @@ class Metabox_General{
                     <div class="pdfev-metabox-field-control">
                         <label class="switch">
                             <input type="checkbox" name="pdfev_meta_download" value="<?php echo esc_attr($check_download); ?>" <?php echo esc_attr(($check_download=='yes')?'checked':''); ?>>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="pdfev-metabox-field">
+                    <div class="pdfev-metabox-field-label">
+                        <p><?php echo esc_html__( 'Right-to-Left Reading', 'pdf-embed-viewer' )?></p>
+                        <span><?php echo esc_html__('Turn on for RTL-language documents (Arabic, Hebrew, etc.) so pages flip right-to-left.','pdf-embed-viewer') ?></span>
+                    </div>
+                    <div class="pdfev-metabox-field-control">
+                        <label class="switch">
+                            <input type="checkbox" name="pdfev_meta_rtl" value="<?php echo esc_attr($rtl); ?>" <?php echo esc_attr(($rtl=='yes')?'checked':''); ?>>
                             <span class="slider"></span>
                         </label>
                     </div>
@@ -180,6 +196,9 @@ class Metabox_General{
 
                 $check_download  = isset( $_POST['pdfev_meta_download'] ) ? sanitize_text_field($_POST['pdfev_meta_download']) : 'no';
                 update_post_meta( $post_id, 'pdfev_meta_download', $check_download );
+
+                $rtl = isset( $_POST['pdfev_meta_rtl'] ) ? sanitize_text_field($_POST['pdfev_meta_rtl']) : 'no';
+                update_post_meta( $post_id, 'pdfev_meta_rtl', $rtl );
 
                 $filesize = isset( $_POST['pdfev_meta_filesize'] ) ? sanitize_text_field($_POST['pdfev_meta_filesize']) : '';
                 update_post_meta( $post_id, 'pdfev_meta_filesize', $filesize );

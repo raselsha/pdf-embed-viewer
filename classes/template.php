@@ -385,6 +385,7 @@ class Template{
         $link = \PDFEV_Functions::get_pdf_link($post_id);
         $is_protected = apply_filters('pdfev_pdf_is_protected', false, $post_id);
         $display_link = $is_protected ? '' : $link;
+        $rtl = get_post_meta($post_id, 'pdfev_meta_rtl', true) === 'yes';
         $flipbook = get_option('pdfev_flipbook_status');
         $flipbook = $flipbook ? $flipbook : 'yes';
     ?>
@@ -394,7 +395,7 @@ class Template{
                 <a class="button btn pdfev-show-traditional <?php echo esc_attr($flipbook=='yes'?'':'active'); ?>"><i class="fas fa-book"></i> <?php _e('Traditional','pdf-embed-viewer'); ?></a>
             </div>
             <div class="pdfev-3dbook-container" style="display: <?php echo esc_attr($flipbook=='yes'?'block':'none'); ?>;">
-                <div class="pdfev-3dbook-viewer" id="pdfev-3dbook-<?php echo esc_attr($post_id); ?>" data-id="<?php echo esc_attr($post_id); ?>" data-pdfev-url="<?php echo esc_attr($display_link); ?>" <?php echo $is_protected ? 'data-pdfev-protected="yes"' : ''; ?>></div>
+                <div class="pdfev-3dbook-viewer" id="pdfev-3dbook-<?php echo esc_attr($post_id); ?>" data-id="<?php echo esc_attr($post_id); ?>" data-pdfev-url="<?php echo esc_attr($display_link); ?>" data-pdfev-rtl="<?php echo $rtl ? 'yes' : 'no'; ?>" <?php echo $is_protected ? 'data-pdfev-protected="yes"' : ''; ?>></div>
             </div>
             <div class="pdfev-traditional-container" style="display: <?php echo esc_attr($flipbook=='yes'?'none':'block'); ?>;">
                 <iframe class="pdf-viewer" data-id="<?php echo esc_attr($post_id); ?>" src="<?php echo esc_attr($display_link); ?>" <?php echo $is_protected ? 'data-pdfev-protected="yes"' : ''; ?> frameborder="0"></iframe>
