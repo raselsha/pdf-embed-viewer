@@ -32,7 +32,19 @@ class General_Settings{
                 <?php wp_nonce_field( 'pdfev_emd_vwr_options_nonce', 'pdfev_emd_vwr_options_nonce' ); ?>
                 <?php $this->options_fields(); ?>
                 <div class="pdfev-form-footer">
-                    <button type="submit" name="submit" id="submit" class="pdfev-btn pdfev-btn-primary pdfev-header-save">
+                    <?php
+                    /*
+                     * form="pdfev-settings-form" on purpose, not just relying on this button
+                     * sitting inside the <form> above: an add-on's own settings section
+                     * (e.g. pdf-embed-viewer-pro's "Manage License", via Appsero's
+                     * menu_output()) can render its own nested <form>, which HTML doesn't
+                     * allow — the browser's parser closes OUR form early the moment it hits
+                     * that nested form's closing tag, silently pushing everything after it
+                     * (including this button) outside any form in the real DOM. Targeting
+                     * the form by id sidesteps that regardless of where this button ends up.
+                     */
+                    ?>
+                    <button type="submit" name="submit" id="submit" form="pdfev-settings-form" class="pdfev-btn pdfev-btn-primary pdfev-header-save">
                         <span class="dashicons dashicons-yes" aria-hidden="true"></span>
                         <?php esc_html_e('Save Changes', 'pdf-embed-viewer'); ?>
                     </button>
