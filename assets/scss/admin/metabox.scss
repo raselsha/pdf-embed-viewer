@@ -159,13 +159,18 @@
                 }
 
                 .pdfev-metabox-field-control{
+                    // Right-aligns simple controls (toggle switches) within their
+                    // grid cell, so they sit at the row's right edge instead of
+                    // hugging the label on the left.
+                    text-align: right;
+
                     &.pdfev-metabox-field-control--inline{
                         display: flex;
+                        justify-content: flex-end;
                         gap: 8px;
                         align-items: center;
 
-                        input.pdfev-emd-vwr-file,
-                        code{
+                        input.pdfev-emd-vwr-file{
                             flex: 1;
                         }
                     }
@@ -201,17 +206,41 @@
                         }
                     }
 
-                    .button.pdfev-emd-vwr-upload{
+                    .button.pdfev-emd-vwr-upload,
+                    .button.pdfev-emd-vwr-copy{
                         display: inline-flex;
                         align-items: center;
                         gap: 6px;
                         white-space: nowrap;
+                        flex-shrink: 0;
 
-                        .dashicons{
+                        .dashicons,
+                        .pdfev-icon-copy{
                             width: 16px;
                             height: 16px;
                             font-size: 16px;
+                            flex-shrink: 0;
                         }
+
+                        // dashicons is an icon font — its glyph sits on the font's own
+                        // baseline/line-height, not centered in the box just by setting
+                        // width/height, so it renders slightly above vertical-center
+                        // next to the label text without this.
+                        .dashicons{
+                            display: inline-flex;
+                            align-items: center;
+                            justify-content: center;
+                            line-height: 16px;
+                        }
+                    }
+
+                    // Fixed width, sized for the longest label ("Copied!"/"Failed!") —
+                    // without this the button visibly grows/shrinks as its label swaps
+                    // between "Copy" and the (longer) result text on click.
+                    .pdfev-btn-label{
+                        display: inline-block;
+                        min-width: 56px;
+                        text-align: left;
                     }
                 }
             }

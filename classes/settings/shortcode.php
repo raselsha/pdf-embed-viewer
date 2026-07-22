@@ -218,7 +218,7 @@ class Shortcode_Generator {
                     <div class="pdfev-section-body">
                     <div id="pdfev-shortcode" class="pdfev-shortcode">[pdfev_viewer template="list" category="" limit="10" order="dsc" read="yes" download="yes" reading_count="yes" downloading_count="yes" show_description="yes" show_author="yes" show_publisher="yes" show_year="yes" show_edition="yes" show_total_pages="yes" show_filesize="yes"]</div>
                     <button id="pdfev-copy-shortcode" class="pdfev-btn pdfev-btn-secondary">
-                        <span class="dashicons dashicons-clipboard" aria-hidden="true"></span>
+                        <svg class="pdfev-icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                         <span class="pdfev-btn-label"><?php echo esc_html__('Copy','pdf-embed-viewer'); ?></span>
                     </button>
                     </div>

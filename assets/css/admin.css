@@ -190,13 +190,16 @@
   color: var(--pdfev-mb-muted);
   font-weight: normal;
 }
+#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-field .pdfev-metabox-field-control {
+  text-align: right;
+}
 #pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-field .pdfev-metabox-field-control.pdfev-metabox-field-control--inline {
   display: flex;
+  justify-content: flex-end;
   gap: 8px;
   align-items: center;
 }
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-field .pdfev-metabox-field-control.pdfev-metabox-field-control--inline input.pdfev-emd-vwr-file,
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-field .pdfev-metabox-field-control.pdfev-metabox-field-control--inline code {
+#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-field .pdfev-metabox-field-control.pdfev-metabox-field-control--inline input.pdfev-emd-vwr-file {
   flex: 1;
 }
 #pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-field .pdfev-metabox-field-control code {
@@ -230,16 +233,34 @@
   border-color: var(--pdfev-mb-accent);
   box-shadow: 0 0 0 3px rgba(56, 88, 233, 0.12);
 }
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-field .pdfev-metabox-field-control .button.pdfev-emd-vwr-upload {
+#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-field .pdfev-metabox-field-control .button.pdfev-emd-vwr-upload,
+#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-field .pdfev-metabox-field-control .button.pdfev-emd-vwr-copy {
   display: inline-flex;
   align-items: center;
   gap: 6px;
   white-space: nowrap;
+  flex-shrink: 0;
 }
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-field .pdfev-metabox-field-control .button.pdfev-emd-vwr-upload .dashicons {
+#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-field .pdfev-metabox-field-control .button.pdfev-emd-vwr-upload .dashicons,
+#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-field .pdfev-metabox-field-control .button.pdfev-emd-vwr-upload .pdfev-icon-copy,
+#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-field .pdfev-metabox-field-control .button.pdfev-emd-vwr-copy .dashicons,
+#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-field .pdfev-metabox-field-control .button.pdfev-emd-vwr-copy .pdfev-icon-copy {
   width: 16px;
   height: 16px;
   font-size: 16px;
+  flex-shrink: 0;
+}
+#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-field .pdfev-metabox-field-control .button.pdfev-emd-vwr-upload .dashicons,
+#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-field .pdfev-metabox-field-control .button.pdfev-emd-vwr-copy .dashicons {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 16px;
+}
+#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-field .pdfev-metabox-field-control .pdfev-btn-label {
+  display: inline-block;
+  min-width: 56px;
+  text-align: left;
 }
 #pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .switch {
   position: relative;
@@ -968,6 +989,17 @@
   width: 16px;
   height: 16px;
   font-size: 16px;
+}
+#wpbody-content .pdfev-settings-page .pdfev-btn .pdfev-icon-copy,
+#wpbody-content .pdfev-settings-page .pdfev-card-body .button-primary .pdfev-icon-copy {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+#wpbody-content .pdfev-settings-page .pdfev-btn-label {
+  display: inline-block;
+  min-width: 56px;
+  text-align: left;
 }
 #wpbody-content .pdfev-settings-page .pdfev-header-save {
   padding: 10px 22px;
