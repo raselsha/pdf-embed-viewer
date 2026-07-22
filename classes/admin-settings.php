@@ -76,11 +76,13 @@ class Admin_Settings{
             <div class="pdfev-header">
                 <span class="pdfev-header-icon dashicons dashicons-media-document" aria-hidden="true"></span>
                 <div class="pdfev-header-text">
-                    <h1><?php echo esc_html__('PDF Embed Viewer', 'pdf-embed-viewer'); ?></h1>
+                    <h1>
+                        <?php echo esc_html__('PDF Embed Viewer', 'pdf-embed-viewer'); ?>
+                        <span class="pdfev-header-version">v<?php echo esc_html(defined('PDFEV_Const_VERSION') ? PDFEV_Const_VERSION : ''); ?></span>
+                    </h1>
                     <p><?php echo esc_html__('Configure your flipbook viewer, shortcodes, and display options.', 'pdf-embed-viewer'); ?></p>
                 </div>
                 <div class="pdfev-header-actions">
-                    <span class="pdfev-header-version">v<?php echo esc_html(defined('PDFEV_Const_VERSION') ? PDFEV_Const_VERSION : ''); ?></span>
                     <?php
                     /*
                      * Submits the General Settings tab's form (#pdfev-settings-form) via the

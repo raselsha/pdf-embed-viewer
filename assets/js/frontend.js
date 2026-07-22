@@ -176,14 +176,41 @@ jQuery(document).ready(function ($) {
 
       function startFlipbook(resolvedUrl, pdfBytes) {
         // Pro flipbook options — free/unlicensed installs never receive
-        // pdfevFronend.flipbookOptions at all, so proOptions stays {} and the
-        // $.extend below is a no-op, leaving today's defaults untouched.
+        // pdfevFronend.flipbookOptions at all, so proOptions stays {} below,
+        // leaving today's defaults untouched.
         let proOptions = pdfevFronend.flipbookOptions || {};
         let skinFile = proOptions.skinFile || "short-black-book-view.css";
 
         let options = {
           pdf: resolvedUrl,
           page: 1, // or customize per book
+          // 3dflipbook's own top-level options only recognize a fixed set of
+          // keys (pdf, page, bookStyle, controlsProps, propertiesCallback,
+          // template, pdfOpenOptions, ...) — anything else (rtl, page mode,
+          // autoplay speed, background color) is silently ignored unless
+          // applied through propertiesCallback below, which is the one
+          // place the library actually reads/merges custom overrides into
+          // its computed book properties.
+          bookStyle: proOptions.style || 'volume',
+          controlsProps: proOptions.controlsProps,
+          propertiesCallback: function (props) {
+            // Per-document Reading Direction (metabox, free tier) always
+            // wins over Pro's site-wide RTL toggle — a document's language
+            // direction is a property of that document, not something one
+            // global setting can get right for every book on a
+            // multilingual site.
+            props.rtl = docRtl;
+            if (typeof proOptions.singlePageMode !== 'undefined') {
+              props.singlePageMode = proOptions.singlePageMode;
+            }
+            if (typeof proOptions.autoPlayDuration !== 'undefined') {
+              props.autoPlayDuration = proOptions.autoPlayDuration;
+            }
+            if (proOptions.backgroundColor) {
+              props.backgroundColor = proOptions.backgroundColor;
+            }
+            return props;
+          },
           template: function () {
             return {
               html: [
@@ -217,26 +244,11 @@ jQuery(document).ready(function ($) {
           },
         };
 
-        // Deep-merge Pro options on top of the defaults above. proOptions has no
-        // "template" key so the function above is left untouched; skinFile isn't
-        // a real FlipBook() option (only used to pick the styles[] entry above),
-        // so it's stripped back off before handing the object to FlipBook().
-        $.extend(true, options, proOptions);
-        delete options.skinFile;
-
-        // Per-document Reading Direction (metabox, free tier) always wins over
-        // Pro's site-wide RTL toggle — a document's language direction is a
-        // property of that document, not something one global setting can
-        // get right for every book on a multilingual site.
-        options.rtl = docRtl;
-
         // Bypass 3dflipbook's own normalizeUrl() bug (see fetchProtectedPdf's
         // comment above) by giving pdf.js the already-fetched bytes directly
         // instead of relying on the (corrupted) blob: URL for loading.
         if (pdfBytes) {
-          options.pdfOpenOptions = $.extend({}, options.pdfOpenOptions, {
-            data: new Uint8Array(pdfBytes),
-          });
+          options.pdfOpenOptions = { data: new Uint8Array(pdfBytes) };
         }
 
         $viewer.FlipBook(options);

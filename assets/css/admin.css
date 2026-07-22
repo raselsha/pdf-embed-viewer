@@ -449,6 +449,9 @@
   gap: 12px;
 }
 #wpbody-content .pdfev-settings-page .pdfev-header .pdfev-header-version {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 8px;
   font-size: 12px;
   font-weight: 500;
   color: var(--pdfev-admin-muted);
