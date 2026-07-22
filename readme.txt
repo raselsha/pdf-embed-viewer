@@ -130,6 +130,12 @@ Display a single PDF by post ID:
 - **Admin Menu**  
   Manage all documents from a dedicated dashboard menu.
 
+- **Modern Settings Dashboard**  
+  A sidebar-navigation settings page with card layouts, toggle switches, and styled dropdowns for a cleaner configuration experience.
+
+- **Redesigned PDF Editor Screen**  
+  Manage General, Book Information, and Template settings from organized tabs when adding or editing a PDF.
+
 - **Color Customization**  
   Adjust colors from the settings page.
 
