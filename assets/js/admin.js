@@ -106,7 +106,112 @@
       }
   });
 
-  // =================media upload======== 
+  // =================PDF source: Remote URL / Back to upload links========
+    // Drag-and-drop / Choose File is the implicit default (no separate
+    // "Upload File" toggle exists anymore) — "Or use a Remote URL instead"
+    // lives inside the dropzone itself, and "Back to upload" lives inside
+    // the Remote URL panel it switches to, rather than a floating tab pair.
+    $(document).on('click', '.pdfev-source-link', function (e) {
+        e.preventDefault();
+        var showRemote = $(this).data('source-target') === 'remote';
+        $('.pdfev-source-panel[data-source="remote"]').css('display', showRemote ? 'block' : 'none');
+        renderPDFThumbnails($('.pdfev-emd-vwr-file').val());
+    });
+
+    // The remote URL box has no name attribute on purpose (only one field,
+    // the hidden .pdfev-emd-vwr-file, should ever get submitted) — it just
+    // keeps that hidden field's value in sync as the admin types.
+    $(document).on('input', '#pdfev-remote-url-input', function () {
+        $('.pdfev-emd-vwr-file').val($(this).val());
+    });
+
+    // ======clear the currently chosen file=========
+    $(document).on('click', '.pdfev-clear-file', function (e) {
+        e.preventDefault();
+        $('.pdfev-emd-vwr-file').val('');
+        $('.pdfev-source-filename').text('');
+        $('#pdfev_meta_filesize').val('');
+        $('#pdfev_meta_total_pages').val('');
+        $('.pdfev-filesize').text('');
+        $('.pdfev-totalpage').text('');
+        $('#pdfev-featured-image-data').val('');
+        $('#pdfev-featured-image-preview').attr('src', '').hide();
+        $('#pdfev-featured-image').data('status', 'no').data('url', '');
+        renderPDFThumbnails('');
+    });
+
+    // ======drag an actual OS file onto the dropzone to upload it=========
+    // Delegated at the document level (not just #pdfev-document-preview)
+    // so the dangerous browser default — navigating away to open the
+    // dropped file — gets prevented even if the drag ends slightly off
+    // target, not just inside the dropzone itself.
+    //
+    // .closest('.pdfev-preview-stage'), not '#pdfev-document-preview': the
+    // "Choose File" overlay sits on top as an absolutely-positioned SIBLING,
+    // not a child, of #pdfev-document-preview — exactly in the empty-dropzone
+    // state this is meant to handle, the actual drop target is the overlay
+    // (or its button/text), which .closest('#pdfev-document-preview') would
+    // never match.
+    $(document).on('dragover', function (e) {
+        var dt = e.originalEvent.dataTransfer;
+        if (!dt || !dt.types || dt.types.indexOf('Files') === -1) return;
+        e.preventDefault();
+        var overDropzone = $(e.target).closest('.pdfev-preview-stage').length > 0;
+        $('#pdfev-document-preview').toggleClass('pdfev-drag-hover', overDropzone);
+    });
+
+    $(document).on('dragleave', function (e) {
+        if (!$(e.target).closest('.pdfev-preview-stage').length) return;
+        $('#pdfev-document-preview').removeClass('pdfev-drag-hover');
+    });
+
+    $(document).on('drop', function (e) {
+        var dt = e.originalEvent.dataTransfer;
+        if (!dt || !dt.types || dt.types.indexOf('Files') === -1) return;
+        e.preventDefault();
+        $('#pdfev-document-preview').removeClass('pdfev-drag-hover');
+
+        if (!$(e.target).closest('.pdfev-preview-stage').length) return;
+
+        var file = dt.files && dt.files[0];
+        if (!file) return;
+        if (file.type !== 'application/pdf') {
+            alert('Please drop a PDF file only.');
+            return;
+        }
+
+        var formData = new FormData();
+        formData.append('action', 'pdfev_upload_pdf_file');
+        formData.append('ajaxnonce', pdfevAjax.ajaxnonce);
+        formData.append('post_id', pdfevAjax.post_id);
+        formData.append('pdfev_pdf_file', file);
+
+        var $overlayText = $('.pdfev-upload-overlay p');
+        var originalText = $overlayText.text();
+        $overlayText.text('Uploading…');
+
+        $.ajax({
+            url: pdfevAjax.ajaxurl,
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+        }).done(function (response) {
+            if (response.success) {
+                $('.pdfev-emd-vwr-file').val(response.data.url);
+                $('.pdfev-source-filename').text(response.data.filename);
+                renderPDFThumbnails(response.data.url);
+            } else {
+                alert((response.data && response.data.message) || 'Upload failed.');
+            }
+        }).fail(function () {
+            alert('Upload failed.');
+        }).always(function () {
+            $overlayText.text(originalText);
+        });
+    });
+
+  // =================media upload========
     $(document).on('click','.pdfev-emd-vwr-upload',function(e) {
         e.preventDefault();
         var mediaUploader = wp.media({
@@ -124,6 +229,7 @@
             // Check if the selected file is a PDF
             if (attachment.mime === 'application/pdf') {
             $('.pdfev-emd-vwr-file').val(attachment.url);
+            $('.pdfev-source-filename').text(attachment.filename || attachment.url.split('/').pop());
             //   $('#pdfev-preview').html(attachment.url);
             renderPDFThumbnails(attachment.url);
             } else {
@@ -134,17 +240,47 @@
         mediaUploader.open();
     });
     // ======pdf thumbnail generate=========
+    // Bumped on every call and captured per-call below — if the file gets
+    // cleared/replaced (or the source tab switched) while an older call is
+    // still mid-render, that older call notices it's been superseded and
+    // stops appending thumbnails instead of racing the newer one and
+    // silently re-populating a container the user just cleared.
+    let pdfevRenderGeneration = 0;
+
     async function renderPDFThumbnails(pdfUrl) {
+        const myGeneration = ++pdfevRenderGeneration;
         const container = $('#pdfev-document-preview');
-        container.show(); // Clear previous thumbnails, if any
-        container.find('.pdfev-loader-wrapper').show();
+        // No "Upload File" toggle exists anymore — drag-and-drop/Choose File
+        // is the implicit default whenever the Remote URL panel isn't shown.
+        const isUploadMode = !$('.pdfev-source-panel[data-source="remote"]').is(':visible');
+
+        container.show();
+        container.find('.pdfev-loader-wrapper').hide();
         container.find('.warning').hide();
+        container.removeClass('pdfev-dropzone');
+        $('.pdfev-upload-overlay').hide();
+
         if(!pdfUrl) {
-            container.show(); // Clear previous thumbnails, if any
-            container.find('.pdfev-loader-wrapper').hide();
-            container.find('.warning').show();
+            // A previous file's rendered page thumbnails otherwise stay sitting
+            // in the DOM underneath the dropzone overlay/warning — clearing or
+            // swapping the file doesn't mean this container was ever emptied.
+            container.find('.preview-thumbnail').remove();
+            $('.pdfev-replace-bar').hide();
+            if (isUploadMode) {
+                // No file chosen yet, in Upload mode — show the dropzone-styled
+                // "Choose File" overlay instead of the plain text warning below,
+                // which is reserved for Remote URL mode (nothing to drag/click there).
+                container.addClass('pdfev-dropzone');
+                $('.pdfev-upload-overlay').show();
+            } else {
+                container.find('.warning').show();
+            }
             return;
         }
+
+        $('.pdfev-replace-bar').css('display', isUploadMode ? 'flex' : 'none');
+        container.find('.pdfev-loader-wrapper').show();
+        $('.pdfev-loader-percent').text('');
         pdfjsLib.GlobalWorkerOptions.workerSrc = pdfevAjax.pdfevurl + 'vendor/pdf/pdf.worker.min.js';
         try {
             const response = await fetch(pdfUrl);
@@ -164,16 +300,29 @@
             const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
             const totalPages = pdf.numPages;
 
+            if (myGeneration !== pdfevRenderGeneration) return;
+
             $('.pdfev-filesize').html(fileSizeDisplay);
             $('.pdfev-totalpage').html(totalPages + ' Pages');
 
             $('#pdfev_meta_filesize').val(fileSizeBytes);
             $('#pdfev_meta_total_pages').val(totalPages);
 
-            container.html('');
+            // Only the previous file's own thumbnails, not the whole container —
+            // wiping everything here would also permanently destroy the (translated)
+            // .pdfev-loader-wrapper/.warning markup, which then could never show
+            // again for the rest of the page's life once a single file had loaded.
+            container.find('.preview-thumbnail').remove();
             let firstImageSet = false;
 
             for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+                // A newer call (Clear, Replace, a fresh drag-drop, a tab switch)
+                // has taken over since this one started — stop appending pages
+                // into a container that isn't "ours" to fill anymore.
+                if (myGeneration !== pdfevRenderGeneration) return;
+
+                $('.pdfev-loader-percent').text(Math.round((pageNum / totalPages) * 100) + '%');
+
                 const page = await pdf.getPage(pageNum);
                 const scale = 0.2;
                 const viewport = page.getViewport({ scale });
@@ -221,11 +370,28 @@
                     $('#pdfev-featured-image-data').val(imageData);
                 });
 
+                // Drag this page onto the Featured Image box as an alternative to
+                // clicking it — see the dragover/drop handlers on #pdfev-featured-image
+                // further down, registered once (not per-thumbnail).
+                wrapper.setAttribute('draggable', 'true');
+                wrapper.addEventListener('dragstart', function (e) {
+                    e.dataTransfer.setData('text/plain', imageData);
+                    e.dataTransfer.effectAllowed = 'copy';
+                    wrapper.classList.add('dragging');
+                });
+                wrapper.addEventListener('dragend', function () {
+                    wrapper.classList.remove('dragging');
+                });
+
                 container.append(wrapper);
             }
 
+            if (myGeneration !== pdfevRenderGeneration) return;
+            container.find('.pdfev-loader-wrapper').hide();
         } catch (error) {
             //console.error('Error loading PDF:', error);
+            if (myGeneration !== pdfevRenderGeneration) return;
+            container.find('.pdfev-loader-wrapper').hide();
             container.find('.warning').show();
         }
     }
@@ -233,6 +399,26 @@
     // on ready show preview pdf
     $(document).ready(function(){
         renderPDFThumbnails($('.pdfev-emd-vwr-file').val());
+    });
+
+    // ======drag a page thumbnail onto Featured Image to set it as cover=========
+    // Delegated + registered once here rather than per-thumbnail in the render
+    // loop above, since #pdfev-featured-image itself never gets recreated.
+    $(document).on('dragover', '#pdfev-featured-image', function (e) {
+        e.preventDefault();
+        $(this).addClass('pdfev-drop-active');
+    });
+    $(document).on('dragleave', '#pdfev-featured-image', function () {
+        $(this).removeClass('pdfev-drop-active');
+    });
+    $(document).on('drop', '#pdfev-featured-image', function (e) {
+        e.preventDefault();
+        $(this).removeClass('pdfev-drop-active');
+        var imageData = e.originalEvent.dataTransfer.getData('text/plain');
+        if (!imageData) return;
+        $('#pdfev-featured-image').show();
+        $('#pdfev-featured-image-preview').attr('src', imageData).show();
+        $('#pdfev-featured-image-data').val(imageData);
     });
 
 

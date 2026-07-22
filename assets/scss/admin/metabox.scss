@@ -123,15 +123,38 @@
                 padding: 4px 24px 20px;
             }
 
+            // No more headings (PDF File / Display Options) between them — a
+            // top border on every group-body but the first is the only
+            // separation left between the two content blocks.
+            .pdfev-metabox-group-body{
+                &:not(:first-child){
+                    margin-top: 20px;
+                    padding-top: 20px;
+                    border-top: 1px solid var(--pdfev-mb-border);
+                }
+            }
+
+            // Each field is its own card — spaced apart with margin instead
+            // of separated by border-bottom dividers on a shared background.
             .pdfev-metabox-field{
                 display: grid;
                 grid-template-columns: 260px 1fr;
                 align-items: center;
                 gap: 16px;
-                padding: 14px 0;
+                padding: 14px 18px;
+                background: var(--pdfev-mb-bg);
+                border: 1px solid var(--pdfev-mb-border);
+                border-radius: var(--pdfev-mb-radius);
+                margin-bottom: 10px;
+                transition: border-color .15s ease, box-shadow .15s ease;
 
-                &:not(:last-child){
-                    border-bottom: 1px solid var(--pdfev-mb-border);
+                &:last-child{
+                    margin-bottom: 0;
+                }
+
+                &:hover{
+                    border-color: #c7cdf7;
+                    box-shadow: 0 1px 3px rgba(16, 24, 40, .06);
                 }
 
                 &.pdfev-metabox-field--stacked{
@@ -139,6 +162,13 @@
 
                     .pdfev-metabox-field-control{
                         margin-top: 10px;
+                        // Stays below the label (column direction) but shrinks to
+                        // content width and sits at the row's right edge — the base
+                        // text-align:right doesn't reach block-level flex children
+                        // like .pdfev-source-panel, hence flex/align-items here instead.
+                        display: flex;
+                        flex-direction: column;
+                        align-items: flex-end;
                     }
                 }
 
@@ -175,9 +205,12 @@
                         }
                     }
 
+                    // Surface (white), not --pdfev-mb-bg — the field row itself
+                    // is now a card using that same tint, so the code chip
+                    // needs the lighter color to still stand out against it.
                     code{
                         display: inline-block;
-                        background: var(--pdfev-mb-bg);
+                        background: var(--pdfev-mb-surface);
                         border: 1px solid var(--pdfev-mb-border);
                         border-radius: var(--pdfev-mb-radius-sm);
                         padding: 6px 10px;
@@ -242,6 +275,7 @@
                         min-width: 56px;
                         text-align: left;
                     }
+
                 }
             }
 
@@ -297,10 +331,141 @@
                 }
             }
 
+            // ===Remote URL panel + the two "switch mode" links===
+            .pdfev-source-panel{
+                margin-bottom: 12px;
+
+                #pdfev-remote-url-input{
+                    width: 100%;
+                    border: 1px solid var(--pdfev-mb-border);
+                    border-radius: var(--pdfev-mb-radius-sm);
+                    padding: 7px 10px;
+                    font-size: 13px;
+                    line-height: 1.4;
+                    color: var(--pdfev-mb-ink);
+
+                    &:focus{
+                        outline: none;
+                        border-color: var(--pdfev-mb-accent);
+                        box-shadow: 0 0 0 3px rgba(56, 88, 233, .12);
+                    }
+                }
+            }
+
+            // Used both inside the dropzone ("Or use a Remote URL instead")
+            // and inside the panel above ("Back to upload") — a plain,
+            // low-emphasis link reads as "switch mode", not a competing
+            // primary action next to Choose File / the URL field.
+            .pdfev-source-link{
+                display: inline-flex;
+                align-items: center;
+                gap: 4px;
+                margin-top: 8px;
+                border: none;
+                background: transparent;
+                padding: 0;
+                font-size: 12.5px;
+                font-weight: 500;
+                color: var(--pdfev-mb-accent);
+                cursor: pointer;
+
+                .dashicons{
+                    width: 14px;
+                    height: 14px;
+                    font-size: 14px;
+                }
+
+                // Underlines just the text on hover, not the whole flex row —
+                // ":hover span" alone still matched the dashicons span too
+                // (a dashicon IS a span), hence the dedicated text-only class.
+                &:hover .pdfev-source-link-text{
+                    text-decoration: underline;
+                }
+            }
+
+            .pdfev-preview-wrap{
+                margin-top: 6px;
+            }
+
+            .pdfev-replace-bar{
+                align-items: center;
+                // Clusters the icon/filename/buttons together at the row's right
+                // edge as one group — filename alone being text-align:right
+                // inside a flex:1 box left the icon stranded on the far left
+                // with a big gap before the (right-aligned) text.
+                justify-content: flex-end;
+                gap: 8px;
+                margin-bottom: 10px;
+                font-size: 12.5px;
+                color: var(--pdfev-mb-muted);
+
+                .dashicons{
+                    width: 16px;
+                    height: 16px;
+                    font-size: 16px;
+                    flex-shrink: 0;
+                }
+
+                .pdfev-source-filename{
+                    overflow-wrap: anywhere;
+                }
+
+                .pdfev-clear-file{
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 26px;
+                    height: 26px;
+                    padding: 0;
+                    border: 1px solid #f2c6c6;
+                    border-radius: 50%;
+                    background: #fdeeee;
+                    color: #d63638;
+                    cursor: pointer;
+                    flex-shrink: 0;
+                    transition: background .15s ease, border-color .15s ease;
+
+                    .dashicons{
+                        width: 14px;
+                        height: 14px;
+                        font-size: 14px;
+                    }
+
+                    &:hover{
+                        background: #d63638;
+                        border-color: #d63638;
+                        color: #fff;
+                    }
+                }
+
+                .pdfev-replace-btn{
+                    // WP core's own .button sizing (height/line-height) otherwise
+                    // wins over just adding padding, since padding alone doesn't
+                    // shrink an already-tall line-height — all sizing set
+                    // explicitly here instead of layering on top of it.
+                    height: auto;
+                    line-height: 1.4;
+                    padding: 3px 12px;
+                    font-size: 12px;
+                    border-radius: 999px;
+                    background: var(--pdfev-mb-accent);
+                    border-color: var(--pdfev-mb-accent);
+                    color: #fff;
+                    box-shadow: none;
+                    text-shadow: none;
+                    transition: background .15s ease, border-color .15s ease;
+
+                    &:hover{
+                        background: var(--pdfev-mb-accent-hover);
+                        border-color: var(--pdfev-mb-accent-hover);
+                        color: #fff;
+                    }
+                }
+            }
+
             .pdfev-metabox-preview-area{
                 display: flex;
                 gap: 16px;
-                margin-top: 6px;
 
                 .warning{
                     text-align: center;
@@ -309,25 +474,74 @@
                     font-size: 13px;
                 }
 
+                // Wraps #pdfev-document-preview so .pdfev-upload-overlay (a sibling,
+                // not a child — it needs to survive the thumbnail renderer's
+                // container.html('') resets) can sit absolutely positioned on top
+                // of it at the exact same size.
+                .pdfev-preview-stage{
+                    position: relative;
+                    width: 75%;
+                }
+
+                .pdfev-upload-overlay{
+                    position: absolute;
+                    inset: 0;
+                    display: none;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 10px;
+                    text-align: center;
+                    color: var(--pdfev-mb-muted);
+                    font-size: 12.5px;
+
+                    p{
+                        margin: 0;
+                    }
+
+                    .dashicons{
+                        width: 28px;
+                        height: 28px;
+                        font-size: 28px;
+                        color: var(--pdfev-mb-accent);
+                    }
+                }
+
                 #pdfev-document-preview{
                     display: none;
-                    width: 75%;
+                    width: 100%;
                     height: 400px;
                     overflow: auto;
                     border: 1px solid var(--pdfev-mb-border);
                     border-radius: var(--pdfev-mb-radius);
                     background: var(--pdfev-mb-surface);
 
+                    &.pdfev-dropzone{
+                        border-style: dashed;
+                        border-color: var(--pdfev-mb-accent);
+                        background: rgba(56, 88, 233, .05);
+                    }
+
+                    // While an actual OS file is being dragged over the dropzone
+                    // (real File drag, not the page-thumbnail-onto-featured-image
+                    // one above) — see the document-level dragover handler in
+                    // admin.js, which only toggles this when dt.types includes "Files".
+                    &.pdfev-drag-hover{
+                        border-color: var(--pdfev-mb-accent);
+                        background: rgba(56, 88, 233, .12);
+                    }
+
                     .preview-thumbnail{
                         margin: 5px;
                         display: inline-block;
                         text-align: center;
                         position: relative;
-                        cursor: pointer;
+                        cursor: grab;
+                        transition: opacity .15s ease;
 
                         &::before{
                             display: none;
-                            content: 'Click to set Fetured image';
+                            content: 'Click or drag to set Featured Image';
                             width: 100%;
                             height: 100%;
                             position: absolute;
@@ -343,6 +557,11 @@
                             display: block;
                         }
 
+                        &.dragging{
+                            opacity: .4;
+                            cursor: grabbing;
+                        }
+
                         .page-number{
                             font-family: 12px;
                             text-align: center;
@@ -353,22 +572,41 @@
                         border: 1px solid #ddd;
                     }
 
+                    // Absolutely positioned (relative to .pdfev-preview-stage, the
+                    // nearest positioned ancestor — same technique as
+                    // .pdfev-upload-overlay) so it's centered over the box
+                    // regardless of scroll position or already-rendered thumbnails
+                    // underneath, rather than sitting inline above them.
                     .pdfev-loader-wrapper {
+                        position: absolute;
+                        inset: 0;
+                        z-index: 1;
                         display: flex;
                         flex-direction: column;
                         justify-content: center;
                         align-items: center;
-                        min-height: 200px;
                         text-align: center;
                         color: var(--pdfev-mb-muted);
+                        // Translucent, not solid — lets already-rendered thumbnails
+                        // stay visible (dimmed) underneath as they fill in, instead
+                        // of hiding all progress behind a fully opaque block.
+                        background: rgba(255, 255, 255, .82);
+                    }
+
+                    .pdfev-loader-percent {
+                        font-weight: 600;
+                        color: var(--pdfev-mb-accent);
                     }
 
                     .pdfev-spinner {
+                        // Scales with the container's own width instead of a fixed
+                        // size that would look tiny on a wide preview and cramped
+                        // on a narrow one — bounded so it stays sensible either way.
+                        width: clamp(24px, 8%, 40px);
+                        height: clamp(24px, 8%, 40px);
                         border: 4px solid #f3f3f3;
                         border-top: 4px solid var(--pdfev-mb-accent);
                         border-radius: 50%;
-                        width: 32px;
-                        height: 32px;
                         animation: pdfev-spin 1s linear infinite;
                         margin-bottom: 10px;
                     }
@@ -392,10 +630,53 @@
                     font-size: 12.5px;
                     color: var(--pdfev-mb-muted);
 
+                    // A book-cover-shaped thumbnail card, not a bare stretched
+                    // image — fixed portrait ratio + object-fit so every cover
+                    // reads consistently regardless of its actual dimensions.
                     #pdfev-featured-image-preview{
                         width: 100%;
-                        border-radius: var(--pdfev-mb-radius-sm);
+                        aspect-ratio: 3 / 4;
+                        object-fit: cover;
                         display: none;
+                        background: var(--pdfev-mb-surface);
+                        border: 1px solid var(--pdfev-mb-border);
+                        border-radius: var(--pdfev-mb-radius-sm);
+                        box-shadow: 0 1px 3px rgba(16, 24, 40, .08);
+                    }
+
+                    // Highlighted while a dragged page thumbnail is over this drop
+                    // target — see the dragover/drop handlers in admin.js.
+                    #pdfev-featured-image{
+                        border-radius: var(--pdfev-mb-radius-sm);
+                        transition: box-shadow .15s ease, background-color .15s ease;
+
+                        &.pdfev-drop-active{
+                            background-color: rgba(56, 88, 233, .08);
+                            box-shadow: 0 0 0 2px var(--pdfev-mb-accent);
+                        }
+                    }
+
+                    .pdfev-featured-image-meta{
+                        display: flex;
+                        flex-direction: column;
+                        gap: 4px;
+                    }
+
+                    .pdfev-featured-image-meta-row{
+                        display: flex;
+                        align-items: baseline;
+                        justify-content: space-between;
+                        gap: 8px;
+
+                        span{
+                            color: var(--pdfev-mb-muted);
+                        }
+
+                        strong{
+                            color: var(--pdfev-mb-ink);
+                            font-weight: 600;
+                            text-align: right;
+                        }
                     }
                 }
             }
