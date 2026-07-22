@@ -84,14 +84,49 @@ jQuery(document).ready(function ($) {
   // Pro "Hide File URL" mode: fetches the (stable, permanent) stream token
   // via ajax instead of it ever being printed into the page's own markup,
   // then fetches the actual PDF bytes itself and hands the viewer/iframe a
-  // blob: URL instead of the real one. A blob: URL only resolves inside the
-  // document that created it — copy/pasting it into a new tab (or a
-  // different browser entirely) fails, unlike a plain token URL which stays
-  // reusable anywhere the same-site Referer check can be satisfied. Not
-  // proof against a deliberately scripted request replaying a stolen
-  // Referer header — this raises the bar against casual copy/paste and
-  // "view source" link sharing, nothing more.
-  function fetchProtectedBlobUrl(post_id, callback) {
+  // blob: URL instead of the real one. A blob: URL alone is NOT tab-locked —
+  // as long as it hasn't been revoked and the creating tab is still open, it
+  // stays resolvable from anywhere it's pasted, same-browser or not. The
+  // actual protection is revoking it (see revokeBlobUrlSoon below) right
+  // after the consuming element has grabbed the bytes it needs — a revoked
+  // blob: URL fails everywhere, including the original tab, while an
+  // already-loaded resource keeps working since it already has its own copy
+  // of the data. Not proof against a deliberately scripted request replaying
+  // a stolen Referer header directly against the token endpoint — this
+  // raises the bar against casual copy/paste and "view source" link
+  // sharing, nothing more.
+  function revokeBlobUrlSoon(blobUrl) {
+    // A fixed delay, not a load/ready event, because pdf.js's own paging
+    // (inside 3dflipbook, a vendored/minified library we don't patch) can
+    // re-request the same blob: URL well after the initial page renders —
+    // e.g. a reader flipping deep into a long book minutes later — and
+    // revoking too early would break that, not just block copy/paste.
+    // Trade-off, on purpose: this closes the "stays copyable for as long as
+    // the tab is open" gap, but a fast copy within this window still works,
+    // and a document a reader takes longer than this to page through could
+    // theoretically hit a revoked URL on a not-yet-loaded page. No revoke
+    // at all (the previous behavior) is worse — indefinite exposure — so
+    // this is the safer default until 3dflipbook exposes a real
+    // "fully loaded" callback we can hook instead of a guessed delay.
+    setTimeout(function () {
+      URL.revokeObjectURL(blobUrl);
+    }, 30000);
+  }
+
+  // Fetches the full PDF once and hands back both a blob: URL (for the
+  // iframe — the browser's own native PDF viewer, unaffected by the bug
+  // below) and the raw bytes (for the flipbook — see startFlipbook's use of
+  // pdfOpenOptions.data). 3dflipbook's own bundled Utils.normalizeUrl() does
+  // a naive split('/') same-host check that corrupts ANY blob: URL handed
+  // to it (blob: URLs embed the page's own origin, which always trips that
+  // check) — it strips the "blob:" scheme entirely, leaving a URL that
+  // doesn't exist, hence 3dflipbook's own "Missing PDF" error. That's a bug
+  // in the vendored library itself (not something we patch there — see
+  // CLAUDE.md), so instead of relying on a URL at all for the flipbook path,
+  // we pass pdf.js the already-fetched bytes directly via pdfOpenOptions.data
+  // — pdf.js only sets up network/URL-based fetching when no data is given,
+  // so this sidesteps the bug entirely.
+  function fetchProtectedPdf(post_id, callback) {
     $.post(pdfevFronend.ajaxurl, {
       action: 'pdfev_get_stream_token',
       ajaxnonce: pdfevFronend.ajaxnonce,
@@ -104,10 +139,12 @@ jQuery(document).ready(function ($) {
       fetch(response.data.url, { credentials: 'same-origin' })
         .then(function (res) {
           if (!res.ok) throw new Error('Protected PDF fetch failed');
-          return res.blob();
+          return res.arrayBuffer();
         })
-        .then(function (blob) {
-          callback(URL.createObjectURL(blob));
+        .then(function (arrayBuffer) {
+          var blobUrl = URL.createObjectURL(new Blob([arrayBuffer], { type: 'application/pdf' }));
+          callback({ blobUrl: blobUrl, arrayBuffer: arrayBuffer });
+          revokeBlobUrlSoon(blobUrl);
         })
         .catch(function () {
           callback(null);
@@ -121,8 +158,8 @@ jQuery(document).ready(function ($) {
     $('.pdf-viewer[data-pdfev-protected="yes"]').each(function () {
       let $iframe = $(this);
       let post_id = $iframe.data('id');
-      fetchProtectedBlobUrl(post_id, function (blobUrl) {
-        if (blobUrl) $iframe.attr('src', blobUrl);
+      fetchProtectedPdf(post_id, function (result) {
+        if (result) $iframe.attr('src', result.blobUrl);
       });
     });
   }
@@ -136,7 +173,7 @@ jQuery(document).ready(function ($) {
 
       if (!pdfURL && !isProtected) return;
 
-      function startFlipbook(resolvedUrl) {
+      function startFlipbook(resolvedUrl, pdfBytes) {
         // Pro flipbook options — free/unlicensed installs never receive
         // pdfevFronend.flipbookOptions at all, so proOptions stays {} and the
         // $.extend below is a no-op, leaving today's defaults untouched.
@@ -186,12 +223,21 @@ jQuery(document).ready(function ($) {
         $.extend(true, options, proOptions);
         delete options.skinFile;
 
+        // Bypass 3dflipbook's own normalizeUrl() bug (see fetchProtectedPdf's
+        // comment above) by giving pdf.js the already-fetched bytes directly
+        // instead of relying on the (corrupted) blob: URL for loading.
+        if (pdfBytes) {
+          options.pdfOpenOptions = $.extend({}, options.pdfOpenOptions, {
+            data: new Uint8Array(pdfBytes),
+          });
+        }
+
         $viewer.FlipBook(options);
       }
 
       if (isProtected) {
-        fetchProtectedBlobUrl(post_id, function (blobUrl) {
-          if (blobUrl) startFlipbook(blobUrl);
+        fetchProtectedPdf(post_id, function (result) {
+          if (result) startFlipbook(result.blobUrl, result.arrayBuffer);
         });
       } else {
         startFlipbook(pdfURL);
