@@ -465,6 +465,10 @@
 
             .pdfev-metabox-preview-area{
                 display: flex;
+                // Explicit (not just relying on the flex default) since the two
+                // panels — Book Cover and the document previewer/dropzone — are
+                // meant to always read as a matched pair, same height, same style.
+                align-items: stretch;
                 gap: 16px;
 
                 .warning{
@@ -481,6 +485,12 @@
                 .pdfev-preview-stage{
                     position: relative;
                     width: 75%;
+                    // Set directly rather than left to flex "stretch" to hand it
+                    // down from #pdfev-document-preview's own height — .pdfev-upload-overlay
+                    // is position:absolute;inset:0 against *this* element, and that only
+                    // centers its content correctly when this box has a height of its
+                    // own to resolve against, not one inherited through a layout step.
+                    height: 400px;
                 }
 
                 .pdfev-upload-overlay{
@@ -510,6 +520,9 @@
                 #pdfev-document-preview{
                     display: none;
                     width: 100%;
+                    // Shared with .pdfev-featured-image-area's own height below —
+                    // keep both values in sync so the previewer and the Book
+                    // Cover panel next to it always read as the same height.
                     height: 400px;
                     overflow: auto;
                     border: 1px solid var(--pdfev-mb-border);
@@ -520,6 +533,15 @@
                         border-style: dashed;
                         border-color: var(--pdfev-mb-accent);
                         background: rgba(56, 88, 233, .05);
+                    }
+
+                    // Explicitly guarantees the border stays visible (solid, not
+                    // dashed/accented) for the whole time pages are still
+                    // rendering — toggled alongside .pdfev-loader-wrapper in
+                    // admin.js rather than left to fall through from the base rule.
+                    &.pdfev-loading{
+                        border-style: solid;
+                        border-color: var(--pdfev-mb-border);
                     }
 
                     // While an actual OS file is being dragged over the dropzone
@@ -593,60 +615,176 @@
                         background: rgba(255, 255, 255, .82);
                     }
 
-                    .pdfev-loader-percent {
-                        font-weight: 600;
-                        color: var(--pdfev-mb-accent);
-                    }
-
-                    .pdfev-spinner {
+                    // A determinate ring (fills to the actual page-render
+                    // percentage) instead of a generic indeterminate spinner —
+                    // it already tracks real progress, so the loader should show
+                    // that directly rather than just spinning forever.
+                    .pdfev-progress-ring {
+                        position: relative;
                         // Scales with the container's own width instead of a fixed
                         // size that would look tiny on a wide preview and cramped
                         // on a narrow one — bounded so it stays sensible either way.
-                        width: clamp(24px, 8%, 40px);
-                        height: clamp(24px, 8%, 40px);
-                        border: 4px solid #f3f3f3;
-                        border-top: 4px solid var(--pdfev-mb-accent);
-                        border-radius: 50%;
-                        animation: pdfev-spin 1s linear infinite;
+                        width: clamp(48px, 14%, 64px);
+                        height: clamp(48px, 14%, 64px);
                         margin-bottom: 10px;
+
+                        svg {
+                            width: 100%;
+                            height: 100%;
+                            // Starts the fill from the top (12 o'clock) instead of
+                            // the default 3-o'clock start point of an SVG circle.
+                            transform: rotate(-90deg);
+                        }
+
+                        circle {
+                            fill: none;
+                            stroke-width: 4;
+                        }
+
+                        .pdfev-progress-ring-track {
+                            stroke: var(--pdfev-mb-border);
+                        }
+
+                        .pdfev-progress-ring-fill {
+                            stroke: var(--pdfev-mb-accent);
+                            stroke-linecap: round;
+                            // Circumference of r=24: 2 * PI * 24 ≈ 150.8 — full
+                            // dasharray, with dashoffset (set inline by admin.js
+                            // per page) shrinking from that same value down to 0
+                            // as pages finish rendering.
+                            stroke-dasharray: 150.8;
+                            stroke-dashoffset: 150.8;
+                            transition: stroke-dashoffset .2s ease;
+                        }
                     }
 
-                    @keyframes pdfev-spin {
-                        0% { transform: rotate(0deg); }
-                        100% { transform: rotate(360deg); }
+                    .pdfev-loader-percent {
+                        position: absolute;
+                        inset: 0;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-weight: 600;
+                        font-size: 11.5px;
+                        color: var(--pdfev-mb-accent);
                     }
                 }
 
                 .pdfev-featured-image-area{
                     width: 25%;
+                    // Same explicit height as #pdfev-document-preview, same
+                    // surface/border/radius treatment — the two panels are meant
+                    // to look and size like a matched pair, not two unrelated boxes.
+                    height: 400px;
                     display: flex;
                     flex-direction: column;
                     align-items: stretch;
                     gap: 8px;
-                    background-color: var(--pdfev-mb-bg);
+                    background-color: var(--pdfev-mb-surface);
                     border: 1px solid var(--pdfev-mb-border);
                     padding: 14px;
                     border-radius: var(--pdfev-mb-radius);
                     font-size: 12.5px;
                     color: var(--pdfev-mb-muted);
 
-                    // A book-cover-shaped thumbnail card, not a bare stretched
-                    // image — fixed portrait ratio + object-fit so every cover
-                    // reads consistently regardless of its actual dimensions.
+                    // "Book Cover" reads as the panel's title, not just another
+                    // field label — bigger/bolder than the shared field-label
+                    // style, with a bit more breathing room above the
+                    // description line below it.
+                    .pdfev-metabox-field-label p{
+                        margin: 0 0 4px;
+                        font-size: 14px;
+                        font-weight: 700;
+                    }
+
+                    // Fills whatever vertical space is left once the label header
+                    // and the meta footer below have taken theirs, so the cover
+                    // image/placeholder always centers in the remaining room
+                    // instead of the card growing/shrinking around it.
+                    .pdfev-featured-image-cover{
+                        flex: 1;
+                        min-height: 0;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                    }
+
+                    // Sized to the cover's OWN natural aspect ratio, not forced
+                    // into a fixed 3:4 box — a forced ratio meant object-fit
+                    // had to either crop (cover) or letterbox (contain)
+                    // whenever a real cover's proportions didn't match. Capped
+                    // by max-width/max-height only, so it shrinks to fit the
+                    // available space but is never stretched or bordered with
+                    // empty space; centered by the cover wrapper's own
+                    // align-items/justify-content.
                     #pdfev-featured-image-preview{
-                        width: 100%;
-                        aspect-ratio: 3 / 4;
-                        object-fit: cover;
+                        width: auto;
+                        height: auto;
+                        max-width: 70%;
+                        max-height: 100%;
+                        object-fit: contain;
                         display: none;
                         background: var(--pdfev-mb-surface);
                         border: 1px solid var(--pdfev-mb-border);
                         border-radius: var(--pdfev-mb-radius-sm);
-                        box-shadow: 0 1px 3px rgba(16, 24, 40, .08);
+                    }
+
+                    // Shared book-cover "feel" for whichever of the two is
+                    // showing (real cover or placeholder): two solid, unblurred
+                    // shadows offset bottom-right read as a couple of pages
+                    // peeking out from behind a closed book, and the inset
+                    // shadow along the left edge reads as the spine/binding
+                    // crease — box-shadow only, since ::after isn't rendered on
+                    // <img> (a replaced element) in any current browser.
+                    #pdfev-featured-image-preview,
+                    .pdfev-featured-image-placeholder{
+                        box-shadow:
+                            0 1px 2px rgba(16, 24, 40, .06),
+                            5px 5px 0 0 var(--pdfev-mb-bg),
+                            9px 9px 0 0 var(--pdfev-mb-border),
+                            inset 6px 0 8px -6px rgba(0, 0, 0, .3);
+                    }
+
+                    // Dummy cover shown until a real one is set — dashed, same
+                    // shape as the real cover, so the panel never looks empty.
+                    .pdfev-featured-image-placeholder{
+                        // Matches #pdfev-featured-image-preview's width so the
+                        // dummy and the real cover are the same size/position.
+                        width: 70%;
+                        aspect-ratio: 3 / 4;
+                        // Same reasoning as #pdfev-featured-image-preview's own
+                        // max-height above — keeps the dummy card from
+                        // overflowing into the label/footer on a wide panel.
+                        max-height: 100%;
+                        display: none;
+                        flex-direction: column;
+                        align-items: center;
+                        justify-content: center;
+                        gap: 6px;
+                        background: var(--pdfev-mb-bg);
+                        border: 1px dashed var(--pdfev-mb-border);
+                        border-radius: var(--pdfev-mb-radius-sm);
+                        color: var(--pdfev-mb-muted);
+
+                        p{
+                            margin: 0;
+                            font-size: 11.5px;
+                        }
+
+                        .dashicons{
+                            width: 22px;
+                            height: 22px;
+                            font-size: 22px;
+                        }
                     }
 
                     // Highlighted while a dragged page thumbnail is over this drop
                     // target — see the dragover/drop handlers in admin.js.
                     #pdfev-featured-image{
+                        display: flex;
+                        flex-direction: column;
+                        flex: 1;
+                        min-height: 0;
                         border-radius: var(--pdfev-mb-radius-sm);
                         transition: box-shadow .15s ease, background-color .15s ease;
 
@@ -656,10 +794,17 @@
                         }
                     }
 
+                    // Always pinned to the bottom of the card (Document size /
+                    // Total Pages), regardless of how much/little room the cover
+                    // image above takes up — a real footer, not just the next
+                    // element in flow.
                     .pdfev-featured-image-meta{
                         display: flex;
                         flex-direction: column;
                         gap: 4px;
+                        margin-top: auto;
+                        padding-top: 10px;
+                        border-top: 1px solid var(--pdfev-mb-border);
                     }
 
                     .pdfev-featured-image-meta-row{

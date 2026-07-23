@@ -136,6 +136,12 @@
         $('.pdfev-totalpage').text('');
         $('#pdfev-featured-image-data').val('');
         $('#pdfev-featured-image-preview').attr('src', '').hide();
+        // .css('display', 'flex'), not .show() — same reasoning as
+        // .pdfev-upload-overlay: this class's own default rule is
+        // display:none, so jQuery's show() would restore the browser's
+        // plain <div> default (block) instead of the flex layout its
+        // icon+text need to stay centered.
+        $('.pdfev-featured-image-placeholder').css('display', 'flex');
         $('#pdfev-featured-image').data('status', 'no').data('url', '');
         renderPDFThumbnails('');
     });
@@ -246,6 +252,33 @@
     // stops appending thumbnails instead of racing the newer one and
     // silently re-populating a container the user just cleared.
     let pdfevRenderGeneration = 0;
+    // Matches the SVG circle's r=24 in the loader markup (2 * PI * 24) — kept
+    // as one constant so the ring's CSS and this JS never drift out of sync.
+    const PDFEV_RING_CIRCUMFERENCE = 150.8;
+
+    // The grid of page thumbnails only ever displays at ~103px wide, so it's
+    // rendered small (fast, light on memory even across a 100+ page doc).
+    // The Book Cover panel shows much bigger (up to 70% of its own panel),
+    // so reusing that same low-res canvas for it looked blurry/upscaled —
+    // whichever page becomes the cover gets re-rendered at this higher scale
+    // instead, on demand (auto-select, click, or drag-drop), not for all pages.
+    const PDFEV_COVER_SCALE = 1.2;
+
+    // Kept in sync with whichever renderPDFThumbnails() call is currently
+    // "live" (matches the generation-counter pattern) so the drag-and-drop-
+    // onto-Featured-Image handler below — registered once, outside this
+    // function's closure — can re-render a specific page at cover quality
+    // without needing the low-res dataURL threaded through dataTransfer.
+    let pdfevCurrentPdfDoc = null;
+
+    async function pdfevRenderPageDataUrl(page, scale) {
+        const viewport = page.getViewport({ scale });
+        const canvas = document.createElement('canvas');
+        canvas.width = viewport.width;
+        canvas.height = viewport.height;
+        await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
+        return canvas.toDataURL('image/jpeg', 0.92);
+    }
 
     async function renderPDFThumbnails(pdfUrl) {
         const myGeneration = ++pdfevRenderGeneration;
@@ -256,9 +289,15 @@
 
         container.show();
         container.find('.pdfev-loader-wrapper').hide();
+        container.removeClass('pdfev-loading');
         container.find('.warning').hide();
         container.removeClass('pdfev-dropzone');
-        $('.pdfev-upload-overlay').hide();
+        // .css('display', ...), not .hide()/.show() — this element is a flex
+        // container (centers its content via align-items/justify-content).
+        // jQuery's show()/hide() don't know that: show() restores a plain
+        // <div>'s browser-default display, which is "block", silently
+        // dropping back to top-anchored content instead of centered.
+        $('.pdfev-upload-overlay').css('display', 'none');
 
         if(!pdfUrl) {
             // A previous file's rendered page thumbnails otherwise stay sitting
@@ -271,7 +310,7 @@
                 // "Choose File" overlay instead of the plain text warning below,
                 // which is reserved for Remote URL mode (nothing to drag/click there).
                 container.addClass('pdfev-dropzone');
-                $('.pdfev-upload-overlay').show();
+                $('.pdfev-upload-overlay').css('display', 'flex');
             } else {
                 container.find('.warning').show();
             }
@@ -280,7 +319,9 @@
 
         $('.pdfev-replace-bar').css('display', isUploadMode ? 'flex' : 'none');
         container.find('.pdfev-loader-wrapper').show();
-        $('.pdfev-loader-percent').text('');
+        container.addClass('pdfev-loading');
+        $('.pdfev-loader-percent').text('0%');
+        $('.pdfev-progress-ring-fill').css('stroke-dashoffset', PDFEV_RING_CIRCUMFERENCE);
         pdfjsLib.GlobalWorkerOptions.workerSrc = pdfevAjax.pdfevurl + 'vendor/pdf/pdf.worker.min.js';
         try {
             const response = await fetch(pdfUrl);
@@ -299,6 +340,7 @@
 
             const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
             const totalPages = pdf.numPages;
+            pdfevCurrentPdfDoc = pdf;
 
             if (myGeneration !== pdfevRenderGeneration) return;
 
@@ -321,7 +363,9 @@
                 // into a container that isn't "ours" to fill anymore.
                 if (myGeneration !== pdfevRenderGeneration) return;
 
-                $('.pdfev-loader-percent').text(Math.round((pageNum / totalPages) * 100) + '%');
+                const loadPercent = Math.round((pageNum / totalPages) * 100);
+                $('.pdfev-loader-percent').text(loadPercent + '%');
+                $('.pdfev-progress-ring-fill').css('stroke-dashoffset', PDFEV_RING_CIRCUMFERENCE * (1 - loadPercent / 100));
 
                 const page = await pdf.getPage(pageNum);
                 const scale = 0.2;
@@ -343,16 +387,22 @@
                 var featured_image = $('#pdfev-featured-image').data('url');
                 if(featured_status==='yes'){
                     firstImageSet = true;
-                    $('#pdfev-featured-image-preview').attr('src', featured_image).show();
+                    $('#pdfev-featured-image-preview').attr('src', featured_image).css('display', 'block');
+                    $('.pdfev-featured-image-placeholder').hide();
                     $('#pdfev-featured-image-data').val(featured_image);
                 }
-                
+
                 if (!firstImageSet) {
-                    $('#pdfev-featured-image').show();
-                    $('#pdfev-featured-image-preview').attr('src', imageData).show();
-                    $('#pdfev-featured-image-data').val(imageData);
-                    
+                    // Re-rendered at cover quality — imageData here is the
+                    // low-res ~103px-wide grid thumbnail, too soft once
+                    // stretched to the Book Cover panel's size.
                     firstImageSet = true;
+                    const coverImageData = await pdfevRenderPageDataUrl(page, PDFEV_COVER_SCALE);
+                    if (myGeneration !== pdfevRenderGeneration) return;
+                    $('#pdfev-featured-image').show();
+                    $('#pdfev-featured-image-preview').attr('src', coverImageData).css('display', 'block');
+                    $('.pdfev-featured-image-placeholder').hide();
+                    $('#pdfev-featured-image-data').val(coverImageData);
                 }
 
                 const wrapper = document.createElement('div');
@@ -364,18 +414,25 @@
                 label.innerText = `Page ${pageNum}`;
                 wrapper.appendChild(label);
 
-                wrapper.addEventListener('click', function () {
+                wrapper.addEventListener('click', async function () {
+                    // Re-render this page at cover quality rather than reusing
+                    // the low-res grid thumbnail — see PDFEV_COVER_SCALE above.
+                    const coverImageData = await pdfevRenderPageDataUrl(page, PDFEV_COVER_SCALE);
                     $('#pdfev-featured-image').show();
-                    $('#pdfev-featured-image-preview').attr('src', imageData).show();
-                    $('#pdfev-featured-image-data').val(imageData);
+                    $('#pdfev-featured-image-preview').attr('src', coverImageData).css('display', 'block');
+                    $('.pdfev-featured-image-placeholder').hide();
+                    $('#pdfev-featured-image-data').val(coverImageData);
                 });
 
                 // Drag this page onto the Featured Image box as an alternative to
                 // clicking it — see the dragover/drop handlers on #pdfev-featured-image
-                // further down, registered once (not per-thumbnail).
+                // further down, registered once (not per-thumbnail). Only the page
+                // number crosses dataTransfer, not image data, so the drop handler
+                // can re-render at cover quality (pdfevCurrentPdfDoc) instead of
+                // reusing this low-res grid thumbnail.
                 wrapper.setAttribute('draggable', 'true');
                 wrapper.addEventListener('dragstart', function (e) {
-                    e.dataTransfer.setData('text/plain', imageData);
+                    e.dataTransfer.setData('text/plain', String(pageNum));
                     e.dataTransfer.effectAllowed = 'copy';
                     wrapper.classList.add('dragging');
                 });
@@ -388,10 +445,12 @@
 
             if (myGeneration !== pdfevRenderGeneration) return;
             container.find('.pdfev-loader-wrapper').hide();
+            container.removeClass('pdfev-loading');
         } catch (error) {
             //console.error('Error loading PDF:', error);
             if (myGeneration !== pdfevRenderGeneration) return;
             container.find('.pdfev-loader-wrapper').hide();
+            container.removeClass('pdfev-loading');
             container.find('.warning').show();
         }
     }
@@ -411,14 +470,19 @@
     $(document).on('dragleave', '#pdfev-featured-image', function () {
         $(this).removeClass('pdfev-drop-active');
     });
-    $(document).on('drop', '#pdfev-featured-image', function (e) {
+    $(document).on('drop', '#pdfev-featured-image', async function (e) {
         e.preventDefault();
         $(this).removeClass('pdfev-drop-active');
-        var imageData = e.originalEvent.dataTransfer.getData('text/plain');
-        if (!imageData) return;
+        var pageNum = parseInt(e.originalEvent.dataTransfer.getData('text/plain'), 10);
+        if (!pageNum || !pdfevCurrentPdfDoc) return;
+        // Re-render at cover quality rather than the low-res grid thumbnail
+        // dragstart only hands over a page number for exactly this reason.
+        var page = await pdfevCurrentPdfDoc.getPage(pageNum);
+        var coverImageData = await pdfevRenderPageDataUrl(page, PDFEV_COVER_SCALE);
         $('#pdfev-featured-image').show();
-        $('#pdfev-featured-image-preview').attr('src', imageData).show();
-        $('#pdfev-featured-image-data').val(imageData);
+        $('#pdfev-featured-image-preview').attr('src', coverImageData).css('display', 'block');
+        $('.pdfev-featured-image-placeholder').hide();
+        $('#pdfev-featured-image-data').val(coverImageData);
     });
 
 

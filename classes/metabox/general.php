@@ -139,7 +139,7 @@ class Metabox_General{
                             <div class="pdfev-metabox-preview-area">
                                 <div class="pdfev-featured-image-area">
                                     <div class="pdfev-metabox-field-label">
-                                        <p><?php echo esc_html__( 'Preview Featured Image', 'pdf-embed-viewer' )?></p>
+                                        <p><?php echo esc_html__( 'Book Cover', 'pdf-embed-viewer' )?></p>
                                         <span><?php echo esc_html__('Select any image to set as thumbnail from right.','pdf-embed-viewer') ?></span>
                                     </div>
                                     <div id="pdfev-featured-image" data-status="<?php echo isset($thumbnail_url)?'yes':'no';?>" data-url="<?php echo isset($thumbnail_url)?$thumbnail_url:'';?>">
@@ -147,7 +147,13 @@ class Metabox_General{
                                         <input type="hidden" name="pdfev_meta_filesize" id="pdfev_meta_filesize" value="<?php echo esc_attr($filesize); ?>">
                                         <input type="hidden" name="pdfev_meta_total_pages" id="pdfev_meta_total_pages" value="<?php echo esc_attr($total_pages); ?>">
 
-                                        <img id="pdfev-featured-image-preview" src="<?php echo esc_attr(isset($thumbnail_url)?$thumbnail_url:'');?>">
+                                        <div class="pdfev-featured-image-cover">
+                                            <img id="pdfev-featured-image-preview" style="display:<?php echo isset($thumbnail_url) ? 'block' : 'none'; ?>;" src="<?php echo esc_attr(isset($thumbnail_url)?$thumbnail_url:'');?>">
+                                            <div class="pdfev-featured-image-placeholder" style="display:<?php echo isset($thumbnail_url) ? 'none' : 'flex'; ?>;">
+                                                <span class="dashicons dashicons-format-image" aria-hidden="true"></span>
+                                                <p><?php esc_html_e('No cover yet', 'pdf-embed-viewer'); ?></p>
+                                            </div>
+                                        </div>
 
                                         <div class="pdfev-featured-image-meta">
                                             <div class="pdfev-featured-image-meta-row">
@@ -170,8 +176,14 @@ class Metabox_General{
                                 <div class="pdfev-preview-stage">
                                     <div id="pdfev-document-preview" class="<?php echo ( ! $is_remote_source && ! $embed_file ) ? 'pdfev-dropzone' : ''; ?>">
                                         <div class="pdfev-loader-wrapper" style="display:none;">
-                                            <div class="pdfev-spinner"></div>
-                                            <p><?php echo __('Loading preview...','pdf-embed-viewer') ?> <span class="pdfev-loader-percent"></span></p>
+                                            <div class="pdfev-progress-ring">
+                                                <svg viewBox="0 0 56 56" aria-hidden="true">
+                                                    <circle class="pdfev-progress-ring-track" cx="28" cy="28" r="24"></circle>
+                                                    <circle class="pdfev-progress-ring-fill" cx="28" cy="28" r="24"></circle>
+                                                </svg>
+                                                <span class="pdfev-loader-percent">0%</span>
+                                            </div>
+                                            <p><?php echo __('Loading preview...','pdf-embed-viewer') ?></p>
                                         </div>
                                         <p class="warning" style="display:none;"><?php echo __('Failed to load preview. Please Upload a PDF.','pdf-embed-viewer') ?></p>
                                     </div>
