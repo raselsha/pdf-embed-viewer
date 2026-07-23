@@ -161,7 +161,9 @@
                 border: 1px solid var(--pdfev-mb-border);
                 border-radius: var(--pdfev-mb-radius);
                 box-shadow: 0 1px 2px rgba(16, 24, 40, .04);
-                overflow: hidden;
+                /* overflow:hidden would clip the custom-select dropdown
+                   (position:absolute) inside the body — same reasoning as
+                   .pdfev-settings-panel below. */
 
                 .pdfev-tab-content{
                     display: none;
@@ -235,8 +237,8 @@
                         margin-top: 10px;
                         /* Stays below the label (column direction) but shrinks to
                            content width and sits at the row's right edge — the base
-                           text-align:right doesn't reach block-level flex children
-                           like .pdfev-source-panel, hence flex/align-items here instead. */
+                           text-align:right doesn't reach block-level flex children,
+                           hence flex/align-items here instead. */
                         display: flex;
                         flex-direction: column;
                         align-items: flex-end;
@@ -295,18 +297,133 @@
                     select{
                         width: 100%;
                         max-width: 420px;
+                        background: var(--pdfev-mb-surface);
                         border: 1px solid var(--pdfev-mb-border);
                         border-radius: var(--pdfev-mb-radius-sm);
-                        padding: 5px 10px;
-                        min-height: 30px;
+                        padding: 7px 12px;
+                        min-height: 34px;
                         font-size: 13px;
                         line-height: 1.4;
                         color: var(--pdfev-mb-ink);
+                        box-shadow: 0 1px 2px rgba(16, 24, 40, .04);
+                        transition: border-color .15s ease, box-shadow .15s ease;
+
+                        &:hover{
+                            border-color: var(--pdfev-mb-muted);
+                        }
 
                         &:focus{
                             outline: none;
                             border-color: var(--pdfev-mb-accent);
                             box-shadow: 0 0 0 3px rgba(56, 88, 233, .12);
+                        }
+
+                        &::placeholder{
+                            color: var(--pdfev-mb-muted);
+                            opacity: .8;
+                        }
+                    }
+
+                    /* Same pattern as General_Settings::render_custom_select() on
+                       the settings page (native <select> hidden, driven by a
+                       styled trigger + listbox) — open/close/select behavior is
+                       already delegated globally in admin.js, nothing extra
+                       needed here beyond the visuals, mapped to this metabox's
+                       own --pdfev-mb-* tokens instead of --pdfev-admin-*. */
+                    .pdfev-select{
+                        position: relative;
+                        display: inline-block;
+                        width: 100%;
+                        max-width: 420px;
+                        text-align: left;
+
+                        .pdfev-select-native{
+                            display: none;
+                        }
+
+                        .pdfev-select-trigger{
+                            width: 100%;
+                            display: flex;
+                            align-items: center;
+                            justify-content: space-between;
+                            gap: 8px;
+                            border: 1px solid var(--pdfev-mb-border);
+                            border-radius: var(--pdfev-mb-radius-sm);
+                            padding: 7px 12px;
+                            min-height: 34px;
+                            font-size: 13px;
+                            line-height: 1.4;
+                            color: var(--pdfev-mb-ink);
+                            background: var(--pdfev-mb-surface);
+                            cursor: pointer;
+                            text-align: left;
+                            box-shadow: 0 1px 2px rgba(16, 24, 40, .04);
+                            transition: border-color .15s ease, box-shadow .15s ease;
+
+                            .dashicons{
+                                width: 14px;
+                                height: 14px;
+                                font-size: 14px;
+                                color: var(--pdfev-mb-muted);
+                                transition: transform .15s ease;
+                                flex-shrink: 0;
+                            }
+
+                            &:hover{
+                                border-color: var(--pdfev-mb-muted);
+                            }
+
+                            &:focus{
+                                outline: none;
+                                border-color: var(--pdfev-mb-accent);
+                                box-shadow: 0 0 0 3px rgba(56, 88, 233, .12);
+                            }
+
+                            &.pdfev-select-open .dashicons{
+                                transform: rotate(180deg);
+                            }
+                        }
+
+                        .pdfev-select-value{
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            white-space: nowrap;
+                        }
+
+                        .pdfev-select-options{
+                            position: absolute;
+                            z-index: 20;
+                            top: calc(100% + 4px);
+                            left: 0;
+                            right: 0;
+                            margin: 0;
+                            padding: 4px;
+                            list-style: none;
+                            max-height: 240px;
+                            overflow-y: auto;
+                            background: var(--pdfev-mb-surface);
+                            border: 1px solid var(--pdfev-mb-border);
+                            border-radius: var(--pdfev-mb-radius-sm);
+                            box-shadow: 0 8px 16px rgba(16, 24, 40, .12);
+
+                            li{
+                                padding: 7px 10px;
+                                font-size: 13px;
+                                line-height: 1.4;
+                                color: var(--pdfev-mb-ink);
+                                border-radius: var(--pdfev-mb-radius-sm);
+                                cursor: pointer;
+
+                                &:hover{
+                                    background: var(--pdfev-mb-bg);
+                                }
+
+                                &[aria-selected="true"]{
+                                    background: rgba(56, 88, 233, .1);
+                                    color: var(--pdfev-mb-accent);
+                                    font-weight: 500;
+                                }
+                            }
                         }
                     }
 
@@ -347,6 +464,179 @@
                         text-align: left;
                     }
 
+                }
+            }
+
+            /* ===modern polish for wp_editor() ("Document Description")===
+               TinyMCE's own toolbar (.mce-*) renders in the parent document
+               (only the actual typed content sits inside an iframe), so its
+               chrome is reachable here — but its skin CSS can load after
+               ours and carries its own specificity, hence !important only
+               on the .mce-* overrides below, not on the plain wp-editor-*
+               wrapper classes which don't need it. */
+            .wp-editor-wrap{
+                border: 1px solid var(--pdfev-mb-border);
+                border-radius: var(--pdfev-mb-radius-sm);
+                background: var(--pdfev-mb-surface);
+                transition: border-color .15s ease, box-shadow .15s ease;
+
+                &:focus-within{
+                    border-color: var(--pdfev-mb-accent);
+                    box-shadow: 0 0 0 3px rgba(56, 88, 233, .12);
+                }
+
+                .wp-editor-tools{
+                    background: var(--pdfev-mb-bg);
+                    border-bottom: 1px solid var(--pdfev-mb-border);
+                    padding: 0;
+                }
+
+                .wp-editor-tabs{
+                    .wp-switch-editor{
+                        border: none;
+                        background: transparent;
+                        font-size: 12px;
+                        color: var(--pdfev-mb-muted);
+                        margin: 6px 6px 0 0;
+                        border-radius: var(--pdfev-mb-radius-sm) var(--pdfev-mb-radius-sm) 0 0;
+                        transition: color .15s ease, background .15s ease;
+
+                        &:hover{
+                            color: var(--pdfev-mb-ink);
+                        }
+                    }
+                }
+
+                .wp-editor-container{
+                    border: none;
+                    border-top: 1px solid var(--pdfev-mb-border);
+
+                    textarea.wp-editor-area{
+                        border: none;
+                        font-family: inherit;
+                    }
+                }
+
+                .mce-top-part{
+                    &::before{
+                        box-shadow: none !important;
+                    }
+                }
+
+                .mce-toolbar-grp{
+                    background: var(--pdfev-mb-bg) !important;
+                    border-bottom: 1px solid var(--pdfev-mb-border) !important;
+                    padding: 2px 4px !important;
+                }
+
+                .mce-flow-layout{
+                    padding: 0 !important;
+                }
+
+                .mce-btn-group{
+                    padding: 0 !important;
+
+                    &:not(:first-child){
+                        border-left: 1px solid var(--pdfev-mb-border) !important;
+                        margin-left: 4px !important;
+                        padding-left: 4px !important;
+                    }
+                }
+
+                .mce-edit-area{
+                    border: none !important;
+                }
+
+                .mce-statusbar{
+                    border-top: 1px solid var(--pdfev-mb-border) !important;
+                    background: var(--pdfev-mb-bg) !important;
+
+                    .mce-path{
+                        padding: 4px 8px !important;
+                        font-size: 11px !important;
+
+                        .mce-path-item{
+                            color: var(--pdfev-mb-muted) !important;
+                            font-size: 11px !important;
+                        }
+                    }
+
+                    .mce-resizehandle{
+                        color: var(--pdfev-mb-muted) !important;
+                    }
+                }
+
+                .mce-btn{
+                    background: transparent !important;
+                    border: none !important;
+                    margin: 0 !important;
+                    border-radius: var(--pdfev-mb-radius-sm) !important;
+                    transition: background .1s ease !important;
+
+                    button{
+                        padding: 4px 6px !important;
+                        border-radius: var(--pdfev-mb-radius-sm) !important;
+                    }
+
+                    &:hover{
+                        background: var(--pdfev-mb-surface) !important;
+                        box-shadow: 0 1px 2px rgba(16, 24, 40, .06) !important;
+                    }
+
+                    &.mce-active,
+                    &:active{
+                        background: rgba(56, 88, 233, .08) !important;
+                    }
+
+                    .mce-ico{
+                        color: var(--pdfev-mb-ink) !important;
+                        font-size: 14px !important;
+                        width: 18px !important;
+                        height: 18px !important;
+                        line-height: 18px !important;
+                    }
+                }
+
+                .mce-splitbtn{
+                    &:hover{
+                        .mce-open{
+                            background: var(--pdfev-mb-surface) !important;
+                        }
+                    }
+                }
+
+                .mce-separator{
+                    background: var(--pdfev-mb-border) !important;
+                    margin: 0 2px !important;
+                }
+
+                /* Quicktags toolbar */
+                .quicktags-toolbar{
+                    background: var(--pdfev-mb-bg);
+                    border-bottom: 1px solid var(--pdfev-mb-border);
+                    padding: 4px 6px;
+
+                    .ed_button{
+                        height: 28px;
+                        padding: 0 8px;
+                        margin: 2px 2px;
+                        border: 1px solid transparent;
+                        border-radius: var(--pdfev-mb-radius-sm);
+                        background: transparent;
+                        color: var(--pdfev-mb-ink);
+                        font-size: 11px;
+                        cursor: pointer;
+                        transition: background .1s ease, border-color .1s ease;
+
+                        &:hover{
+                            background: var(--pdfev-mb-surface);
+                            border-color: var(--pdfev-mb-border);
+                        }
+
+                        &:active{
+                            background: rgba(56, 88, 233, .08);
+                        }
+                    }
                 }
             }
 
@@ -402,27 +692,6 @@
                 }
             }
 
-            /* ===Remote URL panel + the two "switch mode" links=== */
-            .pdfev-source-panel{
-                margin-bottom: 12px;
-
-                #pdfev-remote-url-input{
-                    width: 100%;
-                    border: 1px solid var(--pdfev-mb-border);
-                    border-radius: var(--pdfev-mb-radius-sm);
-                    padding: 7px 10px;
-                    font-size: 13px;
-                    line-height: 1.4;
-                    color: var(--pdfev-mb-ink);
-
-                    &:focus{
-                        outline: none;
-                        border-color: var(--pdfev-mb-accent);
-                        box-shadow: 0 0 0 3px rgba(56, 88, 233, .12);
-                    }
-                }
-            }
-
             /* Used both inside the dropzone ("Or use a Remote URL instead")
                and inside the panel above ("Back to upload") — a plain,
                low-emphasis link reads as "switch mode", not a competing
@@ -458,27 +727,29 @@
                 margin-top: 6px;
             }
 
+            /* Wrapper for whichever of the two rows below is currently
+               relevant (upload-with-a-file, or remote — any state) — only
+               one shows at a time, toggled by admin.js. */
             .pdfev-replace-bar{
-                align-items: center;
-                /* Clusters the icon/filename/buttons together at the row's right
-                   edge as one group — filename alone being text-align:right
-                   inside a flex:1 box left the icon stranded on the far left
-                   with a big gap before the (right-aligned) text. */
-                justify-content: flex-end;
-                gap: 8px;
                 margin-bottom: 10px;
                 font-size: 12.5px;
                 color: var(--pdfev-mb-muted);
+            }
+
+            .pdfev-replace-bar-row{
+                /* PHP/JS always set this inline (flex or none) explicitly —
+                   never toggled via jQuery's bare .show()/.hide(), which
+                   would restore a plain <div>'s default (block) instead. */
+                display: none;
+                align-items: center;
+                flex-wrap: wrap;
+                gap: 8px;
 
                 .dashicons{
                     width: 16px;
                     height: 16px;
                     font-size: 16px;
                     flex-shrink: 0;
-                }
-
-                .pdfev-source-filename{
-                    overflow-wrap: anywhere;
                 }
 
                 .pdfev-clear-file{
@@ -509,15 +780,22 @@
                     }
                 }
 
+                /* Shared pill-button look for both rows' primary action —
+                   "Replace File" (text only) and "Download to Media Library"
+                   (icon + text, hence the flex/gap here too). */
                 .pdfev-replace-btn{
                     /* WP core's own .button sizing (height/line-height) otherwise
                        wins over just adding padding, since padding alone doesn't
                        shrink an already-tall line-height — all sizing set
                        explicitly here instead of layering on top of it. */
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 6px;
                     height: auto;
                     line-height: 1.4;
                     padding: 3px 12px;
                     font-size: 12px;
+                    white-space: nowrap;
                     border-radius: 999px;
                     background: var(--pdfev-mb-accent);
                     border-color: var(--pdfev-mb-accent);
@@ -526,11 +804,77 @@
                     text-shadow: none;
                     transition: background .15s ease, border-color .15s ease;
 
+                    .dashicons{
+                        width: 14px;
+                        height: 14px;
+                        font-size: 14px;
+                    }
+
                     &:hover{
                         background: var(--pdfev-mb-accent-hover);
                         border-color: var(--pdfev-mb-accent-hover);
                         color: #fff;
                     }
+
+                    &:disabled{
+                        opacity: .6;
+                        cursor: default;
+                    }
+                }
+            }
+
+            /* Clusters the icon/filename/buttons together at the row's right
+               edge as one group — filename alone being text-align:right
+               inside a flex:1 box left the icon stranded on the far left
+               with a big gap before the (right-aligned) text. */
+            .pdfev-replace-bar-upload{
+                justify-content: flex-end;
+
+                .pdfev-source-filename{
+                    overflow-wrap: anywhere;
+                }
+            }
+
+            /* The URL input lives inline in this row now, not in a separate
+               floating panel — flex:1 so it fills the space between the icon
+               and the "Back to upload" link rather than being sized by content. */
+            .pdfev-replace-bar-remote{
+                #pdfev-remote-url-input{
+                    flex: 1;
+                    min-width: 0;
+                    background: var(--pdfev-mb-surface);
+                    border: 1px solid var(--pdfev-mb-border);
+                    border-radius: var(--pdfev-mb-radius-sm);
+                    padding: 7px 12px;
+                    min-height: 34px;
+                    font-size: 13px;
+                    line-height: 1.4;
+                    color: var(--pdfev-mb-ink);
+                    box-shadow: 0 1px 2px rgba(16, 24, 40, .04);
+                    transition: border-color .15s ease, box-shadow .15s ease;
+
+                    &:hover{
+                        border-color: var(--pdfev-mb-muted);
+                    }
+
+                    &:focus{
+                        outline: none;
+                        border-color: var(--pdfev-mb-accent);
+                        box-shadow: 0 0 0 3px rgba(56, 88, 233, .12);
+                    }
+
+                    &::placeholder{
+                        color: var(--pdfev-mb-muted);
+                        opacity: .8;
+                    }
+                }
+
+                /* Sits inline in this row, not stacked below like the
+                   overlay's own copy of this link — no top margin here. */
+                .pdfev-source-link{
+                    margin-top: 0;
+                    flex-shrink: 0;
+                    white-space: nowrap;
                 }
             }
 

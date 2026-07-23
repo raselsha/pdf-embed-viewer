@@ -27,7 +27,14 @@ class Enque_Style{
 
         $admin_js_path = PDFEV_Const_Path.'assets/js/admin.js';
         $admin_js_ver = file_exists($admin_js_path) ? filemtime($admin_js_path) : PDFEV_Const_VERSION;
-        wp_enqueue_script( 'pdf-embed-viewer', PDFEV_Const_URL.'assets/js/admin.js', ['jquery','wp-color-picker','jquery-ui-core'], $admin_js_ver, false );
+        // 'media-editor' isn't just for wp.media() (already used elsewhere in this
+        // file without declaring it, since browsers execute deferred/footer
+        // scripts in document order regardless of declared deps for THAT usage) —
+        // it's required here specifically because admin.js wraps
+        // wp.media.featuredImage.set at parse time (top-level, not inside a
+        // click handler), so media-editor.js must have already run by then.
+        // Without this dependency, WP has no reason to print it before admin.js.
+        wp_enqueue_script( 'pdf-embed-viewer', PDFEV_Const_URL.'assets/js/admin.js', ['jquery','wp-color-picker','jquery-ui-core','media-editor'], $admin_js_ver, false );
         wp_localize_script('pdf-embed-viewer', 'pdfevAjax', array(
             'ajaxurl' => admin_url('admin-ajax.php'),
             'ajaxnonce'=> wp_create_nonce('pdf_ajax_nonce'),

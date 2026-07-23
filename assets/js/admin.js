@@ -7,6 +7,37 @@
     $('.pdfev-color-field:not(:disabled)').wpColorPicker();
   });
 
+  // ===========sync with WordPress's native Featured Image box=================
+  // This CPT isn't REST-enabled, so it uses the classic #postimagediv meta
+  // box (wp-includes/js/media-editor.js), not the block editor's own
+  // featured-image panel. WP core funnels both "set" and "remove" through
+  // wp.media.featuredImage.set(id) (id === -1 for remove) — there's no
+  // change event to listen for, so this wraps that single choke point
+  // instead, letting the original run first and then mirroring whatever it
+  // did into the Book Cover panel, without needing a page reload.
+  if (window.wp && wp.media && wp.media.featuredImage) {
+    var pdfevOriginalSetFeaturedImage = wp.media.featuredImage.set;
+    wp.media.featuredImage.set = function (id) {
+      pdfevOriginalSetFeaturedImage.apply(this, arguments);
+
+      if (!id || id === -1 || id === '-1') {
+        $('#pdfev-featured-image-preview').attr('src', '').hide();
+        $('.pdfev-featured-image-placeholder').css('display', 'flex');
+        $('#pdfev-featured-image-data').val('');
+        $('#pdfev-featured-image').data('status', 'no').data('url', '');
+        return;
+      }
+
+      wp.media.attachment(id).fetch().done(function () {
+        var url = wp.media.attachment(id).get('url');
+        $('#pdfev-featured-image-preview').attr('src', url).css('display', 'block');
+        $('.pdfev-featured-image-placeholder').css('display', 'none');
+        $('#pdfev-featured-image-data').val(url);
+        $('#pdfev-featured-image').data('status', 'yes').data('url', url);
+      });
+    };
+  }
+
   // ===========custom select dropdown=================
   // Drives a styled listbox off a visually-hidden native <select> (kept for form submission).
   function pdfevCloseSelects() {
@@ -110,26 +141,100 @@
     // Drag-and-drop / Choose File is the implicit default (no separate
     // "Upload File" toggle exists anymore) — "Or use a Remote URL instead"
     // lives inside the dropzone itself, and "Back to upload" lives inside
-    // the Remote URL panel it switches to, rather than a floating tab pair.
+    // the Remote URL row it switches to (inline in .pdfev-replace-bar, not
+    // a separate floating panel — same spot either way).
     $(document).on('click', '.pdfev-source-link', function (e) {
         e.preventDefault();
         var showRemote = $(this).data('source-target') === 'remote';
-        $('.pdfev-source-panel[data-source="remote"]').css('display', showRemote ? 'block' : 'none');
-        renderPDFThumbnails($('.pdfev-emd-vwr-file').val());
-    });
 
-    // The remote URL box has no name attribute on purpose (only one field,
-    // the hidden .pdfev-emd-vwr-file, should ever get submitted) — it just
-    // keeps that hidden field's value in sync as the admin types.
-    $(document).on('input', '#pdfev-remote-url-input', function () {
-        $('.pdfev-emd-vwr-file').val($(this).val());
-    });
-
-    // ======clear the currently chosen file=========
-    $(document).on('click', '.pdfev-clear-file', function (e) {
-        e.preventDefault();
+        // Switching source type abandons whatever was pending for the other
+        // type — simpler/more predictable than trying to remember and
+        // restore two different pending sources across switches.
         $('.pdfev-emd-vwr-file').val('');
         $('.pdfev-source-filename').text('');
+        $('#pdfev-remote-url-input').val('');
+        $('#pdfev_meta_filesize').val('');
+        $('#pdfev_meta_total_pages').val('');
+        $('.pdfev-filesize').text('');
+        $('.pdfev-totalpage').text('');
+
+        $('.pdfev-replace-bar-upload').css('display', 'none');
+        $('.pdfev-replace-bar-remote').css('display', showRemote ? 'flex' : 'none');
+        $('.pdfev-replace-bar').css('display', showRemote ? 'block' : 'none');
+
+        renderPDFThumbnails('');
+
+        if (showRemote) {
+            $('#pdfev-remote-url-input').trigger('focus');
+        }
+    });
+
+    // A direct fetch() of a cross-origin PDF almost always gets blocked by
+    // CORS (most hosts don't send Access-Control-Allow-Origin for arbitrary
+    // files) — route it through this site's own pdfev_proxy endpoint instead,
+    // exactly like PDFEV_Functions::get_pdf_link() already does server-side
+    // for a saved remote URL. Used for every preview fetch (initial page
+    // load included), never for .pdfev-emd-vwr-file itself — that hidden
+    // field (what actually gets saved) always keeps the raw URL.
+    function pdfevResolvePreviewUrl(url) {
+        if (!url) return url;
+        try {
+            var parsed = new URL(url, window.location.href);
+            if (parsed.host !== window.location.host) {
+                return window.location.origin + '/?pdfev_proxy=' + encodeURIComponent(url);
+            }
+        } catch (err) {
+            return url;
+        }
+        return url;
+    }
+
+    // The remote URL box has no name attribute on purpose (only one field,
+    // the hidden .pdfev-emd-vwr-file, should ever get submitted) — this
+    // keeps that hidden field's value in sync as the admin types, and
+    // debounces a preview reload so it doesn't fetch on every keystroke,
+    // just once typing pauses. Enter/blur trigger it immediately too.
+    let pdfevRemoteUrlTimer = null;
+
+    function pdfevMaybeLoadRemoteUrl(url) {
+        clearTimeout(pdfevRemoteUrlTimer);
+        if (url.indexOf('://') === -1) return;
+        renderPDFThumbnails(pdfevResolvePreviewUrl(url));
+    }
+
+    $(document).on('input', '#pdfev-remote-url-input', function () {
+        var url = $(this).val();
+        $('.pdfev-emd-vwr-file').val(url);
+
+        clearTimeout(pdfevRemoteUrlTimer);
+        pdfevRemoteUrlTimer = setTimeout(function () {
+            pdfevMaybeLoadRemoteUrl(url);
+        }, 700);
+    });
+
+    $(document).on('blur', '#pdfev-remote-url-input', function () {
+        pdfevMaybeLoadRemoteUrl($(this).val());
+    });
+
+    $(document).on('keydown', '#pdfev-remote-url-input', function (e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            pdfevMaybeLoadRemoteUrl($(this).val());
+        }
+    });
+
+    // ======clear the currently chosen file/URL=========
+    // Shared by both rows' clear buttons — .pdfev-replace-bar-upload's
+    // (clears a locally uploaded file) and .pdfev-replace-bar-remote's
+    // (clears a remote URL). Which one fires just depends on which row the
+    // click happened in; the reset itself is identical either way.
+    $(document).on('click', '.pdfev-clear-file', function (e) {
+        e.preventDefault();
+        var wasRemote = $(this).closest('.pdfev-replace-bar-remote').length > 0;
+
+        $('.pdfev-emd-vwr-file').val('');
+        $('.pdfev-source-filename').text('');
+        $('#pdfev-remote-url-input').val('');
         $('#pdfev_meta_filesize').val('');
         $('#pdfev_meta_total_pages').val('');
         $('.pdfev-filesize').text('');
@@ -143,7 +248,68 @@
         // icon+text need to stay centered.
         $('.pdfev-featured-image-placeholder').css('display', 'flex');
         $('#pdfev-featured-image').data('status', 'no').data('url', '');
+
+        // Stay in whichever mode was just cleared — clearing a remote URL
+        // should leave the (now empty) URL row in place, ready to type a
+        // new one, not silently fall back to the upload dropzone.
+        $('.pdfev-replace-bar-upload').css('display', 'none');
+        $('.pdfev-replace-bar-remote').css('display', wasRemote ? 'flex' : 'none');
+        $('.pdfev-replace-bar').css('display', wasRemote ? 'block' : 'none');
+
         renderPDFThumbnails('');
+    });
+
+    // ======"Download to Media Library" for a remote URL=========
+    // Fetches the URL server-side and saves it as a local attachment, then
+    // switches the UI to upload mode pointed at that new local file — same
+    // end state as if it had been chosen via Choose File. Note: a host that
+    // gates its files behind a JS-executing anti-bot challenge (some free
+    // hosting providers) will fail here too — the server can't run that
+    // JS any more than the browser's own fetch could bypass CORS for it.
+    $(document).on('click', '.pdfev-clone-remote-btn', function (e) {
+        e.preventDefault();
+        var $btn = $(this);
+        var url = $('#pdfev-remote-url-input').val();
+
+        if (!url) {
+            alert('Please enter a URL first.');
+            return;
+        }
+
+        var $label = $btn.find('.pdfev-btn-label');
+        var originalLabel = $label.text();
+        $btn.prop('disabled', true);
+        $label.text('Downloading…');
+
+        $.ajax({
+            url: pdfevAjax.ajaxurl,
+            type: 'POST',
+            data: {
+                action: 'pdfev_clone_remote_pdf',
+                ajaxnonce: pdfevAjax.ajaxnonce,
+                post_id: pdfevAjax.post_id,
+                url: url,
+            },
+        }).done(function (response) {
+            if (response.success) {
+                $('.pdfev-emd-vwr-file').val(response.data.url);
+                $('.pdfev-source-filename').text(response.data.filename);
+                $('#pdfev-remote-url-input').val('');
+
+                $('.pdfev-replace-bar-remote').css('display', 'none');
+                $('.pdfev-replace-bar-upload').css('display', 'flex');
+                $('.pdfev-replace-bar').css('display', 'block');
+
+                renderPDFThumbnails(response.data.url);
+            } else {
+                alert((response.data && response.data.message) || 'Could not download that URL.');
+            }
+        }).fail(function () {
+            alert('Could not download that URL.');
+        }).always(function () {
+            $btn.prop('disabled', false);
+            $label.text(originalLabel);
+        });
     });
 
     // ======drag an actual OS file onto the dropzone to upload it=========
@@ -284,8 +450,8 @@
         const myGeneration = ++pdfevRenderGeneration;
         const container = $('#pdfev-document-preview');
         // No "Upload File" toggle exists anymore — drag-and-drop/Choose File
-        // is the implicit default whenever the Remote URL panel isn't shown.
-        const isUploadMode = !$('.pdfev-source-panel[data-source="remote"]').is(':visible');
+        // is the implicit default whenever the Remote URL row isn't shown.
+        const isUploadMode = !$('.pdfev-replace-bar-remote').is(':visible');
 
         container.show();
         container.find('.pdfev-loader-wrapper').hide();
@@ -304,20 +470,28 @@
             // in the DOM underneath the dropzone overlay/warning — clearing or
             // swapping the file doesn't mean this container was ever emptied.
             container.find('.preview-thumbnail').remove();
-            $('.pdfev-replace-bar').hide();
             if (isUploadMode) {
                 // No file chosen yet, in Upload mode — show the dropzone-styled
                 // "Choose File" overlay instead of the plain text warning below,
                 // which is reserved for Remote URL mode (nothing to drag/click there).
+                // The bar itself (a locally-uploaded file's row) has nothing to
+                // show here, so it stays hidden too.
+                $('.pdfev-replace-bar').css('display', 'none');
                 container.addClass('pdfev-dropzone');
                 $('.pdfev-upload-overlay').css('display', 'flex');
             } else {
+                // Remote mode, nothing loaded yet — the bar (with its now-empty
+                // URL input) stays visible; that input IS the entry point here,
+                // there's no separate dropzone to fall back to.
+                $('.pdfev-replace-bar').css('display', 'block');
                 container.find('.warning').show();
             }
             return;
         }
 
-        $('.pdfev-replace-bar').css('display', isUploadMode ? 'flex' : 'none');
+        $('.pdfev-replace-bar').css('display', 'block');
+        $('.pdfev-replace-bar-upload').css('display', isUploadMode ? 'flex' : 'none');
+        $('.pdfev-replace-bar-remote').css('display', isUploadMode ? 'none' : 'flex');
         container.find('.pdfev-loader-wrapper').show();
         container.addClass('pdfev-loading');
         $('.pdfev-loader-percent').text('0%');
@@ -457,7 +631,7 @@
 
     // on ready show preview pdf
     $(document).ready(function(){
-        renderPDFThumbnails($('.pdfev-emd-vwr-file').val());
+        renderPDFThumbnails(pdfevResolvePreviewUrl($('.pdfev-emd-vwr-file').val()));
     });
 
     // ======drag a page thumbnail onto Featured Image to set it as cover=========

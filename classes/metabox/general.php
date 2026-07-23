@@ -15,6 +15,7 @@ class Metabox_General{
         add_action('pdfev_metabox_tabs_content',array($this,'tabs_content'));
         add_action( 'save_post' , array( $this, 'save_post') );
         add_action( 'wp_ajax_pdfev_upload_pdf_file', array( $this, 'ajax_upload_pdf_file' ) );
+        add_action( 'wp_ajax_pdfev_clone_remote_pdf', array( $this, 'ajax_clone_remote_pdf' ) );
     }
 
     /**
@@ -57,6 +58,90 @@ class Metabox_General{
             'filename' => basename( get_attached_file( $attach_id ) ),
         ) );
     }
+
+    /**
+     * "Download to Media Library" — fetches a remote PDF server-side and
+     * saves it as a local attachment, same end result as if the admin had
+     * uploaded it directly. Reuses is_allowed_proxy_url() for the same
+     * SSRF-prevention whitelist the ?pdfev_proxy= endpoint already enforces
+     * (http/https, path ending in .pdf, non-private/non-reserved IP) — this
+     * handler does its own outbound fetch too, so the same rules apply.
+     *
+     * Note: hosts that gate downloads behind a JS-executing anti-bot
+     * challenge (some free hosting providers) will fail here the same way
+     * they fail the ?pdfev_proxy= endpoint — wp_remote_get() can't run
+     * JavaScript any more than curl can, so there's no way around that
+     * short of the file being served without such a challenge.
+     */
+    public function ajax_clone_remote_pdf() {
+        check_ajax_referer( 'pdf_ajax_nonce', 'ajaxnonce' );
+
+        if ( ! current_user_can( 'upload_files' ) ) {
+            wp_send_json_error( array( 'message' => __( 'You are not allowed to upload files.', 'pdf-embed-viewer' ) ) );
+        }
+
+        $url = isset( $_POST['url'] ) ? esc_url_raw( wp_unslash( $_POST['url'] ) ) : '';
+
+        if ( empty( $url ) || ! \PDFEV_Functions::is_allowed_proxy_url( $url ) ) {
+            wp_send_json_error( array( 'message' => __( 'Please enter a valid PDF URL first.', 'pdf-embed-viewer' ) ) );
+        }
+
+        $response = wp_remote_get( $url, array( 'timeout' => 60 ) );
+
+        if ( is_wp_error( $response ) || wp_remote_retrieve_response_code( $response ) !== 200 ) {
+            wp_send_json_error( array( 'message' => __( 'Could not download that URL. The host may be blocking automated requests.', 'pdf-embed-viewer' ) ) );
+        }
+
+        $content_type = wp_remote_retrieve_header( $response, 'content-type' );
+        if ( stripos( (string) $content_type, 'pdf' ) === false ) {
+            wp_send_json_error( array( 'message' => __( 'That URL did not return a PDF file.', 'pdf-embed-viewer' ) ) );
+        }
+
+        $body = wp_remote_retrieve_body( $response );
+        if ( empty( $body ) ) {
+            wp_send_json_error( array( 'message' => __( 'The downloaded file was empty.', 'pdf-embed-viewer' ) ) );
+        }
+
+        $filename = sanitize_file_name( basename( (string) wp_parse_url( $url, PHP_URL_PATH ) ) );
+        if ( empty( $filename ) || ! preg_match( '/\.pdf$/i', $filename ) ) {
+            $filename = 'remote-pdf-' . time() . '.pdf';
+        }
+
+        $upload_dir = wp_upload_dir();
+        $filename   = wp_unique_filename( $upload_dir['path'], $filename );
+        $file_path  = $upload_dir['path'] . '/' . $filename;
+
+        if ( false === file_put_contents( $file_path, $body ) ) {
+            wp_send_json_error( array( 'message' => __( 'Could not save the downloaded file.', 'pdf-embed-viewer' ) ) );
+        }
+
+        require_once ABSPATH . 'wp-admin/includes/image.php';
+
+        $post_id    = isset( $_POST['post_id'] ) ? absint( $_POST['post_id'] ) : 0;
+        $attach_id  = wp_insert_attachment(
+            array(
+                'post_mime_type' => 'application/pdf',
+                'post_title'     => sanitize_file_name( $filename ),
+                'post_content'   => '',
+                'post_status'    => 'inherit',
+            ),
+            $file_path,
+            $post_id
+        );
+
+        if ( is_wp_error( $attach_id ) ) {
+            wp_send_json_error( array( 'message' => $attach_id->get_error_message() ) );
+        }
+
+        $attach_data = wp_generate_attachment_metadata( $attach_id, $file_path );
+        wp_update_attachment_metadata( $attach_id, $attach_data );
+
+        wp_send_json_success( array(
+            'url'      => wp_get_attachment_url( $attach_id ),
+            'filename' => $filename,
+        ) );
+    }
+
     public function tabs($post_id){
         ?>
             <li class="pdfev-tab active" data-tab-target="pdfev-tabs-general">
@@ -103,37 +188,58 @@ class Metabox_General{
 
                     <div class="pdfev-metabox-group-body">
                         <?php
-                        // No separate "PDF Source" field-label anymore — the group
-                        // header above already says the same thing. This panel and
-                        // the hidden input are the only always-present markup;
-                        // Remote URL is reached via a link inside the dropzone
-                        // instead of a floating toggle button disconnected from it.
+                        // $raw_url, not $embed_file — get_pdf_link() rewrites remote
+                        // sources into a same-site ?pdfev_proxy=... URL (so the JS
+                        // preview fetch below avoids CORS), but this hidden field is
+                        // what actually gets saved back into pdfev_meta_pdf_url on
+                        // Update. Using $embed_file here would silently overwrite the
+                        // original remote URL with the local proxy link on every save
+                        // where the admin doesn't happen to retype it.
                         ?>
-                        <div class="pdfev-source-panel" data-source="remote" style="display:<?php echo $is_remote_source ? 'block' : 'none'; ?>;">
-                            <input type="url" id="pdfev-remote-url-input" value="<?php echo $is_remote_source ? esc_attr($raw_url) : ''; ?>" placeholder="<?php echo esc_attr('https://example.com/filename.pdf'); ?>">
-                            <button type="button" class="pdfev-source-link" data-source-target="upload">
-                                <span class="dashicons dashicons-arrow-left-alt2" aria-hidden="true"></span>
-                                <span class="pdfev-source-link-text"><?php esc_html_e('Back to upload', 'pdf-embed-viewer'); ?></span>
-                            </button>
-                        </div>
-
-                        <input type="hidden" class="pdfev-emd-vwr-file" name="pdfev_meta_pdf_url" value="<?php echo esc_attr($embed_file); ?>">
+                        <input type="hidden" class="pdfev-emd-vwr-file" name="pdfev_meta_pdf_url" value="<?php echo esc_attr($raw_url); ?>">
 
                         <div class="pdfev-preview-wrap">
                             <?php
                             // Survives the thumbnail renderer's container.html('') resets (it
                             // lives outside #pdfev-document-preview, not inside it) so the
-                            // "replace" affordance stays available once a file is already chosen.
+                            // "current source" row stays available once a file/URL is set.
+                            // One bar, two mutually-exclusive rows inside it — Remote URL's
+                            // input lives right here instead of a separate floating panel,
+                            // so switching source type doesn't move it somewhere else.
                             ?>
-                            <div class="pdfev-replace-bar" style="display:<?php echo ( ! $is_remote_source && $embed_file ) ? 'flex' : 'none'; ?>;">
-                                <span class="dashicons dashicons-media-document" aria-hidden="true"></span>
-                                <span class="pdfev-source-filename"><?php echo esc_html($uploaded_filename); ?></span>
-                                <button type="button" class="pdfev-clear-file" aria-label="<?php echo esc_attr__('Remove file', 'pdf-embed-viewer'); ?>">
-                                    <span class="dashicons dashicons-no-alt" aria-hidden="true"></span>
-                                </button>
-                                <button type="button" class="button pdfev-emd-vwr-upload pdfev-replace-btn">
-                                    <?php esc_html_e('Replace File', 'pdf-embed-viewer'); ?>
-                                </button>
+                            <div class="pdfev-replace-bar" style="display:<?php echo ( $is_remote_source || ( ! $is_remote_source && $embed_file ) ) ? 'block' : 'none'; ?>;">
+                                <div class="pdfev-replace-bar-row pdfev-replace-bar-upload" style="display:<?php echo ( ! $is_remote_source && $embed_file ) ? 'flex' : 'none'; ?>;">
+                                    <span class="dashicons dashicons-media-document" aria-hidden="true"></span>
+                                    <span class="pdfev-source-filename"><?php echo esc_html($uploaded_filename); ?></span>
+                                    <button type="button" class="pdfev-clear-file" aria-label="<?php echo esc_attr__('Remove file', 'pdf-embed-viewer'); ?>">
+                                        <span class="dashicons dashicons-no-alt" aria-hidden="true"></span>
+                                    </button>
+                                    <button type="button" class="button pdfev-emd-vwr-upload pdfev-replace-btn">
+                                        <?php esc_html_e('Replace File', 'pdf-embed-viewer'); ?>
+                                    </button>
+                                </div>
+                                <div class="pdfev-replace-bar-row pdfev-replace-bar-remote" style="display:<?php echo $is_remote_source ? 'flex' : 'none'; ?>;">
+                                    <span class="dashicons dashicons-admin-links" aria-hidden="true"></span>
+                                    <input type="url" id="pdfev-remote-url-input" value="<?php echo $is_remote_source ? esc_attr($raw_url) : ''; ?>" placeholder="<?php echo esc_attr('https://example.com/filename.pdf'); ?>">
+                                    <button type="button" class="pdfev-clear-file" aria-label="<?php echo esc_attr__('Remove URL', 'pdf-embed-viewer'); ?>">
+                                        <span class="dashicons dashicons-no-alt" aria-hidden="true"></span>
+                                    </button>
+                                    <?php
+                                    // Fetches the URL server-side and saves it as a local
+                                    // attachment — for hosts that don't already work fine as
+                                    // a live remote link (slow, unreliable, or the file host
+                                    // might disappear later), without needing to manually
+                                    // download-then-reupload through the Choose File flow.
+                                    ?>
+                                    <button type="button" class="button pdfev-replace-btn pdfev-clone-remote-btn">
+                                        <span class="dashicons dashicons-download" aria-hidden="true"></span>
+                                        <span class="pdfev-btn-label"><?php esc_html_e('Download to Media Library', 'pdf-embed-viewer'); ?></span>
+                                    </button>
+                                    <button type="button" class="pdfev-source-link" data-source-target="upload">
+                                        <span class="dashicons dashicons-arrow-left-alt2" aria-hidden="true"></span>
+                                        <span class="pdfev-source-link-text"><?php esc_html_e('Back to upload', 'pdf-embed-viewer'); ?></span>
+                                    </button>
+                                </div>
                             </div>
 
                             <div class="pdfev-metabox-preview-area">

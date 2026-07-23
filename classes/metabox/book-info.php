@@ -76,12 +76,15 @@ class Metabox_Book_Info{
                         <span><?php echo esc_html__('Select an author. Author bio is stored as the author taxonomy term description.','pdf-embed-viewer') ?></span>
                     </div>
                     <div class="pdfev-metabox-field-control">
-                        <select name="pdfev_meta_author" id="pdfev_meta_author">
-                            <option value=""><?php esc_html_e('Select Author','pdf-embed-viewer'); ?></option>
-                            <?php if ( ! is_wp_error( $authors ) && ! empty( $authors ) ) : foreach ( $authors as $author ) : ?>
-                                <option value="<?php echo absint( $author->term_id ); ?>" <?php selected( $selected_author, $author->term_id ); ?>><?php echo esc_html( $author->name ); ?></option>
-                            <?php endforeach; endif; ?>
-                        </select>
+                        <?php
+                        $author_options = array();
+                        if ( ! is_wp_error( $authors ) && ! empty( $authors ) ) {
+                            foreach ( $authors as $author ) {
+                                $author_options[ $author->term_id ] = $author->name;
+                            }
+                        }
+                        $this->render_custom_select( 'pdfev_meta_author', 'pdfev_meta_author', $author_options, $selected_author ?: '', __( 'Select Author', 'pdf-embed-viewer' ) );
+                        ?>
                     </div>
                 </div>
                 <div class="pdfev-metabox-field">
@@ -90,12 +93,15 @@ class Metabox_Book_Info{
                         <span><?php echo esc_html__('Select a publisher for this PDF.','pdf-embed-viewer') ?></span>
                     </div>
                     <div class="pdfev-metabox-field-control">
-                        <select name="pdfev_meta_publisher" id="pdfev_meta_publisher">
-                            <option value=""><?php esc_html_e('Select Publisher','pdf-embed-viewer'); ?></option>
-                            <?php if ( ! is_wp_error( $publishers ) && ! empty( $publishers ) ) : foreach ( $publishers as $publisher ) : ?>
-                                <option value="<?php echo absint( $publisher->term_id ); ?>" <?php selected( $selected_publisher, $publisher->term_id ); ?>><?php echo esc_html( $publisher->name ); ?></option>
-                            <?php endforeach; endif; ?>
-                        </select>
+                        <?php
+                        $publisher_options = array();
+                        if ( ! is_wp_error( $publishers ) && ! empty( $publishers ) ) {
+                            foreach ( $publishers as $publisher ) {
+                                $publisher_options[ $publisher->term_id ] = $publisher->name;
+                            }
+                        }
+                        $this->render_custom_select( 'pdfev_meta_publisher', 'pdfev_meta_publisher', $publisher_options, $selected_publisher ?: '', __( 'Select Publisher', 'pdf-embed-viewer' ) );
+                        ?>
                     </div>
                 </div>
                 <div class="pdfev-metabox-field">
@@ -119,6 +125,50 @@ class Metabox_Book_Info{
             </div>
         </div>
 
+        <?php
+    }
+
+    /**
+     * Same visually-hidden-native-<select>-plus-styled-listbox pattern as
+     * General_Settings::render_custom_select() on the settings page — kept
+     * as its own copy here (not shared across those two classes) since the
+     * metabox and settings page already each define their own local design
+     * tokens (--pdfev-mb- vs --pdfev-admin- prefixed custom properties)
+     * rather than sharing one scope, and the open/close/select JS behavior
+     * is already delegated globally in admin.js, so no metabox-specific JS
+     * is needed either.
+     */
+    private function render_custom_select( $id, $name, $options, $selected = '', $placeholder = '' ) {
+        $selected_label = $placeholder;
+        foreach ( $options as $value => $label ) {
+            if ( (string) $value === (string) $selected ) {
+                $selected_label = $label;
+                break;
+            }
+        }
+        ?>
+        <div class="pdfev-select">
+            <select id="<?php echo esc_attr( $id ); ?>" name="<?php echo esc_attr( $name ); ?>" class="pdfev-select-native">
+                <?php if ( $placeholder !== '' ) : ?>
+                <option value=""><?php echo esc_html( $placeholder ); ?></option>
+                <?php endif; ?>
+                <?php foreach ( $options as $value => $label ) : ?>
+                <option value="<?php echo esc_attr( $value ); ?>" <?php selected( (string) $value, (string) $selected ); ?>><?php echo esc_html( $label ); ?></option>
+                <?php endforeach; ?>
+            </select>
+            <button type="button" class="pdfev-select-trigger" aria-haspopup="listbox" aria-expanded="false">
+                <span class="pdfev-select-value"><?php echo esc_html( $selected_label ); ?></span>
+                <span class="dashicons dashicons-arrow-down-alt2" aria-hidden="true"></span>
+            </button>
+            <ul class="pdfev-select-options" role="listbox" hidden>
+                <?php if ( $placeholder !== '' ) : ?>
+                <li role="option" data-value="" <?php echo ( (string) $selected === '' ) ? 'aria-selected="true"' : ''; ?>><?php echo esc_html( $placeholder ); ?></li>
+                <?php endif; ?>
+                <?php foreach ( $options as $value => $label ) : ?>
+                <li role="option" data-value="<?php echo esc_attr( $value ); ?>" <?php echo ( (string) $value === (string) $selected ) ? 'aria-selected="true"' : ''; ?>><?php echo esc_html( $label ); ?></li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
         <?php
     }
 
