@@ -1,1449 +1,1834 @@
-:root {
-  --pdfev-primary:#c79f62;
-  --pdfev-secondary:#666;
-  --pdfev-gray:#ddd;
-  --pdfev-light:#e5e5e5;
-  --pdfev-dark:#333;
-  --pdfev-black:#000;
-  --pdfev-white:#fff;
+/* Hand-maintained plain CSS — no build step. Edit this file directly (no
+   Sass/compile step); it's what actually gets enqueued. Native CSS nesting
+   is used throughout and is supported by all current evergreen browsers,
+   which is all wp-admin needs to work in. */
+
+:root{
+    --pdfev-primary:#c79f62;
+    --pdfev-secondary:#666;
+    --pdfev-gray:#ddd;
+    --pdfev-light:#e5e5e5;
+    --pdfev-dark:#333;
+    --pdfev-black:#000;
+    --pdfev-white:#fff;
 }
 
-.pdfev-embed-viewer .switch {
-  position: relative;
-  display: inline-block;
-  width: 40px;
-  height: 22px;
-  margin: 0;
-  flex-shrink: 0;
-}
-.pdfev-embed-viewer .switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-.pdfev-embed-viewer .switch .slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  border-radius: 999px;
-  background-color: #d0d3d9;
-  border: none;
-  transition: background-color 0.2s ease;
-}
-.pdfev-embed-viewer .switch .slider:before {
-  position: absolute;
-  content: "";
-  height: 16px;
-  width: 16px;
-  left: 3px;
-  top: 3px;
-  border-radius: 50%;
-  background-color: var(--pdfev-white);
-  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.2);
-  transition: transform 0.2s ease;
-}
-.pdfev-embed-viewer .switch input:checked + .slider {
-  background-color: var(--pdfev-admin-accent, var(--pdfev-primary));
-}
-.pdfev-embed-viewer .switch input:checked + .slider:before {
-  transform: translateX(18px);
-}
-.pdfev-embed-viewer .switch input:focus-visible + .slider {
-  box-shadow: 0 0 0 3px rgba(56, 88, 233, 0.25);
+.pdfev-embed-viewer{
+    /* ===========toggle switch button========== */
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 40px;
+      height: 22px;
+      margin: 0;
+      flex-shrink: 0;
+      input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+      .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border-radius: 999px;
+        background-color: #d0d3d9;
+        border: none;
+        transition: background-color .2s ease;
+        &:before {
+          position: absolute;
+          content: "";
+          height: 16px;
+          width: 16px;
+          left: 3px;
+          top: 3px;
+          border-radius: 50%;
+          background-color: var(--pdfev-white);
+          box-shadow: 0 1px 2px rgba(16, 24, 40, .2);
+          transition: transform .2s ease;
+        }
+      }
+
+      input:checked {
+        + .slider {
+          background-color: var(--pdfev-admin-accent, var(--pdfev-primary));
+          &:before{
+            transform: translateX(18px);
+          }
+        }
+      }
+
+      input:focus-visible {
+        + .slider {
+          box-shadow: 0 0 0 3px rgba(56, 88, 233, .25);
+        }
+      }
+    }
 }
 
-#pdfev-embed-viewer {
-  --pdfev-mb-accent: #3858e9;
-  --pdfev-mb-accent-hover: #2f47c4;
-  --pdfev-mb-ink: #1d2327;
-  --pdfev-mb-muted: #64748b;
-  --pdfev-mb-border: #e2e4e9;
-  --pdfev-mb-surface: #ffffff;
-  --pdfev-mb-bg: #f6f7f9;
-  --pdfev-mb-radius: 8px;
-  --pdfev-mb-radius-sm: 5px;
-}
-#pdfev-embed-viewer .inside {
-  margin: 0;
-  padding: 0;
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs {
-  display: flex;
-  align-items: flex-start;
-  gap: 16px;
-  background-color: var(--pdfev-mb-bg);
-  padding: 16px;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, Helvetica, Arial, sans-serif;
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs * {
-  box-sizing: border-box;
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-sidebar {
-  width: 220px;
-  min-width: 220px;
-  background-color: var(--pdfev-mb-surface);
-  border: 1px solid var(--pdfev-mb-border);
-  border-radius: var(--pdfev-mb-radius);
-  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-sidebar ul {
-  margin: 0;
-  padding: 12px;
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-sidebar ul li.pdfev-tab {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 0;
-  padding: 10px 12px;
-  border-radius: var(--pdfev-mb-radius-sm);
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--pdfev-mb-muted);
-  border-left: none;
-  cursor: pointer;
-  transition: background 0.15s ease, color 0.15s ease;
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-sidebar ul li.pdfev-tab .dashicons {
-  width: 16px;
-  height: 16px;
-  font-size: 16px;
-  color: var(--pdfev-mb-muted);
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-sidebar ul li.pdfev-tab:hover {
-  background-color: rgba(0, 0, 0, 0.03);
-  color: var(--pdfev-mb-ink);
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-sidebar ul li.pdfev-tab.active {
-  background-color: rgba(56, 88, 233, 0.1);
-  color: var(--pdfev-mb-accent);
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-sidebar ul li.pdfev-tab.active .dashicons {
-  color: var(--pdfev-mb-accent);
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-content {
-  flex: 1;
-  min-width: 0;
-  background-color: var(--pdfev-mb-surface);
-  border: 1px solid var(--pdfev-mb-border);
-  border-radius: var(--pdfev-mb-radius);
-  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
-  overflow: hidden;
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-content .pdfev-tab-content {
-  display: none;
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-content .pdfev-tab-content.active {
-  display: block;
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-section-header {
-  padding: 18px 24px;
-  border-bottom: 1px solid var(--pdfev-mb-border);
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-section-header h2 {
-  margin: 0 0 4px;
-  padding: 0;
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--pdfev-mb-ink);
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-section-header p {
-  margin: 0;
-  font-size: 13px;
-  color: var(--pdfev-mb-muted);
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-section-body {
-  padding: 4px 24px 20px;
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-group-body:not(:first-child) {
-  margin-top: 20px;
-  padding-top: 20px;
-  border-top: 1px solid var(--pdfev-mb-border);
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-field {
-  display: grid;
-  grid-template-columns: 260px 1fr;
-  align-items: center;
-  gap: 16px;
-  padding: 14px 18px;
-  background: var(--pdfev-mb-bg);
-  border: 1px solid var(--pdfev-mb-border);
-  border-radius: var(--pdfev-mb-radius);
-  margin-bottom: 10px;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-field:last-child {
-  margin-bottom: 0;
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-field:hover {
-  border-color: #c7cdf7;
-  box-shadow: 0 1px 3px rgba(16, 24, 40, 0.06);
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-field.pdfev-metabox-field--stacked {
-  display: block;
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-field.pdfev-metabox-field--stacked .pdfev-metabox-field-control {
-  margin-top: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-field .pdfev-metabox-field-label p {
-  margin: 0 0 2px;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--pdfev-mb-ink);
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-field .pdfev-metabox-field-label span {
-  display: block;
-  font-size: 12px;
-  color: var(--pdfev-mb-muted);
-  font-weight: normal;
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-field .pdfev-metabox-field-control {
-  text-align: right;
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-field .pdfev-metabox-field-control.pdfev-metabox-field-control--inline {
-  display: flex;
-  justify-content: flex-end;
-  gap: 8px;
-  align-items: center;
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-field .pdfev-metabox-field-control.pdfev-metabox-field-control--inline input.pdfev-emd-vwr-file {
-  flex: 1;
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-field .pdfev-metabox-field-control code {
-  display: inline-block;
-  background: var(--pdfev-mb-surface);
-  border: 1px solid var(--pdfev-mb-border);
-  border-radius: var(--pdfev-mb-radius-sm);
-  padding: 6px 10px;
-  font-size: 12.5px;
-  color: var(--pdfev-mb-ink);
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-field .pdfev-metabox-field-control input[type=text],
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-field .pdfev-metabox-field-control input[type=url],
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-field .pdfev-metabox-field-control input[type=number],
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-field .pdfev-metabox-field-control select {
-  width: 100%;
-  max-width: 420px;
-  border: 1px solid var(--pdfev-mb-border);
-  border-radius: var(--pdfev-mb-radius-sm);
-  padding: 5px 10px;
-  min-height: 30px;
-  font-size: 13px;
-  line-height: 1.4;
-  color: var(--pdfev-mb-ink);
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-field .pdfev-metabox-field-control input[type=text]:focus,
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-field .pdfev-metabox-field-control input[type=url]:focus,
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-field .pdfev-metabox-field-control input[type=number]:focus,
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-field .pdfev-metabox-field-control select:focus {
-  outline: none;
-  border-color: var(--pdfev-mb-accent);
-  box-shadow: 0 0 0 3px rgba(56, 88, 233, 0.12);
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-field .pdfev-metabox-field-control .button.pdfev-emd-vwr-upload,
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-field .pdfev-metabox-field-control .button.pdfev-emd-vwr-copy {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-field .pdfev-metabox-field-control .button.pdfev-emd-vwr-upload .dashicons,
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-field .pdfev-metabox-field-control .button.pdfev-emd-vwr-upload .pdfev-icon-copy,
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-field .pdfev-metabox-field-control .button.pdfev-emd-vwr-copy .dashicons,
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-field .pdfev-metabox-field-control .button.pdfev-emd-vwr-copy .pdfev-icon-copy {
-  width: 16px;
-  height: 16px;
-  font-size: 16px;
-  flex-shrink: 0;
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-field .pdfev-metabox-field-control .button.pdfev-emd-vwr-upload .dashicons,
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-field .pdfev-metabox-field-control .button.pdfev-emd-vwr-copy .dashicons {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  line-height: 16px;
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-field .pdfev-metabox-field-control .pdfev-btn-label {
-  display: inline-block;
-  min-width: 56px;
-  text-align: left;
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .switch {
-  position: relative;
-  display: inline-block;
-  width: 40px;
-  height: 22px;
-  margin: 0;
-  flex-shrink: 0;
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .switch .slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  border-radius: 999px;
-  background-color: #d0d3d9;
-  transition: background-color 0.2s ease;
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .switch .slider:before {
-  position: absolute;
-  content: "";
-  height: 16px;
-  width: 16px;
-  left: 3px;
-  top: 3px;
-  border-radius: 50%;
-  background-color: #fff;
-  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.2);
-  transition: transform 0.2s ease;
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .switch input:checked + .slider {
-  background-color: var(--pdfev-mb-accent);
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .switch input:checked + .slider:before {
-  transform: translateX(18px);
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .switch input:focus-visible + .slider {
-  box-shadow: 0 0 0 3px rgba(56, 88, 233, 0.25);
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-source-panel {
-  margin-bottom: 12px;
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-source-panel #pdfev-remote-url-input {
-  width: 100%;
-  border: 1px solid var(--pdfev-mb-border);
-  border-radius: var(--pdfev-mb-radius-sm);
-  padding: 7px 10px;
-  font-size: 13px;
-  line-height: 1.4;
-  color: var(--pdfev-mb-ink);
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-source-panel #pdfev-remote-url-input:focus {
-  outline: none;
-  border-color: var(--pdfev-mb-accent);
-  box-shadow: 0 0 0 3px rgba(56, 88, 233, 0.12);
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-source-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  margin-top: 8px;
-  border: none;
-  background: transparent;
-  padding: 0;
-  font-size: 12.5px;
-  font-weight: 500;
-  color: var(--pdfev-mb-accent);
-  cursor: pointer;
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-source-link .dashicons {
-  width: 14px;
-  height: 14px;
-  font-size: 14px;
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-source-link:hover .pdfev-source-link-text {
-  text-decoration: underline;
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-preview-wrap {
-  margin-top: 6px;
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-replace-bar {
-  align-items: center;
-  justify-content: flex-end;
-  gap: 8px;
-  margin-bottom: 10px;
-  font-size: 12.5px;
-  color: var(--pdfev-mb-muted);
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-replace-bar .dashicons {
-  width: 16px;
-  height: 16px;
-  font-size: 16px;
-  flex-shrink: 0;
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-replace-bar .pdfev-source-filename {
-  overflow-wrap: anywhere;
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-replace-bar .pdfev-clear-file {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 26px;
-  height: 26px;
-  padding: 0;
-  border: 1px solid #f2c6c6;
-  border-radius: 50%;
-  background: #fdeeee;
-  color: #d63638;
-  cursor: pointer;
-  flex-shrink: 0;
-  transition: background 0.15s ease, border-color 0.15s ease;
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-replace-bar .pdfev-clear-file .dashicons {
-  width: 14px;
-  height: 14px;
-  font-size: 14px;
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-replace-bar .pdfev-clear-file:hover {
-  background: #d63638;
-  border-color: #d63638;
-  color: #fff;
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-replace-bar .pdfev-replace-btn {
-  height: auto;
-  line-height: 1.4;
-  padding: 3px 12px;
-  font-size: 12px;
-  border-radius: 999px;
-  background: var(--pdfev-mb-accent);
-  border-color: var(--pdfev-mb-accent);
-  color: #fff;
-  box-shadow: none;
-  text-shadow: none;
-  transition: background 0.15s ease, border-color 0.15s ease;
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-replace-bar .pdfev-replace-btn:hover {
-  background: var(--pdfev-mb-accent-hover);
-  border-color: var(--pdfev-mb-accent-hover);
-  color: #fff;
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-preview-area {
-  display: flex;
-  align-items: stretch;
-  gap: 16px;
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-preview-area .warning {
-  text-align: center;
-  padding-top: 100px;
-  color: #d63638;
-  font-size: 13px;
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-preview-area .pdfev-preview-stage {
-  position: relative;
-  width: 75%;
-  height: 400px;
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-preview-area .pdfev-upload-overlay {
-  position: absolute;
-  inset: 0;
-  display: none;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  text-align: center;
-  color: var(--pdfev-mb-muted);
-  font-size: 12.5px;
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-preview-area .pdfev-upload-overlay p {
-  margin: 0;
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-preview-area .pdfev-upload-overlay .dashicons {
-  width: 28px;
-  height: 28px;
-  font-size: 28px;
-  color: var(--pdfev-mb-accent);
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-preview-area #pdfev-document-preview {
-  display: none;
-  width: 100%;
-  height: 400px;
-  overflow: auto;
-  border: 1px solid var(--pdfev-mb-border);
-  border-radius: var(--pdfev-mb-radius);
-  background: var(--pdfev-mb-surface);
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-preview-area #pdfev-document-preview.pdfev-dropzone {
-  border-style: dashed;
-  border-color: var(--pdfev-mb-accent);
-  background: rgba(56, 88, 233, 0.05);
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-preview-area #pdfev-document-preview.pdfev-loading {
-  border-style: solid;
-  border-color: var(--pdfev-mb-border);
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-preview-area #pdfev-document-preview.pdfev-drag-hover {
-  border-color: var(--pdfev-mb-accent);
-  background: rgba(56, 88, 233, 0.12);
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-preview-area #pdfev-document-preview .preview-thumbnail {
-  margin: 5px;
-  display: inline-block;
-  text-align: center;
-  position: relative;
-  cursor: grab;
-  transition: opacity 0.15s ease;
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-preview-area #pdfev-document-preview .preview-thumbnail::before {
-  display: none;
-  content: "Click or drag to set Featured Image";
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  padding-top: 50%;
-  background-color: rgba(0, 0, 0, 0.662745098);
-  color: skyblue;
-  box-sizing: border-box;
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-preview-area #pdfev-document-preview .preview-thumbnail:hover::before {
-  display: block;
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-preview-area #pdfev-document-preview .preview-thumbnail.dragging {
-  opacity: 0.4;
-  cursor: grabbing;
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-preview-area #pdfev-document-preview .preview-thumbnail .page-number {
-  font-family: 12px;
-  text-align: center;
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-preview-area #pdfev-document-preview canvas {
-  border: 1px solid #ddd;
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-preview-area #pdfev-document-preview .pdfev-loader-wrapper {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  color: var(--pdfev-mb-muted);
-  background: rgba(255, 255, 255, 0.82);
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-preview-area #pdfev-document-preview .pdfev-progress-ring {
-  position: relative;
-  width: clamp(48px, 14%, 64px);
-  height: clamp(48px, 14%, 64px);
-  margin-bottom: 10px;
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-preview-area #pdfev-document-preview .pdfev-progress-ring svg {
-  width: 100%;
-  height: 100%;
-  transform: rotate(-90deg);
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-preview-area #pdfev-document-preview .pdfev-progress-ring circle {
-  fill: none;
-  stroke-width: 4;
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-preview-area #pdfev-document-preview .pdfev-progress-ring .pdfev-progress-ring-track {
-  stroke: var(--pdfev-mb-border);
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-preview-area #pdfev-document-preview .pdfev-progress-ring .pdfev-progress-ring-fill {
-  stroke: var(--pdfev-mb-accent);
-  stroke-linecap: round;
-  stroke-dasharray: 150.8;
-  stroke-dashoffset: 150.8;
-  transition: stroke-dashoffset 0.2s ease;
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-preview-area #pdfev-document-preview .pdfev-loader-percent {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 600;
-  font-size: 11.5px;
-  color: var(--pdfev-mb-accent);
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-preview-area .pdfev-featured-image-area {
-  width: 25%;
-  height: 400px;
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  gap: 8px;
-  background-color: var(--pdfev-mb-surface);
-  border: 1px solid var(--pdfev-mb-border);
-  padding: 14px;
-  border-radius: var(--pdfev-mb-radius);
-  font-size: 12.5px;
-  color: var(--pdfev-mb-muted);
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-preview-area .pdfev-featured-image-area .pdfev-metabox-field-label p {
-  margin: 0 0 4px;
-  font-size: 14px;
-  font-weight: 700;
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-preview-area .pdfev-featured-image-area .pdfev-featured-image-cover {
-  flex: 1;
-  min-height: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-preview-area .pdfev-featured-image-area #pdfev-featured-image-preview {
-  width: auto;
-  height: auto;
-  max-width: 70%;
-  max-height: 100%;
-  object-fit: contain;
-  display: none;
-  background: var(--pdfev-mb-surface);
-  border: 1px solid var(--pdfev-mb-border);
-  border-radius: var(--pdfev-mb-radius-sm);
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-preview-area .pdfev-featured-image-area #pdfev-featured-image-preview,
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-preview-area .pdfev-featured-image-area .pdfev-featured-image-placeholder {
-  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.06), 5px 5px 0 0 var(--pdfev-mb-bg), 9px 9px 0 0 var(--pdfev-mb-border), inset 6px 0 8px -6px rgba(0, 0, 0, 0.3);
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-preview-area .pdfev-featured-image-area .pdfev-featured-image-placeholder {
-  width: 70%;
-  aspect-ratio: 3/4;
-  max-height: 100%;
-  display: none;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  background: var(--pdfev-mb-bg);
-  border: 1px dashed var(--pdfev-mb-border);
-  border-radius: var(--pdfev-mb-radius-sm);
-  color: var(--pdfev-mb-muted);
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-preview-area .pdfev-featured-image-area .pdfev-featured-image-placeholder p {
-  margin: 0;
-  font-size: 11.5px;
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-preview-area .pdfev-featured-image-area .pdfev-featured-image-placeholder .dashicons {
-  width: 22px;
-  height: 22px;
-  font-size: 22px;
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-preview-area .pdfev-featured-image-area #pdfev-featured-image {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  min-height: 0;
-  border-radius: var(--pdfev-mb-radius-sm);
-  transition: box-shadow 0.15s ease, background-color 0.15s ease;
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-preview-area .pdfev-featured-image-area #pdfev-featured-image.pdfev-drop-active {
-  background-color: rgba(56, 88, 233, 0.08);
-  box-shadow: 0 0 0 2px var(--pdfev-mb-accent);
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-preview-area .pdfev-featured-image-area .pdfev-featured-image-meta {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  margin-top: auto;
-  padding-top: 10px;
-  border-top: 1px solid var(--pdfev-mb-border);
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-preview-area .pdfev-featured-image-area .pdfev-featured-image-meta-row {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 8px;
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-preview-area .pdfev-featured-image-area .pdfev-featured-image-meta-row span {
-  color: var(--pdfev-mb-muted);
-}
-#pdfev-embed-viewer .inside #pdfev-embed-metabox-tabs .pdfev-metabox-preview-area .pdfev-featured-image-area .pdfev-featured-image-meta-row strong {
-  color: var(--pdfev-mb-ink);
-  font-weight: 600;
-  text-align: right;
+/* Scoped to #pdfev-embed-viewer (the postbox WP wraps our metabox in) with its own local
+   design tokens — deliberately not sharing settings.scss's #wpbody-content .pdfev-settings-page
+   tokens, since custom properties only cascade to descendants of the element they're set on,
+   and this postbox lives in a completely different part of the post-edit-screen DOM. */
+#pdfev-embed-viewer{
+    --pdfev-mb-accent: #3858e9;
+    --pdfev-mb-accent-hover: #2f47c4;
+    --pdfev-mb-ink: #1d2327;
+    --pdfev-mb-muted: #64748b;
+    --pdfev-mb-border: #e2e4e9;
+    --pdfev-mb-surface: #ffffff;
+    --pdfev-mb-bg: #f6f7f9;
+    --pdfev-mb-radius: 8px;
+    --pdfev-mb-radius-sm: 5px;
+
+    .inside{
+        margin: 0;
+        padding: 0;
+
+        #pdfev-embed-metabox-tabs{
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            background-color: var(--pdfev-mb-bg);
+            padding: 16px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, Helvetica, Arial, sans-serif;
+
+            * {
+                box-sizing: border-box;
+            }
+
+            .pdfev-metabox-sidebar{
+                width: 220px;
+                min-width: 220px;
+                background-color: var(--pdfev-mb-surface);
+                border: 1px solid var(--pdfev-mb-border);
+                border-radius: var(--pdfev-mb-radius);
+                box-shadow: 0 1px 2px rgba(16, 24, 40, .04);
+
+                ul{
+                    margin: 0;
+                    padding: 12px;
+                    list-style: none;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 2px;
+
+                    li.pdfev-tab{
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+                        margin: 0;
+                        padding: 10px 12px;
+                        border-radius: var(--pdfev-mb-radius-sm);
+                        font-size: 13px;
+                        font-weight: 500;
+                        color: var(--pdfev-mb-muted);
+                        border-left: none;
+                        cursor: pointer;
+                        transition: background .15s ease, color .15s ease;
+
+                        .dashicons{
+                            width: 16px;
+                            height: 16px;
+                            font-size: 16px;
+                            color: var(--pdfev-mb-muted);
+                        }
+
+                        &:hover{
+                            background-color: rgba(0, 0, 0, .03);
+                            color: var(--pdfev-mb-ink);
+                        }
+
+                        &.active{
+                            background-color: rgba(56, 88, 233, .1);
+                            color: var(--pdfev-mb-accent);
+
+                            .dashicons{
+                                color: var(--pdfev-mb-accent);
+                            }
+                        }
+                    }
+                }
+            }
+
+            .pdfev-metabox-content{
+                flex: 1;
+                min-width: 0;
+                background-color: var(--pdfev-mb-surface);
+                border: 1px solid var(--pdfev-mb-border);
+                border-radius: var(--pdfev-mb-radius);
+                box-shadow: 0 1px 2px rgba(16, 24, 40, .04);
+                overflow: hidden;
+
+                .pdfev-tab-content{
+                    display: none;
+                    &.active {
+                        display: block;
+                    }
+                }
+            }
+
+            .pdfev-metabox-section-header{
+                padding: 18px 24px;
+                border-bottom: 1px solid var(--pdfev-mb-border);
+
+                h2{
+                    margin: 0 0 4px;
+                    padding: 0;
+                    font-size: 15px;
+                    font-weight: 600;
+                    color: var(--pdfev-mb-ink);
+                }
+
+                p{
+                    margin: 0;
+                    font-size: 13px;
+                    color: var(--pdfev-mb-muted);
+                }
+            }
+
+            .pdfev-metabox-section-body{
+                padding: 4px 24px 20px;
+            }
+
+            /* No more headings (PDF File / Display Options) between them — a
+               top border on every group-body but the first is the only
+               separation left between the two content blocks. */
+            .pdfev-metabox-group-body{
+                &:not(:first-child){
+                    margin-top: 20px;
+                    padding-top: 20px;
+                    border-top: 1px solid var(--pdfev-mb-border);
+                }
+            }
+
+            /* Each field is its own card — spaced apart with margin instead
+               of separated by border-bottom dividers on a shared background. */
+            .pdfev-metabox-field{
+                display: grid;
+                grid-template-columns: 260px 1fr;
+                align-items: center;
+                gap: 16px;
+                padding: 14px 18px;
+                background: var(--pdfev-mb-bg);
+                border: 1px solid var(--pdfev-mb-border);
+                border-radius: var(--pdfev-mb-radius);
+                margin-bottom: 10px;
+                transition: border-color .15s ease, box-shadow .15s ease;
+
+                &:last-child{
+                    margin-bottom: 0;
+                }
+
+                &:hover{
+                    border-color: #c7cdf7;
+                    box-shadow: 0 1px 3px rgba(16, 24, 40, .06);
+                }
+
+                &.pdfev-metabox-field--stacked{
+                    display: block;
+
+                    .pdfev-metabox-field-control{
+                        margin-top: 10px;
+                        /* Stays below the label (column direction) but shrinks to
+                           content width and sits at the row's right edge — the base
+                           text-align:right doesn't reach block-level flex children
+                           like .pdfev-source-panel, hence flex/align-items here instead. */
+                        display: flex;
+                        flex-direction: column;
+                        align-items: flex-end;
+                    }
+                }
+
+                .pdfev-metabox-field-label{
+                    p{
+                        margin: 0 0 2px;
+                        font-size: 13px;
+                        font-weight: 500;
+                        color: var(--pdfev-mb-ink);
+                    }
+
+                    span{
+                        display: block;
+                        font-size: 12px;
+                        color: var(--pdfev-mb-muted);
+                        font-weight: normal;
+                    }
+                }
+
+                .pdfev-metabox-field-control{
+                    /* Right-aligns simple controls (toggle switches) within their
+                       grid cell, so they sit at the row's right edge instead of
+                       hugging the label on the left. */
+                    text-align: right;
+
+                    &.pdfev-metabox-field-control--inline{
+                        display: flex;
+                        justify-content: flex-end;
+                        gap: 8px;
+                        align-items: center;
+
+                        input.pdfev-emd-vwr-file{
+                            flex: 1;
+                        }
+                    }
+
+                    /* Surface (white), not --pdfev-mb-bg — the field row itself
+                       is now a card using that same tint, so the code chip
+                       needs the lighter color to still stand out against it. */
+                    code{
+                        display: inline-block;
+                        background: var(--pdfev-mb-surface);
+                        border: 1px solid var(--pdfev-mb-border);
+                        border-radius: var(--pdfev-mb-radius-sm);
+                        padding: 6px 10px;
+                        font-size: 12.5px;
+                        color: var(--pdfev-mb-ink);
+                    }
+
+                    input[type="text"],
+                    input[type="url"],
+                    input[type="number"],
+                    select{
+                        width: 100%;
+                        max-width: 420px;
+                        border: 1px solid var(--pdfev-mb-border);
+                        border-radius: var(--pdfev-mb-radius-sm);
+                        padding: 5px 10px;
+                        min-height: 30px;
+                        font-size: 13px;
+                        line-height: 1.4;
+                        color: var(--pdfev-mb-ink);
+
+                        &:focus{
+                            outline: none;
+                            border-color: var(--pdfev-mb-accent);
+                            box-shadow: 0 0 0 3px rgba(56, 88, 233, .12);
+                        }
+                    }
+
+                    .button.pdfev-emd-vwr-upload,
+                    .button.pdfev-emd-vwr-copy{
+                        display: inline-flex;
+                        align-items: center;
+                        gap: 6px;
+                        white-space: nowrap;
+                        flex-shrink: 0;
+
+                        .dashicons,
+                        .pdfev-icon-copy{
+                            width: 16px;
+                            height: 16px;
+                            font-size: 16px;
+                            flex-shrink: 0;
+                        }
+
+                        /* dashicons is an icon font — its glyph sits on the font's own
+                           baseline/line-height, not centered in the box just by setting
+                           width/height, so it renders slightly above vertical-center
+                           next to the label text without this. */
+                        .dashicons{
+                            display: inline-flex;
+                            align-items: center;
+                            justify-content: center;
+                            line-height: 16px;
+                        }
+                    }
+
+                    /* Fixed width, sized for the longest label ("Copied!"/"Failed!") —
+                       without this the button visibly grows/shrinks as its label swaps
+                       between "Copy" and the (longer) result text on click. */
+                    .pdfev-btn-label{
+                        display: inline-block;
+                        min-width: 56px;
+                        text-align: left;
+                    }
+
+                }
+            }
+
+            /* ===========toggle switch button========== */
+            .switch {
+                position: relative;
+                display: inline-block;
+                width: 40px;
+                height: 22px;
+                margin: 0;
+                flex-shrink: 0;
+
+                input {
+                    opacity: 0;
+                    width: 0;
+                    height: 0;
+                }
+
+                .slider {
+                    position: absolute;
+                    cursor: pointer;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    border-radius: 999px;
+                    background-color: #d0d3d9;
+                    transition: background-color .2s ease;
+
+                    &:before {
+                        position: absolute;
+                        content: "";
+                        height: 16px;
+                        width: 16px;
+                        left: 3px;
+                        top: 3px;
+                        border-radius: 50%;
+                        background-color: #fff;
+                        box-shadow: 0 1px 2px rgba(16, 24, 40, .2);
+                        transition: transform .2s ease;
+                    }
+                }
+
+                input:checked + .slider {
+                    background-color: var(--pdfev-mb-accent);
+                    &:before{
+                        transform: translateX(18px);
+                    }
+                }
+
+                input:focus-visible + .slider {
+                    box-shadow: 0 0 0 3px rgba(56, 88, 233, .25);
+                }
+            }
+
+            /* ===Remote URL panel + the two "switch mode" links=== */
+            .pdfev-source-panel{
+                margin-bottom: 12px;
+
+                #pdfev-remote-url-input{
+                    width: 100%;
+                    border: 1px solid var(--pdfev-mb-border);
+                    border-radius: var(--pdfev-mb-radius-sm);
+                    padding: 7px 10px;
+                    font-size: 13px;
+                    line-height: 1.4;
+                    color: var(--pdfev-mb-ink);
+
+                    &:focus{
+                        outline: none;
+                        border-color: var(--pdfev-mb-accent);
+                        box-shadow: 0 0 0 3px rgba(56, 88, 233, .12);
+                    }
+                }
+            }
+
+            /* Used both inside the dropzone ("Or use a Remote URL instead")
+               and inside the panel above ("Back to upload") — a plain,
+               low-emphasis link reads as "switch mode", not a competing
+               primary action next to Choose File / the URL field. */
+            .pdfev-source-link{
+                display: inline-flex;
+                align-items: center;
+                gap: 4px;
+                margin-top: 8px;
+                border: none;
+                background: transparent;
+                padding: 0;
+                font-size: 12.5px;
+                font-weight: 500;
+                color: var(--pdfev-mb-accent);
+                cursor: pointer;
+
+                .dashicons{
+                    width: 14px;
+                    height: 14px;
+                    font-size: 14px;
+                }
+
+                /* Underlines just the text on hover, not the whole flex row —
+                   ":hover span" alone still matched the dashicons span too
+                   (a dashicon IS a span), hence the dedicated text-only class. */
+                &:hover .pdfev-source-link-text{
+                    text-decoration: underline;
+                }
+            }
+
+            .pdfev-preview-wrap{
+                margin-top: 6px;
+            }
+
+            .pdfev-replace-bar{
+                align-items: center;
+                /* Clusters the icon/filename/buttons together at the row's right
+                   edge as one group — filename alone being text-align:right
+                   inside a flex:1 box left the icon stranded on the far left
+                   with a big gap before the (right-aligned) text. */
+                justify-content: flex-end;
+                gap: 8px;
+                margin-bottom: 10px;
+                font-size: 12.5px;
+                color: var(--pdfev-mb-muted);
+
+                .dashicons{
+                    width: 16px;
+                    height: 16px;
+                    font-size: 16px;
+                    flex-shrink: 0;
+                }
+
+                .pdfev-source-filename{
+                    overflow-wrap: anywhere;
+                }
+
+                .pdfev-clear-file{
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 26px;
+                    height: 26px;
+                    padding: 0;
+                    border: 1px solid #f2c6c6;
+                    border-radius: 50%;
+                    background: #fdeeee;
+                    color: #d63638;
+                    cursor: pointer;
+                    flex-shrink: 0;
+                    transition: background .15s ease, border-color .15s ease;
+
+                    .dashicons{
+                        width: 14px;
+                        height: 14px;
+                        font-size: 14px;
+                    }
+
+                    &:hover{
+                        background: #d63638;
+                        border-color: #d63638;
+                        color: #fff;
+                    }
+                }
+
+                .pdfev-replace-btn{
+                    /* WP core's own .button sizing (height/line-height) otherwise
+                       wins over just adding padding, since padding alone doesn't
+                       shrink an already-tall line-height — all sizing set
+                       explicitly here instead of layering on top of it. */
+                    height: auto;
+                    line-height: 1.4;
+                    padding: 3px 12px;
+                    font-size: 12px;
+                    border-radius: 999px;
+                    background: var(--pdfev-mb-accent);
+                    border-color: var(--pdfev-mb-accent);
+                    color: #fff;
+                    box-shadow: none;
+                    text-shadow: none;
+                    transition: background .15s ease, border-color .15s ease;
+
+                    &:hover{
+                        background: var(--pdfev-mb-accent-hover);
+                        border-color: var(--pdfev-mb-accent-hover);
+                        color: #fff;
+                    }
+                }
+            }
+
+            .pdfev-metabox-preview-area{
+                display: flex;
+                /* Explicit (not just relying on the flex default) since the two
+                   panels — Book Cover and the document previewer/dropzone — are
+                   meant to always read as a matched pair, same height, same style. */
+                align-items: stretch;
+                gap: 16px;
+
+                .warning{
+                    text-align: center;
+                    padding-top: 100px;
+                    color: #d63638;
+                    font-size: 13px;
+                }
+
+                /* Wraps #pdfev-document-preview so .pdfev-upload-overlay (a sibling,
+                   not a child — it needs to survive the thumbnail renderer's
+                   container.html('') resets) can sit absolutely positioned on top
+                   of it at the exact same size. */
+                .pdfev-preview-stage{
+                    position: relative;
+                    width: 75%;
+                    /* Set directly rather than left to flex "stretch" to hand it
+                       down from #pdfev-document-preview's own height — .pdfev-upload-overlay
+                       is position:absolute;inset:0 against *this* element, and that only
+                       centers its content correctly when this box has a height of its
+                       own to resolve against, not one inherited through a layout step. */
+                    height: 400px;
+                }
+
+                .pdfev-upload-overlay{
+                    position: absolute;
+                    inset: 0;
+                    display: none;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 10px;
+                    text-align: center;
+                    color: var(--pdfev-mb-muted);
+                    font-size: 12.5px;
+
+                    p{
+                        margin: 0;
+                    }
+
+                    .dashicons{
+                        width: 28px;
+                        height: 28px;
+                        font-size: 28px;
+                        color: var(--pdfev-mb-accent);
+                    }
+                }
+
+                #pdfev-document-preview{
+                    display: none;
+                    width: 100%;
+                    /* Shared with .pdfev-featured-image-area's own height below —
+                       keep both values in sync so the previewer and the Book
+                       Cover panel next to it always read as the same height. */
+                    height: 400px;
+                    overflow: auto;
+                    border: 1px solid var(--pdfev-mb-border);
+                    border-radius: var(--pdfev-mb-radius);
+                    background: var(--pdfev-mb-surface);
+
+                    &.pdfev-dropzone{
+                        border-style: dashed;
+                        border-color: var(--pdfev-mb-accent);
+                        background: rgba(56, 88, 233, .05);
+                    }
+
+                    /* Explicitly guarantees the border stays visible (solid, not
+                       dashed/accented) for the whole time pages are still
+                       rendering — toggled alongside .pdfev-loader-wrapper in
+                       admin.js rather than left to fall through from the base rule. */
+                    &.pdfev-loading{
+                        border-style: solid;
+                        border-color: var(--pdfev-mb-border);
+                    }
+
+                    /* While an actual OS file is being dragged over the dropzone
+                       (real File drag, not the page-thumbnail-onto-featured-image
+                       one above) — see the document-level dragover handler in
+                       admin.js, which only toggles this when dt.types includes "Files". */
+                    &.pdfev-drag-hover{
+                        border-color: var(--pdfev-mb-accent);
+                        background: rgba(56, 88, 233, .12);
+                    }
+
+                    .preview-thumbnail{
+                        margin: 5px;
+                        display: inline-block;
+                        text-align: center;
+                        position: relative;
+                        cursor: grab;
+                        transition: opacity .15s ease;
+
+                        &::before{
+                            display: none;
+                            content: 'Click or drag to set Featured Image';
+                            width: 100%;
+                            height: 100%;
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            padding-top: 50%;
+                            background-color: #000000a9;
+                            color: skyblue;
+                            box-sizing: border-box;
+                        }
+
+                        &:hover::before{
+                            display: block;
+                        }
+
+                        &.dragging{
+                            opacity: .4;
+                            cursor: grabbing;
+                        }
+
+                        .page-number{
+                            font-family: 12px;
+                            text-align: center;
+                        }
+                    }
+
+                    canvas{
+                        border: 1px solid #ddd;
+                    }
+
+                    /* Absolutely positioned (relative to .pdfev-preview-stage, the
+                       nearest positioned ancestor — same technique as
+                       .pdfev-upload-overlay) so it's centered over the box
+                       regardless of scroll position or already-rendered thumbnails
+                       underneath, rather than sitting inline above them. */
+                    .pdfev-loader-wrapper {
+                        position: absolute;
+                        inset: 0;
+                        z-index: 1;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: center;
+                        text-align: center;
+                        color: var(--pdfev-mb-muted);
+                        /* Translucent, not solid — lets already-rendered thumbnails
+                           stay visible (dimmed) underneath as they fill in, instead
+                           of hiding all progress behind a fully opaque block. */
+                        background: rgba(255, 255, 255, .82);
+                    }
+
+                    /* A determinate ring (fills to the actual page-render
+                       percentage) instead of a generic indeterminate spinner —
+                       it already tracks real progress, so the loader should show
+                       that directly rather than just spinning forever. */
+                    .pdfev-progress-ring {
+                        position: relative;
+                        /* Scales with the container's own width instead of a fixed
+                           size that would look tiny on a wide preview and cramped
+                           on a narrow one — bounded so it stays sensible either way. */
+                        width: clamp(48px, 14%, 64px);
+                        height: clamp(48px, 14%, 64px);
+                        margin-bottom: 10px;
+
+                        svg {
+                            width: 100%;
+                            height: 100%;
+                            /* Starts the fill from the top (12 o'clock) instead of
+                               the default 3-o'clock start point of an SVG circle. */
+                            transform: rotate(-90deg);
+                        }
+
+                        circle {
+                            fill: none;
+                            stroke-width: 4;
+                        }
+
+                        .pdfev-progress-ring-track {
+                            stroke: var(--pdfev-mb-border);
+                        }
+
+                        .pdfev-progress-ring-fill {
+                            stroke: var(--pdfev-mb-accent);
+                            stroke-linecap: round;
+                            /* Circumference of r=24: 2 * PI * 24 ≈ 150.8 — full
+                               dasharray, with dashoffset (set inline by admin.js
+                               per page) shrinking from that same value down to 0
+                               as pages finish rendering. */
+                            stroke-dasharray: 150.8;
+                            stroke-dashoffset: 150.8;
+                            transition: stroke-dashoffset .2s ease;
+                        }
+                    }
+
+                    .pdfev-loader-percent {
+                        position: absolute;
+                        inset: 0;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-weight: 600;
+                        font-size: 11.5px;
+                        color: var(--pdfev-mb-accent);
+                    }
+                }
+
+                .pdfev-featured-image-area{
+                    width: 25%;
+                    /* Same explicit height as #pdfev-document-preview, same
+                       surface/border/radius treatment — the two panels are meant
+                       to look and size like a matched pair, not two unrelated boxes. */
+                    height: 400px;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: stretch;
+                    gap: 8px;
+                    background-color: var(--pdfev-mb-surface);
+                    border: 1px solid var(--pdfev-mb-border);
+                    padding: 14px;
+                    border-radius: var(--pdfev-mb-radius);
+                    font-size: 12.5px;
+                    color: var(--pdfev-mb-muted);
+
+                    /* "Book Cover" reads as the panel's title, not just another
+                       field label — bigger/bolder than the shared field-label
+                       style, with a bit more breathing room above the
+                       description line below it. */
+                    .pdfev-metabox-field-label p{
+                        margin: 0 0 4px;
+                        font-size: 14px;
+                        font-weight: 700;
+                    }
+
+                    /* Fills whatever vertical space is left once the label header
+                       and the meta footer below have taken theirs, so the cover
+                       image/placeholder always centers in the remaining room
+                       instead of the card growing/shrinking around it. */
+                    .pdfev-featured-image-cover{
+                        flex: 1;
+                        min-height: 0;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                    }
+
+                    /* Sized to the cover's OWN natural aspect ratio, not forced
+                       into a fixed 3:4 box — a forced ratio meant object-fit
+                       had to either crop (cover) or letterbox (contain)
+                       whenever a real cover's proportions didn't match. Capped
+                       by max-width/max-height only, so it shrinks to fit the
+                       available space but is never stretched or bordered with
+                       empty space; centered by the cover wrapper's own
+                       align-items/justify-content. */
+                    #pdfev-featured-image-preview{
+                        width: auto;
+                        height: auto;
+                        max-width: 70%;
+                        max-height: 100%;
+                        object-fit: contain;
+                        display: none;
+                        background: var(--pdfev-mb-surface);
+                        border: 1px solid var(--pdfev-mb-border);
+                        border-radius: var(--pdfev-mb-radius-sm);
+                    }
+
+                    /* Shared book-cover "feel" for whichever of the two is
+                       showing (real cover or placeholder): two solid, unblurred
+                       shadows offset bottom-right read as a couple of pages
+                       peeking out from behind a closed book, and the inset
+                       shadow along the left edge reads as the spine/binding
+                       crease — box-shadow only, since ::after isn't rendered on
+                       <img> (a replaced element) in any current browser. */
+                    #pdfev-featured-image-preview,
+                    .pdfev-featured-image-placeholder{
+                        box-shadow:
+                            0 1px 2px rgba(16, 24, 40, .06),
+                            5px 5px 0 0 var(--pdfev-mb-bg),
+                            9px 9px 0 0 var(--pdfev-mb-border),
+                            inset 6px 0 8px -6px rgba(0, 0, 0, .3);
+                    }
+
+                    /* Dummy cover shown until a real one is set — dashed, same
+                       shape as the real cover, so the panel never looks empty. */
+                    .pdfev-featured-image-placeholder{
+                        /* Matches #pdfev-featured-image-preview's width so the
+                           dummy and the real cover are the same size/position. */
+                        width: 70%;
+                        aspect-ratio: 3 / 4;
+                        /* Same reasoning as #pdfev-featured-image-preview's own
+                           max-height above — keeps the dummy card from
+                           overflowing into the label/footer on a wide panel. */
+                        max-height: 100%;
+                        display: none;
+                        flex-direction: column;
+                        align-items: center;
+                        justify-content: center;
+                        gap: 6px;
+                        background: var(--pdfev-mb-bg);
+                        border: 1px dashed var(--pdfev-mb-border);
+                        border-radius: var(--pdfev-mb-radius-sm);
+                        color: var(--pdfev-mb-muted);
+
+                        p{
+                            margin: 0;
+                            font-size: 11.5px;
+                        }
+
+                        .dashicons{
+                            width: 22px;
+                            height: 22px;
+                            font-size: 22px;
+                        }
+                    }
+
+                    /* Highlighted while a dragged page thumbnail is over this drop
+                       target — see the dragover/drop handlers in admin.js. */
+                    #pdfev-featured-image{
+                        display: flex;
+                        flex-direction: column;
+                        flex: 1;
+                        min-height: 0;
+                        border-radius: var(--pdfev-mb-radius-sm);
+                        transition: box-shadow .15s ease, background-color .15s ease;
+
+                        &.pdfev-drop-active{
+                            background-color: rgba(56, 88, 233, .08);
+                            box-shadow: 0 0 0 2px var(--pdfev-mb-accent);
+                        }
+                    }
+
+                    /* Always pinned to the bottom of the card (Document size /
+                       Total Pages), regardless of how much/little room the cover
+                       image above takes up — a real footer, not just the next
+                       element in flow. */
+                    .pdfev-featured-image-meta{
+                        display: flex;
+                        flex-direction: column;
+                        gap: 4px;
+                        margin-top: auto;
+                        padding-top: 10px;
+                        border-top: 1px solid var(--pdfev-mb-border);
+                    }
+
+                    .pdfev-featured-image-meta-row{
+                        display: flex;
+                        align-items: baseline;
+                        justify-content: space-between;
+                        gap: 8px;
+
+                        span{
+                            color: var(--pdfev-mb-muted);
+                        }
+
+                        strong{
+                            color: var(--pdfev-mb-ink);
+                            font-weight: 600;
+                            text-align: right;
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
-#wpbody-content .pdfev-settings-page {
-  --pdfev-admin-accent: #3858e9;
-  --pdfev-admin-accent-hover: #2f47c4;
-  --pdfev-admin-ink: #1d2327;
-  --pdfev-admin-muted: #64748b;
-  --pdfev-admin-border: #e2e4e9;
-  --pdfev-admin-surface: #ffffff;
-  --pdfev-admin-bg: #f6f7f9;
-  --pdfev-admin-danger: #d63638;
-  --pdfev-admin-radius: 10px;
-  --pdfev-admin-radius-sm: 6px;
-  --pdfev-admin-shadow: 0 1px 2px rgba(16, 24, 40, .04);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, Helvetica, Arial, sans-serif;
-  background: var(--pdfev-admin-bg);
-  margin: 20px auto 40px;
-  padding: 20px 24px 40px;
-  max-width: 1360px;
-  width: auto;
-}
-#wpbody-content .pdfev-settings-page * {
-  box-sizing: border-box;
-}
-#wpbody-content .pdfev-settings-page .pdfev-header {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  background: var(--pdfev-admin-surface);
-  border: 1px solid var(--pdfev-admin-border);
-  border-radius: var(--pdfev-admin-radius);
-  box-shadow: var(--pdfev-admin-shadow);
-  padding: 22px 24px;
-  margin-bottom: 20px;
-}
-#wpbody-content .pdfev-settings-page .pdfev-header .pdfev-header-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 44px;
-  min-width: 44px;
-  border-radius: var(--pdfev-admin-radius-sm);
-  background: rgba(56, 88, 233, 0.1);
-  color: var(--pdfev-admin-accent);
-  font-size: 22px;
-}
-#wpbody-content .pdfev-settings-page .pdfev-header .pdfev-header-icon::before {
-  width: 22px;
-  height: 22px;
-}
-#wpbody-content .pdfev-settings-page .pdfev-header .pdfev-header-text {
-  flex: 1;
-}
-#wpbody-content .pdfev-settings-page .pdfev-header .pdfev-header-text h1 {
-  margin: 0 0 4px;
-  font-size: 20px;
-  font-weight: 600;
-  color: var(--pdfev-admin-ink);
-  line-height: 1.3;
-}
-#wpbody-content .pdfev-settings-page .pdfev-header .pdfev-header-text p {
-  margin: 0;
-  font-size: 13px;
-  color: var(--pdfev-admin-muted);
-}
-#wpbody-content .pdfev-settings-page .pdfev-header .pdfev-header-actions {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-#wpbody-content .pdfev-settings-page .pdfev-header .pdfev-header-version {
-  display: inline-block;
-  vertical-align: middle;
-  margin-left: 8px;
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--pdfev-admin-muted);
-  background: var(--pdfev-admin-bg);
-  border: 1px solid var(--pdfev-admin-border);
-  border-radius: 999px;
-  padding: 4px 10px;
-  white-space: nowrap;
-}
-#wpbody-content .pdfev-settings-page .pdfev-tabs {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  background: var(--pdfev-admin-surface);
-  border: 1px solid var(--pdfev-admin-border);
-  border-radius: var(--pdfev-admin-radius);
-  box-shadow: var(--pdfev-admin-shadow);
-  padding: 6px;
-  margin-bottom: 20px;
-}
-#wpbody-content .pdfev-settings-page .pdfev-tabs .nav-tab {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  cursor: pointer;
-  float: none;
-  border: none;
-  margin: 0;
-  padding: 8px 14px;
-  font-size: 13px;
-  line-height: 1.4;
-  font-weight: 500;
-  background: transparent;
-  color: var(--pdfev-admin-muted);
-  border-radius: var(--pdfev-admin-radius-sm);
-  transition: background 0.15s ease, color 0.15s ease;
-}
-#wpbody-content .pdfev-settings-page .pdfev-tabs .nav-tab .dashicons {
-  width: 16px;
-  height: 16px;
-  font-size: 16px;
-}
-#wpbody-content .pdfev-settings-page .pdfev-tabs .nav-tab:hover {
-  background: var(--pdfev-admin-bg);
-  color: var(--pdfev-admin-ink);
-}
-#wpbody-content .pdfev-settings-page .pdfev-tabs .nav-tab.active {
-  display: inline-flex;
-  background: var(--pdfev-admin-accent);
-  color: #fff;
-  margin-bottom: 0;
-  box-shadow: none;
-}
-#wpbody-content .pdfev-settings-page .pdfev-tabs .nav-tab.active:hover {
-  background: var(--pdfev-admin-accent);
-}
-#wpbody-content .pdfev-settings-page .pdfev-tab-panels .pdfev-tab-content {
-  display: none;
-}
-#wpbody-content .pdfev-settings-page .pdfev-tab-panels .pdfev-tab-content.active {
-  display: block;
-}
-#wpbody-content .pdfev-settings-page .pdfev-card {
-  background: var(--pdfev-admin-surface);
-  border: 1px solid var(--pdfev-admin-border);
-  border-radius: var(--pdfev-admin-radius);
-  box-shadow: var(--pdfev-admin-shadow);
-  margin-bottom: 16px;
-  overflow: hidden;
-}
-#wpbody-content .pdfev-settings-page .pdfev-card .pdfev-card-header {
-  padding: 18px 24px;
-  border-bottom: 1px solid var(--pdfev-admin-border);
-}
-#wpbody-content .pdfev-settings-page .pdfev-card .pdfev-card-header h2 {
-  margin: 0 0 4px;
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--pdfev-admin-ink);
-}
-#wpbody-content .pdfev-settings-page .pdfev-card .pdfev-card-header p {
-  margin: 0;
-  font-size: 13px;
-  color: var(--pdfev-admin-muted);
-}
-#wpbody-content .pdfev-settings-page .pdfev-card .pdfev-card-body {
-  padding: 20px 24px;
-}
-#wpbody-content .pdfev-settings-page .pdfev-settings-shell {
-  display: grid;
-  grid-template-columns: 240px 1fr;
-  gap: 20px;
-  align-items: start;
-}
-@media (max-width: 960px) {
-  #wpbody-content .pdfev-settings-page .pdfev-settings-shell {
-    grid-template-columns: 1fr;
-  }
-}
-#wpbody-content .pdfev-settings-page .pdfev-settings-sidebar {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  background: var(--pdfev-admin-surface);
-  border: 1px solid var(--pdfev-admin-border);
-  border-radius: var(--pdfev-admin-radius);
-  box-shadow: var(--pdfev-admin-shadow);
-  padding: 8px;
-  position: sticky;
-  top: 32px;
-}
-@media (max-width: 960px) {
-  #wpbody-content .pdfev-settings-page .pdfev-settings-sidebar {
-    position: static;
-    flex-direction: row;
-    flex-wrap: wrap;
-  }
-}
-#wpbody-content .pdfev-settings-page .pdfev-section-nav {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  width: 100%;
-  border: none;
-  background: transparent;
-  text-align: left;
-  padding: 10px 12px;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--pdfev-admin-muted);
-  border-radius: var(--pdfev-admin-radius-sm);
-  cursor: pointer;
-  transition: background 0.15s ease, color 0.15s ease;
-}
-#wpbody-content .pdfev-settings-page .pdfev-section-nav .dashicons {
-  width: 16px;
-  height: 16px;
-  font-size: 16px;
-  color: var(--pdfev-admin-muted);
-}
-#wpbody-content .pdfev-settings-page .pdfev-section-nav:hover {
-  background: var(--pdfev-admin-bg);
-  color: var(--pdfev-admin-ink);
-}
-#wpbody-content .pdfev-settings-page .pdfev-section-nav.active {
-  background: rgba(56, 88, 233, 0.1);
-  color: var(--pdfev-admin-accent);
-}
-#wpbody-content .pdfev-settings-page .pdfev-section-nav.active .dashicons {
-  color: var(--pdfev-admin-accent);
-}
-#wpbody-content .pdfev-settings-page .pdfev-settings-panel {
-  background: var(--pdfev-admin-surface);
-  border: 1px solid var(--pdfev-admin-border);
-  border-radius: var(--pdfev-admin-radius);
-  box-shadow: var(--pdfev-admin-shadow);
-}
-#wpbody-content .pdfev-settings-page .pdfev-settings-section {
-  display: none;
-}
-#wpbody-content .pdfev-settings-page .pdfev-settings-section.active {
-  display: block;
-}
-#wpbody-content .pdfev-settings-page .pdfev-section-header {
-  padding: 18px 24px;
-  border-bottom: 1px solid var(--pdfev-admin-border);
-}
-#wpbody-content .pdfev-settings-page .pdfev-section-header h2 {
-  margin: 0 0 4px;
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--pdfev-admin-ink);
-}
-#wpbody-content .pdfev-settings-page .pdfev-section-header p {
-  margin: 0;
-  font-size: 13px;
-  color: var(--pdfev-admin-muted);
-}
-#wpbody-content .pdfev-settings-page .pdfev-section-body {
-  padding: 20px 24px;
-}
-#wpbody-content .pdfev-settings-page .pdfev-field-row {
-  display: grid;
-  grid-template-columns: 220px 1fr;
-  align-items: center;
-  gap: 16px;
-  padding: 8px 0;
-  min-height: 36px;
-}
-#wpbody-content .pdfev-settings-page .pdfev-field-row:not(:last-child) {
-  border-bottom: 1px solid var(--pdfev-admin-border);
-}
-#wpbody-content .pdfev-settings-page .pdfev-field-row .pdfev-field-label label {
-  display: block;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--pdfev-admin-ink);
-}
-#wpbody-content .pdfev-settings-page .pdfev-field-row .pdfev-field-label > span {
-  display: block;
-  margin-top: 2px;
-  font-size: 12px;
-  line-height: 1.4;
-  color: var(--pdfev-admin-muted);
-}
-#wpbody-content .pdfev-settings-page .pdfev-field-row .pdfev-field-control {
-  max-width: 340px;
-}
-#wpbody-content .pdfev-settings-page .pdfev-field-row.pdfev-field-row--stacked {
-  display: block;
-  border-bottom: none;
-  padding: 0 0 12px;
-  min-height: 0;
-}
-#wpbody-content .pdfev-settings-page .pdfev-field-row.pdfev-field-row--stacked label {
-  display: block;
-  margin-bottom: 6px;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--pdfev-admin-ink);
-}
-#wpbody-content .pdfev-settings-page input[type=text],
-#wpbody-content .pdfev-settings-page input[type=email],
-#wpbody-content .pdfev-settings-page input[type=number],
-#wpbody-content .pdfev-settings-page select,
-#wpbody-content .pdfev-settings-page textarea {
-  width: 100%;
-  border: 1px solid var(--pdfev-admin-border);
-  border-radius: var(--pdfev-admin-radius-sm);
-  padding: 5px 10px;
-  min-height: 30px;
-  font-size: 13px;
-  line-height: 1.4;
-  color: var(--pdfev-admin-ink);
-  background: var(--pdfev-admin-surface);
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
-}
-#wpbody-content .pdfev-settings-page input[type=text]:focus,
-#wpbody-content .pdfev-settings-page input[type=email]:focus,
-#wpbody-content .pdfev-settings-page input[type=number]:focus,
-#wpbody-content .pdfev-settings-page select:focus,
-#wpbody-content .pdfev-settings-page textarea:focus {
-  outline: none;
-  border-color: var(--pdfev-admin-accent);
-  box-shadow: 0 0 0 3px rgba(56, 88, 233, 0.12);
-}
-#wpbody-content .pdfev-settings-page textarea {
-  min-height: 80px;
-  line-height: 1.5;
-}
-#wpbody-content .pdfev-settings-page .pdfev-select {
-  position: relative;
-}
-#wpbody-content .pdfev-settings-page .pdfev-select .pdfev-select-native {
-  display: none;
-}
-#wpbody-content .pdfev-settings-page .pdfev-select .pdfev-select-trigger {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  border: 1px solid var(--pdfev-admin-border);
-  border-radius: var(--pdfev-admin-radius-sm);
-  padding: 5px 10px;
-  min-height: 30px;
-  font-size: 13px;
-  line-height: 1.4;
-  color: var(--pdfev-admin-ink);
-  background: var(--pdfev-admin-surface);
-  cursor: pointer;
-  text-align: left;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
-}
-#wpbody-content .pdfev-settings-page .pdfev-select .pdfev-select-trigger .dashicons {
-  width: 14px;
-  height: 14px;
-  font-size: 14px;
-  color: var(--pdfev-admin-muted);
-  transition: transform 0.15s ease;
-  flex-shrink: 0;
-}
-#wpbody-content .pdfev-settings-page .pdfev-select .pdfev-select-trigger:hover {
-  border-color: var(--pdfev-admin-muted);
-}
-#wpbody-content .pdfev-settings-page .pdfev-select .pdfev-select-trigger:focus {
-  outline: none;
-  border-color: var(--pdfev-admin-accent);
-  box-shadow: 0 0 0 3px rgba(56, 88, 233, 0.12);
-}
-#wpbody-content .pdfev-settings-page .pdfev-select .pdfev-select-trigger.pdfev-select-open .dashicons {
-  transform: rotate(180deg);
-}
-#wpbody-content .pdfev-settings-page .pdfev-select .pdfev-select-value {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-#wpbody-content .pdfev-settings-page .pdfev-select .pdfev-select-options {
-  position: absolute;
-  z-index: 20;
-  top: calc(100% + 4px);
-  left: 0;
-  right: 0;
-  margin: 0;
-  padding: 4px;
-  list-style: none;
-  max-height: 240px;
-  overflow-y: auto;
-  background: var(--pdfev-admin-surface);
-  border: 1px solid var(--pdfev-admin-border);
-  border-radius: var(--pdfev-admin-radius-sm);
-  box-shadow: 0 8px 16px rgba(16, 24, 40, 0.12);
-}
-#wpbody-content .pdfev-settings-page .pdfev-select .pdfev-select-options li {
-  padding: 7px 10px;
-  font-size: 13px;
-  line-height: 1.4;
-  color: var(--pdfev-admin-ink);
-  border-radius: var(--pdfev-admin-radius-sm);
-  cursor: pointer;
-}
-#wpbody-content .pdfev-settings-page .pdfev-select .pdfev-select-options li:hover {
-  background: var(--pdfev-admin-bg);
-}
-#wpbody-content .pdfev-settings-page .pdfev-select .pdfev-select-options li[aria-selected=true] {
-  background: rgba(56, 88, 233, 0.1);
-  color: var(--pdfev-admin-accent);
-  font-weight: 500;
-}
-#wpbody-content .pdfev-settings-page .pdfev-toggle-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 2px;
-}
-#wpbody-content .pdfev-settings-page .pdfev-toggle-grid.pdfev-toggle-grid--compact {
-  grid-template-columns: repeat(2, 1fr);
-  column-gap: 32px;
-}
-@media (max-width: 782px) {
-  #wpbody-content .pdfev-settings-page .pdfev-toggle-grid.pdfev-toggle-grid--compact {
-    grid-template-columns: 1fr;
-  }
-}
-#wpbody-content .pdfev-settings-page .pdfev-toggle-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 9px 0;
-  min-height: 32px;
-  border-bottom: 1px solid var(--pdfev-admin-border);
-}
-#wpbody-content .pdfev-settings-page .pdfev-toggle-row:last-child {
-  border-bottom: none;
-}
-#wpbody-content .pdfev-settings-page .pdfev-toggle-row .pdfev-toggle-row-label {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-#wpbody-content .pdfev-settings-page .pdfev-toggle-row .pdfev-toggle-row-title {
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--pdfev-admin-ink);
-}
-#wpbody-content .pdfev-settings-page .pdfev-toggle-row .pdfev-toggle-row-desc {
-  font-size: 12px;
-  line-height: 1.4;
-  color: var(--pdfev-admin-muted);
-}
-#wpbody-content .pdfev-settings-page .pdfev-color-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
-}
-@media (max-width: 782px) {
-  #wpbody-content .pdfev-settings-page .pdfev-color-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-#wpbody-content .pdfev-settings-page .pdfev-color-grid .pdfev-color-item label {
-  display: block;
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--pdfev-admin-ink);
-}
-#wpbody-content .pdfev-settings-page .pdfev-color-grid .pdfev-color-item span {
-  display: block;
-  margin: 2px 0 6px;
-  font-size: 11.5px;
-  line-height: 1.4;
-  color: var(--pdfev-admin-muted);
-}
-#wpbody-content .pdfev-settings-page .pdfev-color-grid .pdfev-color-item .wp-picker-container {
-  display: block;
-}
-#wpbody-content .pdfev-settings-page .pdfev-color-grid .pdfev-color-item .wp-color-result.button {
-  position: relative;
-  width: 100%;
-  min-height: 34px;
-  padding: 0;
-  border: 1px solid var(--pdfev-admin-border);
-  border-radius: var(--pdfev-admin-radius-sm);
-  box-shadow: none;
-  overflow: hidden;
-}
-#wpbody-content .pdfev-settings-page .pdfev-color-grid .pdfev-color-item .wp-color-result-text {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0;
-  padding: 0 10px;
-  background: var(--pdfev-admin-surface);
-  border-left: 1px solid var(--pdfev-admin-border);
-  color: var(--pdfev-admin-ink);
-  font-size: 12px;
-  line-height: normal;
-}
-#wpbody-content .pdfev-settings-page .pdfev-color-grid .pdfev-color-item input.wp-color-picker {
-  width: 100%;
-  margin-top: 8px;
-  font-size: 12.5px;
-}
-#wpbody-content .pdfev-settings-page .pdfev-color-grid .pdfev-color-item .wp-picker-clear.button {
-  margin-top: 6px;
-}
-#wpbody-content .pdfev-settings-page .pdfev-demo-import {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-#wpbody-content .pdfev-settings-page .pdfev-pro-badge {
-  display: inline-block;
-  margin-left: 6px;
-  padding: 1px 7px;
-  border-radius: 999px;
-  background: rgba(56, 88, 233, 0.12);
-  color: var(--pdfev-admin-accent);
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  vertical-align: middle;
-}
-#wpbody-content .pdfev-settings-page .pdfev-locked {
-  opacity: 0.55;
-}
-#wpbody-content .pdfev-settings-page .pdfev-locked .pdfev-select-trigger,
-#wpbody-content .pdfev-settings-page .pdfev-locked input,
-#wpbody-content .pdfev-settings-page .pdfev-locked select,
-#wpbody-content .pdfev-settings-page .pdfev-locked textarea {
-  cursor: not-allowed;
-}
-#wpbody-content .pdfev-settings-page .pdfev-locked .pdfev-select-options {
-  pointer-events: none;
-}
-#wpbody-content .pdfev-settings-page .pdfev-pro-upsell {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 16px;
-  padding: 10px 14px;
-  border: 1px solid rgba(56, 88, 233, 0.25);
-  border-radius: var(--pdfev-admin-radius-sm);
-  background: rgba(56, 88, 233, 0.06);
-  font-size: 13px;
-  color: var(--pdfev-admin-ink);
-}
-#wpbody-content .pdfev-settings-page .pdfev-pro-upsell .dashicons {
-  color: var(--pdfev-admin-accent);
-}
-#wpbody-content .pdfev-settings-page .pdfev-pro-upsell a {
-  margin-left: auto;
-  color: var(--pdfev-admin-accent);
-  font-weight: 600;
-  text-decoration: none;
-  white-space: nowrap;
-}
-#wpbody-content .pdfev-settings-page .pdfev-pro-upsell a:hover {
-  color: var(--pdfev-admin-accent-hover);
-}
-#wpbody-content .pdfev-settings-page .pdfev-form-footer {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 20px;
-  padding-top: 16px;
-  border-top: 1px solid var(--pdfev-admin-border);
-}
-#wpbody-content .pdfev-settings-page .pdfev-btn,
-#wpbody-content .pdfev-settings-page .pdfev-card-body .button-primary {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  height: auto;
-  border: 1px solid transparent;
-  border-radius: var(--pdfev-admin-radius-sm);
-  padding: 8px 16px;
-  font-size: 13px;
-  font-weight: 500;
-  cursor: pointer;
-  text-decoration: none;
-  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
-}
-#wpbody-content .pdfev-settings-page .pdfev-btn .dashicons,
-#wpbody-content .pdfev-settings-page .pdfev-card-body .button-primary .dashicons {
-  width: 16px;
-  height: 16px;
-  font-size: 16px;
-}
-#wpbody-content .pdfev-settings-page .pdfev-btn .pdfev-icon-copy,
-#wpbody-content .pdfev-settings-page .pdfev-card-body .button-primary .pdfev-icon-copy {
-  width: 16px;
-  height: 16px;
-  flex-shrink: 0;
-}
-#wpbody-content .pdfev-settings-page .pdfev-btn-label {
-  display: inline-block;
-  min-width: 56px;
-  text-align: left;
-}
-#wpbody-content .pdfev-settings-page .pdfev-header-save {
-  padding: 10px 22px;
-  font-size: 13.5px;
-  flex-shrink: 0;
-}
-#wpbody-content .pdfev-settings-page .pdfev-btn-primary,
-#wpbody-content .pdfev-settings-page .pdfev-card-body .button-primary {
-  background: var(--pdfev-admin-accent);
-  border-color: var(--pdfev-admin-accent);
-  color: #fff;
-  text-shadow: none;
-  box-shadow: none;
-}
-#wpbody-content .pdfev-settings-page .pdfev-btn-primary:hover,
-#wpbody-content .pdfev-settings-page .pdfev-card-body .button-primary:hover {
-  background: var(--pdfev-admin-accent-hover);
-  border-color: var(--pdfev-admin-accent-hover);
-  color: #fff;
-}
-#wpbody-content .pdfev-settings-page .pdfev-btn-secondary {
-  background: var(--pdfev-admin-surface);
-  border-color: var(--pdfev-admin-border);
-  color: var(--pdfev-admin-ink);
-}
-#wpbody-content .pdfev-settings-page .pdfev-btn-secondary:hover {
-  background: var(--pdfev-admin-bg);
-}
-#wpbody-content .pdfev-settings-page .pdfev-btn-ghost {
-  background: transparent;
-  border-color: var(--pdfev-admin-border);
-  color: var(--pdfev-admin-muted);
-}
-#wpbody-content .pdfev-settings-page .pdfev-btn-ghost:hover {
-  background: var(--pdfev-admin-bg);
-  color: var(--pdfev-admin-ink);
-}
-#wpbody-content .pdfev-settings-page .pdfev-shortcode-generaor {
-  display: grid;
-  grid-template-columns: 420px 1fr;
-  gap: 16px;
-  align-items: start;
-}
-@media (max-width: 960px) {
-  #wpbody-content .pdfev-settings-page .pdfev-shortcode-generaor {
-    grid-template-columns: 1fr;
-  }
-}
-#wpbody-content .pdfev-settings-page .pdfev-shortcode-generaor .shortcode-sidebar,
-#wpbody-content .pdfev-settings-page .pdfev-shortcode-generaor .shortcode-previewer {
-  background: var(--pdfev-admin-surface);
-  border: 1px solid var(--pdfev-admin-border);
-  border-radius: var(--pdfev-admin-radius);
-  box-shadow: var(--pdfev-admin-shadow);
-  overflow: hidden;
-}
-#wpbody-content .pdfev-settings-page .pdfev-shortcode-generaor .shortcode-previewer {
-  text-align: left;
-  align-self: stretch;
-}
-#wpbody-content .pdfev-settings-page .pdfev-shortcode-generaor .shortcode-previewer .pdfev-loading::after {
-  content: "";
-  display: inline-block;
-  margin-left: 10px;
-  width: 16px;
-  height: 16px;
-  border: 2px solid var(--pdfev-admin-border);
-  border-top: 2px solid var(--pdfev-admin-accent);
-  border-radius: 50%;
-  animation: spin 0.6s linear infinite;
-}
+/* Scoped to .pdfev-settings-page (not the shared .pdfev-embed-viewer class, which the
+   post-edit metabox also uses) so these page-chrome rules never leak into the metabox UI.
+
+   #wpbody-content qualifier bumps specificity above wp-admin/css/common.css's own
+   `.wrap { margin: 10px 20px 0 2px; }` (same 0,1,0 specificity as a bare `.pdfev-settings-page`
+   rule) so our centered/wider layout always wins regardless of stylesheet print order. */
+#wpbody-content .pdfev-settings-page{
+    /* ===========design tokens (admin UI only, independent of frontend brand colors)========== */
+    --pdfev-admin-accent: #3858e9;
+    --pdfev-admin-accent-hover: #2f47c4;
+    --pdfev-admin-ink: #1d2327;
+    --pdfev-admin-muted: #64748b;
+    --pdfev-admin-border: #e2e4e9;
+    --pdfev-admin-surface: #ffffff;
+    --pdfev-admin-bg: #f6f7f9;
+    --pdfev-admin-danger: #d63638;
+    --pdfev-admin-radius: 10px;
+    --pdfev-admin-radius-sm: 6px;
+    --pdfev-admin-shadow: 0 1px 2px rgba(16, 24, 40, .04);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, Helvetica, Arial, sans-serif;
+    background: var(--pdfev-admin-bg);
+    margin: 20px auto 40px;
+    padding: 20px 24px 40px;
+    max-width: 1360px;
+    width: auto;
+
+    * {
+        box-sizing: border-box;
+    }
+
+    /* ===========page header========== */
+    .pdfev-header{
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        background: var(--pdfev-admin-surface);
+        border: 1px solid var(--pdfev-admin-border);
+        border-radius: var(--pdfev-admin-radius);
+        box-shadow: var(--pdfev-admin-shadow);
+        padding: 22px 24px;
+        margin-bottom: 20px;
+
+        .pdfev-header-icon{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            min-width: 44px;
+            border-radius: var(--pdfev-admin-radius-sm);
+            background: rgba(56, 88, 233, .1);
+            color: var(--pdfev-admin-accent);
+            font-size: 22px;
+
+            &::before{
+                width: 22px;
+                height: 22px;
+            }
+        }
+
+        .pdfev-header-text{
+            flex: 1;
+
+            h1{
+                margin: 0 0 4px;
+                font-size: 20px;
+                font-weight: 600;
+                color: var(--pdfev-admin-ink);
+                line-height: 1.3;
+            }
+
+            p{
+                margin: 0;
+                font-size: 13px;
+                color: var(--pdfev-admin-muted);
+            }
+        }
+
+        .pdfev-header-actions{
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .pdfev-header-version{
+            display: inline-block;
+            vertical-align: middle;
+            margin-left: 8px;
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--pdfev-admin-muted);
+            background: var(--pdfev-admin-bg);
+            border: 1px solid var(--pdfev-admin-border);
+            border-radius: 999px;
+            padding: 4px 10px;
+            white-space: nowrap;
+        }
+    }
+
+    /* ===========tab nav========== */
+    .pdfev-tabs{
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        background: var(--pdfev-admin-surface);
+        border: 1px solid var(--pdfev-admin-border);
+        border-radius: var(--pdfev-admin-radius);
+        box-shadow: var(--pdfev-admin-shadow);
+        padding: 6px;
+        margin-bottom: 20px;
+
+        .nav-tab{
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            float: none;
+            border: none;
+            margin: 0;
+            padding: 8px 14px;
+            font-size: 13px;
+            line-height: 1.4;
+            font-weight: 500;
+            background: transparent;
+            color: var(--pdfev-admin-muted);
+            border-radius: var(--pdfev-admin-radius-sm);
+            transition: background .15s ease, color .15s ease;
+
+            .dashicons{
+                width: 16px;
+                height: 16px;
+                font-size: 16px;
+            }
+
+            &:hover{
+                background: var(--pdfev-admin-bg);
+                color: var(--pdfev-admin-ink);
+            }
+
+            &.active {
+                display: inline-flex;
+                background: var(--pdfev-admin-accent);
+                color: #fff;
+                margin-bottom: 0;
+                box-shadow: none;
+
+                &:hover{
+                    background: var(--pdfev-admin-accent);
+                }
+            }
+        }
+    }
+
+    .pdfev-tab-panels{
+        .pdfev-tab-content{
+            display: none;
+            &.active {
+                display: block;
+            }
+        }
+    }
+
+    /* ===========cards========== */
+    .pdfev-card{
+        background: var(--pdfev-admin-surface);
+        border: 1px solid var(--pdfev-admin-border);
+        border-radius: var(--pdfev-admin-radius);
+        box-shadow: var(--pdfev-admin-shadow);
+        margin-bottom: 16px;
+        overflow: hidden;
+
+        .pdfev-card-header{
+            padding: 18px 24px;
+            border-bottom: 1px solid var(--pdfev-admin-border);
+
+            h2{
+                margin: 0 0 4px;
+                font-size: 14px;
+                font-weight: 600;
+                color: var(--pdfev-admin-ink);
+            }
+
+            p{
+                margin: 0;
+                font-size: 13px;
+                color: var(--pdfev-admin-muted);
+            }
+        }
+
+        .pdfev-card-body{
+            padding: 20px 24px;
+        }
+    }
+
+    /* ===========general tab: sidebar + section panel========== */
+    .pdfev-settings-shell{
+        display: grid;
+        grid-template-columns: 240px 1fr;
+        gap: 20px;
+        align-items: start;
+
+        @media (max-width: 960px){
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .pdfev-settings-sidebar{
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        background: var(--pdfev-admin-surface);
+        border: 1px solid var(--pdfev-admin-border);
+        border-radius: var(--pdfev-admin-radius);
+        box-shadow: var(--pdfev-admin-shadow);
+        padding: 8px;
+        position: sticky;
+        top: 32px;
+
+        @media (max-width: 960px){
+            position: static;
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+    }
+
+    .pdfev-section-nav{
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+        border: none;
+        background: transparent;
+        text-align: left;
+        padding: 10px 12px;
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--pdfev-admin-muted);
+        border-radius: var(--pdfev-admin-radius-sm);
+        cursor: pointer;
+        transition: background .15s ease, color .15s ease;
+
+        .dashicons{
+            width: 16px;
+            height: 16px;
+            font-size: 16px;
+            color: var(--pdfev-admin-muted);
+        }
+
+        &:hover{
+            background: var(--pdfev-admin-bg);
+            color: var(--pdfev-admin-ink);
+        }
+
+        &.active{
+            background: rgba(56, 88, 233, .1);
+            color: var(--pdfev-admin-accent);
+
+            .dashicons{
+                color: var(--pdfev-admin-accent);
+            }
+        }
+    }
+
+    .pdfev-settings-panel{
+        background: var(--pdfev-admin-surface);
+        border: 1px solid var(--pdfev-admin-border);
+        border-radius: var(--pdfev-admin-radius);
+        box-shadow: var(--pdfev-admin-shadow);
+        /* No overflow:hidden here (unlike .pdfev-card) — this panel hosts the custom select
+           dropdown, which is position:absolute and would get clipped by an overflow-hidden
+           ancestor regardless of z-index. Safe to omit: header/body share the same background,
+           so there's nothing that needs corner-clipping to the panel's border-radius. */
+    }
+
+    .pdfev-settings-section{
+        display: none;
+        &.active{
+            display: block;
+        }
+    }
+
+    .pdfev-section-header{
+        padding: 18px 24px;
+        border-bottom: 1px solid var(--pdfev-admin-border);
+
+        h2{
+            margin: 0 0 4px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--pdfev-admin-ink);
+        }
+
+        p{
+            margin: 0;
+            font-size: 13px;
+            color: var(--pdfev-admin-muted);
+        }
+    }
+
+    .pdfev-section-body{
+        padding: 20px 24px;
+    }
+
+    /* ===========field rows========== */
+    .pdfev-field-row{
+        display: grid;
+        grid-template-columns: 220px 1fr;
+        align-items: center;
+        gap: 16px;
+        padding: 8px 0;
+        min-height: 36px;
+
+        &:not(:last-child){
+            border-bottom: 1px solid var(--pdfev-admin-border);
+        }
+
+        .pdfev-field-label{
+            label{
+                display: block;
+                font-size: 13px;
+                font-weight: 500;
+                color: var(--pdfev-admin-ink);
+            }
+
+            /* Direct-child only — a label can contain its own nested
+               .pdfev-pro-badge span, which must stay inline, not become a
+               block-level bar underneath the label text. */
+            > span{
+                display: block;
+                margin-top: 2px;
+                font-size: 12px;
+                line-height: 1.4;
+                color: var(--pdfev-admin-muted);
+            }
+        }
+
+        .pdfev-field-control{
+            max-width: 340px;
+        }
+
+        &.pdfev-field-row--stacked{
+            display: block;
+            border-bottom: none;
+            padding: 0 0 12px;
+            min-height: 0;
+
+            label{
+                display: block;
+                margin-bottom: 6px;
+                font-size: 13px;
+                font-weight: 500;
+                color: var(--pdfev-admin-ink);
+            }
+        }
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="number"],
+    select,
+    textarea{
+        width: 100%;
+        border: 1px solid var(--pdfev-admin-border);
+        border-radius: var(--pdfev-admin-radius-sm);
+        padding: 5px 10px;
+        min-height: 30px;
+        font-size: 13px;
+        line-height: 1.4;
+        color: var(--pdfev-admin-ink);
+        background: var(--pdfev-admin-surface);
+        transition: border-color .15s ease, box-shadow .15s ease;
+
+        &:focus{
+            outline: none;
+            border-color: var(--pdfev-admin-accent);
+            box-shadow: 0 0 0 3px rgba(56, 88, 233, .12);
+        }
+    }
+
+    textarea{
+        min-height: 80px;
+        line-height: 1.5;
+    }
+
+    /* ===========custom select dropdown==========
+       Native <select> popup lists can't be restyled cross-browser, so we drive a custom
+       styled listbox off a visually-hidden native <select> (kept for form submission/value). */
+    .pdfev-select{
+        position: relative;
+
+        .pdfev-select-native{
+            display: none;
+        }
+
+        .pdfev-select-trigger{
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            border: 1px solid var(--pdfev-admin-border);
+            border-radius: var(--pdfev-admin-radius-sm);
+            padding: 5px 10px;
+            min-height: 30px;
+            font-size: 13px;
+            line-height: 1.4;
+            color: var(--pdfev-admin-ink);
+            background: var(--pdfev-admin-surface);
+            cursor: pointer;
+            text-align: left;
+            transition: border-color .15s ease, box-shadow .15s ease;
+
+            .dashicons{
+                width: 14px;
+                height: 14px;
+                font-size: 14px;
+                color: var(--pdfev-admin-muted);
+                transition: transform .15s ease;
+                flex-shrink: 0;
+            }
+
+            &:hover{
+                border-color: var(--pdfev-admin-muted);
+            }
+
+            &:focus{
+                outline: none;
+                border-color: var(--pdfev-admin-accent);
+                box-shadow: 0 0 0 3px rgba(56, 88, 233, .12);
+            }
+
+            &.pdfev-select-open .dashicons{
+                transform: rotate(180deg);
+            }
+        }
+
+        .pdfev-select-value{
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .pdfev-select-options{
+            position: absolute;
+            z-index: 20;
+            top: calc(100% + 4px);
+            left: 0;
+            right: 0;
+            margin: 0;
+            padding: 4px;
+            list-style: none;
+            max-height: 240px;
+            overflow-y: auto;
+            background: var(--pdfev-admin-surface);
+            border: 1px solid var(--pdfev-admin-border);
+            border-radius: var(--pdfev-admin-radius-sm);
+            box-shadow: 0 8px 16px rgba(16, 24, 40, .12);
+
+            li{
+                padding: 7px 10px;
+                font-size: 13px;
+                line-height: 1.4;
+                color: var(--pdfev-admin-ink);
+                border-radius: var(--pdfev-admin-radius-sm);
+                cursor: pointer;
+
+                &:hover{
+                    background: var(--pdfev-admin-bg);
+                }
+
+                &[aria-selected="true"]{
+                    background: rgba(56, 88, 233, .1);
+                    color: var(--pdfev-admin-accent);
+                    font-weight: 500;
+                }
+            }
+        }
+    }
+
+    /* ===========toggle rows/grid========== */
+    .pdfev-toggle-grid{
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 2px;
+
+        &.pdfev-toggle-grid--compact{
+            grid-template-columns: repeat(2, 1fr);
+            column-gap: 32px;
+
+            @media (max-width: 782px){
+                grid-template-columns: 1fr;
+            }
+        }
+    }
+
+    .pdfev-toggle-row{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 9px 0;
+        min-height: 32px;
+        border-bottom: 1px solid var(--pdfev-admin-border);
+
+        &:last-child{
+            border-bottom: none;
+        }
+
+        .pdfev-toggle-row-label{
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .pdfev-toggle-row-title{
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--pdfev-admin-ink);
+        }
+
+        .pdfev-toggle-row-desc{
+            font-size: 12px;
+            line-height: 1.4;
+            color: var(--pdfev-admin-muted);
+        }
+    }
+
+    /* ===========color grid========== */
+    .pdfev-color-grid{
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+
+        @media (max-width: 782px){
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .pdfev-color-item{
+            label{
+                display: block;
+                font-size: 12px;
+                font-weight: 500;
+                color: var(--pdfev-admin-ink);
+            }
+
+            span{
+                display: block;
+                margin: 2px 0 6px;
+                font-size: 11.5px;
+                line-height: 1.4;
+                color: var(--pdfev-admin-muted);
+            }
+
+            /* WP sets the swatch color as an inline background-color on .wp-color-result itself
+               (via JS), so it always fills the whole button — we can't shrink that inline style
+               from CSS. Instead we pin the "Select Color" label as an absolutely-positioned panel
+               that covers everything except a fixed-width strip on the left, so the swatch color
+               only ever shows through that reserved strip, regardless of the button's own width. */
+            .wp-picker-container{
+                display: block;
+            }
+
+            .wp-color-result.button{
+                position: relative;
+                width: 100%;
+                min-height: 34px;
+                padding: 0;
+                border: 1px solid var(--pdfev-admin-border);
+                border-radius: var(--pdfev-admin-radius-sm);
+                box-shadow: none;
+                overflow: hidden;
+            }
+
+            .wp-color-result-text{
+                position: absolute;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 40px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 0;
+                padding: 0 10px;
+                background: var(--pdfev-admin-surface);
+                border-left: 1px solid var(--pdfev-admin-border);
+                color: var(--pdfev-admin-ink);
+                font-size: 12px;
+                line-height: normal;
+            }
+
+            input.wp-color-picker{
+                width: 100%;
+                margin-top: 8px;
+                font-size: 12.5px;
+            }
+
+            .wp-picker-clear.button{
+                margin-top: 6px;
+            }
+        }
+    }
+
+    /* ===========demo import========== */
+    .pdfev-demo-import{
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    /* ===========pro gating (badge/lock/upsell)==========
+       Cosmetic only — the real enforcement is server-side in
+       General_Settings::save_options_data() and, for these specific features,
+       again at render/endpoint time in PDFEV_Functions. */
+    .pdfev-pro-badge{
+        display: inline-block;
+        margin-left: 6px;
+        padding: 1px 7px;
+        border-radius: 999px;
+        background: rgba(56, 88, 233, .12);
+        color: var(--pdfev-admin-accent);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: .04em;
+        text-transform: uppercase;
+        vertical-align: middle;
+    }
+
+    .pdfev-locked{
+        opacity: .55;
+
+        .pdfev-select-trigger,
+        input,
+        select,
+        textarea{
+            cursor: not-allowed;
+        }
+
+        .pdfev-select-options{
+            pointer-events: none;
+        }
+    }
+
+    .pdfev-pro-upsell{
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 16px;
+        padding: 10px 14px;
+        border: 1px solid rgba(56, 88, 233, .25);
+        border-radius: var(--pdfev-admin-radius-sm);
+        background: rgba(56, 88, 233, .06);
+        font-size: 13px;
+        color: var(--pdfev-admin-ink);
+
+        .dashicons{
+            color: var(--pdfev-admin-accent);
+        }
+
+        a{
+            margin-left: auto;
+            color: var(--pdfev-admin-accent);
+            font-weight: 600;
+            text-decoration: none;
+            white-space: nowrap;
+
+            &:hover{
+                color: var(--pdfev-admin-accent-hover);
+            }
+        }
+    }
+
+    /* ===========buttons========== */
+    .pdfev-form-footer{
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 20px;
+        padding-top: 16px;
+        border-top: 1px solid var(--pdfev-admin-border);
+    }
+
+    .pdfev-btn,
+    .pdfev-card-body .button-primary{
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        height: auto;
+        border: 1px solid transparent;
+        border-radius: var(--pdfev-admin-radius-sm);
+        padding: 8px 16px;
+        font-size: 13px;
+        font-weight: 500;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background .15s ease, border-color .15s ease, color .15s ease;
+
+        .dashicons{
+            width: 16px;
+            height: 16px;
+            font-size: 16px;
+        }
+
+        .pdfev-icon-copy{
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+        }
+    }
+
+    /* Fixed width, sized for the longest label ("Copied!"/"Failed!") — without
+       this the button visibly grows/shrinks as its label swaps between
+       "Copy" and the (longer) result text on click. */
+    .pdfev-btn-label{
+        display: inline-block;
+        min-width: 56px;
+        text-align: left;
+    }
+
+    /* The Save button (both the header and footer copies share this class)
+       is the single primary action for the whole page — a bit more
+       substantial than compact in-card buttons like "Import Demo", so it
+       reads as the form's main CTA. */
+    .pdfev-header-save{
+        padding: 10px 22px;
+        font-size: 13.5px;
+        flex-shrink: 0;
+    }
+
+    .pdfev-btn-primary,
+    .pdfev-card-body .button-primary{
+        background: var(--pdfev-admin-accent);
+        border-color: var(--pdfev-admin-accent);
+        color: #fff;
+        text-shadow: none;
+        box-shadow: none;
+
+        &:hover{
+            background: var(--pdfev-admin-accent-hover);
+            border-color: var(--pdfev-admin-accent-hover);
+            color: #fff;
+        }
+    }
+
+    .pdfev-btn-secondary{
+        background: var(--pdfev-admin-surface);
+        border-color: var(--pdfev-admin-border);
+        color: var(--pdfev-admin-ink);
+
+        &:hover{
+            background: var(--pdfev-admin-bg);
+        }
+    }
+
+    .pdfev-btn-ghost{
+        background: transparent;
+        border-color: var(--pdfev-admin-border);
+        color: var(--pdfev-admin-muted);
+
+        &:hover{
+            background: var(--pdfev-admin-bg);
+            color: var(--pdfev-admin-ink);
+        }
+    }
+
+    /* ===========shortcode generator========== */
+    .pdfev-shortcode-generaor{
+        display: grid;
+        grid-template-columns: 420px 1fr;
+        gap: 16px;
+        align-items: start;
+
+        @media (max-width: 960px){
+            grid-template-columns: 1fr;
+        }
+
+        .shortcode-sidebar,
+        .shortcode-previewer{
+            background: var(--pdfev-admin-surface);
+            border: 1px solid var(--pdfev-admin-border);
+            border-radius: var(--pdfev-admin-radius);
+            box-shadow: var(--pdfev-admin-shadow);
+            overflow: hidden;
+        }
+
+        .shortcode-previewer{
+            text-align: left;
+            align-self: stretch;
+
+            .pdfev-loading::after {
+                content: '';
+                display: inline-block;
+                margin-left: 10px;
+                width: 16px;
+                height: 16px;
+                border: 2px solid var(--pdfev-admin-border);
+                border-top: 2px solid var(--pdfev-admin-accent);
+                border-radius: 50%;
+                animation: spin 0.6s linear infinite;
+            }
+        }
+
+        .form-group {
+            margin-bottom: 12px;
+
+            .form-group-row{
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                gap: 12px;
+            }
+
+            label{
+                font-size: 13px;
+                font-weight: 500;
+                color: var(--pdfev-admin-ink);
+                white-space: nowrap;
+            }
+
+            select, input {
+                width: 220px;
+                font-size: 13px;
+            }
+
+            .form-group-desc{
+                display: block;
+                margin-top: 4px;
+                font-size: 11.5px;
+                line-height: 1.4;
+                color: var(--pdfev-admin-muted);
+            }
+        }
+
+        .pdfev-shortcode-actions{
+            display: flex;
+            gap: 8px;
+            margin-top: 18px;
+        }
+
+        .pdfev-shortcode{
+            background: var(--pdfev-admin-bg);
+            border: 1px solid var(--pdfev-admin-border);
+            border-radius: var(--pdfev-admin-radius-sm);
+            padding: 14px;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+            font-size: 12.5px;
+            line-height: 1.6;
+            color: var(--pdfev-admin-ink);
+            word-break: break-word;
+        }
+
+        button.pdfev-btn{
+            margin-top: 14px;
+        }
+    }
+
+    /* ===========support tab========== */
+    .pdf-embed-viewer-support{
+        margin-top: 4px;
+        margin-bottom: 4px;
+
+        .pdfev-support-links{
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            align-items: start;
+
+            @media (max-width: 960px){
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .pdfev-support-list{
+            list-style: none;
+            margin: 0;
+            padding: 0;
+
+            li{
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                padding: 10px 0;
+                border-bottom: 1px solid var(--pdfev-admin-border);
+                font-size: 13px;
+                color: var(--pdfev-admin-ink);
+
+                &:last-child{
+                    border-bottom: none;
+                }
+
+                .dashicons{
+                    color: var(--pdfev-admin-accent);
+                }
+
+                span:nth-child(2){
+                    flex: 1;
+                }
+
+                a{
+                    color: var(--pdfev-admin-accent);
+                    text-decoration: none;
+                    font-weight: 500;
+                    white-space: nowrap;
+
+                    &:hover{
+                        color: var(--pdfev-admin-accent-hover);
+                    }
+                }
+            }
+        }
+
+        .pdfev-full-width-input{
+            width: 100%;
+            box-sizing: border-box;
+        }
+    }
+}
+
+/* Hoisted out of .shortcode-previewer above — @keyframes can't nest inside
+   a style rule, only the selector/declaration that uses it needs to be
+   nested; the keyframe name itself is always global regardless. */
 @keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-#wpbody-content .pdfev-settings-page .pdfev-shortcode-generaor .form-group {
-  margin-bottom: 12px;
-}
-#wpbody-content .pdfev-settings-page .pdfev-shortcode-generaor .form-group .form-group-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-}
-#wpbody-content .pdfev-settings-page .pdfev-shortcode-generaor .form-group label {
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--pdfev-admin-ink);
-  white-space: nowrap;
-}
-#wpbody-content .pdfev-settings-page .pdfev-shortcode-generaor .form-group select, #wpbody-content .pdfev-settings-page .pdfev-shortcode-generaor .form-group input {
-  width: 220px;
-  font-size: 13px;
-}
-#wpbody-content .pdfev-settings-page .pdfev-shortcode-generaor .form-group .form-group-desc {
-  display: block;
-  margin-top: 4px;
-  font-size: 11.5px;
-  line-height: 1.4;
-  color: var(--pdfev-admin-muted);
-}
-#wpbody-content .pdfev-settings-page .pdfev-shortcode-generaor .pdfev-shortcode-actions {
-  display: flex;
-  gap: 8px;
-  margin-top: 18px;
-}
-#wpbody-content .pdfev-settings-page .pdfev-shortcode-generaor .pdfev-shortcode {
-  background: var(--pdfev-admin-bg);
-  border: 1px solid var(--pdfev-admin-border);
-  border-radius: var(--pdfev-admin-radius-sm);
-  padding: 14px;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  font-size: 12.5px;
-  line-height: 1.6;
-  color: var(--pdfev-admin-ink);
-  word-break: break-word;
-}
-#wpbody-content .pdfev-settings-page .pdfev-shortcode-generaor button.pdfev-btn {
-  margin-top: 14px;
-}
-#wpbody-content .pdfev-settings-page .pdf-embed-viewer-support {
-  margin-top: 4px;
-  margin-bottom: 4px;
-}
-#wpbody-content .pdfev-settings-page .pdf-embed-viewer-support .pdfev-support-links {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  align-items: start;
-}
-@media (max-width: 960px) {
-  #wpbody-content .pdfev-settings-page .pdf-embed-viewer-support .pdfev-support-links {
-    grid-template-columns: 1fr;
-  }
-}
-#wpbody-content .pdfev-settings-page .pdf-embed-viewer-support .pdfev-support-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-#wpbody-content .pdfev-settings-page .pdf-embed-viewer-support .pdfev-support-list li {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 0;
-  border-bottom: 1px solid var(--pdfev-admin-border);
-  font-size: 13px;
-  color: var(--pdfev-admin-ink);
-}
-#wpbody-content .pdfev-settings-page .pdf-embed-viewer-support .pdfev-support-list li:last-child {
-  border-bottom: none;
-}
-#wpbody-content .pdfev-settings-page .pdf-embed-viewer-support .pdfev-support-list li .dashicons {
-  color: var(--pdfev-admin-accent);
-}
-#wpbody-content .pdfev-settings-page .pdf-embed-viewer-support .pdfev-support-list li span:nth-child(2) {
-  flex: 1;
-}
-#wpbody-content .pdfev-settings-page .pdf-embed-viewer-support .pdfev-support-list li a {
-  color: var(--pdfev-admin-accent);
-  text-decoration: none;
-  font-weight: 500;
-  white-space: nowrap;
-}
-#wpbody-content .pdfev-settings-page .pdf-embed-viewer-support .pdfev-support-list li a:hover {
-  color: var(--pdfev-admin-accent-hover);
-}
-#wpbody-content .pdfev-settings-page .pdf-embed-viewer-support .pdfev-full-width-input {
-  width: 100%;
-  box-sizing: border-box;
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
-.demo-import-success {
-  font-size: 13px;
-  color: #1a7f37;
+.demo-import-success{
+    font-size: 13px;
+    color: #1a7f37;
 }
-
 .pdfev-loader {
   display: inline-block;
   width: 16px;
@@ -1456,12 +1841,6 @@
 }
 
 @keyframes pdfev-spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
-
-/*# sourceMappingURL=admin.css.map */

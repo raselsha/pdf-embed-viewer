@@ -13,7 +13,11 @@ sanitization, or nonces.
 - WordPress (CPT/taxonomy/postmeta/options — **no custom DB tables**)
 - JavaScript (jQuery, ES5-ish, no build step)
 - Elementor widgets (optional integration, only loaded if Elementor is active)
-- SCSS source under `assets/scss/` (compiled output checked in under `assets/css/`)
+- Frontend CSS (`assets/css/frontend.css`) is compiled from SCSS under `assets/scss/frontend/`
+  (`npm run frontend` to watch). **Admin CSS (`assets/css/admin.css`) is hand-written plain CSS,
+  edited directly — no build step.** It uses native CSS nesting (widely supported in current
+  browsers, which is all wp-admin needs), so it stays organized the way the old SCSS was without
+  needing a compiler.
 
 ### Architecture
 - **Entry**: `pdf-embed-viewer.php` — defines `PDFEV_Const_*` constants, manually `require_once`s
@@ -98,6 +102,9 @@ sanitization, or nonces.
   CPT/taxonomy/postmeta/options.
 
 ## Build/Test
-- No build step for PHP; SCSS is precompiled and checked in.
+- No build step for PHP.
+- `assets/css/admin.css` is edited directly (plain CSS, native nesting) — no compile step.
+  `assets/css/frontend.css` is still compiled from SCSS (`npm run frontend` to watch
+  `assets/scss/frontend/`).
 - `php -l <file>` to check syntax before considering a PHP change done.
 - No automated test suite currently exists.
