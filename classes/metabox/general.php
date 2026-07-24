@@ -309,7 +309,7 @@ class Metabox_General{
                         </div>
                     </div>
 
-                    <div class="pdfev-metabox-group-body">
+                    <div class="pdfev-metabox-group-body pdfev-metabox-fields-panel">
                         <div class="pdfev-metabox-field">
                             <div class="pdfev-metabox-field-label">
                                 <p><?php echo esc_html__( 'Shortcode', 'pdf-embed-viewer' )?></p>

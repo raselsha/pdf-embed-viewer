@@ -82,7 +82,7 @@
     --pdfev-mb-surface: #ffffff;
     --pdfev-mb-bg: #f6f7f9;
     --pdfev-mb-radius: 8px;
-    --pdfev-mb-radius-sm: 5px;
+    --pdfev-mb-radius-sm: 8px;
 
     .inside{
         margin: 0;
@@ -207,27 +207,65 @@
                 }
             }
 
-            /* Each field is its own card — spaced apart with margin instead
-               of separated by border-bottom dividers on a shared background. */
+            /* Groups related simple fields into one rounded, tinted panel —
+               NOT applied to the PDF-source/dropzone group above, which has
+               its own distinct card-based UI already. The panel's own
+               background is the visual separator now, so it opts out of the
+               plain border-top divider .pdfev-metabox-group-body normally
+               uses between groups. */
+            .pdfev-metabox-fields-panel{
+                background: #eef2f8;
+                border-radius: 12px;
+                padding: 16px;
+
+                &:not(:first-child){
+                    margin-top: 20px;
+                    border-top: none;
+                }
+
+                /* Each field is its own white rounded card floating on the
+                   panel's tinted background, instead of a flat row separated
+                   by a divider line — keeps individual settings clearly
+                   distinct from one another while the panel itself still
+                   reads as one grouped section. */
+                .pdfev-metabox-field{
+                    background: var(--pdfev-mb-surface);
+                    border-radius: 8px;
+                    padding: 14px 16px;
+                    margin-bottom: 10px;
+                    border-bottom: none;
+                    transition: box-shadow .15s ease;
+
+                    &:last-child{
+                        margin-bottom: 0;
+                    }
+
+                    &:hover{
+                        background-color: var(--pdfev-mb-surface);
+                        box-shadow: 0 1px 3px rgba(16, 24, 40, .08);
+                    }
+                }
+            }
+
+            /* Flat row on the shared white section background, separated by a
+               divider line instead of each field being its own boxed card —
+               matches the plain-row-plus-divider look of the reference the
+               design was checked against, rather than a stack of grey cards. */
             .pdfev-metabox-field{
                 display: grid;
                 grid-template-columns: 260px 1fr;
                 align-items: center;
                 gap: 16px;
-                padding: 14px 18px;
-                background: var(--pdfev-mb-bg);
-                border: 1px solid var(--pdfev-mb-border);
-                border-radius: var(--pdfev-mb-radius);
-                margin-bottom: 10px;
-                transition: border-color .15s ease, box-shadow .15s ease;
+                padding: 14px 0;
+                border-bottom: 1px solid var(--pdfev-mb-border);
+                transition: background-color .15s ease;
 
                 &:last-child{
-                    margin-bottom: 0;
+                    border-bottom: none;
                 }
 
                 &:hover{
-                    border-color: #c7cdf7;
-                    box-shadow: 0 1px 3px rgba(16, 24, 40, .06);
+                    background-color: var(--pdfev-mb-bg);
                 }
 
                 &.pdfev-metabox-field--stacked{
@@ -235,22 +273,25 @@
 
                     .pdfev-metabox-field-control{
                         margin-top: 10px;
-                        /* Stays below the label (column direction) but shrinks to
-                           content width and sits at the row's right edge — the base
-                           text-align:right doesn't reach block-level flex children,
-                           hence flex/align-items here instead. */
+                        /* Stretches to the row's full width — this is the
+                           Document Description editor's only current user,
+                           and a WYSIWYG editor shrinking to its own intrinsic
+                           content width (align-items:flex-end's old behavior)
+                           made it render narrow with room to spare on its right. */
                         display: flex;
                         flex-direction: column;
-                        align-items: flex-end;
+                        align-items: stretch;
                     }
                 }
 
                 .pdfev-metabox-field-label{
                     p{
-                        margin: 0 0 2px;
-                        font-size: 13px;
-                        font-weight: 500;
-                        color: var(--pdfev-mb-ink);
+                        margin: 0 0 4px;
+                        font-size: 11px;
+                        font-weight: 600;
+                        letter-spacing: .04em;
+                        text-transform: uppercase;
+                        color: var(--pdfev-mb-muted);
                     }
 
                     span{
@@ -475,6 +516,7 @@
                on the .mce-* overrides below, not on the plain wp-editor-*
                wrapper classes which don't need it. */
             .wp-editor-wrap{
+                width: 100%;
                 border: 1px solid var(--pdfev-mb-border);
                 border-radius: var(--pdfev-mb-radius-sm);
                 background: var(--pdfev-mb-surface);
@@ -899,7 +941,15 @@
                    of it at the exact same size. */
                 .pdfev-preview-stage{
                     position: relative;
-                    width: 75%;
+                    /* flex:1 (not a % width) so it claims whatever's left after
+                       the Book Cover panel's own fixed width — on a narrower
+                       screen (the classic edit-post grid's fixed sidebar eats a
+                       lot of a 1440px-wide window) a % split otherwise shrank
+                       the thumbnail grid down to 2-3 per row for no real
+                       reason, since the grid — not the cover — is what
+                       actually benefits from the extra room. */
+                    flex: 1;
+                    min-width: 0;
                     /* Set directly rather than left to flex "stretch" to hand it
                        down from #pdfev-document-preview's own height — .pdfev-upload-overlay
                        is position:absolute;inset:0 against *this* element, and that only
@@ -1086,7 +1136,16 @@
                 }
 
                 .pdfev-featured-image-area{
-                    width: 25%;
+                    /* Bounded instead of a flat px or a plain % — a flat width
+                       wide enough to look right on a big screen ate MORE room
+                       than the old 25% did on a narrow one (the opposite of
+                       the point), while a bare % shrinks the cover itself down
+                       too far once the column gets narrow. Stays between
+                       200-280px and only scales with the row's own width
+                       inside that range, so .pdfev-preview-stage's flex:1
+                       (the thumbnail grid) gets whatever's left either way. */
+                    width: clamp(200px, 22%, 280px);
+                    flex-shrink: 0;
                     /* Same explicit height as #pdfev-document-preview, same
                        surface/border/radius treatment — the two panels are meant
                        to look and size like a matched pair, not two unrelated boxes. */
@@ -1105,11 +1164,18 @@
                     /* "Book Cover" reads as the panel's title, not just another
                        field label — bigger/bolder than the shared field-label
                        style, with a bit more breathing room above the
-                       description line below it. */
+                       description line below it. Explicitly resets
+                       text-transform/letter-spacing/color instead of just
+                       overriding size/weight, since the shared rule's
+                       uppercase-small-caps treatment (meant for form field
+                       labels) would otherwise still apply here too. */
                     .pdfev-metabox-field-label p{
                         margin: 0 0 4px;
                         font-size: 14px;
                         font-weight: 700;
+                        letter-spacing: normal;
+                        text-transform: none;
+                        color: var(--pdfev-mb-ink);
                     }
 
                     /* Fills whatever vertical space is left once the label header
@@ -1242,6 +1308,66 @@
             }
         }
     }
+}
+
+/* The Title field, permalink row, and 2-column post-edit grid are WordPress
+   core chrome, not our own markup — scoped to body.post-type-pdfev_embed_viewer
+   (WP adds this class automatically) so none of this leaks onto Posts/Pages/
+   other CPTs' edit screens. */
+body.post-type-pdfev_embed_viewer{
+    #titlediv{
+        margin-bottom: 16px;
+
+        #title{
+            padding: 12px 16px;
+            font-size: 20px;
+            font-weight: 600;
+            color: #1d2327;
+            border: 1px solid #e2e4e9;
+            border-radius: 8px;
+            box-shadow: 0 1px 2px rgba(16, 24, 40, .04);
+            transition: border-color .15s ease, box-shadow .15s ease;
+
+            &:hover{
+                border-color: #64748b;
+            }
+
+            &:focus{
+                outline: none;
+                border-color: #3858e9;
+                box-shadow: 0 0 0 3px rgba(56, 88, 233, .12);
+            }
+        }
+
+        .inside{
+            margin-top: 8px;
+        }
+    }
+
+    #edit-slug-box{
+        padding: 10px 14px;
+        background: #f6f7f9;
+        border: 1px solid #e2e4e9;
+        border-radius: 8px;
+        font-size: 13px;
+        color: #64748b;
+
+        a{
+            color: #3858e9;
+        }
+
+        .button{
+            border-radius: 999px;
+        }
+    }
+
+    /* Tried trimming the fixed-width sidebar here to give the main column
+       more room, but reverted it — WP core's Publish box needs its full
+       default width when it's showing two buttons (Save Draft + Publish, on
+       an unsaved post) rather than one ("Update" on an already-published
+       one), and anything narrower pushed those buttons past the browser's
+       right edge instead of actually shrinking the box. Not worth the
+       breakage for a modest width gain; the sidebar stays at core's default. */
 }
 
 /* Scoped to .pdfev-settings-page (not the shared .pdfev-embed-viewer class, which the

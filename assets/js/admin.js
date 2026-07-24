@@ -85,10 +85,15 @@
     }
   });
   // ===========tab (persists across reload via localStorage)=================
-  // Only the top-level settings-page tabs (.nav-tab) persist — the post-edit metabox
-  // reuses the same [data-tab-target] convention (li.pdfev-tab) but shouldn't share the
-  // same storage key, or clicking a metabox tab would clobber the remembered settings tab.
+  // Both the top-level settings-page tabs (.nav-tab) and the post-edit
+  // metabox tabs (li.pdfev-tab) share this same [data-tab-target] click
+  // handler, but persist under their OWN separate storage keys — using one
+  // shared key would mean clicking a metabox tab clobbers the remembered
+  // settings-page tab (or vice versa), since the two screens don't share a
+  // DOM (only one of .nav-tab/.pdfev-tab ever exists on a given page, so
+  // there's never a collision between the two restores below either).
   var pdfevTabStorageKey = 'pdfevActiveTab';
+  var pdfevMetaboxTabStorageKey = 'pdfevActiveMetaboxTab';
   $(document).on('click','[data-tab-target]',function(){
     $('[data-tab-target]').removeClass('active');
     $(this).addClass('active');
@@ -97,6 +102,8 @@
     $('[data-tab="' + target + '"]').addClass('active');
     if ($(this).hasClass('nav-tab')) {
       try { localStorage.setItem(pdfevTabStorageKey, target); } catch (e) {}
+    } else if ($(this).hasClass('pdfev-tab')) {
+      try { localStorage.setItem(pdfevMetaboxTabStorageKey, target); } catch (e) {}
     }
   });
 
@@ -118,6 +125,11 @@
       if (savedTab) {
         var $tabBtn = $('.nav-tab[data-tab-target="' + savedTab + '"]');
         if ($tabBtn.length) { $tabBtn.trigger('click'); }
+      }
+      var savedMetaboxTab = localStorage.getItem(pdfevMetaboxTabStorageKey);
+      if (savedMetaboxTab) {
+        var $metaboxTabBtn = $('.pdfev-tab[data-tab-target="' + savedMetaboxTab + '"]');
+        if ($metaboxTabBtn.length) { $metaboxTabBtn.trigger('click'); }
       }
       var savedSection = localStorage.getItem(pdfevSectionStorageKey);
       if (savedSection) {

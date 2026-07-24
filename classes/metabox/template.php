@@ -32,21 +32,69 @@ class Metabox_Template{
                 <p><?php _e('Here you can set tempate for the document in single view','pdf-embed-viewer'); ?></p>
             </div>
             <div class="pdfev-metabox-section-body">
-                <div class="pdfev-metabox-field">
-                    <div class="pdfev-metabox-field-label">
-                        <p><?php echo esc_html__( 'Template', 'pdf-embed-viewer' )?></p>
-                        <span><?php echo esc_html__('Select Tempate','pdf-embed-viewer') ?></span>
-                    </div>
-                    <div class="pdfev-metabox-field-control">
-                        <select name="pdfev_meta_template" id="pdfev_meta_template">
-                            <option value="flipbook"><?php echo esc_html('Flipbook') ?></option>
-                            <!-- <option value="traditional"><?php echo esc_html('Traditional') ?></option> -->
-                        </select>
+                <div class="pdfev-metabox-group-body pdfev-metabox-fields-panel">
+                    <div class="pdfev-metabox-field">
+                        <div class="pdfev-metabox-field-label">
+                            <p><?php echo esc_html__( 'Template', 'pdf-embed-viewer' )?></p>
+                            <span><?php echo esc_html__('Select Tempate','pdf-embed-viewer') ?></span>
+                        </div>
+                        <div class="pdfev-metabox-field-control">
+                            <?php
+                            $this->render_custom_select(
+                                'pdfev_meta_template',
+                                'pdfev_meta_template',
+                                array( 'flipbook' => __( 'Flipbook', 'pdf-embed-viewer' ) ),
+                                'flipbook'
+                            );
+                            ?>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
+        <?php
+    }
+
+    /**
+     * Same visually-hidden-native-<select>-plus-styled-listbox pattern as
+     * General_Settings::render_custom_select() / Metabox_Book_Info's own
+     * copy — kept separate per-class rather than shared, same reasoning as
+     * that one: each screen defines its own local design tokens, and the
+     * open/close/select JS behavior is already delegated globally in
+     * admin.js, so no per-class JS is needed either.
+     */
+    private function render_custom_select( $id, $name, $options, $selected = '', $placeholder = '' ) {
+        $selected_label = $placeholder;
+        foreach ( $options as $value => $label ) {
+            if ( (string) $value === (string) $selected ) {
+                $selected_label = $label;
+                break;
+            }
+        }
+        ?>
+        <div class="pdfev-select">
+            <select id="<?php echo esc_attr( $id ); ?>" name="<?php echo esc_attr( $name ); ?>" class="pdfev-select-native">
+                <?php if ( $placeholder !== '' ) : ?>
+                <option value=""><?php echo esc_html( $placeholder ); ?></option>
+                <?php endif; ?>
+                <?php foreach ( $options as $value => $label ) : ?>
+                <option value="<?php echo esc_attr( $value ); ?>" <?php selected( (string) $value, (string) $selected ); ?>><?php echo esc_html( $label ); ?></option>
+                <?php endforeach; ?>
+            </select>
+            <button type="button" class="pdfev-select-trigger" aria-haspopup="listbox" aria-expanded="false">
+                <span class="pdfev-select-value"><?php echo esc_html( $selected_label ); ?></span>
+                <span class="dashicons dashicons-arrow-down-alt2" aria-hidden="true"></span>
+            </button>
+            <ul class="pdfev-select-options" role="listbox" hidden>
+                <?php if ( $placeholder !== '' ) : ?>
+                <li role="option" data-value="" <?php echo ( (string) $selected === '' ) ? 'aria-selected="true"' : ''; ?>><?php echo esc_html( $placeholder ); ?></li>
+                <?php endif; ?>
+                <?php foreach ( $options as $value => $label ) : ?>
+                <li role="option" data-value="<?php echo esc_attr( $value ); ?>" <?php echo ( (string) $value === (string) $selected ) ? 'aria-selected="true"' : ''; ?>><?php echo esc_html( $label ); ?></li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
         <?php
     }
 

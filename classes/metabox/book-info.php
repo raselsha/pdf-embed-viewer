@@ -49,6 +49,7 @@ class Metabox_Book_Info{
                 <p><?php _e('Here you can add book\'s author, publisher and other information.','pdf-embed-viewer'); ?></p>
             </div>
             <div class="pdfev-metabox-section-body">
+                <div class="pdfev-metabox-group-body pdfev-metabox-fields-panel">
                 <div class="pdfev-metabox-field pdfev-metabox-field--stacked">
                     <div class="pdfev-metabox-field-label">
                         <p><?php echo esc_html__( 'Document Description', 'pdf-embed-viewer' )?></p>
@@ -63,8 +64,14 @@ class Metabox_Book_Info{
                                 'textarea_name' => 'pdfev_meta_description',
                                 'textarea_rows' => 8,
                                 'media_buttons' => false,
-                                'teeny' => true,
+                                'teeny' => false,
                                 'dfw' => false,
+                                'tinymce' => array(
+                                    // Kitchen-sink second toolbar row (strikethrough,
+                                    // text color, special chars, etc.) shown by
+                                    // default instead of behind the extra click.
+                                    'wordpress_adv_hidden' => false,
+                                ),
                             )
                         );
                         ?>
@@ -121,6 +128,7 @@ class Metabox_Book_Info{
                     <div class="pdfev-metabox-field-control">
                         <input type="text" name="pdfev_meta_edition" value="<?php echo esc_attr($edition); ?>" placeholder="<?php echo esc_attr('1.0'); ?>">
                     </div>
+                </div>
                 </div>
             </div>
         </div>
