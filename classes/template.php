@@ -137,20 +137,34 @@ class Template{
     public static function render_archive_ebook_items($WpQuery, $atts = []){
         if ( $WpQuery->have_posts() ) :
             while ( $WpQuery->have_posts() ) : $WpQuery->the_post();
+                // The hover effect swings the cover open like a physical book —
+                // hinged on the left by default (LTR). An RTL document's cover
+                // physically opens from the right, so the animation mirrors
+                // per-item to match, same pdfev_meta_rtl flag the single-view
+                // reader and its Previous/Next arrows already key off of.
+                $is_rtl = get_post_meta( get_the_ID(), 'pdfev_meta_rtl', true ) === 'yes';
                 ?>
                 <div class="grid-item">
                     <a href="<?php the_permalink(); ?>">
-                        <div class="image">
+                        <?php
+                        // data-pdfev-src feeds the hover preview below (frontend.js
+                        // renders this document's actual page 2 into the .pages
+                        // panel via pdf.js) — get_pdf_link() already resolves to the
+                        // same-origin proxy for cross-origin files, so pdf.js's own
+                        // fetch never hits a CORS wall here.
+                        $pdf_src = \PDFEV_Functions::get_pdf_link( get_the_ID() );
+                        ?>
+                        <div class="image<?php echo $is_rtl ? ' pdfev-book-rtl' : ''; ?>" data-pdfev-src="<?php echo esc_url( $pdf_src ); ?>">
                             <div class="book">
                                 <div class="front-cover">
                                     <?php the_post_thumbnail('medium'); ?>
                                 </div>
                             </div>
                             <div class="pages">
-                                <h2><?php the_title(); ?></h2>
+                                <span class="pdfev-peek-spinner" aria-hidden="true"></span>
                             </div>
                         </div>
-                    </a>                
+                    </a>
                     <div class="content">
                         <h2><a href="<?php the_permalink(); ?>">
                         <?php
@@ -365,6 +379,22 @@ class Template{
 
     //===================== single view ==================
     public function template_single_header(){
+        // For an RTL document, "forward" reads right-to-left — Previous
+        // should point the way the pages turn backward (right) and Next the
+        // way they turn forward (left), the mirror of the LTR default. The
+        // arrow's side of its label flips right along with it (a left arrow
+        // always sits left of its text, a right arrow always sits right of
+        // its text) — not fixed by Previous/Next role, which used to leave a
+        // right-pointing arrow stranded on the left of "Previous" once RTL
+        // swapped only the glyph and not its position.
+        $rtl = get_post_meta(get_the_ID(), 'pdfev_meta_rtl', true) === 'yes';
+        if ($rtl) {
+            $prev_label = __('Previous','pdf-embed-viewer').' &rarr;';
+            $next_label = '&larr; '.__('Next','pdf-embed-viewer');
+        } else {
+            $prev_label = '&larr; '.__('Previous','pdf-embed-viewer');
+            $next_label = __('Next','pdf-embed-viewer').' &rarr;';
+        }
         ?>
         <div class="header">
             <h1><?php the_title();?></h1>
@@ -373,10 +403,10 @@ class Template{
                 <?php \PDFEV_Functions::download_button_single_page_view(get_the_ID()); ?>
             </div>
         </div>
-        
+
         <div class="navigation">
-            <?php previous_post_link('%link','&larr;'.__(' Previous','pdf-embed-viewer') ); ?>
-            <?php next_post_link('%link',__('Next ','pdf-embed-viewer').' &rarr;' ); ?>
+            <?php previous_post_link('%link',$prev_label); ?>
+            <?php next_post_link('%link',$next_label); ?>
         </div>
         <?php
     }
@@ -405,10 +435,20 @@ class Template{
     }
 
     public function template_single_footer(){
+        // See template_single_header() — same reasoning, kept as its own
+        // copy rather than shared since this hooks a separate action.
+        $rtl = get_post_meta(get_the_ID(), 'pdfev_meta_rtl', true) === 'yes';
+        if ($rtl) {
+            $prev_label = __('Previous','pdf-embed-viewer').' &rarr;';
+            $next_label = '&larr; '.__('Next','pdf-embed-viewer');
+        } else {
+            $prev_label = '&larr; '.__('Previous','pdf-embed-viewer');
+            $next_label = __('Next','pdf-embed-viewer').' &rarr;';
+        }
     ?>
         <div class="navigation">
-            <?php previous_post_link('%link','&larr;'.__(' Previous','pdf-embed-viewer') ); ?>
-            <?php next_post_link('%link',__('Next ','pdf-embed-viewer').' &rarr;' ); ?>
+            <?php previous_post_link('%link',$prev_label); ?>
+            <?php next_post_link('%link',$next_label); ?>
         </div>
     <?php
     }

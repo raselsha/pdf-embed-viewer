@@ -342,4 +342,70 @@ jQuery(document).ready(function ($) {
   });
 })(jQuery);
 
+// ============ebook grid: real page-2 preview on hover===========
+(function ($) {
+  var workerConfigured = false;
+  var hoverTimers = new WeakMap();
+
+  function ensureWorker() {
+    if (workerConfigured || typeof pdfjsLib === 'undefined') return;
+    // The archive/ebook grid never instantiates 3dflipbook (that only
+    // happens on the single-view page), so nothing else has pointed pdf.js
+    // at a worker script yet — without this it silently falls back to a
+    // slower in-thread "fake worker".
+    pdfjsLib.GlobalWorkerOptions.workerSrc = pdfevFronend.pdfevurl + 'vendor/pdf/pdf.worker.min.js';
+    workerConfigured = true;
+  }
+
+  function renderPagePeek($image) {
+    if ($image.data('pdfevPeekState')) return; // already rendered, rendering, or failed once
+    var pdfUrl = $image.attr('data-pdfev-src');
+    if (!pdfUrl || typeof pdfjsLib === 'undefined') return;
+
+    $image.data('pdfevPeekState', 'loading');
+    ensureWorker();
+
+    pdfjsLib.getDocument(pdfUrl).promise.then(function (pdf) {
+      // Page 2 is the point of this feature (a peek past the cover); a
+      // single-page document falls back to page 1 instead of erroring.
+      return pdf.getPage(pdf.numPages > 1 ? 2 : 1);
+    }).then(function (page) {
+      var $pages = $image.find('.pages');
+      var containerWidth = $image.width() || 170;
+      var baseViewport = page.getViewport({ scale: 1 });
+      var scale = (containerWidth / baseViewport.width) * 2; // 2x for retina sharpness
+
+      var viewport = page.getViewport({ scale: scale });
+      var canvas = document.createElement('canvas');
+      canvas.width = viewport.width;
+      canvas.height = viewport.height;
+
+      return page.render({ canvasContext: canvas.getContext('2d'), viewport: viewport }).promise.then(function () {
+        $pages.empty().append(canvas).addClass('pdfev-pages-rendered');
+        $image.data('pdfevPeekState', 'done');
+      });
+    }).catch(function () {
+      // A blocked host, corrupt file, or fetch error shouldn't break the
+      // hover effect — the icon/label placeholder just stays as-is.
+      $image.data('pdfevPeekState', 'failed');
+    });
+  }
+
+  $(document).on('mouseenter', '.archive-ebook-style .grid-item .image', function () {
+    var el = this;
+    var $image = $(el);
+    // A short delay so quickly scanning across the shelf doesn't trigger a
+    // full PDF fetch+render for every cover the mouse merely passes over.
+    var timer = setTimeout(function () {
+      renderPagePeek($image);
+    }, 220);
+    hoverTimers.set(el, timer);
+  });
+
+  $(document).on('mouseleave', '.archive-ebook-style .grid-item .image', function () {
+    var timer = hoverTimers.get(this);
+    if (timer) clearTimeout(timer);
+  });
+})(jQuery);
+
 // ============metabox scripts========

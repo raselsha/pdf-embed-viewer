@@ -433,33 +433,42 @@
   }
 }
 
+@keyframes pdfev-peek-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
 .pdfev-embed-viewer {
   margin: 0 auto;
 }
-.pdfev-embed-viewer .archive-ebook-style > .pdfev-load-more-items {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
 .pdfev-embed-viewer .archive-ebook-style {
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+  flex-direction: column;
+  gap: 28px;
+}
+.pdfev-embed-viewer .archive-ebook-style > .pdfev-load-more-items {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 34px 20px;
+  justify-items: center;
 }
 .pdfev-embed-viewer .archive-ebook-style .grid-item {
-  background-color: var(--pdfev-white);
-  border-radius: 6px;
+  width: 100%;
+  max-width: 170px;
   overflow: visible;
   display: flex;
   flex-direction: column;
-  width: 252px;
 }
 .pdfev-embed-viewer .archive-ebook-style .grid-item .image {
-  width: 170px;
-  height: 230px;
+  width: 100%;
+  aspect-ratio: 170/230;
   perspective: 1500px;
   position: relative;
   cursor: pointer;
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.pdfev-embed-viewer .archive-ebook-style .grid-item .image:hover {
+  transform: translateY(-6px);
 }
 .pdfev-embed-viewer .archive-ebook-style .grid-item .book {
   width: 100%;
@@ -467,11 +476,20 @@
   position: relative;
   transform-style: preserve-3d;
   transform-origin: left center;
-  transition: transform 0.8s ease;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
-  border-radius: 6px;
+  transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
   overflow: visible;
   z-index: 2;
+}
+.pdfev-embed-viewer .archive-ebook-style .grid-item .book::before {
+  content: "";
+  position: absolute;
+  top: 2px;
+  bottom: 2px;
+  right: -5px;
+  width: 5px;
+  background: repeating-linear-gradient(to bottom, #f5f3ec 0, #f5f3ec 2px, #dcd6c4 2px, #dcd6c4 3px);
+  box-shadow: 1px 0 3px rgba(0, 0, 0, 0.25);
 }
 .pdfev-embed-viewer .archive-ebook-style .grid-item .front-cover {
   width: 100%;
@@ -480,15 +498,31 @@
   top: 0;
   left: 0;
   backface-visibility: hidden;
-  border-radius: 6px;
   box-shadow: 4px 0 15px rgba(0, 0, 0, 0.3);
   z-index: 2;
+  transition: box-shadow 0.35s ease;
+  overflow: hidden;
+}
+.pdfev-embed-viewer .archive-ebook-style .grid-item .front-cover::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 45%;
+  height: 100%;
+  background: linear-gradient(115deg, transparent 0%, rgba(255, 255, 255, 0.65) 50%, transparent 100%);
+  transform: skewX(-20deg);
+  transition: left 0.85s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+  z-index: 3;
+}
+.pdfev-embed-viewer .archive-ebook-style .grid-item .image:hover .front-cover::after {
+  left: 130%;
 }
 .pdfev-embed-viewer .archive-ebook-style .grid-item .front-cover img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 6px;
   display: block;
 }
 .pdfev-embed-viewer .archive-ebook-style .grid-item .pages {
@@ -499,24 +533,67 @@
   left: 0;
   padding: 10px;
   box-sizing: border-box;
-  background: #f9ecd9;
+  background: #f4f2ec;
   z-index: 1;
-  border-radius: 6px;
-  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
-  text-align: center;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 0.35s ease 0.2s, transform 0.35s ease 0.2s;
 }
-.pdfev-embed-viewer .archive-ebook-style .grid-item .pages h2 {
-  padding-top: 50px;
-  font-size: 20px;
-  font-weight: bold;
-  color: #000;
+.pdfev-embed-viewer .archive-ebook-style .grid-item .pages .pdfev-peek-spinner {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 3px solid rgba(199, 159, 98, 0.25);
+  border-top-color: var(--pdfev-primary);
+  animation: pdfev-peek-spin 0.8s linear infinite;
+}
+.pdfev-embed-viewer .archive-ebook-style .grid-item .pages.pdfev-pages-rendered {
+  padding: 0;
+  align-items: stretch;
+  justify-content: stretch;
+  background: #fff;
+}
+.pdfev-embed-viewer .archive-ebook-style .grid-item .pages.pdfev-pages-rendered canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.pdfev-embed-viewer .archive-ebook-style .grid-item .image:hover .pages {
+  opacity: 1;
+  transform: scale(1);
 }
 .pdfev-embed-viewer .archive-ebook-style .grid-item {
   /* Hover flipping */
 }
 .pdfev-embed-viewer .archive-ebook-style .grid-item .image:hover .book {
   transform: rotateY(-80deg);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+}
+.pdfev-embed-viewer .archive-ebook-style .grid-item {
+  /* Mirrors the open-cover hover for an RTL-flagged document (same
+     pdfev_meta_rtl flag as the single-view reader/Previous-Next
+     arrows) — hinges from the right instead of the left, and the
+     cover's own depth shadow flips sides to match, since a physical
+     RTL book's spine sits on the right. */
+}
+.pdfev-embed-viewer .archive-ebook-style .grid-item .image.pdfev-book-rtl .book {
+  transform-origin: right center;
+}
+.pdfev-embed-viewer .archive-ebook-style .grid-item .image.pdfev-book-rtl .book::before {
+  right: auto;
+  left: -5px;
+  box-shadow: -1px 0 3px rgba(0, 0, 0, 0.25);
+}
+.pdfev-embed-viewer .archive-ebook-style .grid-item .image.pdfev-book-rtl .front-cover {
+  box-shadow: -4px 0 15px rgba(0, 0, 0, 0.3);
+}
+.pdfev-embed-viewer .archive-ebook-style .grid-item .image.pdfev-book-rtl:hover .book {
+  transform: rotateY(80deg);
 }
 .pdfev-embed-viewer .archive-ebook-style .grid-item .back-cover {
   position: absolute;
@@ -534,43 +611,52 @@
   box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.6);
 }
 .pdfev-embed-viewer .archive-ebook-style .grid-item .content {
-  padding: 5px 0;
+  padding-top: 12px;
   flex-grow: 1;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  text-align: center;
 }
 .pdfev-embed-viewer .archive-ebook-style .grid-item .content h2 {
-  font-size: 0.875rem;
-  margin: 5px 0;
-  line-height: 1.1;
+  font-size: 0.9rem;
+  font-weight: 700;
+  margin: 0 0 4px;
+  line-height: 1.3;
 }
 .pdfev-embed-viewer .archive-ebook-style .grid-item .content h2 a {
   color: var(--pdfev-dark);
   text-decoration: none;
 }
+.pdfev-embed-viewer .archive-ebook-style .grid-item .content h2 a:hover {
+  color: var(--pdfev-primary);
+}
+.pdfev-embed-viewer .archive-ebook-style .grid-item .content > p, .pdfev-embed-viewer .archive-ebook-style .grid-item .content > span, .pdfev-embed-viewer .archive-ebook-style .grid-item .content > div:not(.action) {
+  font-size: 0.75rem;
+  color: #8a8a8a;
+}
 .pdfev-embed-viewer .archive-ebook-style .grid-item .content .action {
   display: flex;
-  gap: 5px;
+  gap: 8px;
   flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 10px;
 }
-.pdfev-embed-viewer .archive-ebook-style .grid-item .content .action button {
-  background-color: var(--pdfev-primary);
-  border: none;
-  color: white;
-  padding: 8px 14px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 14px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
+.pdfev-embed-viewer .archive-ebook-style .grid-item .content .action .btn {
+  flex: 1 1 0;
+  background: var(--pdfev-primary);
+  padding: 8px 10px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  transition: background-color 0.25s ease, transform 0.2s ease;
 }
-.pdfev-embed-viewer .archive-ebook-style .grid-item .content .action button.read-btn::before {
-  content: "👁️";
+.pdfev-embed-viewer .archive-ebook-style .grid-item .content .action .btn:hover {
+  background: #b28a4d;
+  transform: translateY(-1px);
 }
-.pdfev-embed-viewer .archive-ebook-style .grid-item .content .action button.download-btn::before {
-  content: "⬇️";
+.pdfev-embed-viewer .archive-ebook-style .grid-item .content .action .btn i {
+  font-size: 12px;
 }
 
 .pdfev-embed-viewer .archive-newsletter-style {
