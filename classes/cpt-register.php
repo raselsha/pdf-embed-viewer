@@ -16,7 +16,7 @@ class CPT{
         add_action( 'manage_pdfev_embed_viewer_posts_custom_column', array($this,'custom_column'),10,2 ) ;
         add_filter( 'manage_edit-pdfev_embed_viewer_sortable_columns', array($this,'sortable_columns') ) ;
         add_filter( 'archive_template', array($this,'archive_template') ) ;
-        add_filter( 'single_template', array($this,'single_template') ) ;
+        add_filter( 'the_content', array($this,'single_content') ) ;
     }        
 
     public function posts_columns($columns){
@@ -184,16 +184,15 @@ class CPT{
         return $archive_template;
     }
 
-    public function single_template($single_template) {
-        global $post;
-        if ($post->post_type == 'pdfev_embed_viewer'){  
-                
-            $single_template = get_template_directory().'/template/single.php';
-            if( ! file_exists($single_template)){
-                $single_template = PDFEV_Const_Path . 'template/single.php';
-            }
+    public function single_content($content) {
+        if (is_singular('pdfev_embed_viewer') && in_the_loop() && is_main_query()) {
+            ob_start();
+            do_action('pdfev_template_single_header');
+            echo do_shortcode('[pdfev_embed_viewer id="' . get_the_ID() . '"]');
+            do_action('pdfev_template_single_footer');
+            return ob_get_clean();
         }
-        return $single_template;
+        return $content;
     }
 
     public static function get_posts_years_array() {
