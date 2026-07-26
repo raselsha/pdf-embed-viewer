@@ -19,13 +19,10 @@ if ( wp_is_block_theme() ) :
 </head>
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
-<a class="skip-link screen-reader-text" id="wp-skip-link" href="#wp--skip-link--target">Skip to content</a>
 <div class="wp-site-blocks">
-    <header class="wp-block-template-part">
-        <?php block_template_part('header'); ?>
-    </header>
+    <?php echo do_blocks('<!-- wp:template-part {"slug":"header","tagName":"header"} /-->'); ?>
 
-    <main class="wp-block-group" id="wp--skip-link--target" style="margin-top:var(--wp--preset--spacing--60)">
+    <main class="wp-block-group" style="margin-top:var(--wp--preset--spacing--60)">
         <div class="wp-block-group alignfull" style="padding-top:var(--wp--preset--spacing--60);padding-bottom:var(--wp--preset--spacing--60)">
             <div class="pdfev-embed-viewer">
                 <?php do_action('pdfev_template_single_header'); ?>
@@ -35,9 +32,7 @@ if ( wp_is_block_theme() ) :
         </div>
     </main>
 
-    <footer class="wp-block-template-part">
-        <?php block_template_part('footer'); ?>
-    </footer>
+    <?php echo do_blocks('<!-- wp:template-part {"slug":"footer","tagName":"footer"} /-->'); ?>
 </div>
 <?php wp_footer(); ?>
 </body>
