@@ -10,5 +10,5 @@ if ( ! defined('ABSPATH') ) {
 }
 
 get_header();
-the_content();
+echo do_shortcode('[pdfev_embed_viewer id="' . get_the_ID() . '"]');
 get_footer();
