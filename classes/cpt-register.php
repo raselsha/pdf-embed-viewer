@@ -16,8 +16,43 @@ class CPT{
         add_action( 'manage_pdfev_embed_viewer_posts_custom_column', array($this,'custom_column'),10,2 ) ;
         add_filter( 'manage_edit-pdfev_embed_viewer_sortable_columns', array($this,'sortable_columns') ) ;
         add_filter( 'archive_template', array($this,'archive_template') ) ;
+        add_filter( 'single_template', array($this,'single_template') ) ;
+        // Block themes, singular view ONLY (not the archive — see the long
+        // comment in archive_template() below for why archives can't use this
+        // same mechanism): let the theme's own single.html block template
+        // render completely natively (header, footer, wrapper markup, global
+        // styles — all exactly as every other page gets them) and only swap
+        // out the inner Post Content block. A full template override (single_
+        // template() below) is correct for classic themes, but on a block
+        // theme it requires hand-reconstructing the theme's entire <html>/
+        // <head>/<body> skeleton (site-wide wrapper classes, global-styles
+        // CSS custom properties, etc.) — easy to get subtly wrong, which is
+        // exactly what made the single view's header/footer render smaller/
+        // plainer than every other page. This filter never fires on a classic
+        // theme (which has no core/post-content block to render in the first
+        // place), so it and single_template()'s wp_is_block_theme() guard
+        // never both fire for the same request.
         add_filter( 'render_block_core/post-content', array($this,'render_post_content'), 10, 2 ) ;
-    }        
+        // Suppresses the theme's own duplicate title above the plugin's
+        // content block — same is_singular guard as render_post_content().
+        add_filter( 'render_block_core/post-title', array($this,'suppress_singular_block'), 10, 2 ) ;
+        // The theme's own featured-image block above the title — this CPT's
+        // book cover is already shown inside the plugin's own reader/archive
+        // views, so this was just a second, redundant large image at the top
+        // of the single page.
+        add_filter( 'render_block_core/post-featured-image', array($this,'suppress_singular_block'), 10, 2 ) ;
+        // Best-effort: many block themes ship a "byline"/"post navigation"/
+        // "more posts" pattern on their single template (rendered as a
+        // core/pattern block), which for this CPT either shows blank (no
+        // matching author/category display) or duplicates what the plugin's
+        // own header/footer already show. Not exhaustive across every theme's
+        // naming, but catches the common cases via a slug keyword match.
+        add_filter( 'render_block_core/pattern', array($this,'suppress_redundant_patterns'), 10, 2 ) ;
+        // Collapses any core/group block that renders down to empty content
+        // (e.g. the theme's post-terms wrapper, when this CPT has no terms)
+        // — see suppress_empty_group()'s own comment for why.
+        add_filter( 'render_block_core/group', array($this,'suppress_empty_group'), 10, 2 ) ;
+    }
 
     public function posts_columns($columns){
         unset($columns['date']);
@@ -175,22 +210,106 @@ class CPT{
     
 
     public function archive_template( $archive_template ) {
-        
-        
-        if ( is_post_type_archive ( 'pdfev_embed_viewer' ) ) {                
+        // Unconditional (unlike single_template() below): a block theme's
+        // archive.html typically loops posts via a Query Loop pattern, which
+        // renders its own inner core/post-content block once PER POST in the
+        // loop — there is no single, page-level "the archive's content block"
+        // to swap out the way single.html has exactly one for the current
+        // post. Filtering render_block_core/post-content was tried here and
+        // caused the plugin's own full post list to render once per looped
+        // post (a combinatorial, massively duplicated page) — a full template
+        // override sidesteps the query loop entirely instead of fighting it.
+        if ( is_post_type_archive ( 'pdfev_embed_viewer' ) ) {
             $archive_template = PDFEV_Const_Path . 'template/archive.php';
         }
 
         return $archive_template;
     }
 
-    public function render_post_content($block_content, $block) {
-        if (is_singular('pdfev_embed_viewer')) {
+    public function single_template( $single_template ) {
+        global $post;
+        // Classic themes only — see render_post_content() below for the
+        // block-theme path.
+        if ( $post && $post->post_type === 'pdfev_embed_viewer' && ! wp_is_block_theme() ) {
+            $single_template = get_template_directory() . '/template/single.php';
+            if ( ! file_exists( $single_template ) ) {
+                $single_template = PDFEV_Const_Path . 'template/single.php';
+            }
+        }
+        return $single_template;
+    }
+
+    public function render_post_content( $block_content, $block ) {
+        // Singular only — see archive_template() above for why the archive
+        // view can't use this same per-block-instance filtering mechanism.
+        if ( is_singular( 'pdfev_embed_viewer' ) ) {
             ob_start();
-            do_action('pdfev_template_single_header');
-            echo do_shortcode('[pdfev_embed_viewer id="' . get_the_ID() . '"]');
-            do_action('pdfev_template_single_footer');
+            // The wrapping div matters, not just for cosmetics: every width/
+            // spacing rule for .header/.navigation is written as descendant
+            // selectors off .pdfev-embed-viewer (assets/css/frontend.css).
+            // Without this wrapper, do_action('pdfev_template_single_header')/
+            // _footer() print .header/.navigation as siblings of the
+            // shortcode's own .pdfev-embed-viewer div instead of descendants
+            // of it — none of that CSS would match, and the theme's own
+            // constrained-width wrapper (a different, narrower content width
+            // than the plugin's own 1300px) would size them instead, which is
+            // exactly why they rendered narrower than the flipbook below
+            // them. template/single.php (the classic-theme path) already
+            // wraps all three the same way — this just matches it.
+            ?>
+            <div class="pdfev-embed-viewer">
+                <?php
+                do_action( 'pdfev_template_single_header' );
+                echo do_shortcode( '[pdfev_embed_viewer id="' . get_the_ID() . '"]' );
+                do_action( 'pdfev_template_single_footer' );
+                ?>
+            </div>
+            <?php
             return ob_get_clean();
+        }
+
+        return $block_content;
+    }
+
+    public function suppress_singular_block( $block_content, $block ) {
+        if ( is_singular( 'pdfev_embed_viewer' ) ) {
+            return '';
+        }
+        return $block_content;
+    }
+
+    public function suppress_redundant_patterns( $block_content, $block ) {
+        // Singular only — the archive view is a full template override (see
+        // archive_template() above), which never runs the theme's own
+        // archive.html through the block-rendering pipeline in the first
+        // place, so this filter has nothing to do there.
+        if ( ! is_singular( 'pdfev_embed_viewer' ) ) {
+            return $block_content;
+        }
+        $slug = $block['attrs']['slug'] ?? '';
+        $redundant_keywords = [ 'written-by', 'byline', 'post-navigation', 'more-posts', 'comments' ];
+        foreach ( $redundant_keywords as $keyword ) {
+            if ( strpos( $slug, $keyword ) !== false ) {
+                return '';
+            }
+        }
+        return $block_content;
+    }
+
+    public function suppress_empty_group( $block_content, $block ) {
+        // Singular only, same reasoning as the two filters above. The theme
+        // wraps core/post-terms in its own padded group — this CPT has no
+        // post_tag terms, so post-terms itself renders nothing, but the
+        // wrapping group's own top/bottom padding (from theme.json spacing
+        // presets) still rendered, leaving a large empty gap between the
+        // plugin's content and the site footer. A group that renders down to
+        // no visible content (whitespace/comments only) serves no purpose —
+        // hiding it removes that dead padding along with it. Scoped to empty
+        // *groups* specifically (not just any empty block) so it can't
+        // accidentally swallow a legitimately content-less block that's
+        // supposed to render its own visible chrome.
+        if ( is_singular( 'pdfev_embed_viewer' ) && trim( wp_strip_all_tags( $block_content ) ) === '' ) {
+            return '';
         }
         return $block_content;
     }

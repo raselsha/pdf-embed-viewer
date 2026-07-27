@@ -1,54 +1,22 @@
-<?php 
+<?php
 /**
  * @package pdv-embed-viewer
  * @version 1.0.0
  * @template single page
- * To customize single page tempalale; you can copy this template folder to your theme directory. 
+ * To customize single page tempalale; you can copy this template folder to your theme directory.
  * If you used child theme, put into parent direcotory first.
  */
 if( ! defined('ABSPATH') ) { die( "Don't access directly" ); }
 
-if ( wp_is_block_theme() ) {  ?>
-<!DOCTYPE html>
-<html <?php language_attributes(); ?>>
-<head>
-	<meta charset="<?php bloginfo( 'charset' ); ?>">
-	<?php
-	$block_content = do_blocks( '
-		<!-- wp:group {"layout":{"type":"constrained"}} -->
-		<div class="wp-block-group">
-		<!-- wp:post-content /-->
-		</div>
-		<!-- /wp:group -->'
- 	);
-    wp_head(); ?>
-</head>
-<body <?php body_class(); ?>>
-<?php wp_body_open(); ?>
-<div class="wp-site-blocks">
-<header class="wp-block-template-part site-header">
-    <?php block_header_area(); ?>
-</header>
-</div>
-<?php
-} else {
-    get_header();	
-}
+// Classic (non-block) themes only — CPT::archive_template() in
+// classes/cpt-register.php only routes here when wp_is_block_theme() is
+// false, so plain get_header()/get_footer() is the theme's real, native
+// header/footer here, not a compatibility shim.
+get_header();
 ?>
-
 
 <!-- Here Archive Template will display -->
 <?php do_action('pdfev_template_archive_view'); ?>
 
-
-<?php if ( wp_is_block_theme() ) : ?>
-	<footer class="wp-block-template-part">
-		<?php block_footer_area(); ?>
-	</footer>
-	<?php wp_footer(); ?>
-</body>  
-
-<?php else: ?>
-	<?php get_footer(); ?>
-<?php endif; ?>
-
+<?php
+get_footer();
