@@ -796,20 +796,36 @@
     selection.removeAllRanges();
     selection.addRange(range);
 
+    // Icon-only copy buttons (e.g. the metabox's shortcode field) have no
+    // .pdfev-btn-label to swap text on — a brief color change on the button
+    // itself is the feedback there instead. Buttons that DO still carry a
+    // text label (the Shortcode Generator tab) keep getting both: the color
+    // change plus the existing "Copied!"/"Failed!" swap.
     var label = $button.find('.pdfev-btn-label');
+    var flashState = function (state) {
+        $button.removeClass('is-copied is-copy-error').addClass(state);
+        setTimeout(function () {
+            $button.removeClass(state);
+        }, 1500);
+    };
     try {
         const successful = document.execCommand('copy');
         if (successful) {
-            label.text('Copied!');
-            setTimeout(() => {
-                label.text('Copy');
-            }, 1500);
+            flashState('is-copied');
+            if (label.length) {
+                label.text('Copied!');
+                setTimeout(() => {
+                    label.text('Copy');
+                }, 1500);
+            }
         } else {
-            label.text('Failed!');
+            flashState('is-copy-error');
+            if (label.length) label.text('Failed!');
         }
     } catch (err) {
         console.error('Copy failed', err);
-        label.text('Error!');
+        flashState('is-copy-error');
+        if (label.length) label.text('Error!');
     }
 
     selection.removeAllRanges();
