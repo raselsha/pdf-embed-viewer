@@ -2,17 +2,19 @@
 
 Contributors:      raselsha
 Requires at least: 3.0
-Tested up to:      6.9
+Tested up to:      7.0
 Requires PHP:      7.0
-Stable tag:        1.5.0
+Stable tag:        1.5.1
 License:           GPLv2 or later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
-Tags:              3d-flipbook, ebook, flipbook, pdf-embed, elementor
+Tags:              pdf-viewer, pdf-embed, flipbook, 3d-flipbook, ebook, elementor, document-viewer, digital-publishing
 
-Display PDFs as interactive 3D flipbooks or standard viewers—ideal for eBooks, manuals, newsletters, and reports.
+Embed PDFs as an interactive 3D flipbook or standard viewer — perfect for eBooks, catalogs, manuals, newsletters & reports.
 
 == Description ==
-**3D Flipbook PDF Viewer & Embedder** enables you to embed and display PDFs on your WordPress site in both traditional and interactive 3D Flipbook modes. Easily showcase documents, newsletters, and eBooks with read/download counters, customizable action buttons, and an intuitive interface. Elementor widgets are included for drag-and-drop embedding of single PDFs or archive. Watch [live Demo](https://pdf-embed-viewer.free.nf) 
+**3D Flipbook PDF Viewer & Embedder** is a free WordPress plugin for displaying PDF documents as a realistic, interactive **3D page-flip flipbook** — or as a standard traditional PDF viewer — anywhere on your site. It's the PDF viewer of choice for eBooks, digital magazines, product catalogs, brochures, manuals, newsletters, and reports.
+
+No coding required: upload a PDF, drop in a shortcode (or use the included **Elementor** widgets for full drag-and-drop setup), and you're done. Built-in read/download counters, customizable action buttons, category organization, and a modern PDF Embed admin screen make it easy to manage a whole library of documents. Watch [live Demo](https://flipbook.lieusoft.com/)
 
 https://www.youtube.com/watch?v=8EgfVxynlPo
 
@@ -94,8 +96,11 @@ Display a single PDF by post ID:
 
 ## Features
 
-- **Embed PDFs Anywhere**  
+- **Embed PDFs Anywhere**
   Add PDFs to any post or page with a shortcode—choose between traditional or interactive 3D Flipbook views.
+
+- **Seamless Theme Integration**
+  The single PDF page renders using your active theme's own header and footer, including modern block themes—no mismatched styling or duplicated titles.
 
 - **Multiple Archive Templates**  
   Display your PDFs in `list`, `grid`, `ebook`, or `newsletter` layouts.
@@ -115,13 +120,16 @@ Display a single PDF by post ID:
 - **Category Support**  
   Organize PDFs by category for easy browsing.
 
-- **Remote PDFs Support**  
-  Rmote Resource can be used like external server file can be used.
+- **Remote PDFs Support**
+  A remote PDF URL can be used directly, or cloned into your own Media Library with one click.
 
-- **Interactive Ebook View**  
-  The `ebook` template features a hover-preview for a realistic book effect.
+- **Interactive Ebook View**
+  The `ebook` template opens each cover on hover with a smooth 3D animation and shows a real preview of the document's next page, not just a placeholder.
 
-- **3D Flipbook & Standard Modes**  
+- **Reading Direction (RTL/LTR) Support**
+  Set each document's reading direction individually — the flipbook, its Previous/Next arrows, and the ebook grid's hover animation all mirror correctly for Arabic, Hebrew, and other right-to-left documents.
+
+- **3D Flipbook & Standard Modes**
   Let users switch between immersive 3D and standard PDF views.
 
 - **Usage Counters**  
@@ -160,7 +168,14 @@ Display a single PDF by post ID:
 - **Read & Download Button Control**  
   Show or hide Read and Download buttons as needed.
 
-== Screenshot ==
+== Screenshots ==
+
+1. Interactive 3D flipbook view with realistic page-flip animation.
+2. E-Book archive grid — hover a cover to flip it open and preview the document.
+3. List, Grid, and Newsletter archive layouts for displaying multiple PDFs.
+4. Modern PDF Embed post editor — General, Book Info, and Template tabs.
+5. Plugin settings dashboard with archive, display, and branding options.
+6. Elementor widgets for drag-and-drop Archive and Single PDF views.
 
 == Installation ==
 
@@ -190,6 +205,19 @@ For more details, see the [Appsero Privacy Policy](https://appsero.com/privacy-p
 * French (fr_FR)
 
 == Changelog ==
+
+= 1.5.1 =
+* Added a per-document Reading Direction (RTL/LTR) setting — the flipbook, its Previous/Next arrows, and the E-Book archive grid's hover effect all now flip correctly for Arabic/Hebrew and other right-to-left documents, on a per-book basis.
+* Redesigned the E-Book archive grid: a smoother 3D cover-flip animation, a real preview of the document's second page rendered on hover (instead of a placeholder icon), hardcover-style page-thickness edges, and a fully responsive grid sized to the covers themselves.
+* Fixed the single PDF page's header and footer looking different from the rest of the site on block themes (e.g. a smaller site title, missing navigation) — it now matches the theme's own header/footer exactly.
+* Fixed a block theme adding its own duplicate title, a blank byline, and unrelated content (a second Previous/Next navigation, a "more posts" list) around the plugin's single PDF page.
+* Fixed the single PDF page's title/actions and Previous/Next navigation not lining up with the width of the PDF viewer below them.
+* Fixed a large empty gap that could appear at the bottom of the single PDF page on block themes.
+* Added a "Download to Media Library" button to clone a remote PDF URL into your own site's Media Library.
+* The Featured Image box now stays in sync with the Book Cover preview when you set a featured image.
+* Redesigned the Book Info and Template tabs of the PDF editor screen with the same modern dropdowns, panels, and description editor as the rest of the settings.
+* Added a Copy button for the single-item shortcode shown in the post editor.
+* Fixed the settings page's bottom Save button not submitting the form.
 
 = 1.5.0 =
 * Redesigned the settings page and the PDF editor screen with a modern sidebar-navigation layout, cards, toggles, and styled dropdowns.
@@ -348,11 +376,23 @@ For more details, see the [Appsero Privacy Policy](https://appsero.com/privacy-p
 
 == Frequently Asked Questions ==
 
+= What is the best free WordPress plugin for a 3D flipbook PDF viewer? =
+3D Flipbook PDF Viewer & Embedder lets you display any PDF as a realistic, interactive page-flip flipbook — or as a standard PDF viewer — on any post, page, or Elementor layout, completely free.
+
 = How do I embed a PDF on a single page or post? =
 Use the shortcode `[pdfev_embed_viewer id="post_id"]`, replacing `post_id` with the ID of your uploaded PDF post.
 
+= How do I show a PDF as a flipbook instead of a plain embed? =
+Every uploaded PDF automatically gets an interactive 3D Flipbook view — visitors can toggle between the Flipbook and a Traditional (standard) viewer right on the page, no extra setup needed.
+
 = Can I create a gallery or archive of multiple PDFs? =
 Yes! Use `[pdfev_viewer template="list"]`, `[pdfev_viewer template="grid"]`, `[pdfev_viewer template="ebook"]`, or `[pdfev_viewer template="newsletter"]` to display different archive layouts.
+
+= Does it support right-to-left (RTL) documents like Arabic or Hebrew PDFs? =
+Yes. Each document has its own Reading Direction setting — when set to RTL, the flipbook, its Previous/Next navigation, and the E-Book grid's hover animation all mirror correctly for that document, independent of your site's overall language.
+
+= Will the single PDF page match my theme, including block themes? =
+Yes. The single PDF view renders using your active theme's own header and footer — including modern block themes like Twenty Twenty-Five — so it looks like a native part of your site, not a plugin bolt-on.
 
 = Does the plugin support Elementor? =
 Yes, the plugin includes Elementor widgets for both archive and single PDF views. You can drag-and-drop PDF lists or individual PDF viewers into your pages, with full support for shortcode attributes and visual customization.
@@ -361,7 +401,7 @@ Yes, the plugin includes Elementor widgets for both archive and single PDF views
 Yes, you can assign categories to your PDFs, making it easy to organize and allow users to browse documents by topic or type.
 
 = Can I use my PDFs from a remote server? =
-Yes, you can add your remote server PDFs. File should be permitted from remote server to access.
+Yes, you can link to a PDF hosted on a remote server, or clone it into your own Media Library with one click.
 
 
 = How do I track how many times a PDF is read or downloaded? =

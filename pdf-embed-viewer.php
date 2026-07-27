@@ -1,9 +1,9 @@
 <?php
 /**
- * Plugin Name: 3D Flipbook PDF Viewer & Embedder – E-Books, Manuals, Newsletters, Reports
+ * Plugin Name: 3D Flipbook PDF Viewer & Embedder
  * Plugin URI: https://pdf-embed-viewer.free.nf/
- * Description: Display PDFs as interactive 3D flipbooks or traditional viewers for E-Books, Manuals, Newsletters, and Reports.
- * Version: 1.5.0
+ * Description: Embed PDFs as an interactive 3D flipbook or a standard viewer — perfect for eBooks, catalogs, brochures, manuals, newsletters, and reports.
+ * Version: 1.5.1
  * Stable Tag: trunk
  * Requires at least: 3.0
  * Requires PHP:      7.0
@@ -43,7 +43,7 @@ if( ! class_exists( 'PDFEV_Embed_Viewer' ) ){
         public function define_contstants(){
             define( 'PDFEV_Const_Path', plugin_dir_path(__FILE__) );
             define( 'PDFEV_Const_URL', plugin_dir_url(__FILE__) );
-            define( 'PDFEV_Const_VERSION', '1.5.0' );
+            define( 'PDFEV_Const_VERSION', '1.5.1' );
         }
 
         public static function include_plugin_files() {
