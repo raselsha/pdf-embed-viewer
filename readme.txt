@@ -4,7 +4,7 @@ Contributors:      raselsha
 Requires at least: 3.0
 Tested up to:      7.0
 Requires PHP:      7.0
-Stable tag:        1.5.1
+Stable tag:        1.5.2
 License:           GPLv2 or later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 Tags:              pdf-viewer, pdf-embed, flipbook, 3d-flipbook, ebook
