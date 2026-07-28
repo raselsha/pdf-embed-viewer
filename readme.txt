@@ -7,14 +7,14 @@ Requires PHP:      7.0
 Stable tag:        1.5.1
 License:           GPLv2 or later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
-Tags:              pdf-viewer, pdf-embed, flipbook, 3d-flipbook, ebook, elementor, document-viewer, digital-publishing
+Tags:              pdf-viewer, pdf-embed, flipbook, 3d-flipbook, ebook
 
 Embed PDFs as an interactive 3D flipbook or standard viewer — perfect for eBooks, catalogs, manuals, newsletters & reports.
 
 == Description ==
 **3D Flipbook PDF Viewer & Embedder** is a free WordPress plugin for displaying PDF documents as a realistic, interactive **3D page-flip flipbook** — or as a standard traditional PDF viewer — anywhere on your site. It's the PDF viewer of choice for eBooks, digital magazines, product catalogs, brochures, manuals, newsletters, and reports.
 
-No coding required: upload a PDF, drop in a shortcode (or use the included **Elementor** widgets for full drag-and-drop setup), and you're done. Built-in read/download counters, customizable action buttons, category organization, and a modern PDF Embed admin screen make it easy to manage a whole library of documents. Watch [live Demo](https://flipbook.lieusoft.com/)
+No coding required: upload a PDF, drop in a shortcode (or use the included **Elementor** widgets for full drag-and-drop setup), and you're done. Built-in read/download counters, customizable action buttons, category organization, and a modern PDF Embed admin screen make it easy to manage a whole library of documents. Watch [Live Demo](https://flipbook.lieusoft.com/)
 
 https://www.youtube.com/watch?v=8EgfVxynlPo
 
