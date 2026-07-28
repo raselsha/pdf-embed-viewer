@@ -472,27 +472,22 @@
                         }
                     }
 
-                    .button.pdfev-emd-vwr-upload,
-                    .button.pdfev-emd-vwr-copy{
+                    .button.pdfev-emd-vwr-upload{
                         display: inline-flex;
                         align-items: center;
                         gap: 6px;
                         white-space: nowrap;
                         flex-shrink: 0;
 
-                        .dashicons,
-                        .pdfev-icon-copy{
+                        .dashicons{
                             width: 16px;
                             height: 16px;
                             font-size: 16px;
                             flex-shrink: 0;
-                        }
-
-                        /* dashicons is an icon font — its glyph sits on the font's own
-                           baseline/line-height, not centered in the box just by setting
-                           width/height, so it renders slightly above vertical-center
-                           next to the label text without this. */
-                        .dashicons{
+                            /* dashicons is an icon font — its glyph sits on the font's own
+                               baseline/line-height, not centered in the box just by setting
+                               width/height, so it renders slightly above vertical-center
+                               next to the label text without this. */
                             display: inline-flex;
                             align-items: center;
                             justify-content: center;
@@ -500,61 +495,98 @@
                         }
                     }
 
-                    /* Fixed width, sized for the longest label ("Copied!"/"Failed!") —
-                       without this the button visibly grows/shrinks as its label swaps
-                       between "Copy" and the (longer) result text on click. */
-                    .pdfev-btn-label{
-                        display: inline-block;
-                        min-width: 56px;
-                        text-align: left;
+                    /* Bare icon button — deliberately NOT a .button (no WP-core
+                       border/padding/background at all): just the copy icon,
+                       clickable, with a small hit-area cushion from the
+                       padding below rather than any visible chrome. */
+                    .pdfev-emd-vwr-copy{
+                        display: inline-flex;
+                        align-items: center;
+                        gap: 6px;
+                        background: none;
+                        border: none;
+                        box-shadow: none;
+                        margin: 0;
+                        padding: 4px;
+                        cursor: pointer;
+                        color: var(--pdfev-mb-muted);
+                        border-radius: var(--pdfev-mb-radius-sm);
+
+                        .pdfev-icon-copy{
+                            width: 16px;
+                            height: 16px;
+                            flex-shrink: 0;
+                            transition: color .15s ease;
+                        }
+
+                        &:hover{
+                            color: var(--pdfev-mb-ink);
+                        }
+
+                        /* The icon itself also flashes success/error-colored,
+                           alongside the shortcode box swapping out for the
+                           "Copied" message below — removed again after ~1s so
+                           everything is back to its plain resting state,
+                           ready to copy again. */
+                        &.is-copied{
+                            color: #1a7f37;
+                        }
+
+                        &.is-copy-error{
+                            color: #b32d2e;
+                        }
                     }
 
-                    /* Icon-only variant (no .pdfev-btn-label at all) — a
-                       small square button instead of one sized to fit a
-                       text label it no longer has. */
-                    .button.pdfev-emd-vwr-copy--icon-only{
-                        gap: 0;
-                        width: 30px;
-                        height: 30px;
-                        padding: 0;
-                        justify-content: center;
-                    }
+                    /* The shortcode holder itself stays put and just flashes
+                       on a successful/failed copy — its shortcode text fades
+                       out and .pdfev-copy-success-message (a child, positioned
+                       to overlay the same box) fades in centered in its
+                       place, until the ~1s feedback window ends. */
+                    #pdfev-single-shortcode{
+                        position: relative;
 
-                    /* Feedback is a brief color change on the icon/button
-                       itself (added by JS as a class, removed again after
-                       ~1.5s) rather than swapping text — this is what makes
-                       an icon-only copy button still communicate success/
-                       failure without a label to update. */
-                    /* !important: WP core's own .button hover/focus state
-                       (var(--accent-2) in current admin color schemes) is
-                       equal-or-higher specificity and otherwise wins over
-                       this plain class chain whenever the mouse happens to
-                       still be over the button right after the click that
-                       triggered this state — which, in practice, is always. */
-                    .button.pdfev-emd-vwr-copy.is-copied{
-                        color: #1a7f37 !important;
-                        border-color: #1a7f37 !important;
-                        transition: color .15s ease, border-color .15s ease;
-                    }
+                        .pdfev-shortcode-text{
+                            transition: opacity .1s ease;
+                        }
 
-                    .button.pdfev-emd-vwr-copy.is-copy-error{
-                        color: #b32d2e !important;
-                        border-color: #b32d2e !important;
-                        transition: color .15s ease, border-color .15s ease;
-                    }
+                        .pdfev-copy-success-message{
+                            position: absolute;
+                            inset: 0;
+                            display: none;
+                            align-items: center;
+                            justify-content: center;
+                            background: var(--pdfev-mb-surface);
+                            border-radius: inherit;
+                            font-size: 12.5px;
+                            font-weight: 600;
+                            white-space: nowrap;
+                        }
 
-                    /* The button naturally still has focus right after the
-                       click that triggered this state — WP core's default
-                       2px blue focus ring (box-shadow, not border) would
-                       otherwise visually swamp the green/red color change
-                       above, since a thick ring reads more prominently than
-                       a 1px border. */
-                    .button.pdfev-emd-vwr-copy.is-copied:focus{
-                        box-shadow: 0 0 0 2px #1a7f37 !important;
-                    }
+                        &.is-copied{
+                            animation: pdfev-shortcode-blink-success .5s ease-in-out 1;
 
-                    .button.pdfev-emd-vwr-copy.is-copy-error:focus{
-                        box-shadow: 0 0 0 2px #b32d2e !important;
+                            .pdfev-shortcode-text{
+                                opacity: 0;
+                            }
+
+                            .pdfev-copy-success-message{
+                                display: flex;
+                                color: #1a7f37;
+                            }
+                        }
+
+                        &.is-copy-error{
+                            animation: pdfev-shortcode-blink-error .5s ease-in-out 1;
+
+                            .pdfev-shortcode-text{
+                                opacity: 0;
+                            }
+
+                            .pdfev-copy-success-message{
+                                display: flex;
+                                color: #b32d2e;
+                            }
+                        }
                     }
 
                 }
@@ -2405,4 +2437,33 @@ body.post-type-pdfev_embed_viewer{
 @keyframes pdfev-spin {
   0%   { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+/* Hoisted out of #pdfev-single-shortcode's .is-copied/.is-copy-error rules
+   (the metabox shortcode holder's copy-feedback blink) for the same reason
+   as @keyframes spin above. */
+@keyframes pdfev-shortcode-blink-success{
+    0%, 100%{
+        background-color: var(--pdfev-mb-surface);
+        border-color: var(--pdfev-mb-border);
+    }
+    50%{
+        /* --pdfev-primary itself (the site's configurable Brand Primary
+           color, #c79f62 by default) at low opacity for the background tint,
+           and at full strength for the thin 1px border the code chip
+           already has — no box-shadow glow on top, just those two. */
+        background-color: rgba(199, 159, 98, .18);
+        border-color: var(--pdfev-primary);
+    }
+}
+
+@keyframes pdfev-shortcode-blink-error{
+    0%, 100%{
+        background-color: var(--pdfev-mb-surface);
+        border-color: var(--pdfev-mb-border);
+    }
+    50%{
+        background-color: rgba(179, 45, 46, .18);
+        border-color: #b32d2e;
+    }
 }

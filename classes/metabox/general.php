@@ -316,8 +316,11 @@ class Metabox_General{
                                 <span><?php echo esc_html__('Add this shortcode to any page or post to view pdf','pdf-embed-viewer') ?></span>
                             </div>
                             <div class="pdfev-metabox-field-control pdfev-metabox-field-control--inline">
-                                <code id="pdfev-single-shortcode"><?php echo esc_html('[pdfev_embed_viewer id="' . get_the_ID() . '"]') ?></code>
-                                <button type="button" id="pdfev-copy-single-shortcode" class="button pdfev-emd-vwr-copy pdfev-emd-vwr-copy--icon-only" title="<?php echo esc_attr__('Copy shortcode', 'pdf-embed-viewer'); ?>" aria-label="<?php echo esc_attr__('Copy shortcode', 'pdf-embed-viewer'); ?>">
+                                <code id="pdfev-single-shortcode">
+                                    <span class="pdfev-shortcode-text"><?php echo esc_html('[pdfev_embed_viewer id="' . get_the_ID() . '"]') ?></span>
+                                    <span class="pdfev-copy-success-message"><?php echo esc_html__('Copied', 'pdf-embed-viewer'); ?></span>
+                                </code>
+                                <button type="button" id="pdfev-copy-single-shortcode" class="pdfev-emd-vwr-copy pdfev-emd-vwr-copy--icon-only" title="<?php echo esc_attr__('Copy shortcode', 'pdf-embed-viewer'); ?>" aria-label="<?php echo esc_attr__('Copy shortcode', 'pdf-embed-viewer'); ?>">
                                     <svg class="pdfev-icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                                 </button>
                             </div>

@@ -792,21 +792,36 @@
     const element = document.getElementById(targetElementId);
     if (!element) return;
 
-    range.selectNodeContents(element);
+    // The metabox's shortcode holder wraps its actual text in its own
+    // .pdfev-shortcode-text span, sitting alongside a hidden
+    // .pdfev-copy-success-message in the same element — selecting the
+    // whole element would sweep that hidden "Copied" text into the
+    // clipboard too, so select just the text span when one exists.
+    const textNode = element.querySelector('.pdfev-shortcode-text') || element;
+    range.selectNodeContents(textNode);
     selection.removeAllRanges();
     selection.addRange(range);
 
-    // Icon-only copy buttons (e.g. the metabox's shortcode field) have no
-    // .pdfev-btn-label to swap text on — a brief color change on the button
-    // itself is the feedback there instead. Buttons that DO still carry a
-    // text label (the Shortcode Generator tab) keep getting both: the color
-    // change plus the existing "Copied!"/"Failed!" swap.
+    // Two different copy buttons share this function. The Shortcode
+    // Generator tab's button keeps its own separate "Copy" text label
+    // (.pdfev-btn-label) and swaps it to "Copied!"/"Failed!". The metabox's
+    // icon-only button instead keeps its shortcode holder visible and
+    // blinking, swapping in a centered .pdfev-copy-success-message (a
+    // child of the holder, overlaying its text) — the icon, the holder,
+    // and that message all turn success/error-colored together, then all
+    // revert back to the plain resting state after ~1s so it's ready to
+    // copy again.
     var label = $button.find('.pdfev-btn-label');
+    var $element = $(element);
+    var successMessage = $element.find('.pdfev-copy-success-message');
+    var successMessageDefaultText = successMessage.length ? successMessage.text() : '';
+    var $stateTargets = $button.add($element).add(successMessage);
     var flashState = function (state) {
-        $button.removeClass('is-copied is-copy-error').addClass(state);
+        $stateTargets.removeClass('is-copied is-copy-error').addClass(state);
         setTimeout(function () {
-            $button.removeClass(state);
-        }, 1500);
+            $stateTargets.removeClass(state);
+            if (successMessage.length) successMessage.text(successMessageDefaultText);
+        }, 1000);
     };
     try {
         const successful = document.execCommand('copy');
@@ -816,16 +831,18 @@
                 label.text('Copied!');
                 setTimeout(() => {
                     label.text('Copy');
-                }, 1500);
+                }, 1000);
             }
         } else {
             flashState('is-copy-error');
             if (label.length) label.text('Failed!');
+            if (successMessage.length) successMessage.text('Failed');
         }
     } catch (err) {
         console.error('Copy failed', err);
         flashState('is-copy-error');
         if (label.length) label.text('Error!');
+        if (successMessage.length) successMessage.text('Error');
     }
 
     selection.removeAllRanges();
