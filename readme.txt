@@ -1,4 +1,4 @@
-=== 3D Flipbook PDF Viewer & Embedder ===
+=== Flipbook PDF Viewer & Embedder ===
 
 Contributors:      raselsha
 Requires at least: 3.0
