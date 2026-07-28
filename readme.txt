@@ -206,6 +206,10 @@ For more details, see the [Appsero Privacy Policy](https://appsero.com/privacy-p
 
 == Changelog ==
 
+= 1.5.2 =
+* Renamed the plugin from "3D Flipbook PDF Viewer & Embedder" to "Flipbook PDF Viewer & Embedder".
+* Trimmed the plugin's WordPress.org search tags down to the 5 that actually count toward search ranking.
+
 = 1.5.1 =
 * Added a per-document Reading Direction (RTL/LTR) setting — the flipbook, its Previous/Next arrows, and the E-Book archive grid's hover effect all now flip correctly for Arabic/Hebrew and other right-to-left documents, on a per-book basis.
 * Redesigned the E-Book archive grid: a smoother 3D cover-flip animation, a real preview of the document's second page rendered on hover (instead of a placeholder icon), hardcover-style page-thickness edges, and a fully responsive grid sized to the covers themselves.
