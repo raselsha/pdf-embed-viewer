@@ -249,6 +249,18 @@ jQuery(document).ready(function ($) {
         // instead of relying on the (corrupted) blob: URL for loading.
         if (pdfBytes) {
           options.pdfOpenOptions = { data: new Uint8Array(pdfBytes) };
+        } else {
+          // 3dflipbook's default pdf.js config leaves HTTP Range requests
+          // enabled (disableRange: false) so it can lazily fetch pages on
+          // demand. Some hosts/CDNs (seen on Pantheon, and others that
+          // gzip-compress or otherwise mangle Range responses for PDF
+          // files) advertise Range support but return bytes that don't
+          // match what pdf.js's xref table expects, which surfaces as a
+          // "Bad end offset" parse error and a blank viewer. Forcing a
+          // single plain full-file fetch sidesteps that whole class of
+          // host/CDN Range bugs at the cost of not lazily streaming very
+          // large PDFs.
+          options.pdfOpenOptions = { disableRange: true, disableStream: true };
         }
 
         $viewer.FlipBook(options);

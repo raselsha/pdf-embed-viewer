@@ -4,7 +4,7 @@ Contributors:      raselsha
 Requires at least: 3.0
 Tested up to:      7.0
 Requires PHP:      7.0
-Stable tag:        1.5.2
+Stable tag:        1.5.3
 License:           GPLv2 or later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 Tags:              pdf-viewer, pdf-embed, flipbook, 3d-flipbook, ebook
@@ -205,6 +205,9 @@ For more details, see the [Appsero Privacy Policy](https://appsero.com/privacy-p
 * French (fr_FR)
 
 == Changelog ==
+
+= 1.5.3 =
+* Fixed: the flipbook could fail to open on some hosts/CDNs with a "Bad end offset" error and a blank viewer, caused by HTTP Range request responses for the PDF file being altered in transit. The viewer now always fetches the full file in one request instead of relying on Range support.
 
 = 1.5.2 =
 * Renamed the plugin from "3D Flipbook PDF Viewer & Embedder" to "Flipbook PDF Viewer & Embedder".
