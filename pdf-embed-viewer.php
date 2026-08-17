@@ -40,12 +40,17 @@ defined('ABSPATH') || exit;
 require_once __DIR__ . '/vendor/appneck/wordpress-sdk/appneck-sdk.php';
 appneck_sdk_load_latest();
 
-$GLOBALS['pdfev_appneck_sdk'] = \Appneck\Sdk\Sdk::bootstrap(
+$pdfev_appneck_sdk = \Appneck\Sdk\Sdk::bootstrap(
     'pk_NurTf7YKoxbzurJTlG7CQyTPWX73xLQe',
     'sk_zZXfQb1i30owdpbZCKbuCeJjMrnW1gx7qzp2NqhyoNJmeXRk',
     'https://appneck.com',
     __FILE__
 );
+$GLOBALS['pdfev_appneck_sdk'] = $pdfev_appneck_sdk;
+
+add_action( 'admin_notices', function () use ( $pdfev_appneck_sdk ) {
+    $pdfev_appneck_sdk->announcement_notices()->render();
+} );
 
 if( ! class_exists( 'PDFEV_Embed_Viewer' ) ){
     class PDFEV_Embed_Viewer{
