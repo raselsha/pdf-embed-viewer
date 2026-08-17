@@ -32,6 +32,21 @@ along with PDF Embed Viewer. If not, see https://www.gnu.org/licenses/gpl-2.0.ht
 
 defined('ABSPATH') || exit;
 
+// Appneck SDK — opt-in usage telemetry, alongside the existing Appsero
+// integration (classes/functions.php). Must run here, at the plugin's
+// synchronous top-level load, not deferred to plugins_loaded: bootstrap()
+// calls register_activation_hook()/register_deactivation_hook() on our
+// behalf, and WordPress only honours those calls during this exact phase.
+require_once __DIR__ . '/vendor/appneck/wordpress-sdk/appneck-sdk.php';
+appneck_sdk_load_latest();
+
+$GLOBALS['pdfev_appneck_sdk'] = \Appneck\Sdk\Sdk::bootstrap(
+    'pk_NurTf7YKoxbzurJTlG7CQyTPWX73xLQe',
+    'sk_zZXfQb1i30owdpbZCKbuCeJjMrnW1gx7qzp2NqhyoNJmeXRk',
+    'https://appneck.com',
+    __FILE__
+);
+
 if( ! class_exists( 'PDFEV_Embed_Viewer' ) ){
     class PDFEV_Embed_Viewer{
 
