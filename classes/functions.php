@@ -281,7 +281,7 @@ if( ! class_exists('PDFEV_Functions') ){
         }
 
         public static function get_post_order(){
-            return 'DSC';
+            return 'DESC';
         }
         /**
          * get_pdf_link() will return the pdf link using pdf ID
@@ -370,10 +370,18 @@ if( ! class_exists('PDFEV_Functions') ){
                 'show_filesize' => $show_filesize,
             );
 
+            $order = $order ? strtoupper( $order ) : self::get_post_order();
+            $order = in_array( $order, [ 'ASC', 'DESC' ], true ) ? $order : 'DESC';
+
             $args = array(
                 'post_type' => self::get_cpt_name(),
                 'post_status' => 'publish',
-                'order' => $order ? $order : self::get_post_order(),
+                // Mirror get_archive_query()'s ordering exactly (menu_order first,
+                // date as the tiebreaker) so "Load More" pagination never re-sorts
+                // items relative to the page that loaded first. The newsletter
+                // template paginates by year tab instead of this AJAX handler, so
+                // it never reaches this branch.
+                'orderby' => [ 'menu_order' => 'ASC', 'date' => $order ],
                 'posts_per_page' => $limit ? $limit : get_option( 'posts_per_page' ),
                 'paged' => $paged,
             );

@@ -4,7 +4,7 @@ Contributors:      raselsha
 Requires at least: 3.0
 Tested up to:      7.0
 Requires PHP:      7.0
-Stable tag:        1.5.3
+Stable tag:        1.5.4
 License:           GPLv2 or later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 Tags:              pdf-viewer, pdf-embed, flipbook, 3d-flipbook, ebook
@@ -205,6 +205,11 @@ For more details, see the [Appsero Privacy Policy](https://appsero.com/privacy-p
 * French (fr_FR)
 
 == Changelog ==
+
+= 1.5.4 =
+* Added: PDF display order can now be set manually — drag and drop to reorder in the "PDF Embed" admin list (or set an exact position via the Order field on each PDF's edit screen), and the Grid, List and Ebook archive views now respect that order. A PDF uploaded later no longer has to sort by date away from the related ones it belongs with.
+* Redesigned the "PDF Embed" admin list screen: cleaner columns, status badges, taxonomy pills, and a one-click copy button for each item's shortcode.
+* Security fix: the demo-data importer's AJAX handler skipped its nonce check entirely whenever the nonce field was simply missing from the request, instead of failing closed. It's now verified unconditionally, and a capability check was added.
 
 = 1.5.3 =
 * Fixed: the flipbook could fail to open on some hosts/CDNs with a "Bad end offset" error and a blank viewer, caused by HTTP Range request responses for the PDF file being altered in transit. The viewer now always fetches the full file in one request instead of relying on Range support.

@@ -39,12 +39,20 @@ class Insert_Demo {
     }
 
     public function import_demo_data(){
-        
-        if( isset( $_POST['ajaxnonce'] ) ){
-            if( ! wp_verify_nonce( sanitize_text_field( wp_unslash ( $_POST['ajaxnonce'] ) ) , 'pdf_ajax_nonce' ) ){
-                wp_send_json_error('Invalid nonce');
-                return;
-            }
+
+        // Fail closed: no nonce (or a bad one) must never fall through to the
+        // import below. The previous `if (isset($nonce))` guard with no else
+        // skipped verification entirely whenever the field was simply absent
+        // from the request — exactly the pattern this codebase's own CLAUDE.md
+        // calls out as a bug (see Metabox_General::save_post()'s doc comment).
+        if ( ! isset( $_POST['ajaxnonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['ajaxnonce'] ) ), 'pdf_ajax_nonce' ) ) {
+            wp_send_json_error( 'Invalid nonce' );
+            return;
+        }
+
+        if ( ! current_user_can( 'manage_options' ) ) {
+            wp_send_json_error( 'Permission denied' );
+            return;
         }
 
         $success = $this->insert_demo_post_xml();

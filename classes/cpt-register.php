@@ -15,6 +15,8 @@ class CPT{
         add_filter( 'manage_pdfev_embed_viewer_posts_columns', array($this,'posts_columns') ) ;
         add_action( 'manage_pdfev_embed_viewer_posts_custom_column', array($this,'custom_column'),10,2 ) ;
         add_filter( 'manage_edit-pdfev_embed_viewer_sortable_columns', array($this,'sortable_columns') ) ;
+        add_action( 'admin_enqueue_scripts', array($this,'enqueue_list_screen_assets') ) ;
+        add_action( 'wp_ajax_pdfev_save_order', array($this,'ajax_save_order') ) ;
         add_filter( 'archive_template', array($this,'archive_template') ) ;
         add_filter( 'single_template', array($this,'single_template') ) ;
         // Block themes, singular view ONLY (not the archive — see the long
@@ -56,7 +58,19 @@ class CPT{
 
     public function posts_columns($columns){
         unset($columns['date']);
-        $columns['pdfev_meta_download'] = esc_html__('Download Enable','pdf-embed-viewer');
+
+        // Insert the drag-reorder handle right after the checkbox column, before
+        // Title — array_merge would lose the 'cb' position, so rebuild in place.
+        $with_handle = [];
+        foreach ( $columns as $key => $label ) {
+            $with_handle[ $key ] = $label;
+            if ( 'cb' === $key ) {
+                $with_handle['pdfev_reorder'] = '';
+            }
+        }
+        $columns = $with_handle;
+
+        $columns['pdfev_meta_download'] = esc_html__('Download','pdf-embed-viewer');
         $columns['pdfev_meta_views_count'] = esc_html__('Views','pdf-embed-viewer');
         $columns['pdfev_meta_downloads_count'] = esc_html__('Downloads','pdf-embed-viewer');
         $columns['shortcode_column'] = esc_html__('Shortcode','pdf-embed-viewer');
@@ -69,24 +83,41 @@ class CPT{
     public function custom_column($columns, $post_id){
 
         switch($columns){
+            case 'pdfev_reorder':
+                echo '<span class="pdfev-drag-handle" title="' . esc_attr__( 'Drag to reorder', 'pdf-embed-viewer' ) . '">'
+                    . '<svg width="10" height="16" viewBox="0 0 10 16" fill="currentColor" aria-hidden="true">'
+                    . '<circle cx="2.5" cy="2.5" r="1.5"/><circle cx="7.5" cy="2.5" r="1.5"/>'
+                    . '<circle cx="2.5" cy="8" r="1.5"/><circle cx="7.5" cy="8" r="1.5"/>'
+                    . '<circle cx="2.5" cy="13.5" r="1.5"/><circle cx="7.5" cy="13.5" r="1.5"/>'
+                    . '</svg>'
+                    . '</span>';
+            break;
             case 'pdfev_meta_pdf_url':
-                echo esc_url(get_post_meta($post_id,'pdfev_meta_pdf_url',true));
+                $url = get_post_meta($post_id,'pdfev_meta_pdf_url',true);
+                if ( $url ) {
+                    echo '<a href="' . esc_url($url) . '" class="pdfev-file-url" target="_blank" rel="noopener noreferrer" title="' . esc_attr($url) . '">' . esc_html($url) . '</a>';
+                }
             break;
             case 'pdfev_meta_download':
-                echo esc_html(get_post_meta($post_id,'pdfev_meta_download',true));
+                $enabled = get_post_meta($post_id,'pdfev_meta_download',true) === 'yes';
+                echo '<span class="pdfev-badge ' . ( $enabled ? 'pdfev-badge--on' : 'pdfev-badge--off' ) . '">' . ( $enabled ? esc_html__('Enabled','pdf-embed-viewer') : esc_html__('Disabled','pdf-embed-viewer') ) . '</span>';
             break;
             case 'pdfev_meta_downloads_count':
                 $downloads = get_post_meta($post_id,'pdfev_meta_downloads_count',true);
                 $downloads = $downloads?$downloads:0;
-                echo esc_html($downloads);
+                echo '<span class="pdfev-stat">' . esc_html($downloads) . '</span>';
             break;
             case 'pdfev_meta_views_count':
                 $views = get_post_meta($post_id,'pdfev_meta_views_count',true);
                 $views = $views?$views:0;
-                echo esc_html($views);
+                echo '<span class="pdfev-stat">' . esc_html($views) . '</span>';
             break;
             case 'shortcode_column':
-                echo esc_html('[pdfev_embed_viewer id="'.get_the_ID().'"]');
+                $shortcode = '[pdfev_embed_viewer id="'.get_the_ID().'"]';
+                echo '<span class="pdfev-shortcode-cell">';
+                echo '<code class="pdfev-shortcode-chip" title="' . esc_attr($shortcode) . '">' . esc_html($shortcode) . '</code>';
+                echo '<button type="button" class="pdfev-copy-btn" data-copy="' . esc_attr($shortcode) . '" title="' . esc_attr__('Copy shortcode','pdf-embed-viewer') . '"><span class="dashicons dashicons-clipboard"></span></button>';
+                echo '</span>';
             break;
         }
     }
@@ -98,6 +129,86 @@ class CPT{
         $columns['pdfev_meta_views_count']='pdfev_meta_views_count';
         $columns['shortcode_column']='ID';
         return $columns;
+    }
+
+    /**
+     * Loads the drag-to-reorder handle only on this CPT's own list screen, and
+     * only when the list is showing its natural, unfiltered order — dragging
+     * while searching, filtering by taxonomy, or sorted by a column (Views,
+     * Downloads, ...) would silently reorder a subset that doesn't match what
+     * a plain "PDF Embed" visit shows, which is confusing rather than useful.
+     */
+    public function enqueue_list_screen_assets( $hook ) {
+        if ( 'edit.php' !== $hook || ! isset( $_GET['post_type'] ) || 'pdfev_embed_viewer' !== $_GET['post_type'] ) {
+            return;
+        }
+
+        $is_filtered = ! empty( $_GET['s'] )
+            || ! empty( $_GET['orderby'] )
+            || ! empty( $_GET['pdfev_category'] )
+            || ! empty( $_GET['pdfev_author'] )
+            || ! empty( $_GET['pdfev_publisher'] )
+            || ( isset( $_GET['post_status'] ) && 'publish' !== $_GET['post_status'] && '' !== $_GET['post_status'] );
+
+        $per_page = (int) get_user_option( 'edit_pdfev_embed_viewer_per_page' );
+        $per_page = $per_page > 0 ? $per_page : 20; // WP_List_Table's own built-in default.
+        $paged    = isset( $_GET['paged'] ) ? max( 1, absint( $_GET['paged'] ) ) : 1;
+
+        // Visual refresh of the native WP_List_Table markup — colors, spacing,
+        // badges, chips — no structural HTML changes, so bulk actions, quick
+        // edit, screen options and search/filter all keep working untouched.
+        $list_css_path = PDFEV_Const_Path . 'assets/css/admin-list.css';
+        $list_css_ver  = file_exists( $list_css_path ) ? filemtime( $list_css_path ) : PDFEV_Const_VERSION;
+        wp_enqueue_style( 'pdfev-admin-list', PDFEV_Const_URL . 'assets/css/admin-list.css', [], $list_css_ver );
+
+        $list_js_path = PDFEV_Const_Path . 'assets/js/admin-list.js';
+        $list_js_ver  = file_exists( $list_js_path ) ? filemtime( $list_js_path ) : PDFEV_Const_VERSION;
+        wp_enqueue_script( 'pdfev-admin-list', PDFEV_Const_URL . 'assets/js/admin-list.js', [ 'jquery' ], $list_js_ver, true );
+
+        wp_enqueue_style( 'pdfev-admin-reorder', PDFEV_Const_URL . 'assets/css/admin-reorder.css', [ 'pdfev-admin-list' ], PDFEV_Const_VERSION );
+
+        $reorder_js_path = PDFEV_Const_Path . 'assets/js/admin-reorder.js';
+        $reorder_js_ver  = file_exists( $reorder_js_path ) ? filemtime( $reorder_js_path ) : PDFEV_Const_VERSION;
+        wp_enqueue_script( 'pdfev-admin-reorder', PDFEV_Const_URL . 'assets/js/admin-reorder.js', [ 'jquery', 'jquery-ui-sortable' ], $reorder_js_ver, true );
+
+        wp_localize_script( 'pdfev-admin-reorder', 'pdfevReorder', [
+            'ajaxurl'    => admin_url( 'admin-ajax.php' ),
+            'ajaxnonce'  => wp_create_nonce( 'pdf_ajax_nonce' ),
+            'canReorder' => ! $is_filtered,
+            'pageOffset' => ( $paged - 1 ) * $per_page,
+        ] );
+    }
+
+    /**
+     * Persists a drag-and-drop reorder from the admin list screen. `order` is
+     * the dragged row IDs in their new top-to-bottom sequence; `pdfev_reorder.php`'s
+     * client adds the current page's offset before sending, so page 2+ doesn't
+     * collide with page 1's menu_order values. Every ID is verified to actually
+     * be this CPT before touching it — this endpoint must never become a way to
+     * reorder (or, via a crafted ID, expose the existence of) unrelated posts.
+     */
+    public function ajax_save_order() {
+        check_ajax_referer( 'pdf_ajax_nonce', 'ajaxnonce' );
+
+        if ( ! current_user_can( 'edit_others_posts' ) ) {
+            wp_send_json_error( [ 'message' => __( 'Permission denied.', 'pdf-embed-viewer' ) ] );
+        }
+
+        $offset = isset( $_POST['offset'] ) ? absint( $_POST['offset'] ) : 0;
+        $order  = isset( $_POST['order'] ) && is_array( $_POST['order'] ) ? array_map( 'absint', wp_unslash( $_POST['order'] ) ) : [];
+
+        if ( empty( $order ) ) {
+            wp_send_json_error( [ 'message' => __( 'Nothing to reorder.', 'pdf-embed-viewer' ) ] );
+        }
+
+        foreach ( $order as $position => $post_id ) {
+            if ( 'pdfev_embed_viewer' !== get_post_type( $post_id ) ) {
+                continue;
+            }
+            wp_update_post( [ 'ID' => $post_id, 'menu_order' => $offset + $position ] );
+        }
+
+        wp_send_json_success();
     }
 
 
@@ -179,7 +290,7 @@ class CPT{
             "description" => __( "PDF Embed", 'pdf-embed-viewer' ),
             "labels" => $labels, 
             "public" => true,
-            "supports" => [ "title",'thumbnail'], // post support ui elements
+            "supports" => [ "title",'thumbnail','page-attributes'], // post support ui elements — page-attributes adds the "Order" field and (this CPT is already hierarchical) native drag-and-drop reordering on the admin list screen
             "hierarchical" => true, //parent child relation post type
             "show_ui" => true, // post type show ui to add, edit
             "show_in_menu" => true, // show menu into admin sidebar

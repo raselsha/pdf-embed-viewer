@@ -1,0 +1,25 @@
+.wp-list-table .column-pdfev_reorder {
+  width: 24px;
+  padding-right: 0;
+  text-align: center;
+}
+
+.pdfev-drag-handle {
+  cursor: move;
+  color: #a7aaad;
+}
+
+.pdfev-drag-handle:hover {
+  color: #3c434a;
+}
+
+.pdfev-reorder-placeholder {
+  background-color: #f0f6fc;
+  outline: 1px dashed #2271b1;
+  outline-offset: -1px;
+}
+
+.ui-sortable-helper {
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}

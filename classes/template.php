@@ -34,10 +34,21 @@ class Template{
     }
 
     public static function get_archive_query($atts = [], $paged = 1) {
+        $order = isset($atts['order']) && $atts['order'] !== '' ? strtoupper($atts['order']) : \PDFEV_Functions::get_post_order();
+        $order = in_array($order, ['ASC', 'DESC'], true) ? $order : 'DESC';
+
         $args = array(
             'post_type'=> \PDFEV_Functions::get_cpt_name(),
             'post_status' => 'publish',
-            'order' => isset($atts['order']) && $atts['order'] !== '' ? $atts['order'] : \PDFEV_Functions::get_post_order(),
+            // Respect the admin's manual drag-and-drop order (Page Attributes'
+            // "Order" field, native to this hierarchical CPT) first, so PDFs
+            // uploaded later can still be positioned next to the related ones
+            // they belong with. Items nobody has manually reordered all share
+            // menu_order 0, so `date` breaks ties among them — this keeps the
+            // pre-existing "newest first" behavior for anyone who never touches
+            // the Order field. `$order` (default DESC) only ever controls that
+            // date tiebreaker, not the manual positions themselves.
+            'orderby' => [ 'menu_order' => 'ASC', 'date' => $order ],
             'posts_per_page'=> isset($atts['limit']) && absint($atts['limit']) ? absint($atts['limit']) : get_option( 'posts_per_page' ),
             'paged' => $paged,
         );
