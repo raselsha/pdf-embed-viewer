@@ -2020,7 +2020,12 @@ body.post-type-pdfev_embed_viewer{
                 color: var(--pdfev-admin-ink);
             }
 
-            span{
+            /* Direct child only: this styles the field's own description.
+               As a plain descendant selector it also matched the spans the
+               color picker builds its drag handles from, stretching the round
+               square handle into an ellipse and the hue slider's handle into
+               a box (the margin and min-height below are what distorted them). */
+            > span{
                 display: block;
                 margin: 2px 0 6px;
                 font-size: 11.5px;
@@ -2466,4 +2471,28 @@ body.post-type-pdfev_embed_viewer{
         background-color: rgba(179, 45, 46, .18);
         border-color: #b32d2e;
     }
+}
+
+/* ===========color picker (iris) box model========== */
+/* Iris predates border-box and sizes everything as content-box: the panel
+   computes its usable width as (width - 20) and lays out the saturation
+   square (77.5%) + gap + hue strip (12%) to fill it, and the round square
+   handle is a 12px box with a 5px border — 22px in total — pulled onto its
+   value point with left/top: -10px.
+
+   This stylesheet puts the settings screen on border-box, which breaks both:
+   the 1px iris-border eats into the declared 255px, so .iris-picker-inner
+   resolves to 233px against children already sized for 235 — a ~0.6px
+   overflow that floats the hue strip down below the square, where it reads
+   as a tall stray bar over the fields underneath — and the handle collapses
+   from 22px to 12px, so it sits up-and-left of its point instead of centred
+   on it.
+
+   Restoring content-box across the picker's whole subtree matches how stock
+   wp-admin renders it (verified by measuring the same picker with this
+   stylesheet disabled). !important because the border-box rule above would
+   otherwise win. */
+.wp-picker-container .iris-picker,
+.wp-picker-container .iris-picker * {
+    box-sizing: content-box !important;
 }

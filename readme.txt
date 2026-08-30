@@ -4,7 +4,7 @@ Contributors:      raselsha
 Requires at least: 3.0
 Tested up to:      7.0
 Requires PHP:      7.0
-Stable tag:        1.5.4
+Stable tag:        1.5.5
 License:           GPLv2 or later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 Tags:              pdf-viewer, pdf-embed, flipbook, 3d-flipbook, ebook
@@ -205,6 +205,10 @@ For more details, see the [Appsero Privacy Policy](https://appsero.com/privacy-p
 * French (fr_FR)
 
 == Changelog ==
+
+= 1.5.5 =
+* Fixed the color pickers on the settings page rendering incorrectly: the hue slider dropped below the color square instead of sitting beside it (showing as a tall stray bar over the fields underneath), and the round drag handle rendered half its size and off-centre from the color it pointed at.
+* Fixed the color pickers' drag handles being stretched out of shape — the round handle into an ellipse and the hue slider's handle into a box.
 
 = 1.5.4 =
 * Added: PDF display order can now be set manually — drag and drop to reorder in the "PDF Embed" admin list (or set an exact position via the Order field on each PDF's edit screen), and the Grid, List and Ebook archive views now respect that order. A PDF uploaded later no longer has to sort by date away from the related ones it belongs with.
