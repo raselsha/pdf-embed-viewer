@@ -121,6 +121,7 @@ class General_Settings{
         $light          = $colors['light']?$colors['light']:'#e5e5e5';
         $container_border = $colors['container_border'] ?? '';
         $container_bg      = $colors['container_bg'] ?? '';
+        $container_max_width = get_option('pdfev_container_max_width');
 
         // Lets an add-on (e.g. pdf-embed-viewer-pro) insert its own sidebar nav
         // entries (typically before 'demo', so "Demo Content" stays last).
@@ -266,6 +267,11 @@ class General_Settings{
                             <label for="pdfev_color_container_bg"><?php esc_html_e('Book Container Background', 'pdf-embed-viewer'); ?></label>
                             <span><?php esc_html_e('Background behind the book/viewer container. Leave blank for transparent.', 'pdf-embed-viewer'); ?></span>
                             <input id="pdfev_color_container_bg" class="pdfev-color-field" type="text" name="pdfev_css_colors[container_bg]" value="<?php echo esc_attr($container_bg); ?>" data-default-color="">
+                        </div>
+                        <div class="pdfev-color-item">
+                            <label for="pdfev_container_max_width"><?php esc_html_e('Container Max Width', 'pdf-embed-viewer'); ?></label>
+                            <span><?php esc_html_e('Widest the whole viewer (book + toolbar) is allowed to grow, in pixels. Leave blank for the default (1300px).', 'pdf-embed-viewer'); ?></span>
+                            <input id="pdfev_container_max_width" type="number" min="200" step="10" name="pdfev_container_max_width" value="<?php echo esc_attr($container_max_width); ?>" placeholder="1300">
                         </div>
                     </div>
                 </div>
@@ -450,6 +456,9 @@ class General_Settings{
             update_option('pdfev_show_total_pages', $show_total_pages);
             update_option('pdfev_show_filesize', $show_filesize);
             update_option('pdfev_css_colors',$colors );
+
+            $container_max_width = isset( $_POST['pdfev_container_max_width'] ) && $_POST['pdfev_container_max_width'] !== '' ? absint( $_POST['pdfev_container_max_width'] ) : '';
+            update_option('pdfev_container_max_width', $container_max_width);
         }
     }
 }

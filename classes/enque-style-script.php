@@ -130,6 +130,7 @@ class Enque_Style{
         // via var(--x, fallback) when these are empty.
         $container_border = ! empty($colors['container_border']) ? esc_html($colors['container_border']) : '';
         $container_bg      = ! empty($colors['container_bg']) ? esc_html($colors['container_bg']) : '';
+        $container_max_width = absint( get_option('pdfev_container_max_width') );
         $inline_css = ":root{
                 --pdfev-primary:{$primary };
                 --pdfev-secondary:{$secondary};
@@ -137,6 +138,7 @@ class Enque_Style{
                 --pdfev-light:{$light};
                 " . ( $container_border !== '' ? "--pdfev-container-border:1px solid {$container_border};" : '' ) . "
                 " . ( $container_bg !== '' ? "--pdfev-container-bg:{$container_bg};" : '' ) . "
+                " . ( $container_max_width > 0 ? "--pdfev-container-max-width:{$container_max_width}px;" : '' ) . "
                 }
             ";
         wp_add_inline_style('pdfev-frontend-style', $inline_css);
