@@ -432,8 +432,14 @@ class Template{
     ?>
         <div class="pdfev-display-switcher">
             <div class="toggle-button">
+                <?php
+                $show_view_switcher = get_option('pdfev_show_view_switcher');
+                $show_view_switcher = $show_view_switcher ? $show_view_switcher : 'yes';
+                if ( $show_view_switcher === 'yes' ) :
+                ?>
                 <a class="button btn pdfev-show-flipbook <?php echo esc_attr($flipbook=='yes'?'active':''); ?>"><i class="fas fa-book-open"></i> <?php _e('Flipbook','pdf-embed-viewer'); ?></a>
                 <a class="button btn pdfev-show-traditional <?php echo esc_attr($flipbook=='yes'?'':'active'); ?>"><i class="fas fa-book"></i> <?php _e('Traditional','pdf-embed-viewer'); ?></a>
+                <?php endif; ?>
             </div>
             <div class="pdfev-3dbook-container" style="display: <?php echo esc_attr($flipbook=='yes'?'block':'none'); ?>;">
                 <div class="pdfev-3dbook-viewer" id="pdfev-3dbook-<?php echo esc_attr($post_id); ?>" data-id="<?php echo esc_attr($post_id); ?>" data-pdfev-url="<?php echo esc_attr($display_link); ?>" data-pdfev-rtl="<?php echo $rtl ? 'yes' : 'no'; ?>" <?php echo $is_protected ? 'data-pdfev-protected="yes"' : ''; ?>></div>

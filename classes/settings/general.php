@@ -81,6 +81,9 @@ class General_Settings{
         $flipbook =  get_option('pdfev_flipbook_status');
         $flipbook = $flipbook ? $flipbook : 'yes';
 
+        $show_view_switcher = get_option('pdfev_show_view_switcher');
+        $show_view_switcher = $show_view_switcher ? $show_view_switcher : 'yes';
+
         $archive_read =  get_option('pdfev_archive_read');
         $archive_read = $archive_read ? $archive_read : 'no';
 
@@ -206,6 +209,7 @@ class General_Settings{
                     <div class="pdfev-section-body pdfev-toggle-grid">
                         <?php
                         $this->toggle_row('pdfev_flipbook_status', __('Default View: 3D Flipbook', 'pdf-embed-viewer'), $flipbook, __('Open PDFs in the interactive 3D flipbook viewer instead of a plain iframe.', 'pdf-embed-viewer'));
+                        $this->toggle_row('pdfev_show_view_switcher', __('Show Flipbook/Traditional Switcher', 'pdf-embed-viewer'), $show_view_switcher, __('Display the Flipbook/Traditional toggle buttons above the viewer. Turn off to always show just the default view, with no switcher (the Download button, controlled separately, is unaffected).', 'pdf-embed-viewer'));
                         $this->toggle_row('pdfev_archive_read', __('Show Read Button', 'pdf-embed-viewer'), $archive_read, __('Display a Read button on each PDF card in the archive.', 'pdf-embed-viewer'));
                         $this->toggle_row('pdfev_reading_counter', __('Show Reading Counter', 'pdf-embed-viewer'), $reading_counter, __('Track and display how many times each PDF has been viewed.', 'pdf-embed-viewer'));
                         $this->toggle_row('pdfev_archive_download', __('Show Download Button', 'pdf-embed-viewer'), $archive_download, __('Display a Download button on each PDF card in the archive.', 'pdf-embed-viewer'));
@@ -418,6 +422,7 @@ class General_Settings{
             $shortcode_page_url = isset( $_POST['pdfev_shortcode_page_url'] ) ? sanitize_text_field($_POST['pdfev_shortcode_page_url']): '';
             $archive_template   = isset( $_POST['pdfev_archive_template'] ) ? sanitize_text_field($_POST['pdfev_archive_template']): 'list';
             $flipbook           = isset( $_POST['pdfev_flipbook_status'] ) ? sanitize_text_field($_POST['pdfev_flipbook_status']): 'no';
+            $show_view_switcher = isset( $_POST['pdfev_show_view_switcher'] ) ? sanitize_text_field($_POST['pdfev_show_view_switcher']): 'no';
             $archive_read       = isset( $_POST['pdfev_archive_read'] ) ? sanitize_text_field($_POST['pdfev_archive_read']): 'no';
             $reading_counter    = isset( $_POST['pdfev_reading_counter'] ) ? sanitize_text_field($_POST['pdfev_reading_counter']): 'no';
             $archive_download   = isset( $_POST['pdfev_archive_download'] ) ? sanitize_text_field($_POST['pdfev_archive_download']): 'no';
@@ -450,6 +455,7 @@ class General_Settings{
             update_option('pdfev_shortcode_page_url',$shortcode_page_url);
             update_option('pdfev_archive_template',$archive_template);
             update_option('pdfev_flipbook_status',$flipbook);
+            update_option('pdfev_show_view_switcher',$show_view_switcher);
             update_option('pdfev_archive_read',$archive_read);
             update_option('pdfev_reading_counter',$reading_counter);
             update_option('pdfev_archive_download',$archive_download);

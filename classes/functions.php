@@ -257,8 +257,14 @@ if( ! class_exists('PDFEV_Functions') ){
                 <?php endif; ?>
                 <div class="pdfev-display-switcher">
                     <div class="toggle-button">
+                        <?php
+                        $show_view_switcher = get_option('pdfev_show_view_switcher');
+                        $show_view_switcher = $show_view_switcher ? $show_view_switcher : 'yes';
+                        if ( $show_view_switcher === 'yes' ) :
+                        ?>
                         <a class="button btn pdfev-show-flipbook <?php echo esc_attr($flipbook=='yes'?'active':''); ?>"><i class="fas fa-book-open"></i> <?php _e('Flipbook','pdf-embed-viewer'); ?></a>
                         <a class="button btn pdfev-show-traditional <?php echo esc_attr($flipbook=='yes'?'':'active'); ?>"><i class="fas fa-book"></i> <?php _e('Traditional','pdf-embed-viewer'); ?></a>
+                        <?php endif; ?>
                         <?php
                         if(!is_singular(PDFEV_Functions::get_cpt_name())):
                             PDFEV_Functions::download_button_single_page_view($post_id);
