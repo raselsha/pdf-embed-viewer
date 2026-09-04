@@ -93,7 +93,11 @@
   // DOM (only one of .nav-tab/.pdfev-tab ever exists on a given page, so
   // there's never a collision between the two restores below either).
   var pdfevTabStorageKey = 'pdfevActiveTab';
-  var pdfevMetaboxTabStorageKey = 'pdfevActiveMetaboxTab';
+  // Scoped to the specific post being edited (localStorage is domain-wide,
+  // not per-page) — an unscoped key meant clicking "Template" once on any
+  // post made it the "remembered" default on every OTHER post's edit
+  // screen too, not just a same-post reload restoring where you left off.
+  var pdfevMetaboxTabStorageKey = 'pdfevActiveMetaboxTab_' + (typeof pdfevAjax !== 'undefined' ? pdfevAjax.post_id : '0');
   $(document).on('click','[data-tab-target]',function(){
     $('[data-tab-target]').removeClass('active');
     $(this).addClass('active');
