@@ -68,7 +68,9 @@ class Enque_Style{
         if( $is_pdf_page ){
             // css ===
             wp_enqueue_style('pdfev-font-awesome',PDFEV_Const_URL.'vendor/font-awesome/font-awesome.min.css',[],PDFEV_Const_VERSION,'all');
-            wp_enqueue_style('pdfev-frontend-style',PDFEV_Const_URL.'assets/css/frontend.css',[],PDFEV_Const_VERSION,'all');
+            $frontend_css_path = PDFEV_Const_Path.'assets/css/frontend.css';
+            $frontend_css_ver = file_exists($frontend_css_path) ? filemtime($frontend_css_path) : PDFEV_Const_VERSION;
+            wp_enqueue_style('pdfev-frontend-style',PDFEV_Const_URL.'assets/css/frontend.css',[],$frontend_css_ver,'all');
             // javascript ===
             $frontend_js_path = PDFEV_Const_Path.'assets/js/frontend.js';
             $frontend_js_ver = file_exists($frontend_js_path) ? filemtime($frontend_js_path) : PDFEV_Const_VERSION;
