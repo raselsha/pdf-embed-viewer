@@ -8,9 +8,17 @@ namespace PDFEV;
 
 defined('ABSPATH') || exit;
 class Shortcode{
+    // Set true the moment either shortcode callback actually runs — the only
+    // reliable signal when a shortcode is invoked via do_shortcode() in a
+    // theme template (e.g. flipbook-theme's front-page.php hero demo)
+    // rather than sitting in a post's saved post_content, which is the only
+    // thing Enque_Style::frontend_style()'s own has_shortcode() check can
+    // see ahead of time. See Enque_Style::late_frontend_style().
+    public static $shortcode_used = false;
+
     public function __construct() {
         add_action('init', [$this,'register_shortcode']);
-    } 
+    }
 
     public function register_shortcode() {
         add_shortcode('pdfev_viewer', [$this,'archive_pdf_shortcode'] );
@@ -18,6 +26,7 @@ class Shortcode{
     }
 
     public function single_pdf_shortcode($atts) {
+        self::$shortcode_used = true;
         $atts = shortcode_atts(
             array(
                 'id' => '',
@@ -44,6 +53,7 @@ class Shortcode{
     }
     
     public function archive_pdf_shortcode($atts) {
+        self::$shortcode_used = true;
         // Set default attributes and merge with user-provided attributes
         $atts = shortcode_atts(
             array(
