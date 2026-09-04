@@ -185,10 +185,11 @@
 .pdfev-embed-viewer .pdfev-3dbook-container {
   box-sizing: border-box;
   /* Reserved aspect-ratio height for the whole viewer (book + toolbar).
-     60% read as too short for portrait-oriented books/covers, squeezing
-     the book down to a fraction of the available width to keep its own
-     ratio — bumped for more standard breathing room. */
-  padding-top: min(75%, 85vh);
+     60% read as too short for portrait-oriented books/covers; 75% (tried
+     first) overshot the other way — a very tall, mostly-empty-looking card
+     while the book streams in, uneven space around the book once loaded.
+     65% is the middle ground. */
+  padding-top: min(65%, 80vh);
   position: relative;
   background-color: var(--pdfev-container-bg, transparent);
   margin-bottom: 25px;
