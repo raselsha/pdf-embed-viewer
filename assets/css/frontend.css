@@ -192,7 +192,7 @@
   padding-top: min(65%, 80vh);
   position: relative;
   background-color: var(--pdfev-container-bg, transparent);
-  margin-bottom: 25px;
+  margin-bottom: 0;
   border: var(--pdfev-container-border, none);
   border-radius: 12px;
 }
