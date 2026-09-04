@@ -35,6 +35,7 @@ class Shortcode{
                 'show_publisher' => '',
                 'show_year'           => 'yes',
                 'show_edition'        => 'yes',
+                'show_download'       => '',
             ),
             $atts,
             'pdfev_embed_viewer'

@@ -267,7 +267,7 @@ if( ! class_exists('PDFEV_Functions') ){
                         <?php endif; ?>
                         <?php
                         if(!is_singular(PDFEV_Functions::get_cpt_name())):
-                            PDFEV_Functions::download_button_single_page_view($post_id);
+                            PDFEV_Functions::download_button_single_page_view($post_id, $atts);
                         endif;
                         ?>
                     </div>
@@ -505,10 +505,22 @@ if( ! class_exists('PDFEV_Functions') ){
             endif;
         }
 
-        public static function download_button_single_page_view($post_id){
-            $check_download  = get_post_meta( $post_id, 'pdfev_meta_download', true );
+        /**
+         * $shortcode_atts['show_download'], if explicitly passed (e.g.
+         * [pdfev_embed_viewer id="215" show_download="no"]), overrides this
+         * post's own pdfev_meta_download metabox setting for just this one
+         * embed — the same override-the-post-default pattern every other
+         * show_* shortcode attribute already follows (see archive_item_meta
+         * above). Falls back to the post meta when not passed, so existing
+         * embeds with no show_download attribute keep behaving exactly as
+         * before.
+         */
+        public static function download_button_single_page_view($post_id, $shortcode_atts = []){
+            $show_download = isset($shortcode_atts['show_download']) && $shortcode_atts['show_download'] !== ''
+                ? $shortcode_atts['show_download']
+                : get_post_meta( $post_id, 'pdfev_meta_download', true );
             $atts['post_id'] = $post_id;
-            if($check_download == 'yes'):
+            if($show_download == 'yes'):
                 self::get_download_button($atts);
             endif;
         }
