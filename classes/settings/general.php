@@ -215,8 +215,6 @@ class General_Settings{
                         $this->toggle_row('pdfev_archive_download', __('Show Download Button', 'pdf-embed-viewer'), $archive_download, __('Display a Download button on each PDF card in the archive.', 'pdf-embed-viewer'));
                         $this->toggle_row('pdfev_download_counter', __('Show Download Counter', 'pdf-embed-viewer'), $download_counter, __('Track and display how many times each PDF has been downloaded.', 'pdf-embed-viewer'));
                         ?>
-                    </div>
-                    <div class="pdfev-section-body">
                         <div class="pdfev-field-row">
                             <div class="pdfev-field-label">
                                 <label for="pdfev_container_max_width"><?php esc_html_e('Container Max Width', 'pdf-embed-viewer'); ?></label>
