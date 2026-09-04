@@ -212,6 +212,17 @@ class General_Settings{
                         $this->toggle_row('pdfev_download_counter', __('Show Download Counter', 'pdf-embed-viewer'), $download_counter, __('Track and display how many times each PDF has been downloaded.', 'pdf-embed-viewer'));
                         ?>
                     </div>
+                    <div class="pdfev-section-body">
+                        <div class="pdfev-field-row">
+                            <div class="pdfev-field-label">
+                                <label for="pdfev_container_max_width"><?php esc_html_e('Container Max Width', 'pdf-embed-viewer'); ?></label>
+                                <span><?php esc_html_e('Widest the whole viewer (book + toolbar) is allowed to grow, in pixels. Leave blank for the default (1300px).', 'pdf-embed-viewer'); ?></span>
+                            </div>
+                            <div class="pdfev-field-control">
+                                <input id="pdfev_container_max_width" type="number" min="200" step="10" name="pdfev_container_max_width" value="<?php echo esc_attr($container_max_width); ?>" placeholder="1300">
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="pdfev-settings-section" data-section="metadata">
@@ -267,11 +278,6 @@ class General_Settings{
                             <label for="pdfev_color_container_bg"><?php esc_html_e('Book Container Background', 'pdf-embed-viewer'); ?></label>
                             <span><?php esc_html_e('Background behind the book/viewer container. Leave blank for transparent.', 'pdf-embed-viewer'); ?></span>
                             <input id="pdfev_color_container_bg" class="pdfev-color-field" type="text" name="pdfev_css_colors[container_bg]" value="<?php echo esc_attr($container_bg); ?>" data-default-color="">
-                        </div>
-                        <div class="pdfev-color-item">
-                            <label for="pdfev_container_max_width"><?php esc_html_e('Container Max Width', 'pdf-embed-viewer'); ?></label>
-                            <span><?php esc_html_e('Widest the whole viewer (book + toolbar) is allowed to grow, in pixels. Leave blank for the default (1300px).', 'pdf-embed-viewer'); ?></span>
-                            <input id="pdfev_container_max_width" type="number" min="200" step="10" name="pdfev_container_max_width" value="<?php echo esc_attr($container_max_width); ?>" placeholder="1300">
                         </div>
                     </div>
                 </div>
