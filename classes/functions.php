@@ -513,7 +513,18 @@ if( ! class_exists('PDFEV_Functions') ){
             endif;
         }
 
-        public static function archive_item_meta($atts = []){
+        /**
+         * $parts controls which pieces this prints — 'all' (default,
+         * preserves every existing call site's behavior: author/pages/
+         * filesize, then description, then publisher/year/edition, in that
+         * fixed order) or 'description'/'meta' (meta = everything except
+         * description) individually, so a template that wants description
+         * positioned somewhere other than between the two meta blocks (e.g.
+         * the grid template's title → description → cover → meta order) can
+         * call this twice instead of fighting the combined block's fixed
+         * internal order.
+         */
+        public static function archive_item_meta($atts = [], $parts = 'all'){
            
             $show_description = isset($atts['show_description']) && $atts['show_description'] !== '' 
                 ? $atts['show_description'] 
@@ -627,18 +638,18 @@ if( ! class_exists('PDFEV_Functions') ){
 
             // ✅ Output
 
-            if (!empty($author_html)) {
+            if ($parts !== 'description' && !empty($author_html)) {
                 echo '<div class="pdfev-archive-meta">' . implode(' • ', $author_html) . '</div>';
             }
 
-            if ($show_description === 'yes') {
+            if ($parts !== 'meta' && $show_description === 'yes') {
                 $description = get_post_meta(get_the_ID(), 'pdfev_meta_description', true);
                 if (!empty($description)) {
                     echo '<div class="pdfev-archive-description">' . wp_kses_post(wpautop($description)) . '</div>';
                 }
             }
 
-            if (!empty($meta_parts)) {
+            if ($parts !== 'description' && !empty($meta_parts)) {
                 echo '<div class="pdfev-archive-meta">' . implode(' • ', $meta_parts) . '</div>';
             }
         }

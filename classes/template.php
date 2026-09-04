@@ -118,20 +118,21 @@ class Template{
             while ( $WpQuery->have_posts() ) : $WpQuery->the_post();
                 ?>
                 <div class="grid-item">
-                    <a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>"> 
+                    <h2><a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>">
+                        <?php
+                            $title = get_the_title();
+                            $trimmed_title = wp_html_excerpt($title, 80, '...');
+                            echo esc_html($trimmed_title);
+                        ?>
+                    </a></h2>
+                    <?php \PDFEV_Functions::archive_item_meta($atts, 'description'); ?>
+                    <a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>">
                         <div class="image">
                             <?php the_post_thumbnail() ?>
                             <span class="date"><?php the_time('d-m-Y'); ?></span>
                         </div>
                     </a>
-                    <h2><a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>"> 
-                        <?php
-                            $title = get_the_title(); 
-                            $trimmed_title = wp_html_excerpt($title, 80, '...');
-                            echo esc_html($trimmed_title);
-                        ?>
-                    </a></h2>
-                    <?php \PDFEV_Functions::archive_item_meta($atts); ?>
+                    <?php \PDFEV_Functions::archive_item_meta($atts, 'meta'); ?>
                     <div class="action">
                         <?php \PDFEV_Functions::read_button($atts); ?>
                         <?php \PDFEV_Functions::download_button($atts); ?>
