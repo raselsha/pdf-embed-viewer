@@ -427,16 +427,6 @@
   object-fit: contain;
   position: relative;
 }
-.pdfev-embed-viewer .archive-grid-style .grid-item .image::before {
-  content: "";
-  width: 100%;
-  height: inherit;
-  position: absolute;
-  left: 0;
-  right: 0;
-  z-index: 1;
-  background-image: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.468));
-}
 .pdfev-embed-viewer .archive-grid-style .grid-item h2 {
   font-size: 1rem;
   font-weight: 700;
