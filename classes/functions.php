@@ -568,50 +568,55 @@ if( ! class_exists('PDFEV_Functions') ){
                 : get_option('pdfev_show_edition');
 
 
-            $author_html = [];
-            $meta_parts = [];
+            // Each entry carries both a pre-joined 'bullet' string (the
+            // original "value1 • value2" line every non-grid caller still
+            // gets) and a plain 'label'/'value' pair (grid's own row
+            // layout, see the $parts === 'meta' branch below) — built once
+            // per field so switching layouts doesn't mean two separate
+            // passes over post terms/meta.
+            $group1 = []; // author, pages, filesize
+            $group2 = []; // publisher, year, edition
 
             // ✅ Author
             if ($show_author === 'yes') {
                 $author_terms = wp_get_post_terms(get_the_ID(), 'pdfev_author', ['fields' => 'names']);
                 if (!empty($author_terms)) {
-                    $author_html[] = sprintf(
-                        '<span class="pdfev-meta-author">%s %s</span>',
-                        esc_html__('by', 'pdf-embed-viewer'),
-                        esc_html(implode(', ', $author_terms))
-                    );
+                    $author_value = esc_html(implode(', ', $author_terms));
+                    $group1[] = [
+                        'label'  => esc_html__('Author', 'pdf-embed-viewer'),
+                        'value'  => $author_value,
+                        'bullet' => sprintf(
+                            '<span class="pdfev-meta-author">%s %s</span>',
+                            esc_html__('by', 'pdf-embed-viewer'),
+                            $author_value
+                        ),
+                    ];
                 }
-                
-                
             }
 
             if ($show_total_pages === 'yes') {
                 $total_pages = get_post_meta(get_the_ID(), 'pdfev_meta_total_pages', true);
                 if (!empty($total_pages)) {
-                    $total_pages = $total_pages . ' ' . esc_html__('Pages', 'pdf-embed-viewer');
-                } else {
-                    $total_pages = '';
-                }
-                if (!empty($total_pages)) {
-                    $author_html[] = sprintf(
-                        '<span class="pdfev-meta-total-pages">%s</span>',
-                        esc_html($total_pages)
-                    );
+                    $group1[] = [
+                        'label'  => esc_html__('Pages', 'pdf-embed-viewer'),
+                        'value'  => esc_html($total_pages),
+                        'bullet' => sprintf(
+                            '<span class="pdfev-meta-total-pages">%s</span>',
+                            esc_html($total_pages . ' ' . esc_html__('Pages', 'pdf-embed-viewer'))
+                        ),
+                    ];
                 }
             }
 
             if ($show_filesize === 'yes') {
                 $pdfev_size = get_post_meta(get_the_ID(), 'pdfev_meta_filesize', true);
                 if (!empty($pdfev_size)) {
-                    $pdfev_size = PDFEV_Functions::convert_file_size($pdfev_size);
-                } else {
-                    $pdfev_size = '';
-                }
-                if (!empty($pdfev_size)) {
-                    $author_html[] = sprintf(
-                        '<span class="pdfev-meta-filesize">%s</span>',
-                        esc_html($pdfev_size)
-                    );
+                    $pdfev_size = esc_html(PDFEV_Functions::convert_file_size($pdfev_size));
+                    $group1[] = [
+                        'label'  => esc_html__('File size', 'pdf-embed-viewer'),
+                        'value'  => $pdfev_size,
+                        'bullet' => sprintf('<span class="pdfev-meta-filesize">%s</span>', $pdfev_size),
+                    ];
                 }
             }
 
@@ -619,10 +624,12 @@ if( ! class_exists('PDFEV_Functions') ){
             if ($show_publisher === 'yes') {
                 $publisher_terms = wp_get_post_terms(get_the_ID(), 'pdfev_publisher', ['fields' => 'names']);
                 if (!empty($publisher_terms)) {
-                    $meta_parts[] = sprintf(
-                        '<span class="pdfev-meta-publisher">%s</span>',
-                        esc_html(implode(', ', $publisher_terms))
-                    );
+                    $publisher_value = esc_html(implode(', ', $publisher_terms));
+                    $group2[] = [
+                        'label'  => esc_html__('Publisher', 'pdf-embed-viewer'),
+                        'value'  => $publisher_value,
+                        'bullet' => sprintf('<span class="pdfev-meta-publisher">%s</span>', $publisher_value),
+                    ];
                 }
             }
 
@@ -630,10 +637,12 @@ if( ! class_exists('PDFEV_Functions') ){
             if ($show_year === 'yes') {
                 $year = get_post_meta(get_the_ID(), 'pdfev_meta_published_year', true);
                 if (!empty($year)) {
-                    $meta_parts[] = sprintf(
-                        '<span class="pdfev-meta-year">%s</span>',
-                        esc_html($year)
-                    );
+                    $year = esc_html($year);
+                    $group2[] = [
+                        'label'  => esc_html__('Year', 'pdf-embed-viewer'),
+                        'value'  => $year,
+                        'bullet' => sprintf('<span class="pdfev-meta-year">%s</span>', $year),
+                    ];
                 }
             }
 
@@ -641,17 +650,35 @@ if( ! class_exists('PDFEV_Functions') ){
             if ($show_edition === 'yes') {
                 $edition = get_post_meta(get_the_ID(), 'pdfev_meta_edition', true);
                 if (!empty($edition)) {
-                    $meta_parts[] = sprintf(
-                        '<span class="pdfev-meta-edition">%s</span>',
-                        esc_html($edition)
-                    );
+                    $edition = esc_html($edition);
+                    $group2[] = [
+                        'label'  => esc_html__('Edition', 'pdf-embed-viewer'),
+                        'value'  => $edition,
+                        'bullet' => sprintf('<span class="pdfev-meta-edition">%s</span>', $edition),
+                    ];
                 }
             }
 
             // ✅ Output
+            //
+            // 'meta' is only ever passed by the grid template — every other
+            // caller (list/newsletter/ebook/single-page) passes 'all' and
+            // keeps the original bullet-joined line untouched, so this row
+            // layout is grid-only.
+            if ($parts === 'meta') {
+                $rows = array_merge($group1, $group2);
+                if (!empty($rows)) {
+                    echo '<div class="pdfev-archive-meta pdfev-archive-meta-rows">';
+                    foreach ($rows as $row) {
+                        echo '<div class="pdfev-meta-row"><span class="pdfev-meta-label">' . $row['label'] . '</span><span class="pdfev-meta-value">' . $row['value'] . '</span></div>';
+                    }
+                    echo '</div>';
+                }
+                return;
+            }
 
-            if ($parts !== 'description' && !empty($author_html)) {
-                echo '<div class="pdfev-archive-meta">' . implode(' • ', $author_html) . '</div>';
+            if ($parts !== 'description' && !empty($group1)) {
+                echo '<div class="pdfev-archive-meta">' . implode(' • ', array_column($group1, 'bullet')) . '</div>';
             }
 
             if ($parts !== 'meta' && $show_description === 'yes') {
@@ -661,8 +688,8 @@ if( ! class_exists('PDFEV_Functions') ){
                 }
             }
 
-            if ($parts !== 'description' && !empty($meta_parts)) {
-                echo '<div class="pdfev-archive-meta">' . implode(' • ', $meta_parts) . '</div>';
+            if ($parts !== 'description' && !empty($group2)) {
+                echo '<div class="pdfev-archive-meta">' . implode(' • ', array_column($group2, 'bullet')) . '</div>';
             }
         }
 

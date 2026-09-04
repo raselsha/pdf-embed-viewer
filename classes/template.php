@@ -129,7 +129,6 @@ class Template{
                     <a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>">
                         <div class="image">
                             <?php the_post_thumbnail() ?>
-                            <span class="date"><?php the_time('d-m-Y'); ?></span>
                         </div>
                     </a>
                     <?php \PDFEV_Functions::archive_item_meta($atts, 'meta'); ?>
