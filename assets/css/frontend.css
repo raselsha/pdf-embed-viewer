@@ -190,12 +190,22 @@
   margin-bottom: 25px;
   border: var(--pdfev-container-border, none);
   border-radius: 12px;
-  overflow: hidden;
 }
+/* Rounding + clipping live on this inner wrapper (which holds the vendor's
+   own full-bleed iframe), not on the bordered box above it: a rounded box
+   that both draws a border AND clips an edge-to-edge iframe child is a known
+   cross-browser sore spot — the iframe's own compositing layer can bleed a
+   sub-pixel past the parent's clip on one side, painting straight over that
+   side's border line. Splitting the two responsibilities avoids the fight
+   entirely, at the cost of the border itself not being clipped by the
+   radius — invisible in practice since the border is drawn on the box's own
+   already-rounded edge. */
 .pdfev-embed-viewer .pdfev-3dbook-container .pdfev-3dbook-viewer {
   left: 0;
   top: 0;
   position: absolute;
+  border-radius: inherit;
+  overflow: hidden;
   height: 100%;
   width: 100%;
 }
