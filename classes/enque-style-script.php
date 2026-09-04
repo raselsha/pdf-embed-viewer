@@ -79,16 +79,23 @@ class Enque_Style{
             // wp_enqueue_script( 'pdf-3dflipbook', PDFEV_Const_URL.'vendor/3dflipbook/js/3dflipbook.js',[],PDFEV_Const_VERSION,true);
             wp_enqueue_script( 'pdf-simple-jquery-pdf', PDFEV_Const_URL.'vendor/3dflipbook/js/simple-jquery-pdf.js',[],PDFEV_Const_VERSION,true);
             
-            $colors         = get_option('pdfev_css_colors');         
+            $colors         = get_option('pdfev_css_colors');
             $primary        = esc_html($colors['primary'] ? $colors['primary'] : '#c79f62');
             $secondary      = esc_html($colors['secondary'] ? $colors['secondary'] : '#666');
             $dark           = esc_html($colors['dark'] ? $colors['dark'] : '#333');
             $light          = esc_html($colors['light'] ? $colors['light'] : '#e5e5e5');
+            // Both left unset by default (no border, transparent background) —
+            // .pdfev-3dbook-container's own CSS falls back to `none`/`transparent`
+            // via var(--x, fallback) when these are empty.
+            $container_border = ! empty($colors['container_border']) ? esc_html($colors['container_border']) : '';
+            $container_bg      = ! empty($colors['container_bg']) ? esc_html($colors['container_bg']) : '';
             $inline_css = ":root{
-                    --pdfev-primary:{$primary };        
+                    --pdfev-primary:{$primary };
                     --pdfev-secondary:{$secondary};
-                    --pdfev-dark:{$dark}; 
+                    --pdfev-dark:{$dark};
                     --pdfev-light:{$light};
+                    " . ( $container_border !== '' ? "--pdfev-container-border:1px solid {$container_border};" : '' ) . "
+                    " . ( $container_bg !== '' ? "--pdfev-container-bg:{$container_bg};" : '' ) . "
                     }
                 ";
             wp_add_inline_style('pdfev-frontend-style', $inline_css);

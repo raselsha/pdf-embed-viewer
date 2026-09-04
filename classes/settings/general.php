@@ -119,6 +119,8 @@ class General_Settings{
         $secondary      = $colors['secondary']?$colors['secondary']:'#666666';
         $dark           = $colors['dark']?$colors['dark']:'#333333';
         $light          = $colors['light']?$colors['light']:'#e5e5e5';
+        $container_border = $colors['container_border'] ?? '';
+        $container_bg      = $colors['container_bg'] ?? '';
 
         // Lets an add-on (e.g. pdf-embed-viewer-pro) insert its own sidebar nav
         // entries (typically before 'demo', so "Demo Content" stays last).
@@ -254,6 +256,16 @@ class General_Settings{
                             <label for="pdfev_color_light"><?php esc_html_e('Light', 'pdf-embed-viewer'); ?></label>
                             <span><?php esc_html_e('Used for backgrounds and subtle borders.', 'pdf-embed-viewer'); ?></span>
                             <input id="pdfev_color_light" class="pdfev-color-field" type="text" name="pdfev_css_colors[light]" value="<?php echo esc_attr($light); ?>">
+                        </div>
+                        <div class="pdfev-color-item">
+                            <label for="pdfev_color_container_border"><?php esc_html_e('Book Container Border', 'pdf-embed-viewer'); ?></label>
+                            <span><?php esc_html_e('Border around the book/viewer container. Leave blank for no border.', 'pdf-embed-viewer'); ?></span>
+                            <input id="pdfev_color_container_border" class="pdfev-color-field" type="text" name="pdfev_css_colors[container_border]" value="<?php echo esc_attr($container_border); ?>" data-default-color="">
+                        </div>
+                        <div class="pdfev-color-item">
+                            <label for="pdfev_color_container_bg"><?php esc_html_e('Book Container Background', 'pdf-embed-viewer'); ?></label>
+                            <span><?php esc_html_e('Background behind the book/viewer container. Leave blank for transparent.', 'pdf-embed-viewer'); ?></span>
+                            <input id="pdfev_color_container_bg" class="pdfev-color-field" type="text" name="pdfev_css_colors[container_bg]" value="<?php echo esc_attr($container_bg); ?>" data-default-color="">
                         </div>
                     </div>
                 </div>
@@ -410,12 +422,16 @@ class General_Settings{
             $secondary          = isset( $_POST['pdfev_css_colors']['secondary'] ) ? sanitize_hex_color($_POST['pdfev_css_colors']['secondary']) : '';
             $dark               = isset( $_POST['pdfev_css_colors']['dark'] ) ? sanitize_hex_color($_POST['pdfev_css_colors']['dark'])  : '';
             $light              = isset( $_POST['pdfev_css_colors']['light'] ) ? sanitize_hex_color($_POST['pdfev_css_colors']['light'])    :'';
-            
+            $container_border  = isset( $_POST['pdfev_css_colors']['container_border'] ) ? sanitize_hex_color($_POST['pdfev_css_colors']['container_border']) : '';
+            $container_bg      = isset( $_POST['pdfev_css_colors']['container_bg'] ) ? sanitize_hex_color($_POST['pdfev_css_colors']['container_bg']) : '';
+
             $colors = [
-                'primary'   => $primary,
-                'secondary' => $secondary,
-                'dark'      => $dark,
-                'light'     => $light,
+                'primary'          => $primary,
+                'secondary'        => $secondary,
+                'dark'             => $dark,
+                'light'            => $light,
+                'container_border' => $container_border,
+                'container_bg'     => $container_bg,
             ];
             update_option('pdfev_archive_title',$archive_title);
             update_option('pdfev_archive_slug',$archive_slug);

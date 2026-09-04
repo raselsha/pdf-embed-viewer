@@ -186,9 +186,11 @@
   box-sizing: border-box;
   padding-top: min(60%, 80vh);
   position: relative;
-  background-color: var(--pdfev-light);
+  background-color: var(--pdfev-container-bg, transparent);
   margin-bottom: 25px;
-  border: 1px solid var(--pdfev-secondary);
+  border: var(--pdfev-container-border, none);
+  border-radius: 12px;
+  overflow: hidden;
 }
 .pdfev-embed-viewer .pdfev-3dbook-container .pdfev-3dbook-viewer {
   left: 0;
