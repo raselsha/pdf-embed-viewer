@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Flipbook PDF Viewer & Embedder
- * Plugin URI: https://pdf-embed-viewer.free.nf/
+ * Plugin URI: https://flipbook.lieusoft.com/
  * Description: Embed PDFs as an interactive 3D flipbook or a standard viewer — perfect for eBooks, catalogs, brochures, manuals, newsletters, and reports.
  * Version: 1.5.5
  * Stable Tag: trunk
