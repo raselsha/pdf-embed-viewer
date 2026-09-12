@@ -4,7 +4,7 @@ Contributors:      raselsha
 Requires at least: 3.0
 Tested up to:      7.0
 Requires PHP:      7.0
-Stable tag:        1.5.5
+Stable tag:        1.5.6
 License:           GPLv2 or later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 Tags:              pdf-viewer, pdf-embed, flipbook, 3d-flipbook, ebook
@@ -205,6 +205,18 @@ For more details, see the [Appsero Privacy Policy](https://appsero.com/privacy-p
 * French (fr_FR)
 
 == Changelog ==
+
+= 1.5.6 =
+* Added: a Container Max Width setting (Display & Behavior) to control the whole viewer's overall width, previously fixed at 1300px.
+* Added: a "Show Flipbook/Traditional Switcher" toggle (Display & Behavior) to hide the view-toggle buttons — independent of the Download button's own visibility control.
+* Added: a show_download shortcode attribute to override a document's Download button visibility for one specific embed, matching show_description/show_author and the other existing show_* attributes.
+* Changed: the flipbook container's border and background are now off by default (previously a fixed gray fill/border) with rounded corners either way — two new Brand Colors settings (Book Container Border, Book Container Background) let you turn either back on.
+* Changed: adjusted the flipbook container's default height so portrait-oriented covers/pages have enough room without leaving excess empty space around the book.
+* Redesigned the Grid archive template's cards: title, description, cover, then meta, in that order — rounded corners with a hover lift, a clamped multi-line description, and meta fields (pages, file size, publisher, year, edition) shown as label/value rows instead of one bullet-joined line; removed the cover image's date badge and dark gradient overlay.
+* Fixed: a shortcode's CSS/JS didn't load when used outside a post's saved content (e.g. called directly from a theme template) — the viewer's container rendered but never initialized.
+* Fixed: setting a flipbook container border color could make its bottom edge disappear in some browsers.
+* Fixed: the PDF editor screen's "last-viewed tab" was remembered site-wide instead of per-document — switching tabs on one PDF's edit screen no longer changes the default tab shown on every other PDF's edit screen.
+* Fixed: frontend.css could keep serving a stale cached copy after an update instead of the new version.
 
 = 1.5.5 =
 * Fixed the color pickers on the settings page rendering incorrectly: the hue slider dropped below the color square instead of sitting beside it (showing as a tall stray bar over the fields underneath), and the round drag handle rendered half its size and off-centre from the color it pointed at.
