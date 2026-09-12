@@ -1,0 +1,80 @@
+name: Scheduled Release
+
+# Tags and deploys whatever version is currently in pdf-embed-viewer.php,
+# once, at a chosen time — GitHub has no native "schedule this tag for
+# later" action, so this is a cron-triggered workflow instead. Idempotent:
+# every run checks whether that version's tag already exists and no-ops if
+# so, so it's safe to leave this enabled indefinitely (it only ever does
+# something on the first run after a version bump that hasn't shipped yet).
+#
+# Deliberately self-contained (tag + deploy in one job) rather than relying
+# on the tag push to trigger deploy.yml's own `on: push: tags` listener:
+# a push made with the default GITHUB_TOKEN does not trigger other
+# workflows (GitHub's own anti-recursion rule), so that chain would
+# silently never fire.
+
+on:
+  schedule:
+    # 00:30 UTC = 06:30 Bangladesh time (UTC+6). GitHub does not guarantee
+    # scheduled workflows fire at the exact minute — expect it within
+    # roughly the surrounding hour, more during platform-wide load spikes.
+    - cron: "30 0 * * *"
+  workflow_dispatch: {}
+
+jobs:
+  release:
+    name: Tag and deploy if not already released
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Read the current plugin version
+        id: version
+        run: |
+          FILE_VERSION=$(grep -m1 "Version:" pdf-embed-viewer.php | sed -E 's/.*Version:[[:space:]]*([0-9.]+).*/\1/')
+          echo "Plugin header version: $FILE_VERSION"
+          echo "version=$FILE_VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Skip everything below if this version is already tagged
+        id: check
+        run: |
+          if git rev-parse "v${{ steps.version.outputs.version }}" >/dev/null 2>&1; then
+            echo "v${{ steps.version.outputs.version }} already exists — nothing to do."
+            echo "already_tagged=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "already_tagged=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Verify version consistency
+        if: steps.check.outputs.already_tagged == 'false'
+        run: |
+          FILE_VERSION="${{ steps.version.outputs.version }}"
+          STABLE_TAG=$(grep -m1 "Stable tag:" readme.txt | sed -E 's/.*Stable tag:[[:space:]]*([0-9.]+).*/\1/')
+
+          echo "pdf-embed-viewer.php:  $FILE_VERSION"
+          echo "readme.txt Stable tag: $STABLE_TAG"
+
+          if [ "$FILE_VERSION" != "$STABLE_TAG" ]; then
+            echo "::error::Version mismatch — Version header ($FILE_VERSION) and readme.txt Stable tag ($STABLE_TAG) must match before a scheduled release can tag this."
+            exit 1
+          fi
+
+      - name: Create and push the release tag
+        if: steps.check.outputs.already_tagged == 'false'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git tag -a "v${{ steps.version.outputs.version }}" -m "Release ${{ steps.version.outputs.version }}"
+          git push origin "v${{ steps.version.outputs.version }}"
+
+      - name: WordPress Plugin Deploy
+        if: steps.check.outputs.already_tagged == 'false'
+        uses: 10up/action-wordpress-plugin-deploy@stable
+        env:
+          SVN_USERNAME: ${{ secrets.WPORG_USERNAME }}
+          SVN_PASSWORD: ${{ secrets.WPORG_PASSWORD }}
+          SLUG: pdf-embed-viewer
