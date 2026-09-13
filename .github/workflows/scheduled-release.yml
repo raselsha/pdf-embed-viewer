@@ -39,11 +39,11 @@ jobs:
           echo "Plugin header version: $FILE_VERSION"
           echo "version=$FILE_VERSION" >> "$GITHUB_OUTPUT"
 
-      - name: Skip everything below if this version is already tagged
+      - name: Check whether this version is already tagged on GitHub
         id: check
         run: |
           if git rev-parse "v${{ steps.version.outputs.version }}" >/dev/null 2>&1; then
-            echo "v${{ steps.version.outputs.version }} already exists — nothing to do."
+            echo "v${{ steps.version.outputs.version }} already exists on GitHub."
             echo "already_tagged=true" >> "$GITHUB_OUTPUT"
           else
             echo "already_tagged=false" >> "$GITHUB_OUTPUT"
@@ -71,10 +71,27 @@ jobs:
           git tag -a "v${{ steps.version.outputs.version }}" -m "Release ${{ steps.version.outputs.version }}"
           git push origin "v${{ steps.version.outputs.version }}"
 
+      # Deliberately NOT gated behind steps.check (a GitHub tag existing and
+      # this version actually being live on WordPress.org are two different
+      # things — this run's own deploy can otherwise fail after the tag step
+      # above already succeeded, same as it did the first time this ran, and
+      # a plain already_tagged gate would then permanently skip retrying the
+      # deploy on every later run). Instead this always runs, and relies on
+      # the action's own built-in idempotency: its deploy.sh bails out early
+      # once `tags/$VERSION` already exists in the WordPress.org SVN repo.
+      #
+      # VERSION is passed explicitly rather than left for the action to
+      # infer from GITHUB_REF: deploy.sh's fallback is
+      # `VERSION="${GITHUB_REF#refs/tags/}"`, which only produces the right
+      # value when the run itself was triggered by pushing that tag ref.
+      # This job's own trigger is `schedule`/`workflow_dispatch` on the
+      # `main` branch, so GITHUB_REF there is refs/heads/main — silently
+      # deriving a garbage VERSION and pointing the SVN copy at the wrong
+      # path instead of failing loudly.
       - name: WordPress Plugin Deploy
-        if: steps.check.outputs.already_tagged == 'false'
         uses: 10up/action-wordpress-plugin-deploy@stable
         env:
           SVN_USERNAME: ${{ secrets.WPORG_USERNAME }}
           SVN_PASSWORD: ${{ secrets.WPORG_PASSWORD }}
           SLUG: pdf-embed-viewer
+          VERSION: ${{ steps.version.outputs.version }}
