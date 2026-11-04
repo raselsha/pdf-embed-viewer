@@ -958,8 +958,8 @@
   list-style-type: none;
   margin: 0;
   padding: 0;
-  margin-right: 1em;
-  overflow-y: scroll;
+  margin-inline-end: 1em;
+  overflow-y: auto;
 }
 @media (min-width: 992px) {
   .pdfev-embed-viewer .archive-newsletter-style .tabs {
@@ -990,7 +990,7 @@
   }
 }
 .pdfev-embed-viewer .archive-newsletter-style .tabs-content table {
-  text-align: left;
+  text-align: start;
   border-collapse: collapse;
   transition: all 0.5s;
   border: 0;
@@ -1017,7 +1017,7 @@
   white-space: nowrap;
 }
 .pdfev-embed-viewer .archive-newsletter-style .tabs-content table td:last-child .btn + .btn {
-  margin-left: 6px;
+  margin-inline-start: 6px;
 }
 /* Phones: year tabs become a horizontal strip and each table row becomes a
    stacked card (month label, title + meta, then the buttons), so nothing is
@@ -1080,7 +1080,7 @@
     display: flex;
     gap: 8px;
     margin-top: 12px;
-    text-align: left !important;
+    text-align: start !important;
     white-space: normal;
   }
   .pdfev-embed-viewer .archive-newsletter-style .tabs-content table td:last-child .btn {
@@ -1088,7 +1088,7 @@
     min-height: 42px;
   }
   .pdfev-embed-viewer .archive-newsletter-style .tabs-content table td:last-child .btn + .btn {
-    margin-left: 0;
+    margin-inline-start: 0;
   }
 }
 

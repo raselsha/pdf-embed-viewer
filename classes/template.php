@@ -227,7 +227,7 @@ class Template{
                         <a href="<?php the_permalink(); ?>"><?php the_title();?></a>
                         <?php \PDFEV_Functions::archive_item_meta($atts); ?>
                     </td>
-                    <td style="text-align: right;">
+                    <td style="text-align: end;">
                         <?php \PDFEV_Functions::read_button($atts); ?>
                         <?php \PDFEV_Functions::download_button($atts); ?>
                     </td>
@@ -327,7 +327,7 @@ class Template{
                                 <tr>         					    			
                                     <th width="10%"><?php echo esc_html__('Month','pdf-embed-viewer') ?></th>
                                     <th width="50%"><?php echo esc_html__('Title','pdf-embed-viewer') ?></th>
-                                    <th width="40%" style="text-align: right;"></th>
+                                    <th width="40%" style="text-align: end;"></th>
                                 </tr>
                             </thead>
                             <?php
@@ -370,7 +370,7 @@ class Template{
                                             <a href="<?php the_permalink(); ?>"><?php the_title();?></a>
                                             <?php \PDFEV_Functions::archive_item_meta($atts); ?>
                                         </td>
-                                        <td  style="text-align: right;">
+                                        <td  style="text-align: end;">
                                             <?php \PDFEV_Functions::read_button($atts); ?>
                                             <?php \PDFEV_Functions::download_button($atts); ?>
                                         </td>
