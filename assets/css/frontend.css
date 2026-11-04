@@ -879,7 +879,7 @@
 }
 .pdfev-embed-viewer .archive-ebook-style .grid-item .content > p, .pdfev-embed-viewer .archive-ebook-style .grid-item .content > span, .pdfev-embed-viewer .archive-ebook-style .grid-item .content > div:not(.action) {
   font-size: 0.75rem;
-  color: #8a8a8a;
+  color: var(--pdfev-secondary);
 }
 .pdfev-embed-viewer .archive-ebook-style .grid-item .content .action {
   display: flex;
@@ -888,17 +888,16 @@
   justify-content: center;
   margin-top: 10px;
 }
+/* Colours come from the shared .read-btn / .download-btn rules (filled
+   primary vs. outlined), so hover follows the Brand Colors settings too. */
 .pdfev-embed-viewer .archive-ebook-style .grid-item .content .action .btn {
   flex: 1 1 0;
-  background: var(--pdfev-primary);
   padding: 8px 10px;
   border-radius: 999px;
   font-size: 13px;
   font-weight: 600;
-  transition: background-color 0.25s ease, transform 0.2s ease;
 }
 .pdfev-embed-viewer .archive-ebook-style .grid-item .content .action .btn:hover {
-  background: #b28a4d;
   transform: translateY(-1px);
 }
 .pdfev-embed-viewer .archive-ebook-style .grid-item .content .action .btn i {
