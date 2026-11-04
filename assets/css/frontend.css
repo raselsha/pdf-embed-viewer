@@ -650,6 +650,20 @@
   flex: 1 1 0;
   min-height: 42px;
 }
+/* RTL books: Arabic/Urdu/Hebrew letters must join, which the monospace
+   stack, letter-spacing and uppercase transform break — use the page font
+   for their tag row and run the head text right-to-left. */
+.pdfev-embed-viewer .archive-grid-style .pdfev-item-rtl .pdfev-card-head h2,
+.pdfev-embed-viewer .archive-grid-style .pdfev-item-rtl .pdfev-archive-description {
+  direction: rtl;
+  text-align: right;
+}
+.pdfev-embed-viewer .archive-grid-style .pdfev-item-rtl .pdfev-archive-meta-tags {
+  font-family: inherit;
+  font-size: 13px;
+  letter-spacing: 0;
+  text-transform: none;
+}
 @media (max-width: 480px) {
   .pdfev-embed-viewer .archive-grid-style .grid-item .image {
     height: 300px;

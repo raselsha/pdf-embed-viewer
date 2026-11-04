@@ -126,8 +126,9 @@ class Template{
                 $kicker     = !empty($categories) && !is_wp_error($categories) ? implode(' · ', array_slice($categories, 0, 2)) : __('PDF', 'pdf-embed-viewer');
                 $cover_url  = get_the_post_thumbnail_url(get_the_ID(), 'large');
                 $pages      = get_post_meta(get_the_ID(), 'pdfev_meta_total_pages', true);
+                $is_rtl     = get_post_meta(get_the_ID(), 'pdfev_meta_rtl', true) === 'yes';
                 ?>
-                <article class="grid-item">
+                <article class="grid-item<?php echo $is_rtl ? ' pdfev-item-rtl' : ''; ?>">
                     <div class="pdfev-card-head">
                         <p class="pdfev-card-kicker"><?php echo esc_html(sprintf('%02d', $index)); ?> &mdash; <?php echo esc_html($kicker); ?></p>
                         <h2><a href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>">
