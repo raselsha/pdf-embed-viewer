@@ -664,6 +664,11 @@
   letter-spacing: 0;
   text-transform: none;
 }
+/* Right-to-left text inside RTL items (lang set by item_lang_attrs()). */
+.pdfev-embed-viewer :is([lang="ar"], [lang="ur"], [lang="he"]) :is(h2, .pdfev-archive-description, .list-description, .pdfev-archive-meta) {
+  direction: rtl;
+  text-align: right;
+}
 /* Nastaliq (Urdu) letterforms are tall and slope: give them more line
    height so clamped titles/descriptions are not clipped. */
 .pdfev-embed-viewer [lang="ur"] h2,

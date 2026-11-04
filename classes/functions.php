@@ -729,9 +729,11 @@ if( ! class_exists('PDFEV_Functions') ){
             } elseif (preg_match('/\p{Arabic}/u', $text)) {
                 $lang = 'ar';
             } else {
-                return ' dir="rtl"';
+                return '';
             }
-            return ' lang="' . esc_attr($lang) . '" dir="rtl"';
+            // lang only: dir="rtl" on the whole item would also mirror the
+            // card's kicker and button row; the text itself is set RTL in CSS.
+            return ' lang="' . esc_attr($lang) . '"';
         }
 
         public static function convert_file_size($bytes){
