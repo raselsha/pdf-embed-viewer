@@ -709,6 +709,31 @@ if( ! class_exists('PDFEV_Functions') ){
                
             <?php
         }
+        /**
+         * lang/dir attributes for an RTL item's wrapper, so themes can pick
+         * a script-appropriate font (e.g. Nastaliq for Urdu via :lang(ur)).
+         * Only for posts flagged RTL; the language is guessed from the title:
+         * Hebrew letters → he, Urdu letters (ٹ ڈ ڑ ں ہ ھ ے ۓ گ ک ی — the last two Persian-style kaf/yeh, never in Arabic) → ur,
+         * any other Arabic script → ar. Returns '' for LTR posts.
+         */
+        public static function item_lang_attrs($post_id = 0){
+            $post_id = $post_id ? $post_id : get_the_ID();
+            if (get_post_meta($post_id, 'pdfev_meta_rtl', true) !== 'yes') {
+                return '';
+            }
+            $text = get_the_title($post_id) . ' ' . get_post_meta($post_id, 'pdfev_meta_description', true);
+            if (preg_match('/\p{Hebrew}/u', $text)) {
+                $lang = 'he';
+            } elseif (preg_match('/[\x{0679}\x{0688}\x{0691}\x{06BA}\x{06C1}\x{06BE}\x{06D2}\x{06D3}\x{06AF}\x{06A9}\x{06CC}]/u', $text)) {
+                $lang = 'ur';
+            } elseif (preg_match('/\p{Arabic}/u', $text)) {
+                $lang = 'ar';
+            } else {
+                return ' dir="rtl"';
+            }
+            return ' lang="' . esc_attr($lang) . '" dir="rtl"';
+        }
+
         public static function convert_file_size($bytes){
             $bytes = (float) $bytes;
             if ($bytes <= 0) {

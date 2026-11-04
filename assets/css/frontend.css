@@ -664,6 +664,14 @@
   letter-spacing: 0;
   text-transform: none;
 }
+/* Nastaliq (Urdu) letterforms are tall and slope: give them more line
+   height so clamped titles/descriptions are not clipped. */
+.pdfev-embed-viewer [lang="ur"] h2,
+.pdfev-embed-viewer [lang="ur"] .pdfev-archive-description,
+.pdfev-embed-viewer [lang="ur"] .pdfev-archive-meta,
+.pdfev-embed-viewer [lang="ur"] .content > * {
+  line-height: 2;
+}
 @media (max-width: 480px) {
   .pdfev-embed-viewer .archive-grid-style .grid-item .image {
     height: 300px;

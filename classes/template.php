@@ -85,7 +85,7 @@ class Template{
         if ( $WpQuery->have_posts() ) :
             while ( $WpQuery->have_posts() ) : $WpQuery->the_post();
                 ?>
-                <div class="list-item">
+                <div class="list-item"<?php echo \PDFEV_Functions::item_lang_attrs(); ?>>
                     <div class="list-image">
                         <a href="<?php echo esc_url( get_permalink() ); ?>">
                             <?php the_post_thumbnail('medium'); ?>
@@ -128,7 +128,7 @@ class Template{
                 $pages      = get_post_meta(get_the_ID(), 'pdfev_meta_total_pages', true);
                 $is_rtl     = get_post_meta(get_the_ID(), 'pdfev_meta_rtl', true) === 'yes';
                 ?>
-                <article class="grid-item<?php echo $is_rtl ? ' pdfev-item-rtl' : ''; ?>">
+                <article class="grid-item<?php echo $is_rtl ? ' pdfev-item-rtl' : ''; ?>"<?php echo \PDFEV_Functions::item_lang_attrs(); ?>>
                     <div class="pdfev-card-head">
                         <p class="pdfev-card-kicker"><?php echo esc_html(sprintf('%02d', $index)); ?> &mdash; <?php echo esc_html($kicker); ?></p>
                         <h2><a href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>">
@@ -173,7 +173,7 @@ class Template{
                 // reader and its Previous/Next arrows already key off of.
                 $is_rtl = get_post_meta( get_the_ID(), 'pdfev_meta_rtl', true ) === 'yes';
                 ?>
-                <div class="grid-item">
+                <div class="grid-item"<?php echo \PDFEV_Functions::item_lang_attrs(); ?>>
                     <a href="<?php the_permalink(); ?>">
                         <?php
                         // data-pdfev-src feeds the hover preview below (frontend.js
@@ -221,7 +221,7 @@ class Template{
         if ( $WpQuery->have_posts() ) :
             while ( $WpQuery->have_posts() ) : $WpQuery->the_post();
                 ?>
-                <tr>
+                <tr<?php echo \PDFEV_Functions::item_lang_attrs(); ?>>
                     <td><?php the_time('F'); ?></td>
                     <td>
                         <a href="<?php the_permalink(); ?>"><?php the_title();?></a>
@@ -364,7 +364,7 @@ class Template{
                                 while ( $WpQuery->have_posts() ) :
                                     $WpQuery->the_post();
                                     ?>
-                                    <tr>
+                                    <tr<?php echo \PDFEV_Functions::item_lang_attrs(); ?>>
                                         <td><?php the_time('F'); ?></td>
                                         <td>
                                             <a href="<?php the_permalink(); ?>"><?php the_title();?></a>
