@@ -85,11 +85,47 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 20px;
+  margin-top: 36px;
   width: 100%;
 }
+/* Outlined like the Download button, with a down-arrow that nudges on
+   hover; the primary colour only appears on hover/focus. */
 .pdfev-embed-viewer .pdfev-load-more-button {
-  padding: 5px 10px;
+  gap: 10px;
+  min-height: 46px;
+  padding: 12px 22px;
+  border: 1px solid var(--pdfev-light);
+  border-radius: 10px;
+  background: var(--pdfev-white);
+  color: var(--pdfev-dark);
+  font-size: 15px;
+  font-weight: 600;
+  box-shadow: 0 2px 0 var(--pdfev-light);
+}
+.pdfev-embed-viewer .pdfev-load-more-button::after {
+  content: "\2193";
+  font-weight: 400;
+  transition: transform 0.2s ease;
+}
+.pdfev-embed-viewer .pdfev-load-more-button:hover {
+  border-color: var(--pdfev-primary);
+  color: var(--pdfev-primary);
+  background: var(--pdfev-white);
+}
+.pdfev-embed-viewer .pdfev-load-more-button:hover::after {
+  transform: translateY(2px);
+}
+.pdfev-embed-viewer .pdfev-load-more-button:disabled {
+  cursor: progress;
+  opacity: 0.7;
+}
+.pdfev-embed-viewer .pdfev-load-more-button:disabled::after {
+  content: none;
+}
+@media (max-width: 480px) {
+  .pdfev-embed-viewer .pdfev-load-more-button {
+    width: 100%;
+  }
 }
 .pdfev-embed-viewer .toggle-button a {
   background: none;
@@ -950,6 +986,84 @@
 .pdfev-embed-viewer .archive-newsletter-style .tabs-content table tr:nth-child(odd) {
   background: var(--pdfev-light);
   border: 0;
+}
+.pdfev-embed-viewer .archive-newsletter-style .tabs-content table td:last-child {
+  white-space: nowrap;
+}
+.pdfev-embed-viewer .archive-newsletter-style .tabs-content table td:last-child .btn + .btn {
+  margin-left: 6px;
+}
+/* Phones: year tabs become a horizontal strip and each table row becomes a
+   stacked card (month label, title + meta, then the buttons), so nothing is
+   pushed off-screen. */
+@media (max-width: 640px) {
+  .pdfev-embed-viewer .archive-newsletter-style .tabs {
+    flex-direction: row;
+    overflow-x: auto;
+    overflow-y: hidden;
+    margin: 0 0 12px;
+    border-radius: 8px;
+  }
+  .pdfev-embed-viewer .archive-newsletter-style .tabs .tab {
+    flex: 0 0 auto;
+    padding: 10px 16px;
+  }
+  .pdfev-embed-viewer .archive-newsletter-style .tabs-content table tbody,
+  .pdfev-embed-viewer .archive-newsletter-style .tabs-content table tr,
+  .pdfev-embed-viewer .archive-newsletter-style .tabs-content table td {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .pdfev-embed-viewer .archive-newsletter-style .tabs-content table.active[data-tab-content] {
+    display: block;
+  }
+  .pdfev-embed-viewer .archive-newsletter-style .tabs-content table thead {
+    display: none;
+  }
+  .pdfev-embed-viewer .archive-newsletter-style .tabs-content table tr {
+    padding: 14px 14px 16px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    border: 1px solid var(--pdfev-light);
+    background: var(--pdfev-white);
+  }
+  .pdfev-embed-viewer .archive-newsletter-style .tabs-content table tr:nth-child(odd) {
+    background: var(--pdfev-white);
+    border: 1px solid var(--pdfev-light);
+  }
+  .pdfev-embed-viewer .archive-newsletter-style .tabs-content table td {
+    padding: 0;
+    font-weight: normal;
+  }
+  .pdfev-embed-viewer .archive-newsletter-style .tabs-content table td:first-child {
+    margin-bottom: 4px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--pdfev-primary);
+  }
+  .pdfev-embed-viewer .archive-newsletter-style .tabs-content table td:nth-child(2) > a {
+    font-size: 1.05rem;
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--pdfev-dark);
+  }
+  .pdfev-embed-viewer .archive-newsletter-style .tabs-content table td:last-child {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    text-align: left !important;
+    white-space: normal;
+  }
+  .pdfev-embed-viewer .archive-newsletter-style .tabs-content table td:last-child .btn {
+    flex: 1 1 0;
+    min-height: 42px;
+  }
+  .pdfev-embed-viewer .archive-newsletter-style .tabs-content table td:last-child .btn + .btn {
+    margin-left: 0;
+  }
 }
 
 :root {
