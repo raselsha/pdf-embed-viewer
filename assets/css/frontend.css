@@ -46,13 +46,33 @@
 }
 .pdfev-embed-viewer .button, .pdfev-embed-viewer .read-btn, .pdfev-embed-viewer .download-btn {
   background: var(--pdfev-primary);
-  padding: 0.1em 0.5em;
-  border-radius: 0.25em;
+  padding: 9px 14px;
+  border-radius: 8px;
   color: var(--pdfev-white);
-  font-weight: normal;
+  font-weight: 600;
+  line-height: 1.2;
   text-decoration: none;
   font-size: 14px;
-  border: 0;
+  border: 1px solid transparent;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+}
+.pdfev-embed-viewer .button:active, .pdfev-embed-viewer .read-btn:active, .pdfev-embed-viewer .download-btn:active {
+  transform: scale(0.98);
+}
+.pdfev-embed-viewer .button:focus-visible, .pdfev-embed-viewer .read-btn:focus-visible, .pdfev-embed-viewer .download-btn:focus-visible {
+  outline: 2px solid var(--pdfev-primary);
+  outline-offset: 2px;
+}
+.pdfev-embed-viewer .pdfev-count {
+  display: inline-block;
+  min-width: 1.6em;
+  padding: 1px 7px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.5;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.22);
 }
 .pdfev-embed-viewer .btn {
   display: inline-flex;
@@ -149,25 +169,31 @@
   }
 }
 .pdfev-embed-viewer .download-btn {
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
   width: auto;
   text-align: center;
   box-sizing: border-box;
-  gap: 5px;
-  color: var(--pdfev-white);
-  background-color: var(--pdfev-secondary);
+  gap: 6px;
+  color: var(--pdfev-dark);
+  background-color: var(--pdfev-white);
+  border-color: var(--pdfev-light);
 }
 .pdfev-embed-viewer .download-btn:hover {
-  color: var(--pdfev-white);
-  background-color: var(--pdfev-secondary);
+  color: var(--pdfev-dark);
+  background-color: var(--pdfev-white);
+  border-color: var(--pdfev-dark);
   text-decoration: none;
-  opacity: 0.9;
+}
+.pdfev-embed-viewer .download-btn .pdfev-count {
+  background: var(--pdfev-light);
+  color: var(--pdfev-dark);
 }
 .pdfev-embed-viewer .read-btn {
   width: auto;
   text-align: center;
   box-sizing: border-box;
+  gap: 6px;
   color: var(--pdfev-white);
   background-color: var(--pdfev-primary);
 }
@@ -175,7 +201,7 @@
   color: var(--pdfev-white);
   background-color: var(--pdfev-primary);
   text-decoration: none;
-  opacity: 0.9;
+  filter: brightness(1.1);
 }
 .pdfev-embed-viewer .pdf-viewer {
   margin: 0.5em 0;
@@ -362,129 +388,245 @@
   }
 }
 
+.pdfev-embed-viewer .screen-reader-text {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+/* Grid: editorial cards — mono kicker, title, description, a dotted tag
+   row, then a "scene" built from the cover itself (blurred backdrop + a
+   dithered halftone copy + the crisp cover on top). Rows line up across
+   cards through subgrid where supported. */
 .pdfev-embed-viewer .archive-grid-style > .pdfev-load-more-items {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
   gap: 20px;
 }
-@media (min-width: 1024px) {
-  .pdfev-embed-viewer .archive-grid-style > .pdfev-load-more-items {
-    justify-content: start;
-  }
-}
 .pdfev-embed-viewer .archive-grid-style .grid-item {
-  width: 46%;
-  border: 1px solid var(--pdfev-light);
-  padding: 16px;
   position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-  gap: 10px;
-  border-radius: 12px;
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+  grid-row: span 4;
+  min-width: 0;
+  border: 1px solid var(--pdfev-light);
+  border-radius: 10px;
   background: #fff;
-  box-shadow: 0 1px 2px rgba(17, 24, 39, 0.04), 0 10px 24px -14px rgba(17, 24, 39, 0.14);
-  transition: box-shadow 0.2s ease, transform 0.2s ease;
+  box-shadow: 0 1px 2px rgba(17, 24, 39, 0.04), 0 12px 28px -18px rgba(17, 24, 39, 0.18);
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+@supports (grid-template-rows: subgrid) {
+  .pdfev-embed-viewer .archive-grid-style .grid-item {
+    grid-template-rows: subgrid;
+    row-gap: 0;
+  }
 }
 .pdfev-embed-viewer .archive-grid-style .grid-item:hover {
-  box-shadow: 0 2px 6px rgba(17, 24, 39, 0.06), 0 20px 36px -16px rgba(17, 24, 39, 0.2);
-  transform: translateY(-2px);
+  box-shadow: 0 2px 6px rgba(17, 24, 39, 0.06), 0 22px 40px -20px rgba(17, 24, 39, 0.28);
+  transform: translateY(-3px);
 }
-@media (min-width: 768px) {
-  .pdfev-embed-viewer .archive-grid-style .grid-item {
-    width: 30%;
-  }
+.pdfev-embed-viewer .archive-grid-style .pdfev-card-head {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  padding: 22px 22px 18px;
 }
-@media (min-width: 1024px) {
-  .pdfev-embed-viewer .archive-grid-style .grid-item {
-    width: 22%;
-  }
-}
-.pdfev-embed-viewer .archive-grid-style .grid-item .image {
-  width: 100%;
-  height: 180px;
-  position: relative;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 6px 16px -8px rgba(17, 24, 39, 0.28);
-}
-.pdfev-embed-viewer .archive-grid-style .grid-item .image img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  position: relative;
+.pdfev-embed-viewer .archive-grid-style .pdfev-card-kicker {
+  margin: 0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--pdfev-primary);
 }
 .pdfev-embed-viewer .archive-grid-style .grid-item h2 {
-  font-size: 1rem;
-  font-weight: 700;
-  line-height: 1.35;
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
   text-align: left;
-  width: 100%;
-  box-sizing: border-box;
 }
 .pdfev-embed-viewer .archive-grid-style .grid-item h2 a {
   color: var(--pdfev-dark);
+  text-decoration: none;
+}
+.pdfev-embed-viewer .archive-grid-style .grid-item h2 a:hover {
+  color: var(--pdfev-primary);
 }
 .pdfev-embed-viewer .archive-grid-style .grid-item .pdfev-archive-description {
-  width: 100%;
-  font-size: 0.85rem;
-  line-height: 1.5;
+  font-size: 0.95rem;
+  line-height: 1.6;
   color: var(--pdfev-secondary);
   display: -webkit-box;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
 .pdfev-embed-viewer .archive-grid-style .grid-item .pdfev-archive-description p {
   margin: 0;
 }
-.pdfev-embed-viewer .archive-grid-style .grid-item .pdfev-archive-meta {
-  width: 100%;
-  font-size: 0.78rem;
-  line-height: 1.4;
-  color: var(--pdfev-secondary);
+.pdfev-embed-viewer .archive-grid-style .pdfev-card-tags {
+  padding: 0 22px;
 }
-/* Spec-sheet layout (label left, value right, a separator above the block
-   and between each row) for the grid card's meta block specifically —
-   list/newsletter/ebook/single-page keep the plain bullet-joined line
-   from .pdfev-archive-meta above; only archive_item_meta()'s 'meta' output
-   (grid only) adds this second class. */
-.pdfev-embed-viewer .archive-grid-style .grid-item .pdfev-archive-meta-rows {
-  padding-top: 10px;
-  border-top: 1px solid #e5e7eb;
-}
-.pdfev-embed-viewer .archive-grid-style .grid-item .pdfev-meta-row {
+/* Each tag carries its own leading dot; the list is shifted left by one
+   dot-slot and clipped, so whichever tag starts a line (first one, or
+   after a wrap) loses its dot and no line ends on a stray separator. */
+.pdfev-embed-viewer .archive-grid-style .pdfev-archive-meta-tags {
   display: flex;
-  align-items: baseline;
+  flex-wrap: wrap;
+  align-items: center;
+  row-gap: 4px;
+  margin: 0 0 0 -16px;
+  padding: 11px 0;
+  list-style: none;
+  border-top: 1px solid var(--pdfev-light);
+  clip-path: inset(0 0 0 16px);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 11.5px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--pdfev-dark);
+}
+.pdfev-embed-viewer .archive-grid-style .pdfev-archive-meta-tags li {
+  position: relative;
+  margin: 0;
+  padding-left: 16px;
+  white-space: nowrap;
+}
+.pdfev-embed-viewer .archive-grid-style .pdfev-archive-meta-tags li::before {
+  content: "\00B7";
+  position: absolute;
+  left: 5px;
+  color: var(--pdfev-secondary);
+  opacity: 0.6;
+}
+.pdfev-embed-viewer .archive-grid-style .grid-item .image {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 340px;
+  margin: 4px 22px 0;
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--pdfev-light);
+  text-decoration: none;
+}
+.pdfev-embed-viewer .archive-grid-style .pdfev-card-scene,
+.pdfev-embed-viewer .archive-grid-style .pdfev-card-dither {
+  position: absolute;
+  inset: 0;
+  background-image: var(--pdfev-cover, none);
+  background-size: cover;
+  background-position: center;
+}
+.pdfev-embed-viewer .archive-grid-style .pdfev-card-scene {
+  inset: -24px;
+  filter: blur(14px) saturate(1.2);
+  transform: scale(1.1);
+}
+/* The dither: the same artwork, masked through a fine dot screen and
+   pushed in contrast, laid over the soft backdrop. */
+.pdfev-embed-viewer .archive-grid-style .pdfev-card-dither {
+  inset: -12px;
+  opacity: 0.5;
+  filter: blur(5px) contrast(1.5) saturate(1.4);
+  -webkit-mask-image: radial-gradient(circle, #000 0.9px, transparent 1.3px);
+  mask-image: radial-gradient(circle, #000 0.9px, transparent 1.3px);
+  -webkit-mask-size: 3px 3px;
+  mask-size: 3px 3px;
+}
+.pdfev-embed-viewer .archive-grid-style .image::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.28) 1px, transparent 1.4px);
+  background-size: 4px 4px;
+}
+.pdfev-embed-viewer .archive-grid-style .pdfev-card-cover {
+  position: relative;
+  z-index: 2;
+  display: block;
+  width: 58%;
+  max-width: 190px;
+  transition: transform 0.4s ease;
+}
+.pdfev-embed-viewer .archive-grid-style .pdfev-card-cover img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 3px 6px 6px 3px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), 0 22px 36px -14px rgba(0, 0, 0, 0.6);
+}
+.pdfev-embed-viewer .archive-grid-style .pdfev-card-chip {
+  position: absolute;
+  z-index: 3;
+  left: 14px;
+  right: 14px;
+  bottom: 14px;
+  display: flex;
+  align-items: center;
   justify-content: space-between;
-  gap: 12px;
-  padding: 6px 0;
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: 8px;
+  background: #fff;
+  color: var(--pdfev-dark);
+  font-size: 13px;
+  line-height: 1.3;
+  box-shadow: 0 10px 24px -10px rgba(0, 0, 0, 0.45);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
 }
-.pdfev-embed-viewer .archive-grid-style .grid-item .pdfev-meta-row + .pdfev-meta-row {
-  border-top: 1px solid #f0f1f3;
-}
-.pdfev-embed-viewer .archive-grid-style .grid-item .pdfev-meta-label {
+.pdfev-embed-viewer .archive-grid-style .pdfev-card-chip span {
   color: var(--pdfev-secondary);
 }
-.pdfev-embed-viewer .archive-grid-style .grid-item .pdfev-meta-value {
+.pdfev-embed-viewer .archive-grid-style .pdfev-card-chip strong {
   font-weight: 600;
-  color: var(--pdfev-dark);
-  text-align: right;
+  color: var(--pdfev-primary);
+}
+.pdfev-embed-viewer .archive-grid-style .grid-item:hover .pdfev-card-cover,
+.pdfev-embed-viewer .archive-grid-style .grid-item:focus-within .pdfev-card-cover {
+  transform: translateY(-14px) rotate(-1.5deg);
+}
+.pdfev-embed-viewer .archive-grid-style .grid-item:hover .pdfev-card-chip,
+.pdfev-embed-viewer .archive-grid-style .grid-item:focus-within .pdfev-card-chip {
+  opacity: 1;
+  transform: translateY(0);
 }
 .pdfev-embed-viewer .archive-grid-style .grid-item .action {
-  width: 100%;
-  margin-top: auto;
-  padding-top: 4px;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   gap: 10px;
+  padding: 16px 22px 22px;
 }
-@media (min-width: 580px) {
-  .pdfev-embed-viewer .archive-grid-style .grid-item .action {
-    flex-direction: row;
+.pdfev-embed-viewer .archive-grid-style .grid-item .action .btn {
+  flex: 1 1 0;
+  min-height: 42px;
+}
+@media (max-width: 480px) {
+  .pdfev-embed-viewer .archive-grid-style .grid-item .image {
+    height: 300px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pdfev-embed-viewer .archive-grid-style .grid-item,
+  .pdfev-embed-viewer .archive-grid-style .pdfev-card-cover,
+  .pdfev-embed-viewer .archive-grid-style .pdfev-card-chip {
+    transition: none;
+  }
+  .pdfev-embed-viewer .archive-grid-style .grid-item:hover {
+    transform: none;
   }
 }
 

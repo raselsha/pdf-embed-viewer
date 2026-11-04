@@ -115,28 +115,45 @@ class Template{
 
     public static function render_archive_grid_items($WpQuery, $atts = []){
         if ( $WpQuery->have_posts() ) :
+            // Running card number ("01 — Magazine"), continued across
+            // load-more pages rather than restarting at 01 on each one.
+            $per_page = (int) $WpQuery->get('posts_per_page');
+            $paged    = max(1, (int) $WpQuery->get('paged'));
+            $index    = $per_page > 0 ? ($paged - 1) * $per_page : 0;
             while ( $WpQuery->have_posts() ) : $WpQuery->the_post();
+                $index++;
+                $categories = wp_get_post_terms(get_the_ID(), 'pdfev_category', ['fields' => 'names']);
+                $kicker     = !empty($categories) && !is_wp_error($categories) ? implode(' · ', array_slice($categories, 0, 2)) : __('PDF', 'pdf-embed-viewer');
+                $cover_url  = get_the_post_thumbnail_url(get_the_ID(), 'large');
+                $pages      = get_post_meta(get_the_ID(), 'pdfev_meta_total_pages', true);
                 ?>
-                <div class="grid-item">
-                    <h2><a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>">
-                        <?php
-                            $title = get_the_title();
-                            $trimmed_title = wp_html_excerpt($title, 80, '...');
-                            echo esc_html($trimmed_title);
-                        ?>
-                    </a></h2>
-                    <?php \PDFEV_Functions::archive_item_meta($atts, 'description'); ?>
-                    <a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>">
-                        <div class="image">
-                            <?php the_post_thumbnail() ?>
-                        </div>
+                <article class="grid-item">
+                    <div class="pdfev-card-head">
+                        <p class="pdfev-card-kicker"><?php echo esc_html(sprintf('%02d', $index)); ?> &mdash; <?php echo esc_html($kicker); ?></p>
+                        <h2><a href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>">
+                            <?php echo esc_html(wp_html_excerpt(get_the_title(), 80, '...')); ?>
+                        </a></h2>
+                        <?php \PDFEV_Functions::archive_item_meta($atts, 'description'); ?>
+                    </div>
+                    <div class="pdfev-card-tags">
+                        <?php \PDFEV_Functions::archive_item_meta($atts, 'meta'); ?>
+                    </div>
+                    <a class="image" href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>"<?php echo $cover_url ? ' style="--pdfev-cover:url(\'' . esc_url($cover_url) . '\')"' : ''; ?>>
+                        <span class="pdfev-card-scene" aria-hidden="true"></span>
+                        <span class="pdfev-card-dither" aria-hidden="true"></span>
+                        <span class="pdfev-card-cover"><?php the_post_thumbnail('large'); ?></span>
+                        <span class="pdfev-card-chip">
+                            <?php if (!empty($pages)) : ?>
+                                <span><?php echo esc_html(sprintf(_n('%s page', '%s pages', (int) $pages, 'pdf-embed-viewer'), number_format_i18n((int) $pages))); ?></span>
+                            <?php endif; ?>
+                            <strong><?php esc_html_e('Open flipbook', 'pdf-embed-viewer'); ?> &rarr;</strong>
+                        </span>
                     </a>
-                    <?php \PDFEV_Functions::archive_item_meta($atts, 'meta'); ?>
                     <div class="action">
                         <?php \PDFEV_Functions::read_button($atts); ?>
                         <?php \PDFEV_Functions::download_button($atts); ?>
                     </div>
-                </div>
+                </article>
                 <?php
             endwhile;
             wp_reset_postdata();

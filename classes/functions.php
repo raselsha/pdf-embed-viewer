@@ -450,7 +450,7 @@ if( ! class_exists('PDFEV_Functions') ){
         public static function get_read_button($atts=[]){
             $reading_counter = isset($atts['reading_count']) && $atts['reading_count']!='' ? $atts['reading_count'] :  get_option('pdfev_reading_counter');
             ?>
-            <a href="<?php the_permalink(); ?>" class="button btn read-btn"><i class="fas fa-eye"></i> <?php echo esc_html__('Read','pdf-embed-viewer');?> <?php  echo  $reading_counter=='yes'? "(".PDFEV_Functions::get_post_view().")" : '' ;?></a>
+            <a href="<?php the_permalink(); ?>" class="button btn read-btn"><i class="fas fa-eye"></i> <?php echo esc_html__('Read','pdf-embed-viewer');?><?php if ($reading_counter == 'yes') : ?> <span class="pdfev-count"><?php echo esc_html(PDFEV_Functions::get_post_view()); ?></span><?php endif; ?></a>
             <?php
         }
 
@@ -493,7 +493,7 @@ if( ! class_exists('PDFEV_Functions') ){
                 <i class="fas fa-cloud-download-alt"></i>
                 <?php echo esc_html__('Download','pdf-embed-viewer'); ?>
                 <?php if($download_counter=='yes'): ?>
-                <span><?php esc_html_e('('); ?><span class="pdfev-download-counter"><?php echo self::get_download_count($post_id);?></span><?php esc_html_e(')'); ?></span>
+                <span class="pdfev-count"><span class="pdfev-download-counter"><?php echo esc_html(self::get_download_count($post_id)); ?></span></span>
                 <?php endif; ?>
             </a>
         <?php
@@ -666,13 +666,18 @@ if( ! class_exists('PDFEV_Functions') ){
             // keeps the original bullet-joined line untouched, so this row
             // layout is grid-only.
             if ($parts === 'meta') {
+                // Grid card's tag row: values only ("2026 · 10 Pages · 3.15 MB"),
+                // the label kept as a tooltip/screen-reader hint.
                 $rows = array_merge($group1, $group2);
                 if (!empty($rows)) {
-                    echo '<div class="pdfev-archive-meta pdfev-archive-meta-rows">';
+                    echo '<ul class="pdfev-archive-meta pdfev-archive-meta-tags">';
                     foreach ($rows as $row) {
-                        echo '<div class="pdfev-meta-row"><span class="pdfev-meta-label">' . $row['label'] . '</span><span class="pdfev-meta-value">' . $row['value'] . '</span></div>';
+                        $value = $row['label'] === esc_html__('Pages', 'pdf-embed-viewer')
+                            ? $row['value'] . ' ' . esc_html__('Pages', 'pdf-embed-viewer')
+                            : $row['value'];
+                        echo '<li title="' . esc_attr($row['label']) . '"><span class="screen-reader-text">' . $row['label'] . ': </span>' . $value . '</li>';
                     }
-                    echo '</div>';
+                    echo '</ul>';
                 }
                 return;
             }
