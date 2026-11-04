@@ -35,6 +35,11 @@ class CPT{
         // place), so it and single_template()'s wp_is_block_theme() guard
         // never both fire for the same request.
         add_filter( 'render_block_core/post-content', array($this,'render_post_content'), 10, 2 ) ;
+        // This CPT has no editor, so its post_content is empty. Anything that
+        // prints the content of a PDF post — the Post Content widget in an
+        // Elementor Theme Builder single template, a page builder, a theme
+        // that calls the_content() — gets the book instead of a blank area.
+        add_filter( 'the_content', array($this,'single_content'), 20 ) ;
         // Suppresses the theme's own duplicate title above the plugin's
         // content block — same is_singular guard as render_post_content().
         add_filter( 'render_block_core/post-title', array($this,'suppress_singular_block'), 10, 2 ) ;
@@ -380,6 +385,29 @@ class CPT{
         }
 
         return $block_content;
+    }
+
+    public function single_content( $content ) {
+        static $rendering = false;
+        if ( $rendering || ! is_singular( 'pdfev_embed_viewer' ) || get_post_type() !== 'pdfev_embed_viewer' || get_the_ID() !== get_queried_object_id() ) {
+            return $content;
+        }
+        if ( trim( wp_strip_all_tags( $content ) ) !== '' ) {
+            return $content;
+        }
+        $rendering = true;
+        ob_start();
+        ?>
+        <div class="pdfev-embed-viewer">
+            <?php
+            do_action( 'pdfev_template_single_header' );
+            echo do_shortcode( '[pdfev_embed_viewer id="' . get_the_ID() . '"]' );
+            do_action( 'pdfev_template_single_footer' );
+            ?>
+        </div>
+        <?php
+        $rendering = false;
+        return ob_get_clean();
     }
 
     public function suppress_singular_block( $block_content, $block ) {

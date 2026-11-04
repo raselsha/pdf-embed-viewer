@@ -13,10 +13,10 @@ if( ! defined('ABSPATH') ) { die( "Don't access directly" ); }
 // false, so plain get_header()/get_footer() is the theme's real, native
 // header/footer here, not a compatibility shim.
 get_header();
-?>
 
-<!-- Here Archive Template will display -->
-<?php do_action('pdfev_template_archive_view'); ?>
+// Same Theme Builder hand-off as template/single.php, for "Archive" templates.
+if ( ! ( function_exists( 'elementor_theme_do_location' ) && elementor_theme_do_location( 'archive' ) ) ) {
+    do_action( 'pdfev_template_archive_view' );
+}
 
-<?php
 get_footer();

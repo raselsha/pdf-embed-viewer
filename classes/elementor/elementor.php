@@ -20,7 +20,7 @@ class Elementor_Settings {
         if ( did_action( 'elementor/loaded' ) ) {
             add_action( 'elementor/frontend/after_register_scripts', [ $this, 'widget_scripts' ] );
             add_action( 'elementor/elements/categories_registered', [ $this, 'add_widget_categories' ] );
-            add_action( 'elementor/widgets/widgets_registered', [ $this, 'register_widgets' ] );
+            add_action( 'elementor/widgets/register', [ $this, 'register_widgets' ] );
         }
     }
 
@@ -56,11 +56,11 @@ class Elementor_Settings {
     /**
      * Register widgets with Elementor
      */
-    public function register_widgets() {
+    public function register_widgets( $widgets_manager = null ) {
         $this->include_widgets_files();
-        // Register the widget class (assuming it's defined inside the included file)
-        ElementorPlugin::instance()->widgets_manager->register( new \PDFEV\Widgets\PDFEV_Grid_Widget() );
-        ElementorPlugin::instance()->widgets_manager->register( new \PDFEV\Widgets\PDFEV_Single_Widget() );
+        $widgets_manager = $widgets_manager ? $widgets_manager : ElementorPlugin::instance()->widgets_manager;
+        $widgets_manager->register( new \PDFEV\Widgets\PDFEV_Grid_Widget() );
+        $widgets_manager->register( new \PDFEV\Widgets\PDFEV_Single_Widget() );
     }
 }
 

@@ -677,6 +677,16 @@
 .pdfev-embed-viewer [lang="ur"] .content > * {
   line-height: 2;
 }
+/* Elementor "Dither Effect" / "Lift on Hover" switches (prefix classes on
+   the widget wrapper). */
+.pdfev-dither-off .archive-grid-style .pdfev-card-dither,
+.pdfev-dither-off .archive-grid-style .image::after {
+  display: none;
+}
+.pdfev-lift-off .archive-grid-style .grid-item:hover,
+.pdfev-lift-off .archive-grid-style .grid-item:hover .pdfev-card-cover {
+  transform: none;
+}
 @media (max-width: 480px) {
   .pdfev-embed-viewer .archive-grid-style .grid-item .image {
     height: 300px;
