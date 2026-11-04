@@ -306,6 +306,10 @@ class Template{
 
     public function template_archive_newsletter($atts=[]){
         $years =  \PDFEV\CPT::get_posts_years_array();
+        // Unique tab ids when more than one newsletter archive is on a page.
+        static $newsletter_instance = 0;
+        $newsletter_instance++;
+        $uid = $newsletter_instance > 1 ? '-' . $newsletter_instance : '';
     ?>
     <div class="pdfev-embed-viewer">
         <?php if($years): ?>
@@ -313,12 +317,12 @@ class Template{
                 <ul class="tabs">
                     <?php 
                         foreach($years as $year): ?>
-                            <li class="tab <?php echo esc_attr($year==gmdate('Y')?'active':''); ?>" data-tab-target="#year-<?php echo esc_attr($year);?>" ><?php echo esc_attr($year);?></li>
+                            <li class="tab <?php echo esc_attr($year==gmdate('Y')?'active':''); ?>" data-tab-target="#year-<?php echo esc_attr($year . $uid);?>" ><?php echo esc_attr($year);?></li>
                     <?php endforeach; ?>
                 </ul>
                 <div class="tabs-content" >
                     <?php foreach($years as $year): ?>
-                        <table  class="<?php echo esc_attr($year==gmdate('Y')?'active':''); ?>" data-tab-content  id="year-<?php echo esc_attr($year);?>">
+                        <table  class="<?php echo esc_attr($year==gmdate('Y')?'active':''); ?>" data-tab-content  id="year-<?php echo esc_attr($year . $uid);?>">
                             <thead>
                                 <tr>         					    			
                                     <th width="10%"><?php echo esc_html__('Month','pdf-embed-viewer') ?></th>

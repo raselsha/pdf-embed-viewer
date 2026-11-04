@@ -1,15 +1,19 @@
 
 // ============custom data tabs===========
+// Scoped per .archive-newsletter-style block so several newsletter archives
+// (e.g. one per category) can sit on the same page independently.
 jQuery(document).ready(function ($) {
-    $('[data-tab-target]:first').addClass('active');
-    $('[data-tab-content]:first').addClass('active');
-    $('[data-tab-target]').click(function () {
-    var target = $(this).data('tab-target');
-    $('[data-tab-content]').removeClass('active');
-    $('.tab').removeClass('active');
+  $('.archive-newsletter-style').each(function () {
+    var $box = $(this);
+    $box.find('[data-tab-target]').removeClass('active').first().addClass('active');
+    $box.find('[data-tab-content]').removeClass('active').first().addClass('active');
+  });
+  $(document).on('click', '.archive-newsletter-style [data-tab-target]', function () {
+    var $box = $(this).closest('.archive-newsletter-style');
+    $box.find('[data-tab-content]').removeClass('active');
+    $box.find('[data-tab-target]').removeClass('active');
     $(this).addClass('active');
-    $(target).addClass('active');
-    
+    $box.find($(this).data('tab-target')).addClass('active');
   });
 });
 
