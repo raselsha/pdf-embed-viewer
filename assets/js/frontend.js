@@ -430,7 +430,7 @@ jQuery(document).ready(function ($) {
         return $.isEmptyObject(controls) ? undefined : controls;
       }
 
-      function startFlipbook(resolvedUrl, pdfBytes) {
+      function startFlipbook(resolvedUrl, pdfBytes, openOptions) {
         // Pro flipbook options — free/unlicensed installs never receive
         // pdfevFronend.flipbookOptions at all, so proOptions stays {} below,
         // leaving today's defaults untouched.
@@ -503,7 +503,9 @@ jQuery(document).ready(function ($) {
         // Bypass 3dflipbook's own normalizeUrl() bug (see fetchProtectedPdf's
         // comment above) by giving pdf.js the already-fetched bytes directly
         // instead of relying on the (corrupted) blob: URL for loading.
-        if (pdfBytes) {
+        if (openOptions) {
+          options.pdfOpenOptions = openOptions;
+        } else if (pdfBytes) {
           options.pdfOpenOptions = { data: new Uint8Array(pdfBytes) };
         } else {
           // 3dflipbook's default pdf.js config leaves HTTP Range requests
@@ -522,9 +524,33 @@ jQuery(document).ready(function ($) {
         $viewer.FlipBook(options);
       }
 
-      if (isProtected) {
-        // The bytes are fetched before the flipbook starts, so show a loader
-        // in the meantime — otherwise the stage just sits empty.
+      var pdfSize = parseInt($viewer.attr('data-pdfev-size'), 10) || 0;
+      if (isProtected && pdfSize > 0 && typeof pdfjsLib !== 'undefined' && pdfjsLib.PDFDataRangeTransport) {
+        // Start the flipbook right away (full stage, toolbar and its own
+        // "PDF is Loading" state) and feed pdf.js the protected bytes through
+        // a range transport the moment they arrive.
+        var transport = new pdfjsLib.PDFDataRangeTransport(pdfSize, null);
+        var fullBytes = null, pendingRanges = [];
+        transport.requestDataRange = function (begin, end) {
+          if (fullBytes) transport.onDataRange(begin, fullBytes.subarray(begin, end));
+          else pendingRanges.push([begin, end]);
+        };
+        startFlipbook('protected.pdf', null, { range: transport, length: pdfSize, disableAutoFetch: false, disableStream: true });
+        fetchProtectedPdf(post_id, function (result) {
+          if (!result) {
+            $viewer.html('<div class="pdfev-load-error">' + (pdfevFronend.load_error_text || 'This PDF could not be loaded. Please reload the page.') + '</div>');
+            return;
+          }
+          fullBytes = new Uint8Array(result.arrayBuffer);
+          transport.onDataProgress(fullBytes.length, fullBytes.length);
+          transport.onDataProgressiveRead(fullBytes);
+          transport.onDataProgressiveDone();
+          pendingRanges.forEach(function (r) { transport.onDataRange(r[0], fullBytes.subarray(r[0], r[1])); });
+          pendingRanges = [];
+        });
+      } else if (isProtected) {
+        // No size known: the bytes are fetched before the flipbook starts,
+        // so show a loader in the meantime.
         $viewer.html(preloaderHtml());
         fetchProtectedPdf(post_id, function (result) {
           if (result) {

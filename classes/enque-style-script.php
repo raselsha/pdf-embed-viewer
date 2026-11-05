@@ -27,6 +27,7 @@ class Enque_Style{
         // structurally cannot: a shortcode used outside post_content.
         add_action('wp_footer',[$this,'late_frontend_style'],1);
         add_action('wp_head',[$this,'preload_viewer_assets'],2);
+        add_action('wp_head',[$this,'early_protected_fetch'],1);
     }
 
     public function backend_style(){
@@ -79,6 +80,37 @@ class Enque_Style{
             printf( '<link rel="preload" as="script" href="%s">' . "\n", esc_url( PDFEV_Const_URL . $src . '?ver=' . $ver ) );
         }
         printf( '<link rel="prefetch" href="%s">' . "\n", esc_url( PDFEV_Const_URL . 'vendor/pdf/pdf.worker.min.js' ) );
+    }
+
+    /**
+     * On a single PDF page whose file is protected, start the PDF request from
+     * the very top of <head> — before stylesheets and fonts hold up the
+     * parser — instead of waiting for the inline starter beside the viewer.
+     * Same request and the same window.__pdfevPrefetch slot, so it only ever
+     * runs once.
+     */
+    public function early_protected_fetch(){
+        if ( ! is_singular('pdfev_embed_viewer') ) {
+            return;
+        }
+        $id = get_queried_object_id();
+        if ( ! $id || ! apply_filters('pdfev_pdf_is_protected', false, $id) ) {
+            return;
+        }
+        ?>
+<script>
+(function () {
+    if (!window.fetch || !window.URLSearchParams) return;
+    var pre = window.__pdfevPrefetch = window.__pdfevPrefetch || {};
+    var id = <?php echo (int) $id; ?>;
+    if (pre[id]) return;
+    pre[id] = fetch(<?php echo wp_json_encode( admin_url( 'admin-ajax.php' ) ); ?>, {
+        method: 'POST', credentials: 'same-origin', cache: 'no-store',
+        body: new URLSearchParams({ action: 'pdfev_get_stream_token', ajaxnonce: <?php echo wp_json_encode( wp_create_nonce( 'pdf_ajax_nonce' ) ); ?>, post_id: id, inline: '1' })
+    }).catch(function () { return null; });
+})();
+</script>
+        <?php
     }
 
     public function frontend_style(){

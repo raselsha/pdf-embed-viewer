@@ -276,7 +276,7 @@ if( ! class_exists('PDFEV_Functions') ){
                         ?>
                     </div>
                     <div class="pdfev-3dbook-container" style="display: <?php echo esc_attr($flipbook=='yes'?'block':'none'); ?>;">
-                        <div class="pdfev-3dbook-viewer" id="pdfev-3dbook-<?php echo esc_attr($post_id); ?>" data-id="<?php echo esc_attr($post_id); ?>" data-pdfev-url="<?php echo esc_attr($display_link); ?>" data-pdfev-rtl="<?php echo $rtl ? 'yes' : 'no'; ?>" <?php echo $is_protected ? 'data-pdfev-protected="yes"' : ''; ?>><?php if ( $is_protected ) : ?><div class="pdfev-preloader" role="status" aria-label="<?php esc_attr_e('Loading', 'pdf-embed-viewer'); ?>"><div class="book-frame"><div class="left-page"></div><div class="right-page"></div><div class="flipping-page page-1"></div><div class="flipping-page page-2"></div><div class="flipping-page page-3"></div></div></div><?php endif; ?></div>
+                        <div class="pdfev-3dbook-viewer" id="pdfev-3dbook-<?php echo esc_attr($post_id); ?>" data-id="<?php echo esc_attr($post_id); ?>" data-pdfev-url="<?php echo esc_attr($display_link); ?>" data-pdfev-rtl="<?php echo $rtl ? 'yes' : 'no'; ?>" <?php echo $is_protected ? 'data-pdfev-protected="yes" data-pdfev-size="' . absint( apply_filters( 'pdfev_pdf_size', 0, $post_id ) ) . '"' : ''; ?>></div>
                         <?php if ( $is_protected ) : ?>
                         <script>
                         // Start downloading the protected PDF right away, while
