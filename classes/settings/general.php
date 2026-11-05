@@ -140,6 +140,12 @@ class General_Settings{
             'colors'   => ['icon' => 'admin-appearance', 'label' => __('Brand Colors', 'pdf-embed-viewer')],
             'demo'     => ['icon' => 'database-import',  'label' => __('Demo Content', 'pdf-embed-viewer')],
         ];
+        if ( ! class_exists( 'PDFEV_Pro_Functions' ) ) {
+            $demo = $base_sections['demo'];
+            unset( $base_sections['demo'] );
+            $base_sections['pro']  = ['icon' => 'star-filled', 'label' => __('Pro Features', 'pdf-embed-viewer'), 'badge' => __('PRO', 'pdf-embed-viewer')];
+            $base_sections['demo'] = $demo;
+        }
         $sections = apply_filters('pdfev_settings_sections', $base_sections);
         ?>
         <div class="pdfev-settings-shell">
@@ -335,6 +341,41 @@ class General_Settings{
                     </div>
                 </div>
 
+                <?php if ( ! class_exists( 'PDFEV_Pro_Functions' ) ) : ?>
+                <div class="pdfev-settings-section" data-section="pro">
+                    <div class="pdfev-section-header">
+                        <h2><?php esc_html_e('Pro Features', 'pdf-embed-viewer'); ?></h2>
+                        <p><?php esc_html_e('Protect your PDFs and get more out of the flipbook with the Pro add-on.', 'pdf-embed-viewer'); ?></p>
+                    </div>
+                    <div class="pdfev-section-body">
+                        <div class="pdfev-pro-upsell">
+                            <span class="dashicons dashicons-lock" aria-hidden="true"></span>
+                            <span><?php esc_html_e('These features are part of Flipbook PDF Pro.', 'pdf-embed-viewer'); ?></span>
+                            <a href="<?php echo esc_url( PDFEV_Pro_URL ); ?>" target="_blank" rel="noopener"><?php esc_html_e('Get Pro', 'pdf-embed-viewer'); ?></a>
+                        </div>
+                        <ul class="pdfev-pro-features">
+                            <?php
+                            $pro_features = [
+                                [ __('Lockdown — no downloads', 'pdf-embed-viewer'), __('No download button or link, originals moved to a locked folder, single-use links, scrambled file transfer, print/save blocked.', 'pdf-embed-viewer') ],
+                                [ __('Hide File URL', 'pdf-embed-viewer'), __('The real file path never appears in the page; PDFs are served through a protected link.', 'pdf-embed-viewer') ],
+                                [ __('Premium skins & toolbar', 'pdf-embed-viewer'), __('Modern viewer chrome with page slider, thumbnails, table of contents and search panels.', 'pdf-embed-viewer') ],
+                                [ __('Flipbook controls', 'pdf-embed-viewer'), __('Page-flip sound, autoplay, single/double page mode, zoom limits, background and border colours.', 'pdf-embed-viewer') ],
+                                [ __('Right-to-left reading', 'pdf-embed-viewer'), __('Turn pages right-to-left for Arabic, Urdu, Hebrew and other RTL books.', 'pdf-embed-viewer') ],
+                                [ __('Toolbar buttons on/off', 'pdf-embed-viewer'), __('Show or hide Print, Full Screen, Table of Contents, Share and Download in the viewer.', 'pdf-embed-viewer') ],
+                            ];
+                            foreach ( $pro_features as $feature ) :
+                                ?>
+                                <li>
+                                    <strong><span class="dashicons dashicons-lock" aria-hidden="true"></span> <?php echo esc_html( $feature[0] ); ?> <span class="pdfev-pro-badge"><?php esc_html_e('PRO', 'pdf-embed-viewer'); ?></span></strong>
+                                    <span><?php echo esc_html( $feature[1] ); ?></span>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                        <p><a class="button button-primary button-hero" href="<?php echo esc_url( PDFEV_Pro_URL ); ?>" target="_blank" rel="noopener"><?php esc_html_e('Get Flipbook PDF Pro', 'pdf-embed-viewer'); ?></a></p>
+                    </div>
+                </div>
+                <?php endif; ?>
+
                 <?php
                 // Lets an add-on (e.g. pdf-embed-viewer-pro) render its own extra
                 // settings section(s) here, using this class's own toggle_row() /
@@ -428,6 +469,7 @@ class General_Settings{
             <span class="dashicons dashicons-lock" aria-hidden="true"></span>
             <span><?php echo esc_html($message); ?></span>
             <a href="<?php echo esc_url($license_url); ?>"><?php esc_html_e('Activate License', 'pdf-embed-viewer'); ?></a>
+            <a href="<?php echo esc_url( PDFEV_Pro_URL ); ?>" target="_blank" rel="noopener"><?php esc_html_e('Get Pro', 'pdf-embed-viewer'); ?></a>
         </div>
         <?php
     }

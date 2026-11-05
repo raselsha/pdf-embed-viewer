@@ -2496,3 +2496,26 @@ body.post-type-pdfev_embed_viewer{
 .wp-picker-container .iris-picker * {
     box-sizing: content-box !important;
 }
+
+/* Pro Features list (shown while the Pro add-on isn't active). */
+.pdfev-pro-features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 12px;
+    margin: 16px 0;
+    padding: 0;
+    list-style: none;
+    & li {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        margin: 0;
+        padding: 14px 16px;
+        border: 1px solid #e2e4e7;
+        border-radius: 8px;
+        background: #fff;
+    }
+    & strong { display: flex; align-items: center; gap: 6px; }
+    & strong .dashicons { font-size: 16px; width: 16px; height: 16px; color: #6e35e8; }
+    & span:not(.dashicons):not(.pdfev-pro-badge) { color: #50575e; line-height: 1.5; }
+}

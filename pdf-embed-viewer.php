@@ -7,7 +7,7 @@
  * Stable Tag: trunk
  * Requires at least: 3.0
  * Requires PHP:      7.0
- * Author: Shahadat Hossain
+ * Author: Lieusoft
  * Author URI: https://lieusoft.com
  * License: GPL v2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -44,6 +44,9 @@ if( ! class_exists( 'PDFEV_Embed_Viewer' ) ){
             define( 'PDFEV_Const_Path', plugin_dir_path(__FILE__) );
             define( 'PDFEV_Const_URL', plugin_dir_url(__FILE__) );
             define( 'PDFEV_Const_VERSION', '1.5.6' );
+if ( ! defined( 'PDFEV_Pro_URL' ) ) {
+    define( 'PDFEV_Pro_URL', 'https://lieusoft.com/pdf-embed-viewer/#pricing' );
+}
         }
 
         public static function include_plugin_files() {

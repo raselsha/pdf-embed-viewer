@@ -346,6 +346,18 @@ jQuery(document).ready(function ($) {
 
       if (!pdfURL && !isProtected) return;
 
+      // Add-on flag (Pro): on narrow screens always open in single-page view.
+      // The library's own "mobile" test is based on the stage's diagonal, which
+      // a tall phone stage can exceed, so it is forced here by viewport width.
+      function mobileControls(proOptions) {
+        var controls = $.extend(true, {}, proOptions.controlsProps || {});
+        if (proOptions.mobileSinglePage && window.matchMedia && window.matchMedia('(max-width: 767px)').matches) {
+          controls.actions = controls.actions || {};
+          controls.actions.cmdSinglePage = $.extend({}, controls.actions.cmdSinglePage, { active: true, activeForMobile: true });
+        }
+        return $.isEmptyObject(controls) ? undefined : controls;
+      }
+
       function startFlipbook(resolvedUrl, pdfBytes) {
         // Pro flipbook options — free/unlicensed installs never receive
         // pdfevFronend.flipbookOptions at all, so proOptions stays {} below,
@@ -364,7 +376,7 @@ jQuery(document).ready(function ($) {
           // place the library actually reads/merges custom overrides into
           // its computed book properties.
           bookStyle: proOptions.style || 'volume',
-          controlsProps: proOptions.controlsProps,
+          controlsProps: mobileControls(proOptions),
           propertiesCallback: function (props) {
             // Per-document Reading Direction (metabox, free tier) always
             // wins over Pro's site-wide RTL toggle — a document's language
