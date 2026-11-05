@@ -162,7 +162,9 @@ class Metabox_General{
         $site_host = wp_parse_url( home_url(), PHP_URL_HOST );
         $file_host = $raw_url ? wp_parse_url( $raw_url, PHP_URL_HOST ) : null;
         $is_remote_source = $file_host && $site_host !== $file_host;
-        $uploaded_filename = ( ! $is_remote_source && $embed_file ) ? basename( (string) wp_parse_url( $embed_file, PHP_URL_PATH ) ) : '';
+        // From the saved URL, not get_pdf_link(): an add-on may swap the latter
+        // for a protected link that carries no file name.
+        $uploaded_filename = ( ! $is_remote_source && $raw_url ) ? basename( (string) wp_parse_url( $raw_url, PHP_URL_PATH ) ) : '';
 
         $check_download  = get_post_meta( $post_id, 'pdfev_meta_download', true );
         $check_download  = $check_download ? $check_download : 'yes';

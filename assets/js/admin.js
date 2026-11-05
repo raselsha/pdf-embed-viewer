@@ -194,6 +194,9 @@
     // field (what actually gets saved) always keeps the raw URL.
     function pdfevResolvePreviewUrl(url) {
         if (!url) return url;
+        if (pdfevAjax.preview_pdf_url && url === pdfevAjax.saved_pdf_url) {
+            return pdfevAjax.preview_pdf_url;
+        }
         try {
             var parsed = new URL(url, window.location.href);
             if (parsed.host !== window.location.host) {
@@ -514,7 +517,8 @@
         $('.pdfev-progress-ring-fill').css('stroke-dashoffset', PDFEV_RING_CIRCUMFERENCE);
         pdfjsLib.GlobalWorkerOptions.workerSrc = pdfevAjax.pdfevurl + 'vendor/pdf/pdf.worker.min.js';
         try {
-            const response = await fetch(pdfUrl);
+            const response = await fetch(pdfUrl, { credentials: 'same-origin' });
+            if (!response.ok) throw new Error('PDF request failed: ' + response.status);
             const arrayBuffer = await response.arrayBuffer();
             const fileSizeBytes = arrayBuffer.byteLength;
             console.log("response");

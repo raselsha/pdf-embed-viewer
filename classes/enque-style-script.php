@@ -57,6 +57,11 @@ class Enque_Style{
             'pdfevurl' => PDFEV_Const_URL,
             'pdfworker' => PDFEV_Const_URL.'vendor/pdf/pdf.worker.min.js',
             'post_id' => get_the_ID(),
+            // An add-on can serve the saved file to the editor through its own
+            // authenticated URL when the file itself isn't publicly reachable
+            // (e.g. Pro Lockdown's locked folder).
+            'saved_pdf_url'   => get_the_ID() ? (string) get_post_meta( get_the_ID(), 'pdfev_meta_pdf_url', true ) : '',
+            'preview_pdf_url' => get_the_ID() ? (string) apply_filters( 'pdfev_admin_preview_url', '', get_the_ID() ) : '',
         ));
     }
 
