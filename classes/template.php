@@ -429,8 +429,19 @@ class Template{
             $next_label = __('Next','pdf-embed-viewer').' &rarr;';
         }
         ?>
+        <?php
+        // Settings → General → "Show Description" covers single views too.
+        $description = get_option('pdfev_show_description') === 'yes'
+            ? get_post_meta(get_the_ID(), 'pdfev_meta_description', true)
+            : '';
+        ?>
         <div class="header">
-            <h1><?php the_title();?></h1>
+            <div class="pdfev-single-title">
+                <h1><?php the_title();?></h1>
+                <?php if ( ! empty( $description ) ) : ?>
+                    <div class="pdfev-single-description"><?php echo wp_kses_post( wpautop( $description ) ); ?></div>
+                <?php endif; ?>
+            </div>
             <div class="action">
                 <?php \PDFEV_Functions::back_to_archive();?>
                 <?php \PDFEV_Functions::download_button_single_page_view(get_the_ID()); ?>

@@ -18,6 +18,18 @@
     align-items: center;
   }
 }
+.pdfev-embed-viewer .pdfev-single-title {
+  min-width: 0;
+}
+.pdfev-embed-viewer .pdfev-single-description {
+  margin-top: 8px;
+  max-width: 70ch;
+  color: var(--pdfev-secondary);
+  line-height: 1.6;
+}
+.pdfev-embed-viewer .pdfev-single-description p {
+  margin: 0 0 0.5em;
+}
 .pdfev-embed-viewer .header .action {
   display: flex;
   justify-content: space-between;
