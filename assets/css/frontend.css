@@ -1210,6 +1210,17 @@
   .pdfev-embed-viewer .pdfev-embed-viewer { padding-left: 0; padding-right: 0; }
 }
 
+.pdfev-3dbook-viewer > .pdfev-preloader,
+.pdfev-3dbook-viewer > .pdfev-load-error {
+  position: absolute;
+  inset: 0;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.pdfev-load-error { padding: 20px; text-align: center; color: var(--pdfev-secondary); }
+
 :root {
   --pdfev-primary:#c79f62;
   --pdfev-secondary:#666;

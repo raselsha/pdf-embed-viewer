@@ -134,6 +134,12 @@ jQuery(document).ready(function ($) {
   // so this sidesteps the bug entirely.
   var protectedPdfCache = {};
 
+  function preloaderHtml() {
+    return '<div class="pdfev-preloader" role="status" aria-label="Loading">' +
+      '<div class="book-frame"><div class="left-page"></div><div class="right-page"></div>' +
+      '<div class="flipping-page page-1"></div><div class="flipping-page page-2"></div><div class="flipping-page page-3"></div></div></div>';
+  }
+
   function unmaskBytes(arrayBuffer, keyB64) {
     var key = Uint8Array.from(atob(keyB64), function (c) { return c.charCodeAt(0); });
     var bytes = new Uint8Array(arrayBuffer);
@@ -156,7 +162,20 @@ jQuery(document).ready(function ($) {
     });
   }
 
-  function loadProtectedPdf(post_id) {
+  // A page served from a full-page cache can carry an expired nonce; on a
+  // 403 fetch a fresh one once and retry.
+  function refreshNonce() {
+    return fetch(pdfevFronend.ajaxurl, {
+      method: 'POST',
+      body: new URLSearchParams({ action: 'pdfev_refresh_nonce' }),
+      credentials: 'same-origin',
+      cache: 'no-store'
+    }).then(function (r) { return r.json(); }).then(function (j) {
+      if (j && j.success && j.data && j.data.nonce) pdfevFronend.ajaxnonce = j.data.nonce;
+    });
+  }
+
+  function loadProtectedPdf(post_id, retried) {
     var body = new URLSearchParams({
       action: 'pdfev_get_stream_token',
       ajaxnonce: pdfevFronend.ajaxnonce,
@@ -165,7 +184,14 @@ jQuery(document).ready(function ($) {
     });
     return fetch(pdfevFronend.ajaxurl, { method: 'POST', body: body, credentials: 'same-origin', cache: 'no-store' })
       .then(function (res) {
+        if (res.status === 403 && !retried) {
+          return refreshNonce().then(function () { return { retry: true }; });
+        }
         if (!res.ok) throw new Error('Protected PDF request failed');
+        return res;
+      })
+      .then(function (res) {
+        if (res.retry) return loadProtectedPdf(post_id, true);
         var type = res.headers.get('Content-Type') || '';
         // Add-ons that answer with the bytes directly (Pro Lockdown): masked
         // payload, key in a header — no second request, no blob: URL.
@@ -229,6 +255,7 @@ jQuery(document).ready(function ($) {
       if ($reader.data('pdfev-protected') === 'yes') {
         fetchProtectedPdf($reader.data('id'), function (result) {
           if (result) open({ data: new Uint8Array(result.arrayBuffer) });
+          else $reader.find('.pdfev-scroll-loading').text(pdfevFronend.load_error_text || 'This PDF could not be loaded. Please reload the page.');
         });
       } else {
         open({ url: $reader.data('pdfev-url') });
@@ -483,8 +510,16 @@ jQuery(document).ready(function ($) {
       }
 
       if (isProtected) {
+        // The bytes are fetched before the flipbook starts, so show a loader
+        // in the meantime — otherwise the stage just sits empty.
+        $viewer.html(preloaderHtml());
         fetchProtectedPdf(post_id, function (result) {
-          if (result) startFlipbook(result.blobUrl || 'protected.pdf', result.arrayBuffer);
+          if (result) {
+            $viewer.empty();
+            startFlipbook(result.blobUrl || 'protected.pdf', result.arrayBuffer);
+          } else {
+            $viewer.html('<div class="pdfev-load-error">' + (pdfevFronend.load_error_text || 'This PDF could not be loaded. Please reload the page.') + '</div>');
+          }
         });
       } else {
         startFlipbook(pdfURL);

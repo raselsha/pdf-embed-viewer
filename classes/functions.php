@@ -20,6 +20,10 @@ if( ! class_exists('PDFEV_Functions') ){
             add_action( 'init', [$this,'pdfev_proxy']);
             add_action( 'wp_ajax_pdfev_load_more_archive', ['PDFEV_Functions','load_more_archive'] );
             add_action( 'wp_ajax_nopriv_pdfev_load_more_archive', ['PDFEV_Functions','load_more_archive'] );
+            // Fresh nonce for pages served from a full-page cache after the
+            // nonce printed into them has expired (frontend.js retries once).
+            add_action( 'wp_ajax_pdfev_refresh_nonce', ['PDFEV_Functions','refresh_nonce'] );
+            add_action( 'wp_ajax_nopriv_pdfev_refresh_nonce', ['PDFEV_Functions','refresh_nonce'] );
         }
 
         function dummy_import(){
@@ -781,6 +785,11 @@ if( ! class_exists('PDFEV_Functions') ){
                 return true;
             }
             return false;
+        }
+
+        public static function refresh_nonce(){
+            nocache_headers();
+            wp_send_json_success( [ 'nonce' => wp_create_nonce( 'pdf_ajax_nonce' ) ] );
         }
 
         public static function convert_file_size($bytes){
