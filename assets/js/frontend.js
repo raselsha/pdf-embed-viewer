@@ -77,12 +77,14 @@ jQuery(document).ready(function ($) {
     
     $parent.find('.pdfev-traditional-container').show();
     $parent.find('.pdfev-3dbook-container').hide();
+    initScrollReaders();
   });
 
   // ===initialize the flipbook===
   $(document).ready(function(){
     initializeFlipbook();
     initializeProtectedIframes();
+    initScrollReaders();
   });
 
   // Pro "Hide File URL" mode: fetches the (stable, permanent) stream token
@@ -140,12 +142,28 @@ jQuery(document).ready(function ($) {
         callback(null);
         return;
       }
-      fetch(response.data.url, { credentials: 'same-origin' })
+      fetch(response.data.url, { credentials: 'same-origin', cache: 'no-store' })
         .then(function (res) {
           if (!res.ok) throw new Error('Protected PDF fetch failed');
           return res.arrayBuffer();
         })
         .then(function (arrayBuffer) {
+          // An add-on may send the bytes masked with a per-request key, so
+          // the response saved from the network panel or caught by a
+          // download manager is not a usable PDF. Unmask in memory only.
+          if (response.data.key) {
+            var key = Uint8Array.from(atob(response.data.key), function (c) { return c.charCodeAt(0); });
+            var bytes = new Uint8Array(arrayBuffer);
+            for (var i = 0, k = key.length; i < bytes.length; i++) {
+              bytes[i] ^= key[i % k];
+            }
+          }
+          // No blob: URL when the add-on says so (Lockdown) — nothing
+          // openable in a new tab, the viewers get the bytes directly.
+          if (response.data.no_blob) {
+            callback({ blobUrl: null, arrayBuffer: arrayBuffer });
+            return;
+          }
           var blobUrl = URL.createObjectURL(new Blob([arrayBuffer], { type: 'application/pdf' }));
           callback({ blobUrl: blobUrl, arrayBuffer: arrayBuffer });
           revokeBlobUrlSoon(blobUrl);
@@ -163,9 +181,159 @@ jQuery(document).ready(function ($) {
       let $iframe = $(this);
       let post_id = $iframe.data('id');
       fetchProtectedPdf(post_id, function (result) {
-        if (result) $iframe.attr('src', result.blobUrl);
+        if (result && result.blobUrl) $iframe.attr('src', result.blobUrl);
       });
     });
+  }
+
+  // ===Scroll reader (the "Traditional" view)===
+  // pdf.js renders each page onto a canvas, lazily as it nears the viewport.
+  // Same look and behaviour in every browser (phones included), and no
+  // browser PDF viewer with its own Save/Print buttons. In Pro's protected
+  // mode the bytes come from fetchProtectedPdf(), never from a printed URL.
+  function initScrollReaders() {
+    $('.pdfev-scroll-reader').each(function () {
+      var $reader = $(this);
+      if ($reader.data('pdfevScroll') || !$reader.is(':visible')) return;
+      $reader.data('pdfevScroll', true);
+      if (typeof pdfjsLib === 'undefined') return;
+      if (!pdfjsLib.GlobalWorkerOptions.workerSrc) {
+        pdfjsLib.GlobalWorkerOptions.workerSrc = pdfevFronend.pdfevurl + 'vendor/pdf/pdf.worker.min.js';
+      }
+      var open = function (source) {
+        pdfjsLib.getDocument(source).promise.then(function (pdf) {
+          buildScrollReader($reader, pdf);
+        }).catch(function () {
+          $reader.find('.pdfev-scroll-loading').text(pdfevFronend.scroll_error_text || 'This PDF could not be loaded.');
+        });
+      };
+      if ($reader.data('pdfev-protected') === 'yes') {
+        fetchProtectedPdf($reader.data('id'), function (result) {
+          if (result) open({ data: new Uint8Array(result.arrayBuffer) });
+        });
+      } else {
+        open({ url: $reader.data('pdfev-url') });
+      }
+    });
+  }
+
+  function buildScrollReader($reader, pdf) {
+    var $pages = $reader.find('.pdfev-scroll-pages');
+    var zoom = 1;
+    var pageEls = [];
+    var renderTokens = [];
+
+    $reader.find('.pdfev-scroll-total').text(pdf.numPages);
+    $pages.empty();
+
+    for (var i = 1; i <= pdf.numPages; i++) {
+      var el = document.createElement('div');
+      el.className = 'pdfev-scroll-page';
+      el.setAttribute('data-page', i);
+      el.setAttribute('aria-label', 'Page ' + i);
+      $pages[0].appendChild(el);
+      pageEls.push(el);
+    }
+
+    // Page boxes are sized from page 1 so the scrollbar is right before any
+    // page renders; each page corrects its own height once it is drawn.
+    var ratio = 1.414;
+    function width() {
+      return Math.max(200, ($pages[0].clientWidth - 24) * zoom);
+    }
+    function sizeBoxes() {
+      var w = width();
+      pageEls.forEach(function (el) {
+        el.style.width = w + 'px';
+        el.style.height = (w * (el._ratio || ratio)) + 'px';
+      });
+      $reader.find('.pdfev-scroll-zoom').text(Math.round(zoom * 100) + '%');
+    }
+
+    function renderPage(el) {
+      var n = parseInt(el.getAttribute('data-page'), 10);
+      var token = (renderTokens[n] || 0) + 1;
+      renderTokens[n] = token;
+      pdf.getPage(n).then(function (page) {
+        var base = page.getViewport({ scale: 1 });
+        el._ratio = base.height / base.width;
+        var w = width();
+        el.style.height = (w * el._ratio) + 'px';
+        var dpr = Math.min(window.devicePixelRatio || 1, 2);
+        var viewport = page.getViewport({ scale: (w / base.width) * dpr });
+        var canvas = document.createElement('canvas');
+        canvas.width = viewport.width;
+        canvas.height = viewport.height;
+        canvas.style.width = '100%';
+        canvas.style.height = '100%';
+        return page.render({ canvasContext: canvas.getContext('2d'), viewport: viewport }).promise.then(function () {
+          if (renderTokens[n] !== token) return; // a newer zoom level won
+          el.innerHTML = '';
+          el.appendChild(canvas);
+          el.setAttribute('data-rendered', 'yes');
+        });
+      });
+    }
+
+    var lazy = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting && entry.target.getAttribute('data-rendered') !== 'yes') {
+          renderPage(entry.target);
+        }
+      });
+    }, { root: $pages[0], rootMargin: '800px 0px' });
+
+    var visible = {};
+    var tracker = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        visible[entry.target.getAttribute('data-page')] = entry.intersectionRatio;
+      });
+      var best = 1, bestRatio = -1;
+      Object.keys(visible).forEach(function (k) {
+        if (visible[k] > bestRatio) { bestRatio = visible[k]; best = k; }
+      });
+      $reader.find('.pdfev-scroll-current').text(best);
+    }, { root: $pages[0], threshold: [0, 0.25, 0.5, 0.75, 1] });
+
+    sizeBoxes();
+    pageEls.forEach(function (el) { lazy.observe(el); tracker.observe(el); });
+
+    function rerender() {
+      sizeBoxes();
+      pageEls.forEach(function (el) {
+        if (el.getAttribute('data-rendered') === 'yes') {
+          el.removeAttribute('data-rendered');
+          renderPage(el);
+        }
+      });
+    }
+
+    $reader.on('click', '.pdfev-scroll-btn', function () {
+      var action = $(this).data('action');
+      if (action === 'zoom-in') zoom = Math.min(3, Math.round((zoom + 0.25) * 100) / 100);
+      if (action === 'zoom-out') zoom = Math.max(0.5, Math.round((zoom - 0.25) * 100) / 100);
+      if (action === 'fit') zoom = 1;
+      if (action === 'fullscreen') {
+        var node = $reader[0];
+        if (document.fullscreenElement) { document.exitFullscreen(); }
+        else if (node.requestFullscreen) { node.requestFullscreen(); }
+        return;
+      }
+      rerender();
+    });
+
+    var resizeTimer;
+    $(window).on('resize', function () {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(rerender, 200);
+    });
+    document.addEventListener('fullscreenchange', function () { setTimeout(rerender, 100); });
+
+    // The pages are canvases already; this just stops the casual
+    // right-click → "Save image as…" on a single page.
+    $pages.on('contextmenu', 'canvas', function (e) { e.preventDefault(); });
+
+    $reader.trigger('pdfev:scroll-reader-ready', [pdf]);
   }
 
   function initializeFlipbook() {
@@ -272,7 +440,7 @@ jQuery(document).ready(function ($) {
 
       if (isProtected) {
         fetchProtectedPdf(post_id, function (result) {
-          if (result) startFlipbook(result.blobUrl, result.arrayBuffer);
+          if (result) startFlipbook(result.blobUrl || 'protected.pdf', result.arrayBuffer);
         });
       } else {
         startFlipbook(pdfURL);

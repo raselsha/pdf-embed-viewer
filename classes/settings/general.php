@@ -128,13 +128,19 @@ class General_Settings{
 
         // Lets an add-on (e.g. pdf-embed-viewer-pro) insert its own sidebar nav
         // entries (typically before 'demo', so "Demo Content" stays last).
-        $sections = apply_filters('pdfev_settings_sections', [
+        $base_sections = [
             'archive'  => ['icon' => 'admin-links',     'label' => __('Archive Page', 'pdf-embed-viewer')],
+        ];
+        if ( did_action( 'elementor/loaded' ) ) {
+            $base_sections['elementor'] = ['icon' => 'layout', 'label' => __('Elementor', 'pdf-embed-viewer')];
+        }
+        $base_sections += [
             'display'  => ['icon' => 'visibility',       'label' => __('Display & Behavior', 'pdf-embed-viewer')],
             'metadata' => ['icon' => 'book',             'label' => __('Book Details', 'pdf-embed-viewer')],
             'colors'   => ['icon' => 'admin-appearance', 'label' => __('Brand Colors', 'pdf-embed-viewer')],
             'demo'     => ['icon' => 'database-import',  'label' => __('Demo Content', 'pdf-embed-viewer')],
-        ]);
+        ];
+        $sections = apply_filters('pdfev_settings_sections', $base_sections);
         ?>
         <div class="pdfev-settings-shell">
             <aside class="pdfev-settings-sidebar">
@@ -200,6 +206,32 @@ class General_Settings{
                         </div>
                     </div>
                 </div>
+
+                <?php if ( did_action( 'elementor/loaded' ) ) : ?>
+                <div class="pdfev-settings-section" data-section="elementor">
+                    <div class="pdfev-section-header">
+                        <h2><?php esc_html_e('Elementor', 'pdf-embed-viewer'); ?></h2>
+                        <p><?php esc_html_e('Design the single PDF page yourself in Elementor.', 'pdf-embed-viewer'); ?></p>
+                    </div>
+                    <div class="pdfev-section-body">
+                        <div class="pdfev-field-row">
+                            <div class="pdfev-field-label">
+                                <label for="pdfev_single_elementor_template"><?php esc_html_e('Single PDF Page Template', 'pdf-embed-viewer'); ?></label>
+                                <span><?php esc_html_e('Build a template in Elementor → Templates (Page, Section or Container) using the PDF widgets — Title, Cover, Details, Description, Download Button, Navigation and Single View with "Current PDF post" — then pick it here. It is used for every PDF page. An Elementor Pro Theme Builder "Single" template for PDFs takes priority over this.', 'pdf-embed-viewer'); ?></span>
+                            </div>
+                            <div class="pdfev-field-control">
+                                <?php
+                                $el_templates = [];
+                                foreach ( get_posts( [ 'post_type' => 'elementor_library', 'posts_per_page' => -1, 'post_status' => 'publish', 'orderby' => 'title', 'order' => 'ASC' ] ) as $el_tpl ) {
+                                    $el_templates[ $el_tpl->ID ] = $el_tpl->post_title;
+                                }
+                                $this->render_custom_select('pdfev_single_elementor_template', 'pdfev_single_elementor_template', $el_templates, get_option('pdfev_single_elementor_template'), __('Default plugin layout', 'pdf-embed-viewer'));
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <?php endif; ?>
 
                 <div class="pdfev-settings-section" data-section="display">
                     <div class="pdfev-section-header">
@@ -466,6 +498,10 @@ class General_Settings{
             update_option('pdfev_show_total_pages', $show_total_pages);
             update_option('pdfev_show_filesize', $show_filesize);
             update_option('pdfev_css_colors',$colors );
+
+            if ( isset( $_POST['pdfev_single_elementor_template'] ) ) {
+                update_option( 'pdfev_single_elementor_template', absint( $_POST['pdfev_single_elementor_template'] ) );
+            }
 
             $container_max_width = isset( $_POST['pdfev_container_max_width'] ) && $_POST['pdfev_container_max_width'] !== '' ? absint( $_POST['pdfev_container_max_width'] ) : '';
             update_option('pdfev_container_max_width', $container_max_width);

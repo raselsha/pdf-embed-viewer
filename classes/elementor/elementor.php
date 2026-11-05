@@ -51,6 +51,7 @@ class Elementor_Settings {
     private function include_widgets_files() {
         require_once PDFEV_Const_Path . 'classes/elementor/widgets/archive-view.php';
         require_once PDFEV_Const_Path . 'classes/elementor/widgets/single-view.php';
+        require_once PDFEV_Const_Path . 'classes/elementor/widgets/single-parts.php';
     }
 
     /**
@@ -61,6 +62,10 @@ class Elementor_Settings {
         $widgets_manager = $widgets_manager ? $widgets_manager : ElementorPlugin::instance()->widgets_manager;
         $widgets_manager->register( new \PDFEV\Widgets\PDFEV_Grid_Widget() );
         $widgets_manager->register( new \PDFEV\Widgets\PDFEV_Single_Widget() );
+        foreach ( [ 'Title', 'Cover', 'Meta', 'Description', 'Download', 'Navigation' ] as $part ) {
+            $class = '\\PDFEV\\Widgets\\PDFEV_' . $part . '_Widget';
+            $widgets_manager->register( new $class() );
+        }
     }
 }
 

@@ -15,11 +15,10 @@ if ( ! defined('ABSPATH') ) {
 // header/footer here, not a compatibility shim.
 get_header();
 
-// An Elementor Pro / Pro Elements Theme Builder "Single" template assigned to
-// this post type takes over the content area; the plugin's own layout only
-// renders when no such template exists. Inside that template, the PDF Single
-// View widget (Source: Current post) or the Post Content widget shows the book.
-if ( ! ( function_exists( 'elementor_theme_do_location' ) && elementor_theme_do_location( 'single' ) ) ) :
+// An Elementor-built layout (Theme Builder "Single" template, or the template
+// picked in Settings → General) takes over the content area; the plugin's own
+// layout only renders when there is none. See render_elementor_single().
+if ( ! PDFEV_Functions::render_elementor_single() ) :
     ?>
 <div class="pdfev-embed-viewer">
     <?php do_action('pdfev_template_single_header'); ?>

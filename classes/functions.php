@@ -275,7 +275,28 @@ if( ! class_exists('PDFEV_Functions') ){
                         <div class="pdfev-3dbook-viewer" id="pdfev-3dbook-<?php echo esc_attr($post_id); ?>" data-id="<?php echo esc_attr($post_id); ?>" data-pdfev-url="<?php echo esc_attr($display_link); ?>" data-pdfev-rtl="<?php echo $rtl ? 'yes' : 'no'; ?>" <?php echo $is_protected ? 'data-pdfev-protected="yes"' : ''; ?>></div>
                     </div>
                     <div class="pdfev-traditional-container" style="display: <?php echo esc_attr($flipbook=='yes'?'none':'block'); ?>;">
-                        <iframe class="pdf-viewer" data-id="<?php echo esc_attr($post_id); ?>" src="<?php echo esc_attr($display_link); ?>" <?php echo $is_protected ? 'data-pdfev-protected="yes"' : ''; ?> frameborder="0"></iframe>
+                        <?php
+                        // Scroll reader: pages rendered by pdf.js onto canvas
+                        // (assets/js/frontend.js → initScrollReaders), so it
+                        // looks and works the same in every browser, phones
+                        // included, and never exposes the browser's own PDF
+                        // viewer with its Save/Print buttons.
+                        ?>
+                        <div class="pdfev-scroll-reader" data-id="<?php echo esc_attr($post_id); ?>" data-pdfev-url="<?php echo esc_attr($display_link); ?>" data-pdfev-rtl="<?php echo $rtl ? 'yes' : 'no'; ?>" <?php echo $is_protected ? 'data-pdfev-protected="yes"' : ''; ?><?php echo $rtl ? ' dir="rtl"' : ''; ?>>
+                            <div class="pdfev-scroll-toolbar" role="toolbar" aria-label="<?php esc_attr_e('PDF reader', 'pdf-embed-viewer'); ?>">
+                                <span class="pdfev-scroll-pageinfo" aria-live="polite"><span class="pdfev-scroll-current">1</span> / <span class="pdfev-scroll-total">&hellip;</span></span>
+                                <span class="pdfev-scroll-tools">
+                                    <button type="button" class="pdfev-scroll-btn" data-action="zoom-out" aria-label="<?php esc_attr_e('Zoom out', 'pdf-embed-viewer'); ?>"><i class="fas fa-search-minus" aria-hidden="true"></i></button>
+                                    <span class="pdfev-scroll-zoom">100%</span>
+                                    <button type="button" class="pdfev-scroll-btn" data-action="zoom-in" aria-label="<?php esc_attr_e('Zoom in', 'pdf-embed-viewer'); ?>"><i class="fas fa-search-plus" aria-hidden="true"></i></button>
+                                    <button type="button" class="pdfev-scroll-btn" data-action="fit" aria-label="<?php esc_attr_e('Fit to width', 'pdf-embed-viewer'); ?>"><i class="fas fa-arrows-alt-h" aria-hidden="true"></i></button>
+                                    <button type="button" class="pdfev-scroll-btn" data-action="fullscreen" aria-label="<?php esc_attr_e('Fullscreen', 'pdf-embed-viewer'); ?>"><i class="fas fa-expand" aria-hidden="true"></i></button>
+                                </span>
+                            </div>
+                            <div class="pdfev-scroll-pages" tabindex="0">
+                                <div class="pdfev-scroll-loading"><?php esc_html_e('Loading…', 'pdf-embed-viewer'); ?></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -476,6 +497,12 @@ if( ! class_exists('PDFEV_Functions') ){
         public static function get_download_button($atts=[]){
             $download_counter = isset($atts['downloading_count']) && $atts['downloading_count']!='' ? $atts['downloading_count'] : get_option('pdfev_download_counter');
             $post_id = isset($atts['post_id']) ? $atts['post_id'] : get_the_ID();
+
+            // An add-on can forbid downloading this PDF altogether (e.g.
+            // pdf-embed-viewer-pro's Lockdown mode) — then no button at all.
+            if ( ! apply_filters( 'pdfev_download_allowed', true, $post_id ) ) {
+                return;
+            }
 
             // Default (free-tier) attributes: a direct link with the browser
             // `download` attribute. An add-on (e.g. pdf-embed-viewer-pro) can
@@ -734,6 +761,26 @@ if( ! class_exists('PDFEV_Functions') ){
             // lang only: dir="rtl" on the whole item would also mirror the
             // card's kicker and button row; the text itself is set RTL in CSS.
             return ' lang="' . esc_attr($lang) . '"';
+        }
+
+        /**
+         * Render an Elementor-built single PDF layout if there is one, and
+         * say whether it did. Order: an Elementor Pro / Pro Elements Theme
+         * Builder "Single" template for this post type, then the Elementor
+         * template chosen in Settings → General (works with free Elementor).
+         * Templates call this before falling back to the plugin's own layout.
+         */
+        public static function render_elementor_single(){
+            if ( function_exists( 'elementor_theme_do_location' ) && elementor_theme_do_location( 'single' ) ) {
+                return true;
+            }
+            $template_id = absint( get_option( 'pdfev_single_elementor_template' ) );
+            if ( $template_id && did_action( 'elementor/loaded' ) && class_exists( '\\Elementor\\Plugin' )
+                && get_post_type( $template_id ) === 'elementor_library' && get_post_status( $template_id ) === 'publish' ) {
+                echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $template_id, true ); // phpcs:ignore WordPress.Security.EscapeOutput -- Elementor-rendered markup
+                return true;
+            }
+            return false;
         }
 
         public static function convert_file_size($bytes){

@@ -372,6 +372,17 @@ class CPT{
             // exactly why they rendered narrower than the flipbook below
             // them. template/single.php (the classic-theme path) already
             // wraps all three the same way — this just matches it.
+            static $rendering = false;
+            if ( $rendering ) {
+                return $block_content;
+            }
+            $rendering = true;
+            $template_id = absint( get_option( 'pdfev_single_elementor_template' ) );
+            if ( $template_id && did_action( 'elementor/loaded' ) && get_post_type( $template_id ) === 'elementor_library' && get_post_status( $template_id ) === 'publish' ) {
+                echo \Elementor\Plugin::instance()->frontend->get_builder_content_for_display( $template_id, true ); // phpcs:ignore WordPress.Security.EscapeOutput -- Elementor-rendered markup
+                $rendering = false;
+                return ob_get_clean();
+            }
             ?>
             <div class="pdfev-embed-viewer">
                 <?php
@@ -381,6 +392,7 @@ class CPT{
                 ?>
             </div>
             <?php
+            $rendering = false;
             return ob_get_clean();
         }
 
