@@ -132,48 +132,67 @@ jQuery(document).ready(function ($) {
   // we pass pdf.js the already-fetched bytes directly via pdfOpenOptions.data
   // — pdf.js only sets up network/URL-based fetching when no data is given,
   // so this sidesteps the bug entirely.
+  var protectedPdfCache = {};
+
+  function unmaskBytes(arrayBuffer, keyB64) {
+    var key = Uint8Array.from(atob(keyB64), function (c) { return c.charCodeAt(0); });
+    var bytes = new Uint8Array(arrayBuffer);
+    for (var i = 0, k = key.length; i < bytes.length; i++) {
+      bytes[i] ^= key[i % k];
+    }
+    return arrayBuffer;
+  }
+
+  // One shared download per PDF per page view: the flipbook and the scroll
+  // reader both get the same bytes instead of fetching the file twice.
   function fetchProtectedPdf(post_id, callback) {
-    $.post(pdfevFronend.ajaxurl, {
+    if (!protectedPdfCache[post_id]) {
+      protectedPdfCache[post_id] = loadProtectedPdf(post_id);
+    }
+    protectedPdfCache[post_id].then(function (result) {
+      // Hand each consumer its own copy — pdf.js may transfer (detach) the
+      // buffer it is given to its worker.
+      callback(result ? { blobUrl: result.blobUrl, arrayBuffer: result.arrayBuffer.slice(0) } : null);
+    });
+  }
+
+  function loadProtectedPdf(post_id) {
+    var body = new URLSearchParams({
       action: 'pdfev_get_stream_token',
       ajaxnonce: pdfevFronend.ajaxnonce,
       post_id: post_id,
-    }).done(function (response) {
-      if (!response.success || !response.data || !response.data.url) {
-        callback(null);
-        return;
-      }
-      fetch(response.data.url, { credentials: 'same-origin', cache: 'no-store' })
-        .then(function (res) {
-          if (!res.ok) throw new Error('Protected PDF fetch failed');
-          return res.arrayBuffer();
-        })
-        .then(function (arrayBuffer) {
-          // An add-on may send the bytes masked with a per-request key, so
-          // the response saved from the network panel or caught by a
-          // download manager is not a usable PDF. Unmask in memory only.
-          if (response.data.key) {
-            var key = Uint8Array.from(atob(response.data.key), function (c) { return c.charCodeAt(0); });
-            var bytes = new Uint8Array(arrayBuffer);
-            for (var i = 0, k = key.length; i < bytes.length; i++) {
-              bytes[i] ^= key[i % k];
-            }
-          }
-          // No blob: URL when the add-on says so (Lockdown) — nothing
-          // openable in a new tab, the viewers get the bytes directly.
-          if (response.data.no_blob) {
-            callback({ blobUrl: null, arrayBuffer: arrayBuffer });
-            return;
-          }
-          var blobUrl = URL.createObjectURL(new Blob([arrayBuffer], { type: 'application/pdf' }));
-          callback({ blobUrl: blobUrl, arrayBuffer: arrayBuffer });
-          revokeBlobUrlSoon(blobUrl);
-        })
-        .catch(function () {
-          callback(null);
-        });
-    }).fail(function () {
-      callback(null);
+      inline: '1'
     });
+    return fetch(pdfevFronend.ajaxurl, { method: 'POST', body: body, credentials: 'same-origin', cache: 'no-store' })
+      .then(function (res) {
+        if (!res.ok) throw new Error('Protected PDF request failed');
+        var type = res.headers.get('Content-Type') || '';
+        // Add-ons that answer with the bytes directly (Pro Lockdown): masked
+        // payload, key in a header — no second request, no blob: URL.
+        if (type.indexOf('application/octet-stream') === 0) {
+          var key = res.headers.get('X-Pdfev-Key');
+          return res.arrayBuffer().then(function (buf) {
+            return { blobUrl: null, arrayBuffer: key ? unmaskBytes(buf, key) : buf };
+          });
+        }
+        // Otherwise a JSON ticket with a URL to fetch (Hide File URL).
+        return res.json().then(function (response) {
+          if (!response.success || !response.data || !response.data.url) return null;
+          return fetch(response.data.url, { credentials: 'same-origin', cache: 'no-store' })
+            .then(function (r) {
+              if (!r.ok) throw new Error('Protected PDF fetch failed');
+              return r.arrayBuffer();
+            })
+            .then(function (buf) {
+              if (response.data.key) unmaskBytes(buf, response.data.key);
+              if (response.data.no_blob) return { blobUrl: null, arrayBuffer: buf };
+              var blobUrl = URL.createObjectURL(new Blob([buf], { type: 'application/pdf' }));
+              revokeBlobUrlSoon(blobUrl);
+              return { blobUrl: blobUrl, arrayBuffer: buf };
+            });
+        });
+      })
+      .catch(function () { return null; });
   }
 
   function initializeProtectedIframes() {
