@@ -276,7 +276,24 @@ if( ! class_exists('PDFEV_Functions') ){
                         ?>
                     </div>
                     <div class="pdfev-3dbook-container" style="display: <?php echo esc_attr($flipbook=='yes'?'block':'none'); ?>;">
-                        <div class="pdfev-3dbook-viewer" id="pdfev-3dbook-<?php echo esc_attr($post_id); ?>" data-id="<?php echo esc_attr($post_id); ?>" data-pdfev-url="<?php echo esc_attr($display_link); ?>" data-pdfev-rtl="<?php echo $rtl ? 'yes' : 'no'; ?>" <?php echo $is_protected ? 'data-pdfev-protected="yes"' : ''; ?>></div>
+                        <div class="pdfev-3dbook-viewer" id="pdfev-3dbook-<?php echo esc_attr($post_id); ?>" data-id="<?php echo esc_attr($post_id); ?>" data-pdfev-url="<?php echo esc_attr($display_link); ?>" data-pdfev-rtl="<?php echo $rtl ? 'yes' : 'no'; ?>" <?php echo $is_protected ? 'data-pdfev-protected="yes"' : ''; ?>><?php if ( $is_protected ) : ?><div class="pdfev-preloader" role="status" aria-label="<?php esc_attr_e('Loading', 'pdf-embed-viewer'); ?>"><div class="book-frame"><div class="left-page"></div><div class="right-page"></div><div class="flipping-page page-1"></div><div class="flipping-page page-2"></div><div class="flipping-page page-3"></div></div></div><?php endif; ?></div>
+                        <?php if ( $is_protected ) : ?>
+                        <script>
+                        // Start downloading the protected PDF right away, while
+                        // the viewer scripts are still loading (frontend.js picks
+                        // this up instead of starting its own request).
+                        (function () {
+                            if (!window.fetch || !window.URLSearchParams) return;
+                            var pre = window.__pdfevPrefetch = window.__pdfevPrefetch || {};
+                            var id = <?php echo (int) $post_id; ?>;
+                            if (pre[id]) return;
+                            pre[id] = fetch(<?php echo wp_json_encode( admin_url( 'admin-ajax.php' ) ); ?>, {
+                                method: 'POST', credentials: 'same-origin', cache: 'no-store',
+                                body: new URLSearchParams({ action: 'pdfev_get_stream_token', ajaxnonce: <?php echo wp_json_encode( wp_create_nonce( 'pdf_ajax_nonce' ) ); ?>, post_id: id, inline: '1' })
+                            }).catch(function () { return null; });
+                        })();
+                        </script>
+                        <?php endif; ?>
                     </div>
                     <div class="pdfev-traditional-container" style="display: <?php echo esc_attr($flipbook=='yes'?'none':'block'); ?>;">
                         <?php

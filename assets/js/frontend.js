@@ -176,6 +176,14 @@ jQuery(document).ready(function ($) {
   }
 
   function loadProtectedPdf(post_id, retried) {
+    // Request already started inline next to the viewer markup?
+    var pre = !retried && window.__pdfevPrefetch && window.__pdfevPrefetch[post_id];
+    if (pre) {
+      delete window.__pdfevPrefetch[post_id];
+      return pre.then(function (res) {
+        return res ? handleProtectedResponse(res, post_id, false) : loadProtectedPdf(post_id, false, true);
+      });
+    }
     var body = new URLSearchParams({
       action: 'pdfev_get_stream_token',
       ajaxnonce: pdfevFronend.ajaxnonce,
@@ -183,6 +191,11 @@ jQuery(document).ready(function ($) {
       inline: '1'
     });
     return fetch(pdfevFronend.ajaxurl, { method: 'POST', body: body, credentials: 'same-origin', cache: 'no-store' })
+      .then(function (res) { return handleProtectedResponse(res, post_id, retried); });
+  }
+
+  function handleProtectedResponse(res, post_id, retried) {
+    return Promise.resolve(res)
       .then(function (res) {
         if (res.status === 403 && !retried) {
           return refreshNonce().then(function () { return { retry: true }; });

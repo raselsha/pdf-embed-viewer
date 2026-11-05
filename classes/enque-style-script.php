@@ -26,6 +26,7 @@ class Enque_Style{
         // wp_enqueue_scripts, which fires before the template body at all)
         // structurally cannot: a shortcode used outside post_content.
         add_action('wp_footer',[$this,'late_frontend_style'],1);
+        add_action('wp_head',[$this,'preload_viewer_assets'],2);
     }
 
     public function backend_style(){
@@ -56,6 +57,28 @@ class Enque_Style{
             'pdfworker' => PDFEV_Const_URL.'vendor/pdf/pdf.worker.min.js',
             'post_id' => get_the_ID(),
         ));
+    }
+
+    /**
+     * The viewer scripts load in the footer, so the browser only discovers
+     * them at the end of the page. On pages that will show a viewer, ask for
+     * the heavy ones (and the pdf.js worker) from the <head> so they download
+     * in parallel with the page instead of after it.
+     */
+    public function preload_viewer_assets(){
+        $likely = is_singular('pdfev_embed_viewer') || is_front_page();
+        if ( ! $likely && is_singular() ) {
+            $post = get_post();
+            $likely = $post && ( has_shortcode($post->post_content, 'pdfev_embed_viewer') || has_shortcode($post->post_content, 'pdfev_viewer') );
+        }
+        if ( ! apply_filters( 'pdfev_preload_viewer_assets', $likely ) ) {
+            return;
+        }
+        $ver = PDFEV_Const_VERSION;
+        foreach ( [ 'vendor/3dflipbook/js/three.min.js', 'vendor/pdf/pdf.min.js', 'vendor/3dflipbook/js/3dflipbook.min.js', 'vendor/3dflipbook/js/simple-jquery-pdf.js' ] as $src ) {
+            printf( '<link rel="preload" as="script" href="%s">' . "\n", esc_url( PDFEV_Const_URL . $src . '?ver=' . $ver ) );
+        }
+        printf( '<link rel="prefetch" href="%s">' . "\n", esc_url( PDFEV_Const_URL . 'vendor/pdf/pdf.worker.min.js' ) );
     }
 
     public function frontend_style(){
@@ -116,7 +139,7 @@ class Enque_Style{
         $frontend_js_ver = file_exists($frontend_js_path) ? filemtime($frontend_js_path) : PDFEV_Const_VERSION;
         wp_enqueue_script( 'pdf-frontend-script', PDFEV_Const_URL.'assets/js/frontend.js',['jquery'],$frontend_js_ver,true);
         wp_enqueue_script( 'pdf-three.min', PDFEV_Const_URL.'vendor/3dflipbook/js/three.min.js',['jquery'],PDFEV_Const_VERSION,true);
-        wp_enqueue_script( 'pdf-min', PDFEV_Const_URL.'vendor/pdf/pdf.js',['jquery'],PDFEV_Const_VERSION,true);
+        wp_enqueue_script( 'pdf-min', PDFEV_Const_URL.'vendor/pdf/pdf.min.js',['jquery'],PDFEV_Const_VERSION,true);
         wp_enqueue_script( 'pdf-3dflipbook', PDFEV_Const_URL.'vendor/3dflipbook/js/3dflipbook.min.js',[],PDFEV_Const_VERSION,true);
         wp_enqueue_script( 'pdf-simple-jquery-pdf', PDFEV_Const_URL.'vendor/3dflipbook/js/simple-jquery-pdf.js',[],PDFEV_Const_VERSION,true);
 
@@ -145,7 +168,7 @@ class Enque_Style{
         wp_add_inline_script('pdf-3dflipbook', 'window.$ = window.jQuery;', 'before');
         wp_add_inline_script('pdf-3dflipbook', '
             window.PDFJS_LOCALE = {
-                pdfJsWorker: "' . esc_url(PDFEV_Const_URL . 'vendor/pdf/pdf.worker.js') . '",
+                pdfJsWorker: "' . esc_url(PDFEV_Const_URL . 'vendor/pdf/pdf.worker.min.js') . '",
                 pdfJsCMapUrl: "cmaps"
             };
         ', 'before');
