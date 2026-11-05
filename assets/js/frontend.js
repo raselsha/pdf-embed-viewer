@@ -257,8 +257,12 @@ jQuery(document).ready(function ($) {
     // Page boxes are sized from page 1 so the scrollbar is right before any
     // page renders; each page corrects its own height once it is drawn.
     var ratio = 1.414;
+    // Fit width = the scroll area minus its own side padding (read from CSS,
+    // so the phone layout's tighter padding is used automatically).
     function width() {
-      return Math.max(200, ($pages[0].clientWidth - 24) * zoom);
+      var cs = window.getComputedStyle($pages[0]);
+      var inner = $pages[0].clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+      return Math.max(120, inner * zoom);
     }
     function sizeBoxes() {
       var w = width();
@@ -341,11 +345,20 @@ jQuery(document).ready(function ($) {
       rerender();
     });
 
-    var resizeTimer;
-    $(window).on('resize', function () {
+    // Re-fit whenever the reader's own width changes (rotation, sidebar,
+    // the reader being shown after it was built) — not just window resize.
+    var resizeTimer, lastWidth = $pages[0].clientWidth;
+    var refit = function () {
+      if ($pages[0].clientWidth === lastWidth) return;
+      lastWidth = $pages[0].clientWidth;
       clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(rerender, 200);
-    });
+      resizeTimer = setTimeout(rerender, 150);
+    };
+    if (window.ResizeObserver) {
+      new ResizeObserver(refit).observe($pages[0]);
+    } else {
+      $(window).on('resize', refit);
+    }
     document.addEventListener('fullscreenchange', function () { setTimeout(rerender, 100); });
 
     // The pages are canvases already; this just stops the casual

@@ -1204,7 +1204,10 @@
 .pdfev-scroll-reader:fullscreen { border-radius: 0; }
 .pdfev-scroll-reader:fullscreen .pdfev-scroll-pages { height: 100%; flex: 1; }
 @media (max-width: 600px) {
-  .pdfev-scroll-pages { height: var(--pdfev-scroll-height-mobile, 75vh); padding: 8px; gap: 8px; }
+  .pdfev-scroll-reader { margin-left: -6px; margin-right: -6px; border-radius: 8px; }
+  .pdfev-scroll-pages { height: var(--pdfev-scroll-height-mobile, 78vh); padding: 4px; gap: 6px; }
+  .pdfev-scroll-toolbar { padding: 6px 8px; }
+  .pdfev-embed-viewer .pdfev-embed-viewer { padding-left: 0; padding-right: 0; }
 }
 
 :root {
