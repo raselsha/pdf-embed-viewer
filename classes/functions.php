@@ -23,6 +23,7 @@ if( ! class_exists('PDFEV_Functions') ){
             // Fresh nonce for pages served from a full-page cache after the
             // nonce printed into them has expired (frontend.js retries once).
             add_action( 'wp_ajax_pdfev_refresh_nonce', ['PDFEV_Functions','refresh_nonce'] );
+            add_action( 'init', ['PDFEV_Functions','release_orphaned_lock'], 20 );
             add_action( 'wp_ajax_nopriv_pdfev_refresh_nonce', ['PDFEV_Functions','refresh_nonce'] );
         }
 
@@ -802,6 +803,27 @@ if( ! class_exists('PDFEV_Functions') ){
                 return true;
             }
             return false;
+        }
+
+        /**
+         * The Pro add-on's Lockdown mode moves PDFs into uploads/pdfev-locked
+         * and denies direct access there — only the add-on can serve them.
+         * If the add-on isn't running (deactivated, deleted, folder renamed),
+         * lift that deny so this plugin keeps working on its own like before.
+         * Pro's activation puts the rule back when Lockdown is still selected.
+         */
+        public static function release_orphaned_lock(){
+            if ( class_exists( 'PDFEV_Pro_Functions' ) ) {
+                return;
+            }
+            $up = wp_upload_dir( null, false );
+            if ( empty( $up['basedir'] ) ) {
+                return;
+            }
+            $rules = trailingslashit( $up['basedir'] ) . 'pdfev-locked/.htaccess';
+            if ( file_exists( $rules ) ) {
+                wp_delete_file( $rules );
+            }
         }
 
         public static function refresh_nonce(){
