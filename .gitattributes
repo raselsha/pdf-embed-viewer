@@ -1,0 +1,7 @@
+# Left out of the WordPress.org release (10up/action-wordpress-plugin-deploy
+# builds trunk with `git archive`, which honours export-ignore).
+/.wordpress-org export-ignore
+/.github export-ignore
+/.gitattributes export-ignore
+/.gitignore export-ignore
+/CLAUDE.md export-ignore
