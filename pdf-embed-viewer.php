@@ -66,6 +66,7 @@ if ( ! defined( 'PDFEV_Pro_URL' ) ) {
             require_once PDFEV_Const_Path . 'classes/count-manager.php';
             require_once PDFEV_Const_Path . 'classes/template.php';
             require_once PDFEV_Const_Path . 'classes/insert-demo.php';
+            require_once PDFEV_Const_Path . 'classes/pro-announcement.php';
             require_once PDFEV_Const_Path . 'classes/elementor/elementor.php';
             
         }
