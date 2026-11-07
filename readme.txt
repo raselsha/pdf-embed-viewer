@@ -4,9 +4,9 @@ Contributors:      raselsha
 Donate link:       https://lieusoft.com
 Tags:              pdf-viewer, pdf-embed, flipbook, 3d-flipbook, ebook
 Requires at least: 3.0
-Tested up to:      7.0
+Tested up to:      7.1
 Requires PHP:      7.0
-Stable tag:        1.5.6
+Stable tag:        1.5.7
 License:           GPLv2 or later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -172,6 +172,19 @@ No. Appsero only collects basic telemetry data after you give permission. It's 1
 12. Settings: display and behavior, archive page, book details and brand colors.
 
 == Changelog ==
+
+= 1.5.7 =
+* Added: the Traditional view is now a built-in page reader (zoom, fit to width, full screen) instead of the browser's own PDF viewer in an iframe, so it looks and works the same in every browser, phones included.
+* Added: Elementor Theme Builder support for single PDF pages, with six new widgets to build your own layout: PDF Title, PDF Cover, PDF Description, PDF Details, PDF Download Button and PDF Navigation. The Archive View and Single View widgets get full style controls.
+* Added: better right-to-left support: Arabic, Urdu and Hebrew text stays joined on grid cards, the newsletter archive mirrors correctly, and archive items carry a lang attribute so themes can choose script fonts.
+* Added: the description can be shown on single PDF pages (Display & Behavior → Show Description).
+* Added: several newsletter archives can now share one page.
+* Added: a Pro Features section in Settings, Get Pro links, and a one-time, dismissible announcement for admins about the new Pro add-on.
+* Changed: redesigned Grid archive cards, a restyled Load More button, and E-Book archive buttons that follow your button colors.
+* Changed: the newsletter archive now works on phones.
+* Fixed: with the Pro add-on active, protected PDFs load faster (one request, shared by the flipbook and the Traditional view) and recover by themselves from an expired page cache.
+* Fixed: PDFs keep loading if the Pro add-on is switched off while its Lockdown mode is on.
+* Fixed: the PDF edit screen shows the real file name and previews files that an add-on serves privately.
 
 = 1.5.6 =
 * Added: a Container Max Width setting (Display & Behavior) to control the whole viewer's overall width, previously fixed at 1300px.
@@ -369,6 +382,9 @@ No. Appsero only collects basic telemetry data after you give permission. It's 1
 * Initial release 🎉
 
 == Upgrade Notice ==
+
+= 1.5.7 =
+A built-in Traditional page reader, Elementor Theme Builder widgets for single PDF pages, better Arabic/Urdu/Hebrew support and a redesigned Grid archive.
 
 = 1.5.6 =
 Adds a Container Max Width setting, a Flipbook/Traditional switcher visibility toggle, a per-shortcode show_download override, and a redesigned Grid template — plus fixes for a shortcode-outside-post-content asset-loading bug, a site-wide (instead of per-document) remembered editor tab, and stale cached CSS after updates.
