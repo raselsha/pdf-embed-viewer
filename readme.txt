@@ -158,12 +158,18 @@ No. Appsero only collects basic telemetry data after you give permission. It's 1
 
 == Screenshots ==
 
-1. Interactive 3D flipbook view with realistic page-flip animation.
-2. E-Book archive grid — hover a cover to flip it open and preview the document.
-3. List, Grid, and Newsletter archive layouts for displaying multiple PDFs.
-4. Modern PDF Embed post editor — General, Book Info, and Template tabs.
-5. Plugin settings dashboard with archive, display, and branding options.
-6. Elementor widgets for drag-and-drop Archive and Single PDF views.
+1. A realistic 3D flipbook with double-page spreads, a clean toolbar, zoom, table of contents and full screen.
+2. Pages turn like paper: drag a corner or click the arrows.
+3. Right-to-left books turn from right to left: a Hebrew book with the thumbnails panel open.
+4. Arabic, Urdu and Hebrew are fully supported. Here an Urdu poetry book shown as a right-to-left spread.
+5. Match your brand: set the book container background to any color. Here a furniture catalogue.
+6. A food magazine on a deep burgundy background.
+7. E-Book archive layout: a shelf of covers with Read and Download buttons and live counters.
+8. Grid archive layout with cover cards, details and buttons.
+9. Newsletter archive layout, grouped by year and month.
+10. Traditional view: a scrolling page reader with zoom and full screen, one click away from the flipbook.
+11. The PDF editor: upload a PDF, pick the cover from its pages and copy the shortcode.
+12. Settings: display and behavior, archive page, book details and brand colors.
 
 == Changelog ==
 
