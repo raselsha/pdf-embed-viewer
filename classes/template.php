@@ -180,10 +180,15 @@ class Template{
                         // renders this document's actual page 2 into the .pages
                         // panel via pdf.js) — get_pdf_link() already resolves to the
                         // same-origin proxy for cross-origin files, so pdf.js's own
-                        // fetch never hits a CORS wall here.
-                        $pdf_src = \PDFEV_Functions::get_pdf_link( get_the_ID() );
+                        // fetch never hits a CORS wall here. A protected file (an
+                        // add-on's Hide File URL / Lockdown) prints no URL at all:
+                        // the preview fetches its bytes through the same on-demand
+                        // protected request the viewer uses, by post ID.
+                        $pdf_id        = get_the_ID();
+                        $pdf_protected = apply_filters( 'pdfev_pdf_is_protected', false, $pdf_id );
+                        $pdf_src       = $pdf_protected ? '' : \PDFEV_Functions::get_pdf_link( $pdf_id );
                         ?>
-                        <div class="image<?php echo $is_rtl ? ' pdfev-book-rtl' : ''; ?>" data-pdfev-src="<?php echo esc_url( $pdf_src ); ?>">
+                        <div class="image<?php echo $is_rtl ? ' pdfev-book-rtl' : ''; ?>" data-pdfev-id="<?php echo (int) $pdf_id; ?>"<?php echo $pdf_protected ? ' data-pdfev-protected="yes"' : ' data-pdfev-src="' . esc_url( $pdf_src ) . '"'; ?>>
                             <div class="book">
                                 <div class="front-cover">
                                     <?php the_post_thumbnail('medium'); ?>

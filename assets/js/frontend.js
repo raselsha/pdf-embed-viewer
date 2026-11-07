@@ -194,6 +194,18 @@ jQuery(document).ready(function ($) {
       .then(function (res) { return handleProtectedResponse(res, post_id, retried); });
   }
 
+  // The ebook shelf's page-2 preview (further down) uses the same protected
+  // request. It reuses bytes the viewer already holds, otherwise loads them
+  // uncached: it renders one page and lets the bytes go.
+  window.pdfevLoadProtectedPdf = function (post_id) {
+    if (protectedPdfCache[post_id]) {
+      return protectedPdfCache[post_id].then(function (r) {
+        return r ? { blobUrl: r.blobUrl, arrayBuffer: r.arrayBuffer.slice(0) } : null;
+      });
+    }
+    return loadProtectedPdf(post_id);
+  };
+
   function handleProtectedResponse(res, post_id, retried) {
     return Promise.resolve(res)
       .then(function (res) {
@@ -625,6 +637,7 @@ jQuery(document).ready(function ($) {
             }
             target.append(html);
           }
+          $(document).trigger('pdfev:items-added');
           if (response.data.has_more) {
             $button.data('current-page', response.data.next_page);
             $button.data('next-page', response.data.next_page + 1);
@@ -645,9 +658,21 @@ jQuery(document).ready(function ($) {
 })(jQuery);
 
 // ============ebook grid: real page-2 preview on hover===========
+// Page 2 is rendered ahead of time: books near the viewport are queued and
+// rendered in the background (two at a time), so the page is already there
+// when the cover swings open. Hovering a book that isn't done yet starts it
+// right away. On Data Saver / 2G connections nothing is preloaded; a book
+// renders only when hovered, as before.
 (function ($) {
+  var SEL = '.archive-ebook-style .grid-item .image';
+  var MAX_BUSY = 2;
+  var conn = navigator.connection || {};
+  var preload = 'IntersectionObserver' in window && !conn.saveData && !/(^|-)2g$/.test(conn.effectiveType || '');
   var workerConfigured = false;
   var hoverTimers = new WeakMap();
+  var queue = [];
+  var busy = 0;
+  var observer = null;
 
   function ensureWorker() {
     if (workerConfigured || typeof pdfjsLib === 'undefined') return;
@@ -659,55 +684,116 @@ jQuery(document).ready(function ($) {
     workerConfigured = true;
   }
 
-  function renderPagePeek($image) {
-    if ($image.data('pdfevPeekState')) return; // already rendered, rendering, or failed once
-    var pdfUrl = $image.attr('data-pdfev-src');
-    if (!pdfUrl || typeof pdfjsLib === 'undefined') return;
+  // What to hand pdf.js for this book, or null.
+  function pdfSource($image) {
+    // Protected files (an add-on's Hide File URL / Lockdown): no URL in the
+    // markup — the bytes come from the same on-demand request the viewer uses.
+    if ($image.attr('data-pdfev-protected') === 'yes') {
+      if (typeof window.pdfevLoadProtectedPdf !== 'function') return Promise.resolve(null);
+      return window.pdfevLoadProtectedPdf($image.attr('data-pdfev-id')).then(function (r) {
+        return r ? { data: new Uint8Array(r.arrayBuffer) } : null;
+      });
+    }
+    var url = $image.attr('data-pdfev-src');
+    if (!url) return Promise.resolve(null);
+    // Range requests: pdf.js fetches the cross-reference table and what page
+    // 2 needs instead of the whole file. Servers without Range support just
+    // send the whole file, as before.
+    return Promise.resolve({ url: url, disableAutoFetch: true, disableStream: true });
+  }
 
-    $image.data('pdfevPeekState', 'loading');
+  function renderPagePeek($image) {
+    if ($image.data('pdfevPeekState') || typeof pdfjsLib === 'undefined') return Promise.resolve();
+    $image.data('pdfevPeekState', 'loading'); // rendering, done, or failed once
     ensureWorker();
 
-    pdfjsLib.getDocument(pdfUrl).promise.then(function (pdf) {
+    var $pages = $image.find('.pages');
+    var task = null;
+
+    return pdfSource($image).then(function (params) {
+      if (!params) throw new Error('No PDF source');
+      task = pdfjsLib.getDocument(params);
+      return task.promise;
+    }).then(function (pdf) {
       // Page 2 is the point of this feature (a peek past the cover); a
       // single-page document falls back to page 1 instead of erroring.
       return pdf.getPage(pdf.numPages > 1 ? 2 : 1);
     }).then(function (page) {
-      var $pages = $image.find('.pages');
       var containerWidth = $image.width() || 170;
       var baseViewport = page.getViewport({ scale: 1 });
       var scale = (containerWidth / baseViewport.width) * 2; // 2x for retina sharpness
 
       var viewport = page.getViewport({ scale: scale });
       var canvas = document.createElement('canvas');
-      canvas.width = viewport.width;
-      canvas.height = viewport.height;
+      canvas.width = Math.ceil(viewport.width);
+      canvas.height = Math.ceil(viewport.height);
 
       return page.render({ canvasContext: canvas.getContext('2d'), viewport: viewport }).promise.then(function () {
         $pages.empty().append(canvas).addClass('pdfev-pages-rendered');
         $image.data('pdfevPeekState', 'done');
       });
     }).catch(function () {
-      // A blocked host, corrupt file, or fetch error shouldn't break the
-      // hover effect — the icon/label placeholder just stays as-is.
+      // A blocked host, corrupt file or failed request shouldn't leave a
+      // spinner turning forever: the panel settles to a plain page.
+      $pages.addClass('pdfev-pages-failed');
       $image.data('pdfevPeekState', 'failed');
+    }).then(function () {
+      // The canvas is all that's kept; free pdf.js's copy of the document.
+      if (task) task.destroy();
     });
   }
 
-  $(document).on('mouseenter', '.archive-ebook-style .grid-item .image', function () {
+  function pump() {
+    while (busy < MAX_BUSY && queue.length) {
+      var $image = queue.shift();
+      if ($image.data('pdfevPeekState')) continue;
+      busy++;
+      renderPagePeek($image).then(function () { busy--; pump(); });
+    }
+  }
+
+  function observe() {
+    if (!preload) return;
+    if (!observer) {
+      observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          observer.unobserve(entry.target);
+          queue.push($(entry.target));
+        });
+        pump();
+      }, { rootMargin: '300px 0px' });
+    }
+    $(SEL).each(function () {
+      if (!$(this).data('pdfevPeekState')) observer.observe(this);
+    });
+  }
+
+  $(document).on('mouseenter', SEL, function () {
     var el = this;
     var $image = $(el);
-    // A short delay so quickly scanning across the shelf doesn't trigger a
-    // full PDF fetch+render for every cover the mouse merely passes over.
+    if ($image.data('pdfevPeekState')) return;
+    // Without preloading, a short delay so quickly scanning across the
+    // shelf doesn't fetch and render every cover the mouse passes over.
     var timer = setTimeout(function () {
       renderPagePeek($image);
-    }, 220);
+    }, preload ? 0 : 220);
     hoverTimers.set(el, timer);
   });
 
-  $(document).on('mouseleave', '.archive-ebook-style .grid-item .image', function () {
+  $(document).on('mouseleave', SEL, function () {
     var timer = hoverTimers.get(this);
     if (timer) clearTimeout(timer);
   });
+
+  // Start once the page itself has finished loading, so previews never
+  // compete with the page's own images and scripts; Load More adds more.
+  if (document.readyState === 'complete') {
+    observe();
+  } else {
+    $(window).on('load', observe);
+  }
+  $(document).on('pdfev:items-added', observe);
 })(jQuery);
 
 // ============metabox scripts========

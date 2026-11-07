@@ -851,6 +851,15 @@
   border-top-color: var(--pdfev-primary);
   animation: pdfev-peek-spin 0.8s linear infinite;
 }
+/* Preview couldn't load (blocked host, corrupt file): a plain ruled page
+   instead of a spinner that never stops. */
+.pdfev-embed-viewer .archive-ebook-style .grid-item .pages.pdfev-pages-failed {
+  background-image: repeating-linear-gradient(to bottom, transparent 0 13px, rgba(0, 0, 0, 0.06) 13px 14px);
+  background-clip: content-box;
+}
+.pdfev-embed-viewer .archive-ebook-style .grid-item .pages.pdfev-pages-failed .pdfev-peek-spinner {
+  display: none;
+}
 .pdfev-embed-viewer .archive-ebook-style .grid-item .pages.pdfev-pages-rendered {
   padding: 0;
   align-items: stretch;
