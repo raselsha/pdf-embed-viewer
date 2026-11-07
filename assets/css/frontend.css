@@ -523,15 +523,17 @@
 .pdfev-embed-viewer .archive-grid-style .pdfev-card-tags {
   padding: 0 22px;
 }
-/* Each tag carries its own leading dot; the list is shifted left by one
-   dot-slot and clipped, so whichever tag starts a line (first one, or
-   after a wrap) loses its dot and no line ends on a stray separator. */
+/* Each tag carries its own leading dot; the list is shifted toward the
+   line start by one dot-slot and clipped, so whichever tag starts a line
+   (first one, or after a wrap) loses its dot and no line ends on a stray
+   separator. Logical sides, so it holds in right-to-left contexts too. */
 .pdfev-embed-viewer .archive-grid-style .pdfev-archive-meta-tags {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   row-gap: 4px;
-  margin: 0 0 0 -16px;
+  margin: 0;
+  margin-inline-start: -16px;
   padding: 11px 0;
   list-style: none;
   border-top: 1px solid var(--pdfev-light);
@@ -542,16 +544,19 @@
   text-transform: uppercase;
   color: var(--pdfev-dark);
 }
+[dir="rtl"] .pdfev-embed-viewer .archive-grid-style .pdfev-archive-meta-tags {
+  clip-path: inset(0 16px 0 0);
+}
 .pdfev-embed-viewer .archive-grid-style .pdfev-archive-meta-tags li {
   position: relative;
   margin: 0;
-  padding-left: 16px;
+  padding-inline-start: 16px;
   white-space: nowrap;
 }
 .pdfev-embed-viewer .archive-grid-style .pdfev-archive-meta-tags li::before {
   content: "\00B7";
   position: absolute;
-  left: 5px;
+  inset-inline-start: 5px;
   color: var(--pdfev-secondary);
   opacity: 0.6;
 }
