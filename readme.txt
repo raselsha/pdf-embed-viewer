@@ -185,6 +185,8 @@ No. Appsero only collects basic telemetry data after you give permission. It's 1
 * Fixed: with the Pro add-on active, protected PDFs load faster (one request, shared by the flipbook and the Traditional view) and recover by themselves from an expired page cache.
 * Fixed: PDFs keep loading if the Pro add-on is switched off while its Lockdown mode is on.
 * Fixed: the PDF edit screen shows the real file name and previews files that an add-on serves privately.
+* Fixed: the E-Book archive's page preview (the page behind the opening cover) now appears when the Pro add-on protects your files, instead of spinning forever. Previews also load in the background before you hover, fetch only what they need from the PDF, and fall back to a full download on hosts that mishandle partial requests.
+* Fixed: on right-to-left pages, Grid card tags no longer end with a stray separator dot.
 
 = 1.5.6 =
 * Added: a Container Max Width setting (Display & Behavior) to control the whole viewer's overall width, previously fixed at 1300px.

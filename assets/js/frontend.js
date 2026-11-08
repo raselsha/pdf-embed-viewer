@@ -702,21 +702,11 @@ jQuery(document).ready(function ($) {
     return Promise.resolve({ url: url, disableAutoFetch: true, disableStream: true });
   }
 
-  function renderPagePeek($image) {
-    if ($image.data('pdfevPeekState') || typeof pdfjsLib === 'undefined') return Promise.resolve();
-    $image.data('pdfevPeekState', 'loading'); // rendering, done, or failed once
-    ensureWorker();
-
-    var $pages = $image.find('.pages');
-    var task = null;
-
-    return pdfSource($image).then(function (params) {
-      if (!params) throw new Error('No PDF source');
-      task = pdfjsLib.getDocument(params);
-      return task.promise;
-    }).then(function (pdf) {
-      // Page 2 is the point of this feature (a peek past the cover); a
-      // single-page document falls back to page 1 instead of erroring.
+  // Open the PDF, render page 2 (page 1 for a single-page file) to a canvas,
+  // and free pdf.js's copy of the document either way.
+  function renderToCanvas(params, $image) {
+    var task = pdfjsLib.getDocument(params);
+    return task.promise.then(function (pdf) {
       return pdf.getPage(pdf.numPages > 1 ? 2 : 1);
     }).then(function (page) {
       var containerWidth = $image.width() || 170;
@@ -729,17 +719,40 @@ jQuery(document).ready(function ($) {
       canvas.height = Math.ceil(viewport.height);
 
       return page.render({ canvasContext: canvas.getContext('2d'), viewport: viewport }).promise.then(function () {
-        $pages.empty().append(canvas).addClass('pdfev-pages-rendered');
-        $image.data('pdfevPeekState', 'done');
+        return canvas;
       });
+    }).then(function (canvas) {
+      task.destroy();
+      return canvas;
+    }, function (err) {
+      task.destroy();
+      throw err;
+    });
+  }
+
+  function renderPagePeek($image) {
+    if ($image.data('pdfevPeekState') || typeof pdfjsLib === 'undefined') return Promise.resolve();
+    $image.data('pdfevPeekState', 'loading'); // rendering, done, or failed once
+    ensureWorker();
+
+    var $pages = $image.find('.pages');
+
+    return pdfSource($image).then(function (params) {
+      if (!params) throw new Error('No PDF source');
+      return renderToCanvas(params, $image).catch(function (err) {
+        // Some hosts/CDNs mangle Range responses ("Bad end offset", the
+        // reason the viewer itself loads whole files): retry once that way.
+        if (!params.url) throw err;
+        return renderToCanvas({ url: params.url, disableRange: true, disableStream: true }, $image);
+      });
+    }).then(function (canvas) {
+      $pages.empty().append(canvas).addClass('pdfev-pages-rendered');
+      $image.data('pdfevPeekState', 'done');
     }).catch(function () {
       // A blocked host, corrupt file or failed request shouldn't leave a
       // spinner turning forever: the panel settles to a plain page.
       $pages.addClass('pdfev-pages-failed');
       $image.data('pdfevPeekState', 'failed');
-    }).then(function () {
-      // The canvas is all that's kept; free pdf.js's copy of the document.
-      if (task) task.destroy();
     });
   }
 
