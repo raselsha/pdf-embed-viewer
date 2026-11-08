@@ -78,6 +78,16 @@ Display your whole library — or a filtered slice of it — in whichever layout
 
 Prefer a visual builder? Use **Settings → Shortcode Generator** instead of writing these by hand.
 
+= ⭐ Pro Add-on: Protect Your PDFs =
+The free plugin is complete on its own. [Flipbook PDF Viewer & Embedder Pro](https://lieusoft.com/pdf-embed-viewer/) is an optional add-on for when you need more:
+
+* **Lockdown, no downloads** — no download button or link, originals moved to a locked folder, single-use links, scrambled file transfer, and print/save shortcuts blocked.
+* **Hide File URL** — the real file path never appears in the page; PDFs are served through a protected link.
+* **Premium skin & toolbar** — the Studio Light skin with a page slider, thumbnails, table of contents, search and a dark-mode toggle.
+* **Flipbook controls** — page-flip sound, autoplay, single/double page mode, zoom limits, background and border colours.
+* **Toolbar buttons on/off** — show or hide Print, Full Screen, Table of Contents, Share and Download in the viewer.
+* **Mobile single-page view** — one full-width page at a time on phones.
+
 = 🔒 Privacy =
 This plugin uses the [Appsero](https://appsero.com) SDK to collect basic telemetry — but **only after you explicitly consent** via an admin notice. By default, no data is collected at all, and nothing personal or sensitive is gathered without permission. See the [Appsero Privacy Policy](https://appsero.com/privacy-policy/) for details.
 
@@ -152,6 +162,9 @@ No, the plugin is lightweight and optimized for fast performance.
 
 = Do I need coding knowledge to use this plugin? =
 No coding skills are required. You can manage everything with shortcodes and plugin settings.
+
+= Is there a Pro version? =
+Yes. [Flipbook PDF Viewer & Embedder Pro](https://lieusoft.com/pdf-embed-viewer/) is an optional add-on that installs next to this plugin. It adds download protection (Lockdown and Hide File URL), a premium viewer skin and toolbar, and extra flipbook controls. Everything described above stays free.
 
 = Is Appsero collecting my private data? =
 No. Appsero only collects basic telemetry data after you give permission. It's 100% optional and secure.

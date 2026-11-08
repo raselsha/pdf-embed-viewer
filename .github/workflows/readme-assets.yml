@@ -1,0 +1,42 @@
+name: Update readme & assets on WordPress.org
+
+# Pushes readme.txt and .wordpress-org/ (banner, icon, screenshots,
+# blueprint) to WordPress.org WITHOUT a new version. WordPress.org shows
+# the readme of the released stable tag, so a description/FAQ change made
+# after a release otherwise waits for the next one.
+#
+# Manual only (Actions → this workflow → Run workflow, or
+# `gh workflow run readme-assets.yml --ref main`): a push to main must
+# never publish an unreleased version's changelog by itself.
+#
+# The action commits readme.txt to trunk and to the stable tag folder, and
+# syncs assets/ from .wordpress-org/ with --delete, so that folder must
+# keep holding everything that should stay in assets. Code is never
+# committed by this workflow (IGNORE_OTHER_FILES).
+
+on:
+  workflow_dispatch: {}
+
+jobs:
+  readme-assets:
+    name: Push readme.txt and assets to WordPress.org
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Check that the Stable tag is a released version
+        run: |
+          STABLE_TAG=$(grep -m1 "Stable tag:" readme.txt | sed -E 's/.*Stable tag:[[:space:]]*([0-9.]+).*/\1/')
+          echo "readme.txt Stable tag: $STABLE_TAG"
+          if ! curl -sfI "https://plugins.svn.wordpress.org/pdf-embed-viewer/tags/$STABLE_TAG/readme.txt" >/dev/null; then
+            echo "::error::tags/$STABLE_TAG does not exist on WordPress.org yet. Release that version first (scheduled-release.yml)."
+            exit 1
+          fi
+
+      - name: WordPress.org readme/assets update
+        uses: 10up/action-wordpress-plugin-asset-update@stable
+        env:
+          SVN_USERNAME: ${{ secrets.WPORG_USERNAME }}
+          SVN_PASSWORD: ${{ secrets.WPORG_PASSWORD }}
+          SLUG: pdf-embed-viewer
+          IGNORE_OTHER_FILES: true
