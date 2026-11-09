@@ -16,7 +16,7 @@ Turn any PDF into a realistic, interactive 3D page-flip flipbook — or a standa
 
 Most PDF viewer plugins just drop a flat, static embed on the page — a rectangle you scroll through, no different from opening the file directly. **Flipbook PDF Viewer & Embedder** treats a PDF like what it actually is: a book. Every document you upload gets a realistic, interactive 3D page-flip flipbook automatically, with a standard traditional viewer always one click away — no coding, no conversion step, just upload a PDF and drop in a shortcode.
 
-[youtube https://www.youtube.com/watch?v=8EgfVxynlPo]
+[youtube https://www.youtube.com/watch?v=etrOF4t4s4c]
 
 [Live Demo](https://flipbook.lieusoft.com/) | [Support](https://lieusoft.com)
 
