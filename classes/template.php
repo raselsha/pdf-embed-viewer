@@ -125,7 +125,6 @@ class Template{
                 $categories = wp_get_post_terms(get_the_ID(), 'pdfev_category', ['fields' => 'names']);
                 $kicker     = !empty($categories) && !is_wp_error($categories) ? implode(' · ', array_slice($categories, 0, 2)) : __('PDF', 'pdf-embed-viewer');
                 $cover_url  = get_the_post_thumbnail_url(get_the_ID(), 'large');
-                $pages      = get_post_meta(get_the_ID(), 'pdfev_meta_total_pages', true);
                 $is_rtl     = get_post_meta(get_the_ID(), 'pdfev_meta_rtl', true) === 'yes';
                 ?>
                 <article class="grid-item<?php echo $is_rtl ? ' pdfev-item-rtl' : ''; ?>"<?php echo \PDFEV_Functions::item_lang_attrs(); ?>>
@@ -143,11 +142,56 @@ class Template{
                         <span class="pdfev-card-scene" aria-hidden="true"></span>
                         <span class="pdfev-card-dither" aria-hidden="true"></span>
                         <span class="pdfev-card-cover"><?php the_post_thumbnail('large'); ?></span>
-                        <span class="pdfev-card-chip">
-                            <?php if (!empty($pages)) : ?>
-                                <span><?php echo esc_html(sprintf(_n('%s page', '%s pages', (int) $pages, 'pdf-embed-viewer'), number_format_i18n((int) $pages))); ?></span>
+                        <?php
+                        // Hover details, laid out like a short chat over the cover:
+                        // the author, a details card, pages/size tiles, then an
+                        // "Open flipbook" reply.
+                        // Only fields the settings switch on; the same values are in
+                        // the card's tag row, so this layer is hidden from screen readers.
+                        $peek     = \PDFEV_Functions::meta_fields($atts);
+                        // Card heading: the publisher (the title is already above
+                        // the image), falling back to the title when there is none.
+                        $top_line = !empty($peek['publisher']) ? $peek['publisher']['value'] : esc_html(wp_html_excerpt(get_the_title(), 60, '…'));
+                        $sub_line = implode(' · ', array_filter([
+                            isset($peek['year']) ? $peek['year']['value'] : '',
+                            isset($peek['edition']) ? $peek['edition']['value'] : '',
+                        ]));
+                        $initials = !empty($peek['author']) ? \PDFEV_Functions::initials($peek['author']['value']) : '';
+                        ?>
+                        <span class="pdfev-card-peek" aria-hidden="true">
+                            <?php if (!empty($peek['author'])) : ?>
+                                <span class="pdfev-peek-row">
+                                    <?php // Initials read oddly in Arabic/Hebrew (e.g. two alifs): use a person icon there. ?>
+                                    <span class="pdfev-peek-avatar"><?php if (preg_match('/[\p{Arabic}\p{Hebrew}]/u', $initials)) : ?><i class="fas fa-user"></i><?php else : echo esc_html($initials); endif; ?></span>
+                                    <span class="pdfev-peek-bubble"><small><?php echo $peek['author']['label']; ?></small><span class="pdfev-peek-name"><?php echo $peek['author']['value']; ?></span></span>
+                                </span>
                             <?php endif; ?>
-                            <strong><?php esc_html_e('Open flipbook', 'pdf-embed-viewer'); ?> &rarr;</strong>
+                            <?php if (!empty($peek['publisher']) || $sub_line !== '') : ?>
+                                <span class="pdfev-peek-card">
+                                    <?php if ($cover_url) : ?><span class="pdfev-peek-thumb"></span><?php endif; ?>
+                                    <span class="pdfev-peek-info">
+                                        <span class="pdfev-peek-top"><span><?php echo $top_line; ?></span></span>
+                                        <?php if ($sub_line !== '') : ?>
+                                            <span class="pdfev-peek-bottom"><span><?php echo $sub_line; ?></span></span>
+                                        <?php endif; ?>
+                                    </span>
+                                </span>
+                            <?php endif; ?>
+                            <?php if (!empty($peek['pages']) || !empty($peek['filesize'])) : ?>
+                                <?php // Pages and file size: their own row of small tiles. ?>
+                                <span class="pdfev-peek-stats">
+                                    <?php if (!empty($peek['pages'])) : ?>
+                                        <span class="pdfev-peek-stat"><i class="fas fa-file-alt"></i><b><?php echo esc_html(number_format_i18n((int) $peek['pages']['value'])); ?></b><small><?php echo $peek['pages']['label']; ?></small></span>
+                                    <?php endif; ?>
+                                    <?php if (!empty($peek['filesize'])) : ?>
+                                        <span class="pdfev-peek-stat"><i class="fas fa-hdd"></i><b><?php echo $peek['filesize']['value']; ?></b><small><?php echo $peek['filesize']['label']; ?></small></span>
+                                    <?php endif; ?>
+                                </span>
+                            <?php endif; ?>
+                            <span class="pdfev-peek-row pdfev-peek-row--end">
+                                <span class="pdfev-peek-bubble pdfev-peek-cta"><?php esc_html_e('Open flipbook', 'pdf-embed-viewer'); ?> &rarr;</span>
+                                <span class="pdfev-peek-avatar pdfev-peek-avatar--icon"><i class="fas fa-book-open"></i></span>
+                            </span>
                         </span>
                     </a>
                     <div class="action">

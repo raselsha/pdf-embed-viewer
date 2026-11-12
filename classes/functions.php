@@ -585,126 +585,86 @@ if( ! class_exists('PDFEV_Functions') ){
          * call this twice instead of fighting the combined block's fixed
          * internal order.
          */
+        /**
+         * The book details the settings (or shortcode attributes) switch on,
+         * keyed by field, in display order: author, pages, filesize,
+         * publisher, year, edition. Each is [ 'label' => ..., 'value' => ... ],
+         * both already escaped for HTML. Shared by the archive meta line and
+         * the grid card's hover details.
+         */
+        public static function meta_fields($atts = []){
+            $show = function ($key) use ($atts) {
+                return isset($atts[$key]) && $atts[$key] !== '' ? $atts[$key] : get_option('pdfev_' . $key);
+            };
+            $post_id = get_the_ID();
+            $fields  = [];
+
+            if ($show('show_author') === 'yes') {
+                $terms = wp_get_post_terms($post_id, 'pdfev_author', ['fields' => 'names']);
+                if (!empty($terms) && !is_wp_error($terms)) {
+                    $fields['author'] = ['label' => esc_html__('Author', 'pdf-embed-viewer'), 'value' => esc_html(implode(', ', $terms))];
+                }
+            }
+            if ($show('show_total_pages') === 'yes') {
+                $total_pages = get_post_meta($post_id, 'pdfev_meta_total_pages', true);
+                if (!empty($total_pages)) {
+                    $fields['pages'] = ['label' => esc_html__('Pages', 'pdf-embed-viewer'), 'value' => esc_html($total_pages)];
+                }
+            }
+            if ($show('show_filesize') === 'yes') {
+                $size = get_post_meta($post_id, 'pdfev_meta_filesize', true);
+                if (!empty($size)) {
+                    $fields['filesize'] = ['label' => esc_html__('File size', 'pdf-embed-viewer'), 'value' => esc_html(PDFEV_Functions::convert_file_size($size))];
+                }
+            }
+            if ($show('show_publisher') === 'yes') {
+                $terms = wp_get_post_terms($post_id, 'pdfev_publisher', ['fields' => 'names']);
+                if (!empty($terms) && !is_wp_error($terms)) {
+                    $fields['publisher'] = ['label' => esc_html__('Publisher', 'pdf-embed-viewer'), 'value' => esc_html(implode(', ', $terms))];
+                }
+            }
+            if ($show('show_year') === 'yes') {
+                $year = get_post_meta($post_id, 'pdfev_meta_published_year', true);
+                if (!empty($year)) {
+                    $fields['year'] = ['label' => esc_html__('Year', 'pdf-embed-viewer'), 'value' => esc_html($year)];
+                }
+            }
+            if ($show('show_edition') === 'yes') {
+                $edition = get_post_meta($post_id, 'pdfev_meta_edition', true);
+                if (!empty($edition)) {
+                    $fields['edition'] = ['label' => esc_html__('Edition', 'pdf-embed-viewer'), 'value' => esc_html($edition)];
+                }
+            }
+            return $fields;
+        }
+
         public static function archive_item_meta($atts = [], $parts = 'all'){
-           
-            $show_description = isset($atts['show_description']) && $atts['show_description'] !== '' 
-                ? $atts['show_description'] 
+
+            $show_description = isset($atts['show_description']) && $atts['show_description'] !== ''
+                ? $atts['show_description']
                 : get_option('pdfev_show_description');
-
-            $show_author = isset($atts['show_author']) && $atts['show_author'] !== '' 
-                ? $atts['show_author'] 
-                : get_option('pdfev_show_author');
-            
-            $show_total_pages = isset($atts['show_total_pages']) && $atts['show_total_pages'] !== '' 
-                ? $atts['show_total_pages'] 
-                : get_option('pdfev_show_total_pages');
-
-            $show_filesize = isset($atts['show_filesize']) && $atts['show_filesize'] !== '' 
-                ? $atts['show_filesize'] 
-                : get_option('pdfev_show_filesize');
-
-            $show_publisher = isset($atts['show_publisher']) && $atts['show_publisher'] !== '' 
-                ? $atts['show_publisher'] 
-                : get_option('pdfev_show_publisher');
-
-            // ✅ NEW (split করা)
-            $show_year = isset($atts['show_year']) && $atts['show_year'] !== '' 
-                ? $atts['show_year'] 
-                : get_option('pdfev_show_year');
-
-            $show_edition = isset($atts['show_edition']) && $atts['show_edition'] !== '' 
-                ? $atts['show_edition'] 
-                : get_option('pdfev_show_edition');
-
 
             // Each entry carries both a pre-joined 'bullet' string (the
             // original "value1 • value2" line every non-grid caller still
             // gets) and a plain 'label'/'value' pair (grid's own row
-            // layout, see the $parts === 'meta' branch below) — built once
-            // per field so switching layouts doesn't mean two separate
-            // passes over post terms/meta.
+            // layout, see the $parts === 'meta' branch below).
+            $fields  = self::meta_fields($atts);
+            $bullets = [
+                'author'    => function ($v) { return sprintf('<span class="pdfev-meta-author">%s %s</span>', esc_html__('by', 'pdf-embed-viewer'), $v); },
+                'pages'     => function ($v) { return sprintf('<span class="pdfev-meta-total-pages">%s</span>', $v . ' ' . esc_html__('Pages', 'pdf-embed-viewer')); },
+                'filesize'  => function ($v) { return sprintf('<span class="pdfev-meta-filesize">%s</span>', $v); },
+                'publisher' => function ($v) { return sprintf('<span class="pdfev-meta-publisher">%s</span>', $v); },
+                'year'      => function ($v) { return sprintf('<span class="pdfev-meta-year">%s</span>', $v); },
+                'edition'   => function ($v) { return sprintf('<span class="pdfev-meta-edition">%s</span>', $v); },
+            ];
             $group1 = []; // author, pages, filesize
             $group2 = []; // publisher, year, edition
-
-            // ✅ Author
-            if ($show_author === 'yes') {
-                $author_terms = wp_get_post_terms(get_the_ID(), 'pdfev_author', ['fields' => 'names']);
-                if (!empty($author_terms)) {
-                    $author_value = esc_html(implode(', ', $author_terms));
-                    $group1[] = [
-                        'label'  => esc_html__('Author', 'pdf-embed-viewer'),
-                        'value'  => $author_value,
-                        'bullet' => sprintf(
-                            '<span class="pdfev-meta-author">%s %s</span>',
-                            esc_html__('by', 'pdf-embed-viewer'),
-                            $author_value
-                        ),
-                    ];
-                }
-            }
-
-            if ($show_total_pages === 'yes') {
-                $total_pages = get_post_meta(get_the_ID(), 'pdfev_meta_total_pages', true);
-                if (!empty($total_pages)) {
-                    $group1[] = [
-                        'label'  => esc_html__('Pages', 'pdf-embed-viewer'),
-                        'value'  => esc_html($total_pages),
-                        'bullet' => sprintf(
-                            '<span class="pdfev-meta-total-pages">%s</span>',
-                            esc_html($total_pages . ' ' . esc_html__('Pages', 'pdf-embed-viewer'))
-                        ),
-                    ];
-                }
-            }
-
-            if ($show_filesize === 'yes') {
-                $pdfev_size = get_post_meta(get_the_ID(), 'pdfev_meta_filesize', true);
-                if (!empty($pdfev_size)) {
-                    $pdfev_size = esc_html(PDFEV_Functions::convert_file_size($pdfev_size));
-                    $group1[] = [
-                        'label'  => esc_html__('File size', 'pdf-embed-viewer'),
-                        'value'  => $pdfev_size,
-                        'bullet' => sprintf('<span class="pdfev-meta-filesize">%s</span>', $pdfev_size),
-                    ];
-                }
-            }
-
-            // ✅ Publisher
-            if ($show_publisher === 'yes') {
-                $publisher_terms = wp_get_post_terms(get_the_ID(), 'pdfev_publisher', ['fields' => 'names']);
-                if (!empty($publisher_terms)) {
-                    $publisher_value = esc_html(implode(', ', $publisher_terms));
-                    $group2[] = [
-                        'label'  => esc_html__('Publisher', 'pdf-embed-viewer'),
-                        'value'  => $publisher_value,
-                        'bullet' => sprintf('<span class="pdfev-meta-publisher">%s</span>', $publisher_value),
-                    ];
-                }
-            }
-
-            // ✅ NEW: Year
-            if ($show_year === 'yes') {
-                $year = get_post_meta(get_the_ID(), 'pdfev_meta_published_year', true);
-                if (!empty($year)) {
-                    $year = esc_html($year);
-                    $group2[] = [
-                        'label'  => esc_html__('Year', 'pdf-embed-viewer'),
-                        'value'  => $year,
-                        'bullet' => sprintf('<span class="pdfev-meta-year">%s</span>', $year),
-                    ];
-                }
-            }
-
-            // ✅ NEW: Edition
-            if ($show_edition === 'yes') {
-                $edition = get_post_meta(get_the_ID(), 'pdfev_meta_edition', true);
-                if (!empty($edition)) {
-                    $edition = esc_html($edition);
-                    $group2[] = [
-                        'label'  => esc_html__('Edition', 'pdf-embed-viewer'),
-                        'value'  => $edition,
-                        'bullet' => sprintf('<span class="pdfev-meta-edition">%s</span>', $edition),
-                    ];
+            foreach ($fields as $key => $field) {
+                $row = $field + ['key' => $key, 'bullet' => $bullets[$key]($field['value'])];
+                if (in_array($key, ['author', 'pages', 'filesize'], true)) {
+                    $group1[] = $row;
+                } else {
+                    $group2[] = $row;
                 }
             }
 
@@ -721,7 +681,7 @@ if( ! class_exists('PDFEV_Functions') ){
                 if (!empty($rows)) {
                     echo '<ul class="pdfev-archive-meta pdfev-archive-meta-tags">';
                     foreach ($rows as $row) {
-                        $value = $row['label'] === esc_html__('Pages', 'pdf-embed-viewer')
+                        $value = 'pages' === $row['key']
                             ? $row['value'] . ' ' . esc_html__('Pages', 'pdf-embed-viewer')
                             : $row['value'];
                         echo '<li title="' . esc_attr($row['label']) . '"><span class="screen-reader-text">' . $row['label'] . ': </span>' . $value . '</li>';
@@ -765,6 +725,17 @@ if( ! class_exists('PDFEV_Functions') ){
          * Hebrew letters → he, Urdu letters (ٹ ڈ ڑ ں ہ ھ ے ۓ گ ک ی — the last two Persian-style kaf/yeh, never in Arabic) → ur,
          * any other Arabic script → ar. Returns '' for LTR posts.
          */
+        /** Up to two initials for an avatar ("Mara Lindqvist" -> "ML"); first name only when several. */
+        public static function initials($names){
+            $first = trim(explode(',', wp_strip_all_tags(html_entity_decode((string) $names, ENT_QUOTES, 'UTF-8')))[0]);
+            $words = preg_split('/\s+/u', $first, -1, PREG_SPLIT_NO_EMPTY);
+            $out   = '';
+            foreach (array_slice($words, 0, 2) as $word) {
+                $out .= function_exists('mb_substr') ? mb_substr($word, 0, 1, 'UTF-8') : substr($word, 0, 1);
+            }
+            return function_exists('mb_strtoupper') ? mb_strtoupper($out, 'UTF-8') : strtoupper($out);
+        }
+
         public static function item_lang_attrs($post_id = 0){
             $post_id = $post_id ? $post_id : get_the_ID();
             if (get_post_meta($post_id, 'pdfev_meta_rtl', true) !== 'yes') {

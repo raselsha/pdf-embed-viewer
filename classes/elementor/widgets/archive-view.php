@@ -528,18 +528,6 @@ class PDFEV_Grid_Widget extends Widget_Base {
 			]
 		);
 
-		$this->add_responsive_control(
-			'cover_width',
-			[
-				'label'      => __( 'Cover Width (Grid)', 'pdf-embed-viewer' ),
-				'type'       => Controls_Manager::SLIDER,
-				'size_units' => [ '%', 'px' ],
-				'range'      => [ '%' => [ 'min' => 20, 'max' => 100 ], 'px' => [ 'min' => 60, 'max' => 400 ] ],
-				'condition'  => [ 'template' => 'grid' ],
-				'selectors'  => [ '{{WRAPPER}} .archive-grid-style .pdfev-card-cover' => 'width: {{SIZE}}{{UNIT}}; max-width: none;' ],
-			]
-		);
-
 		$this->add_control(
 			'image_effect',
 			[
@@ -552,6 +540,32 @@ class PDFEV_Grid_Widget extends Widget_Base {
 				'condition'    => [ 'template' => 'grid' ],
 				'prefix_class'       => 'pdfev-dither-',
 				'classes_dictionary' => [ '' => 'off' ],
+			]
+		);
+
+		// The grid cover fills the image area now, so the old "Cover Width"
+		// control is gone; these tune the dither layer instead.
+		$this->add_control(
+			'dither_size',
+			[
+				'label'      => __( 'Dither Size (Grid)', 'pdf-embed-viewer' ),
+				'type'       => Controls_Manager::SLIDER,
+				'size_units' => [ 'px' ],
+				'range'      => [ 'px' => [ 'min' => 16, 'max' => 64, 'step' => 16 ] ],
+				'condition'  => [ 'template' => 'grid', 'image_effect' => 'yes' ],
+				'selectors'  => [ '{{WRAPPER}} .archive-grid-style .grid-item .image' => '--pdfev-dither-cell: {{SIZE}}{{UNIT}};' ],
+			]
+		);
+
+		$this->add_control(
+			'dither_strength',
+			[
+				'label'      => __( 'Dither Strength (Grid)', 'pdf-embed-viewer' ),
+				'type'       => Controls_Manager::SLIDER,
+				'size_units' => [ '%' ],
+				'range'      => [ '%' => [ 'min' => 0, 'max' => 100 ] ],
+				'condition'  => [ 'template' => 'grid', 'image_effect' => 'yes' ],
+				'selectors'  => [ '{{WRAPPER}} .archive-grid-style .grid-item .image' => '--pdfev-dither-opacity: calc({{SIZE}} / 100);' ],
 			]
 		);
 

@@ -460,6 +460,11 @@
   position: relative;
   display: grid;
   grid-template-rows: auto auto 1fr auto;
+  /* One column that never grows past the card: without this, the widest
+     row (Read + Download with their counters) widened the column, and the
+     image, tag row and buttons ran out of the card's right edge in narrow
+     (e.g. 4-column) grids. */
+  grid-template-columns: minmax(0, 1fr);
   grid-row: span 4;
   min-width: 0;
   border: 1px solid var(--pdfev-light);
@@ -581,91 +586,267 @@
   background-size: cover;
   background-position: center;
 }
+/* The cover <img> below is the picture now (sharp, filling the frame), so
+   the old blurred backdrop is not needed. */
 .pdfev-embed-viewer .archive-grid-style .pdfev-card-scene {
-  inset: -24px;
-  filter: blur(14px) saturate(1.2);
-  transform: scale(1.1);
+  display: none;
 }
-/* The dither: the same artwork, masked through a fine dot screen and
-   pushed in contrast, laid over the soft backdrop. */
+/* The dither: true 1-bit ordered dithering in CSS. Inside the layer the
+   cover sits at 50% on black, a Bayer threshold tile is screen-blended over
+   it, then grayscale + a huge contrast turns every pixel black or white.
+   The whole layer is laid at 40% over the sharp, full-frame cover, with
+   the hover chip on top: one picture, dithered. Tune per site
+   with --pdfev-dither-cell (tile size) and --pdfev-dither-opacity. */
+.pdfev-embed-viewer .archive-grid-style .image {
+  --pdfev-dither-cell: 16px;
+  --pdfev-dither-opacity: 0.4;
+  /* 16x16 Bayer matrix, 256 grey levels. */
+  --pdfev-dither-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAAAAAA6mKC9AAABDklEQVR42mNgaFBYwNGhsYKpSWkRV5fWKoYDDg8STni8yDjk9CjplNerLAaDDQITLHZIzDDaJDTJapfULIYPBRcCflTciPhUdCnoV9WtKCYZmZgYHh4fHxjNcMbnTc4Rlycp5/ze5R1ze5bGYLNHZo7JFpEpdvvk5pltE5vG8KfmTsyXkish/+ruxX0ruxbGxM7u7i4uHh7OzOzsLCwcHMxw2Plx8mnv19kHHR8mnvR8mclgvFl4svVu6dmGGwUnWu6UnMnwufhy8O/q29EfCy8G/qy8GYnpjvP+7/OPuz9PP+v7Nveo69NUBvv98vPNt4tPt90rO9d0q+hUhv/19+O/l18P/1t7N/Zr6dVQADGCeEdKzRiYAAAAAElFTkSuQmCC");
+}
 .pdfev-embed-viewer .archive-grid-style .pdfev-card-dither {
-  inset: -12px;
-  opacity: 0.5;
-  filter: blur(5px) contrast(1.5) saturate(1.4);
-  -webkit-mask-image: radial-gradient(circle, #000 0.9px, transparent 1.3px);
-  mask-image: radial-gradient(circle, #000 0.9px, transparent 1.3px);
-  -webkit-mask-size: 3px 3px;
-  mask-size: 3px 3px;
+  z-index: 1;
+  background: #000;
+  isolation: isolate;
+  filter: grayscale(1) contrast(120);
+  opacity: var(--pdfev-dither-opacity);
+  pointer-events: none;
 }
-.pdfev-embed-viewer .archive-grid-style .image::after {
+.pdfev-embed-viewer .archive-grid-style .pdfev-card-dither::before,
+.pdfev-embed-viewer .archive-grid-style .pdfev-card-dither::after {
   content: "";
   position: absolute;
+}
+/* Same crop as the cover <img> (center top), so the dots line up with it. */
+.pdfev-embed-viewer .archive-grid-style .pdfev-card-dither::before {
   inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  background-image: radial-gradient(rgba(255, 255, 255, 0.28) 1px, transparent 1.4px);
-  background-size: 4px 4px;
+  background: var(--pdfev-cover, none) center top / cover no-repeat;
+  opacity: 0.5;
+}
+/* No cover image: no dither over the empty frame. */
+.pdfev-embed-viewer .archive-grid-style .image:not([style*="--pdfev-cover"]) .pdfev-card-dither {
+  display: none;
+}
+.pdfev-embed-viewer .archive-grid-style .pdfev-card-dither::after {
+  inset: 0;
+  background-image: var(--pdfev-dither-image);
+  background-repeat: repeat;
+  background-position: 0 0;
+  background-size: var(--pdfev-dither-cell) var(--pdfev-dither-cell);
+  image-rendering: pixelated;
+  mix-blend-mode: screen;
 }
 .pdfev-embed-viewer .archive-grid-style .pdfev-card-cover {
-  position: relative;
-  z-index: 2;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
   display: block;
-  width: 58%;
-  max-width: 190px;
-  transition: transform 0.4s ease;
 }
 .pdfev-embed-viewer .archive-grid-style .pdfev-card-cover img {
   display: block;
   width: 100%;
-  height: auto;
-  border-radius: 3px 6px 6px 3px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), 0 22px 36px -14px rgba(0, 0, 0, 0.6);
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  object-position: center top;
+  border-radius: 0;
+  box-shadow: none;
 }
-.pdfev-embed-viewer .archive-grid-style .pdfev-card-chip {
+/* Hover details: a short "chat" over the cover (author bubble, details
+   card, "Open flipbook" reply), sliding in one after another. */
+.pdfev-embed-viewer .archive-grid-style .pdfev-card-peek {
   position: absolute;
+  inset: 0;
   z-index: 3;
-  left: 14px;
-  right: 14px;
-  bottom: 14px;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  padding: 9px 12px;
-  border-radius: 8px;
-  background: #fff;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px;
+  pointer-events: none;
   color: var(--pdfev-dark);
   font-size: 13px;
-  line-height: 1.3;
-  box-shadow: 0 10px 24px -10px rgba(0, 0, 0, 0.45);
+  line-height: 1.35;
+  text-align: start;
+}
+.pdfev-embed-viewer .archive-grid-style .pdfev-card-peek > * {
   opacity: 0;
   transform: translateY(8px);
-  transition: opacity 0.35s ease, transform 0.35s ease;
+  transition: opacity 0.45s ease-out, transform 0.45s ease-out;
 }
-.pdfev-embed-viewer .archive-grid-style .pdfev-card-chip span {
-  color: var(--pdfev-secondary);
+.pdfev-embed-viewer .archive-grid-style .pdfev-card-peek > :nth-child(2) {
+  transition-delay: 0.08s;
 }
-.pdfev-embed-viewer .archive-grid-style .pdfev-card-chip strong {
-  font-weight: 600;
-  color: var(--pdfev-primary);
+.pdfev-embed-viewer .archive-grid-style .pdfev-card-peek > :nth-child(3) {
+  transition-delay: 0.16s;
 }
-.pdfev-embed-viewer .archive-grid-style .grid-item:hover .pdfev-card-cover,
-.pdfev-embed-viewer .archive-grid-style .grid-item:focus-within .pdfev-card-cover {
-  transform: translateY(-14px) rotate(-1.5deg);
+.pdfev-embed-viewer .archive-grid-style .pdfev-card-peek > :nth-child(4) {
+  transition-delay: 0.24s;
 }
-.pdfev-embed-viewer .archive-grid-style .grid-item:hover .pdfev-card-chip,
-.pdfev-embed-viewer .archive-grid-style .grid-item:focus-within .pdfev-card-chip {
+.pdfev-embed-viewer .archive-grid-style .grid-item:hover .pdfev-card-peek > *,
+.pdfev-embed-viewer .archive-grid-style .grid-item:focus-within .pdfev-card-peek > * {
   opacity: 1;
   transform: translateY(0);
 }
+.pdfev-embed-viewer .archive-grid-style .pdfev-peek-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+.pdfev-embed-viewer .archive-grid-style .pdfev-peek-row--end {
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+.pdfev-embed-viewer .archive-grid-style .pdfev-peek-avatar {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--pdfev-primary);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+}
+.pdfev-embed-viewer .archive-grid-style .pdfev-peek-avatar--icon {
+  background: #fff;
+  color: var(--pdfev-primary);
+  font-size: 12px;
+}
+.pdfev-embed-viewer .archive-grid-style .pdfev-peek-bubble,
+.pdfev-embed-viewer .archive-grid-style .pdfev-peek-card,
+.pdfev-embed-viewer .archive-grid-style .pdfev-peek-stat {
+  min-width: 0;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08), 0 8px 20px -10px rgba(0, 0, 0, 0.4);
+}
+.pdfev-embed-viewer .archive-grid-style .pdfev-peek-bubble {
+  max-width: calc(100% - 36px);
+  padding: 7px 11px;
+}
+.pdfev-embed-viewer .archive-grid-style .pdfev-peek-bubble small {
+  display: block;
+  font-size: 11px;
+  line-height: 1.3;
+  color: var(--pdfev-secondary);
+}
+.pdfev-embed-viewer .archive-grid-style .pdfev-peek-name {
+  display: block;
+  font-weight: 600;
+}
+.pdfev-embed-viewer .archive-grid-style .pdfev-peek-cta {
+  background: var(--pdfev-primary);
+  color: #fff;
+  font-weight: 600;
+}
+.pdfev-embed-viewer .archive-grid-style .pdfev-peek-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 10px;
+}
+.pdfev-embed-viewer .archive-grid-style .pdfev-peek-thumb {
+  flex: none;
+  width: 34px;
+  height: 44px;
+  border-radius: 4px;
+  background: var(--pdfev-cover, none) center top / cover no-repeat var(--pdfev-light);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+}
+.pdfev-embed-viewer .archive-grid-style .pdfev-peek-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+.pdfev-embed-viewer .archive-grid-style .pdfev-peek-top,
+.pdfev-embed-viewer .archive-grid-style .pdfev-peek-bottom {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+.pdfev-embed-viewer .archive-grid-style .pdfev-peek-top {
+  font-weight: 600;
+}
+.pdfev-embed-viewer .archive-grid-style .pdfev-peek-bottom {
+  margin-top: 5px;
+  padding-top: 5px;
+  border-top: 1px solid var(--pdfev-light);
+  font-size: 11.5px;
+  color: var(--pdfev-secondary);
+}
+/* Pages / file size tiles (like the reference's product tiles). */
+.pdfev-embed-viewer .archive-grid-style .pdfev-peek-stats {
+  display: flex;
+  gap: 8px;
+}
+.pdfev-embed-viewer .archive-grid-style .pdfev-peek-stat {
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 8px 6px 7px;
+  text-align: center;
+}
+.pdfev-embed-viewer .archive-grid-style .pdfev-peek-stat i {
+  margin-bottom: 2px;
+  font-size: 13px;
+  color: var(--pdfev-primary);
+}
+.pdfev-embed-viewer .archive-grid-style .pdfev-peek-stat b {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+.pdfev-embed-viewer .archive-grid-style .pdfev-peek-stat small {
+  font-size: 11px;
+  line-height: 1.2;
+  color: var(--pdfev-secondary);
+}
+.pdfev-embed-viewer .archive-grid-style :is(.pdfev-peek-name, .pdfev-peek-top > :first-child, .pdfev-peek-bottom > :first-child) {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  unicode-bidi: plaintext;
+}
+.pdfev-embed-viewer .archive-grid-style :is(.pdfev-peek-top, .pdfev-peek-bottom) > :last-child:not(:first-child) {
+  flex: none;
+}
 .pdfev-embed-viewer .archive-grid-style .grid-item .action {
   display: flex;
-  gap: 10px;
+  flex-wrap: wrap;
+  /* Cards in a row share this row's height (subgrid): keep buttons at their
+     own height when a neighbour's buttons wrapped onto two lines. */
+  align-content: flex-start;
+  gap: 10px 8px;
   padding: 16px 22px 22px;
+  /* The button row is the size container (not the card: containment on the
+     card would switch off its subgrid, so rows stop lining up across cards). */
+  container-type: inline-size;
 }
 .pdfev-embed-viewer .archive-grid-style .grid-item .action .btn {
   flex: 1 1 0;
   min-height: 42px;
+  white-space: nowrap;
+}
+/* Narrow cards: tighter buttons keep Read and Download on one row; if they
+   still don't fit (large theme fonts), Download wraps under Read instead of
+   overflowing the card. */
+@container (max-width: 290px) {
+  .pdfev-embed-viewer .archive-grid-style .grid-item .action .btn {
+    gap: 4px;
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+  .pdfev-embed-viewer .archive-grid-style .grid-item .action .pdfev-count {
+    padding: 1px 5px;
+  }
 }
 /* RTL books: Arabic/Urdu/Hebrew letters must join, which the monospace
    stack, letter-spacing and uppercase transform break — use the page font
@@ -696,8 +877,7 @@
 }
 /* Elementor "Dither Effect" / "Lift on Hover" switches (prefix classes on
    the widget wrapper). */
-.pdfev-dither-off .archive-grid-style .pdfev-card-dither,
-.pdfev-dither-off .archive-grid-style .image::after {
+.pdfev-dither-off .archive-grid-style .pdfev-card-dither {
   display: none;
 }
 .pdfev-lift-off .archive-grid-style .grid-item:hover,
@@ -711,8 +891,7 @@
 }
 @media (prefers-reduced-motion: reduce) {
   .pdfev-embed-viewer .archive-grid-style .grid-item,
-  .pdfev-embed-viewer .archive-grid-style .pdfev-card-cover,
-  .pdfev-embed-viewer .archive-grid-style .pdfev-card-chip {
+  .pdfev-embed-viewer .archive-grid-style .pdfev-card-peek > * {
     transition: none;
   }
   .pdfev-embed-viewer .archive-grid-style .grid-item:hover {
