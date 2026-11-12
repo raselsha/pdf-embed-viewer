@@ -93,6 +93,14 @@
   cursor: pointer;
   gap: 5px;
 }
+/* Inline SVG icons (PDFEV_Functions::icon()): sized to the text. */
+.pdfev-embed-viewer .pdfev-icon {
+  display: inline-block;
+  flex: none;
+  width: 1.15em;
+  height: 1.15em;
+  vertical-align: -0.2em;
+}
 .pdfev-embed-viewer .pdfev-load-more-wrap {
   display: flex;
   justify-content: center;
@@ -792,10 +800,15 @@
   padding: 8px 6px 7px;
   text-align: center;
 }
-.pdfev-embed-viewer .archive-grid-style .pdfev-peek-stat i {
+.pdfev-embed-viewer .archive-grid-style .pdfev-peek-stat .pdfev-icon {
+  width: 16px;
+  height: 16px;
   margin-bottom: 2px;
-  font-size: 13px;
   color: var(--pdfev-primary);
+}
+.pdfev-embed-viewer .archive-grid-style .pdfev-peek-avatar .pdfev-icon {
+  width: 15px;
+  height: 15px;
 }
 .pdfev-embed-viewer .archive-grid-style .pdfev-peek-stat b {
   font-size: 14px;
@@ -840,12 +853,14 @@
    overflowing the card. */
 @container (max-width: 290px) {
   .pdfev-embed-viewer .archive-grid-style .grid-item .action .btn {
-    gap: 4px;
-    padding-left: 8px;
-    padding-right: 8px;
+    gap: 3px;
+    padding-left: 7px;
+    padding-right: 7px;
+    font-size: 13px;
   }
   .pdfev-embed-viewer .archive-grid-style .grid-item .action .pdfev-count {
     padding: 1px 5px;
+    font-size: 11px;
   }
 }
 /* RTL books: Arabic/Urdu/Hebrew letters must join, which the monospace
@@ -1144,6 +1159,10 @@
 }
 .pdfev-embed-viewer .archive-ebook-style .grid-item .content .action .btn i {
   font-size: 12px;
+}
+.pdfev-embed-viewer .archive-ebook-style .grid-item .content .action .btn .pdfev-icon {
+  width: 14px;
+  height: 14px;
 }
 
 .pdfev-embed-viewer .archive-newsletter-style {

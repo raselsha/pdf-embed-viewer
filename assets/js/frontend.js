@@ -19,6 +19,21 @@ jQuery(document).ready(function ($) {
 
 
 (function($) {
+  // Same short form as PDFEV_Functions::compact_count(): 999, 1.2K, 1.2M.
+  function pdfevCompactCount(n) {
+    n = Math.max(0, parseInt(n, 10) || 0);
+    if (n < 1000) return n.toLocaleString('en-US');
+    var units = [[1e9, 'B'], [1e6, 'M'], [1e3, 'K']];
+    for (var i = 0; i < units.length; i++) {
+      if (n >= units[i][0]) {
+        var v = Math.floor(n / units[i][0] * 10) / 10;
+        if (v >= 100) v = Math.floor(v);
+        return v.toLocaleString('en-US', { maximumFractionDigits: 1 }) + units[i][1];
+      }
+    }
+    return String(n);
+  }
+
   // This is the click event for the download button counter. In Pro "Hide File
   // URL" mode, the button has no real href (data-protected="yes") — the actual
   // download link is minted fresh by this same AJAX call and only then
@@ -42,7 +57,9 @@ jQuery(document).ready(function ($) {
         },
         success: function(response) {
           if (response.success) {
-            $button.find('.pdfev-download-counter').html(response.data.download_count);
+            var count = parseInt(response.data.download_count, 10) || 0;
+            $button.find('.pdfev-download-counter').text(pdfevCompactCount(count))
+              .closest('.pdfev-count').attr('title', count.toLocaleString('en-US'));
             if (isProtected && response.data.download_url) {
               window.location.href = response.data.download_url;
             }

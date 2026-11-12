@@ -162,7 +162,7 @@ class Template{
                             <?php if (!empty($peek['author'])) : ?>
                                 <span class="pdfev-peek-row">
                                     <?php // Initials read oddly in Arabic/Hebrew (e.g. two alifs): use a person icon there. ?>
-                                    <span class="pdfev-peek-avatar"><?php if (preg_match('/[\p{Arabic}\p{Hebrew}]/u', $initials)) : ?><i class="fas fa-user"></i><?php else : echo esc_html($initials); endif; ?></span>
+                                    <span class="pdfev-peek-avatar"><?php if (preg_match('/[\p{Arabic}\p{Hebrew}]/u', $initials)) : echo \PDFEV_Functions::icon('user'); else : echo esc_html($initials); endif; ?></span>
                                     <span class="pdfev-peek-bubble"><small><?php echo $peek['author']['label']; ?></small><span class="pdfev-peek-name"><?php echo $peek['author']['value']; ?></span></span>
                                 </span>
                             <?php endif; ?>
@@ -181,16 +181,16 @@ class Template{
                                 <?php // Pages and file size: their own row of small tiles. ?>
                                 <span class="pdfev-peek-stats">
                                     <?php if (!empty($peek['pages'])) : ?>
-                                        <span class="pdfev-peek-stat"><i class="fas fa-file-alt"></i><b><?php echo esc_html(number_format_i18n((int) $peek['pages']['value'])); ?></b><small><?php echo $peek['pages']['label']; ?></small></span>
+                                        <span class="pdfev-peek-stat"><?php echo \PDFEV_Functions::icon('pages'); ?><b><?php echo esc_html(number_format_i18n((int) $peek['pages']['value'])); ?></b><small><?php echo $peek['pages']['label']; ?></small></span>
                                     <?php endif; ?>
                                     <?php if (!empty($peek['filesize'])) : ?>
-                                        <span class="pdfev-peek-stat"><i class="fas fa-hdd"></i><b><?php echo $peek['filesize']['value']; ?></b><small><?php echo $peek['filesize']['label']; ?></small></span>
+                                        <span class="pdfev-peek-stat"><?php echo \PDFEV_Functions::icon('size'); ?><b><?php echo $peek['filesize']['value']; ?></b><small><?php echo $peek['filesize']['label']; ?></small></span>
                                     <?php endif; ?>
                                 </span>
                             <?php endif; ?>
                             <span class="pdfev-peek-row pdfev-peek-row--end">
                                 <span class="pdfev-peek-bubble pdfev-peek-cta"><?php esc_html_e('Open flipbook', 'pdf-embed-viewer'); ?> &rarr;</span>
-                                <span class="pdfev-peek-avatar pdfev-peek-avatar--icon"><i class="fas fa-book-open"></i></span>
+                                <span class="pdfev-peek-avatar pdfev-peek-avatar--icon"><?php echo \PDFEV_Functions::icon('read'); ?></span>
                             </span>
                         </span>
                     </a>

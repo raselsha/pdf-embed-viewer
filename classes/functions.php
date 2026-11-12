@@ -493,8 +493,50 @@ if( ! class_exists('PDFEV_Functions') ){
         public static function get_read_button($atts=[]){
             $reading_counter = isset($atts['reading_count']) && $atts['reading_count']!='' ? $atts['reading_count'] :  get_option('pdfev_reading_counter');
             ?>
-            <a href="<?php the_permalink(); ?>" class="button btn read-btn"><i class="fas fa-eye"></i> <?php echo esc_html__('Read','pdf-embed-viewer');?><?php if ($reading_counter == 'yes') : ?> <span class="pdfev-count"><?php echo esc_html(PDFEV_Functions::get_post_view()); ?></span><?php endif; ?></a>
+            <a href="<?php the_permalink(); ?>" class="button btn read-btn"><?php echo self::icon('read'); ?> <?php echo esc_html__('Read','pdf-embed-viewer');?><?php if ($reading_counter == 'yes') : $views = (int) PDFEV_Functions::get_post_view(); ?> <span class="pdfev-count" title="<?php echo esc_attr(number_format_i18n($views)); ?>"><?php echo esc_html(self::compact_count($views)); ?></span><?php endif; ?></a>
             <?php
+        }
+
+        /**
+         * Inline SVG icon (24px grid, 2px rounded strokes, colour from the
+         * text). Drawn for this plugin; the presentation attributes sit on
+         * the <svg> itself so a theme's `svg { fill: ... }` can't restyle it.
+         * Static markup only, safe to echo.
+         */
+        public static function icon($name){
+            $paths = [
+                'read'     => '<path d="M12 6.5C9.6 5 6.5 4.5 3 5.2v13c3.5-.7 6.6-.2 9 1.3"/><path d="M12 6.5c2.4-1.5 5.5-2 9-1.3v13c-3.5-.7-6.6-.2-9 1.3"/><path d="M12 6.5v13"/>',
+                'download' => '<path d="M12 4v11"/><path d="m7.5 10.5 4.5 4.5 4.5-4.5"/><path d="M4.5 19.5h15"/>',
+                'user'     => '<circle cx="12" cy="8" r="3.5"/><path d="M5 20c.8-3.6 3.6-6 7-6s6.2 2.4 7 6"/>',
+                'pages'    => '<path d="M14 3H7.5A2.5 2.5 0 0 0 5 5.5v13A2.5 2.5 0 0 0 7.5 21h9a2.5 2.5 0 0 0 2.5-2.5V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 16.5h4"/>',
+                'size'     => '<ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v12c0 1.7 3.1 3 7 3s7-1.3 7-3V6"/><path d="M5 12c0 1.7 3.1 3 7 3s7-1.3 7-3"/>',
+            ];
+            if (!isset($paths[$name])) {
+                return '';
+            }
+            return '<svg class="pdfev-icon pdfev-icon-' . $name . '" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">' . $paths[$name] . '</svg>';
+        }
+
+        /**
+         * Short counter text for the Read/Download badges: 999, 1.2K, 98.8K,
+         * 1.2M. Rounds down, so 999,999 shows 999.9K, never "1000K"; the
+         * full number goes in the badge's title.
+         */
+        public static function compact_count($count){
+            $count = max(0, (int) $count);
+            if ($count < 1000) {
+                return number_format_i18n($count);
+            }
+            foreach ([1000000000 => 'B', 1000000 => 'M', 1000 => 'K'] as $size => $suffix) {
+                if ($count >= $size) {
+                    $value = floor($count / $size * 10) / 10;
+                    if ($value >= 100 || floor($value) == $value) {
+                        return number_format_i18n(floor($value)) . $suffix;
+                    }
+                    return number_format_i18n($value, 1) . $suffix;
+                }
+            }
+            return number_format_i18n($count);
         }
 
         public static function read_button($atts=[]){
@@ -539,10 +581,10 @@ if( ! class_exists('PDFEV_Functions') ){
             ], $post_id);
         ?>
             <a class="button btn download-btn" href="<?php echo !empty($attrs['data_protected']) ? '#' : esc_url($attrs['href']); ?>" data-post-id="<?php echo esc_attr($post_id); ?>" <?php echo !empty($attrs['data_protected']) ? 'data-protected="yes"' : (!empty($attrs['download']) ? 'download="' . esc_attr($attrs['download']) . '"' : ''); ?>>
-                <i class="fas fa-cloud-download-alt"></i>
+                <?php echo self::icon('download'); ?>
                 <?php echo esc_html__('Download','pdf-embed-viewer'); ?>
-                <?php if($download_counter=='yes'): ?>
-                <span class="pdfev-count"><span class="pdfev-download-counter"><?php echo esc_html(self::get_download_count($post_id)); ?></span></span>
+                <?php if($download_counter=='yes'): $downloads = (int) self::get_download_count($post_id); ?>
+                <span class="pdfev-count" title="<?php echo esc_attr(number_format_i18n($downloads)); ?>"><span class="pdfev-download-counter"><?php echo esc_html(self::compact_count($downloads)); ?></span></span>
                 <?php endif; ?>
             </a>
         <?php
