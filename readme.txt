@@ -178,7 +178,7 @@ No. Appsero only collects basic telemetry data after you give permission. It's 1
 5. Match your brand: set the book container background to any color. Here a furniture catalogue.
 6. A food magazine on a deep burgundy background.
 7. E-Book archive layout: a shelf of covers with Read and Download buttons and live counters.
-8. Grid archive layout with cover cards, details and buttons.
+8. Grid archive layout: full-cover cards with a fine dot texture. Hovering a card shows its author, publisher, pages and file size.
 9. Newsletter archive layout, grouped by year and month.
 10. Traditional view: a scrolling page reader with zoom and full screen, one click away from the flipbook.
 11. The PDF editor: upload a PDF, pick the cover from its pages and copy the shortcode.
