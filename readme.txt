@@ -6,7 +6,7 @@ Tags:              pdf-viewer, pdf-embed, flipbook, 3d-flipbook, ebook
 Requires at least: 3.0
 Tested up to:      7.1
 Requires PHP:      7.0
-Stable tag:        1.5.7
+Stable tag:        1.5.8
 License:           GPLv2 or later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -185,6 +185,12 @@ No. Appsero only collects basic telemetry data after you give permission. It's 1
 12. Settings: display and behavior, archive page, book details and brand colors.
 
 == Changelog ==
+
+= 1.5.8 =
+* Fixed: Grid cards no longer spill out of their card in narrow grids (for example 4 columns) when the Read and Download counters are shown. The buttons tighten up, and Download moves under Read if they still don't fit.
+* Changed: Grid thumbnails now show the full cover with a fine dot texture, and hovering a card shows its author, publisher, year, page count and file size (only the details you have switched on in Settings).
+* Changed: new line icons on the Read and Download buttons in every layout, and large counters are shortened (1.2K, 3.4M) with the full number shown on hover.
+* Changed: in the Elementor Archive View widget, the Grid's "Cover Width" control is replaced by "Dither Size" and "Dither Strength".
 
 = 1.5.7 =
 * Added: the Traditional view is now a built-in page reader (zoom, fit to width, full screen) instead of the browser's own PDF viewer in an iframe, so it looks and works the same in every browser, phones included.
@@ -397,6 +403,9 @@ No. Appsero only collects basic telemetry data after you give permission. It's 1
 * Initial release 🎉
 
 == Upgrade Notice ==
+
+= 1.5.8 =
+Fixes Grid cards overflowing in 4-column layouts, and adds a full-cover Grid thumbnail with hover details, new button icons and shortened counters.
 
 = 1.5.7 =
 A built-in Traditional page reader, Elementor Theme Builder widgets for single PDF pages, better Arabic/Urdu/Hebrew support and a redesigned Grid archive.
