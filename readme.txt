@@ -177,7 +177,7 @@ No. Appsero only collects basic telemetry data after you give permission. It's 1
 4. Arabic, Urdu and Hebrew are fully supported. Here an Urdu poetry book shown as a right-to-left spread.
 5. Match your brand: set the book container background to any color. Here a furniture catalogue.
 6. A food magazine on a deep burgundy background.
-7. E-Book archive layout: a shelf of covers with Read and Download buttons and live counters.
+7. E-Book archive layout: a shelf of 3D covers. Hovering a book opens it on a preview of the page inside; Read and Download buttons show live counters.
 8. Grid archive layout: full-cover cards with a fine dot texture. Hovering a card shows its author, publisher, pages and file size.
 9. Newsletter archive layout, grouped by year and month.
 10. Traditional view: a scrolling page reader with zoom and full screen, one click away from the flipbook.
