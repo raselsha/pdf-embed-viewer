@@ -350,8 +350,14 @@ class General_Settings{
                     <div class="pdfev-section-body">
                         <div class="pdfev-pro-upsell">
                             <span class="dashicons dashicons-lock" aria-hidden="true"></span>
-                            <span><?php esc_html_e('These features are part of Flipbook PDF Pro.', 'pdf-embed-viewer'); ?></span>
-                            <a href="<?php echo esc_url( PDFEV_Pro_URL ); ?>" target="_blank" rel="noopener"><?php esc_html_e('Get Pro', 'pdf-embed-viewer'); ?></a>
+                            <span>
+                                <?php esc_html_e('These features are part of Flipbook PDF Pro.', 'pdf-embed-viewer'); ?>
+                                <?php
+                                /* translators: %s: discount code */
+                                echo esc_html( sprintf( __( 'Use code %s for 30%% off your first purchase.', 'pdf-embed-viewer' ), PRO_OFFER_CODE ) );
+                                ?>
+                            </span>
+                            <a href="<?php echo esc_url( pro_url( 'settings-pro', true ) ); ?>" target="_blank" rel="noopener"><?php esc_html_e('Get Pro', 'pdf-embed-viewer'); ?></a>
                         </div>
                         <ul class="pdfev-pro-features">
                             <?php
@@ -371,7 +377,7 @@ class General_Settings{
                                 </li>
                             <?php endforeach; ?>
                         </ul>
-                        <p><a class="button button-primary button-hero" href="<?php echo esc_url( PDFEV_Pro_URL ); ?>" target="_blank" rel="noopener"><?php esc_html_e('Get Flipbook PDF Pro', 'pdf-embed-viewer'); ?></a></p>
+                        <p><a class="button button-primary button-hero" href="<?php echo esc_url( pro_url( 'settings-pro', true ) ); ?>" target="_blank" rel="noopener"><?php esc_html_e('Get Flipbook PDF Pro', 'pdf-embed-viewer'); ?></a></p>
                     </div>
                 </div>
                 <?php endif; ?>
@@ -469,7 +475,7 @@ class General_Settings{
             <span class="dashicons dashicons-lock" aria-hidden="true"></span>
             <span><?php echo esc_html($message); ?></span>
             <a href="<?php echo esc_url($license_url); ?>"><?php esc_html_e('Activate License', 'pdf-embed-viewer'); ?></a>
-            <a href="<?php echo esc_url( PDFEV_Pro_URL ); ?>" target="_blank" rel="noopener"><?php esc_html_e('Get Pro', 'pdf-embed-viewer'); ?></a>
+            <a href="<?php echo esc_url( pro_url( 'settings-banner' ) ); ?>" target="_blank" rel="noopener"><?php esc_html_e('Get Pro', 'pdf-embed-viewer'); ?></a>
         </div>
         <?php
     }

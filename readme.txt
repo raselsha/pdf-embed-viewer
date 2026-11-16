@@ -6,7 +6,7 @@ Tags:              pdf-viewer, pdf-embed, flipbook, 3d-flipbook, ebook
 Requires at least: 3.0
 Tested up to:      7.1
 Requires PHP:      7.0
-Stable tag:        1.5.9
+Stable tag:        1.6.0
 License:           GPLv2 or later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -79,7 +79,7 @@ Display your whole library — or a filtered slice of it — in whichever layout
 Prefer a visual builder? Use **Settings → Shortcode Generator** instead of writing these by hand.
 
 = ⭐ Pro Add-on: Protect Your PDFs =
-The free plugin is complete on its own. [Flipbook PDF Viewer & Embedder Pro](https://lieusoft.com/pdf-embed-viewer/) is an optional add-on for when you need more:
+The free plugin is complete on its own. [Flipbook PDF Viewer & Embedder Pro](https://lieusoft.com/pdf-embed-viewer/) is an optional add-on for when you need more (users of the free plugin get 30% off their first purchase with code FLIPBOOK30, and every plan has a 14-day money-back guarantee):
 
 * **Lockdown, no downloads** — no download button or link, originals moved to a locked folder, single-use links, scrambled file transfer, and print/save shortcuts blocked.
 * **Hide File URL** — the real file path never appears in the page; PDFs are served through a protected link.
@@ -185,6 +185,11 @@ No. Appsero only collects basic telemetry data after you give permission. It's 1
 12. Settings: display and behavior, archive page, book details and brand colors.
 
 == Changelog ==
+
+= 1.6.0 =
+* Added: a "Pro" tab in the PDF editor that shows what the Pro add-on adds to that document (Lockdown, hidden file URL, per-PDF download button, premium toolbar). It only appears while Pro isn't installed.
+* Added: a one-time thank-you offer for admins who have used the plugin for 14+ days and published 3+ PDFs: 30% off the first Pro purchase with code FLIPBOOK30. It never shows alongside the Pro announcement, and can be dismissed for good or snoozed for 30 days.
+* Changed: "Get Pro" links carry UTM tags (where in the plugin the click came from), so we can see which screens are useful. No data is sent from your site; the tags are only part of the link you click.
 
 = 1.5.9 =
 * Fixed: large PDFs open much faster. The flipbook and the Traditional reader now download only the parts of the file the pages on screen need, instead of the whole file first. In a test, a 160 MB scanned book appeared in 10 seconds instead of 100. On hosts that mishandle partial downloads, the viewer switches back to a full download by itself.

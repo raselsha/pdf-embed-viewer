@@ -199,3 +199,30 @@
         padding: 18px 18px 20px;
     }
 }
+
+/* Thank-you offer (classes/pro-offer.php) */
+.pdfev-pro-notice .pdfev-pro-notice__art--offer {
+    flex: 0 0 96px;
+    align-self: center;
+    margin: 16px 0 16px 20px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 96px;
+    height: 96px;
+    min-height: 0;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #7c3aed, #4f46e5);
+    color: #fff;
+    line-height: 1;
+}
+.pdfev-pro-notice__art--offer span { font-size: 30px; font-weight: 800; letter-spacing: -0.02em; }
+.pdfev-pro-notice__art--offer small { margin-top: 2px; font-size: 13px; font-weight: 600; text-transform: uppercase; opacity: 0.9; }
+.notice.pdfev-pro-notice button.pdfev-pro-notice__later {
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+}

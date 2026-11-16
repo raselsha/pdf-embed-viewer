@@ -56,7 +56,7 @@ class Pro_Announcement {
         if ( ! $this->should_show() ) {
             return;
         }
-        $pro_url     = defined( 'PDFEV_Pro_URL' ) ? PDFEV_Pro_URL : 'https://lieusoft.com/pdf-embed-viewer/#pricing';
+        $pro_url     = pro_url( 'announcement' );
         $compare_url = 'https://flipbook.lieusoft.com/#compare';
         ?>
         <div class="notice pdfev-pro-notice" data-notice="<?php echo esc_attr( self::ANNOUNCEMENT_ID ); ?>">
@@ -104,7 +104,8 @@ class Pro_Announcement {
             wp_send_json_error( null, 403 );
         }
         $id = isset( $_POST['notice'] ) ? sanitize_key( wp_unslash( $_POST['notice'] ) ) : '';
-        if ( self::ANNOUNCEMENT_ID !== $id ) {
+        // The launch announcement and the later thank-you offer (classes/pro-offer.php).
+        if ( ! in_array( $id, [ self::ANNOUNCEMENT_ID, Pro_Offer::NOTICE_ID ], true ) ) {
             wp_send_json_error( null, 400 );
         }
         $user_id   = get_current_user_id();

@@ -41,7 +41,7 @@ class Admin_Settings{
         if ( class_exists( 'PDFEV_Pro_Functions' ) ) {
             return $links;
         }
-        $links['pdfev_pro'] = '<a href="' . esc_url( PDFEV_Pro_URL ) . '" target="_blank" rel="noopener" style="color:#6e35e8;font-weight:700;">' . esc_html__( 'Get Pro', 'pdf-embed-viewer' ) . '</a>';
+        $links['pdfev_pro'] = '<a href="' . esc_url( pro_url( 'plugins-list' ) ) . '" target="_blank" rel="noopener" style="color:#6e35e8;font-weight:700;">' . esc_html__( 'Get Pro', 'pdf-embed-viewer' ) . '</a>';
         return $links;
     }
 
@@ -49,7 +49,7 @@ class Admin_Settings{
         if ( 'pdf-embed-viewer/pdf-embed-viewer.php' === $file ) {
             $meta[] = '<a href="https://flipbook.lieusoft.com/" target="_blank" rel="noopener">' . esc_html__( 'Live demo', 'pdf-embed-viewer' ) . '</a>';
             if ( ! class_exists( 'PDFEV_Pro_Functions' ) ) {
-                $meta[] = '<a href="' . esc_url( PDFEV_Pro_URL ) . '" target="_blank" rel="noopener">' . esc_html__( 'Pro version', 'pdf-embed-viewer' ) . '</a>';
+                $meta[] = '<a href="' . esc_url( pro_url( 'plugins-row' ) ) . '" target="_blank" rel="noopener">' . esc_html__( 'Pro version', 'pdf-embed-viewer' ) . '</a>';
             }
         }
         return $meta;
