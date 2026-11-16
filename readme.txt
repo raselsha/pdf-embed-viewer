@@ -6,7 +6,7 @@ Tags:              pdf-viewer, pdf-embed, flipbook, 3d-flipbook, ebook
 Requires at least: 3.0
 Tested up to:      7.1
 Requires PHP:      7.0
-Stable tag:        1.5.8
+Stable tag:        1.5.9
 License:           GPLv2 or later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -185,6 +185,12 @@ No. Appsero only collects basic telemetry data after you give permission. It's 1
 12. Settings: display and behavior, archive page, book details and brand colors.
 
 == Changelog ==
+
+= 1.5.9 =
+* Fixed: large PDFs open much faster. The flipbook and the Traditional reader now download only the parts of the file the pages on screen need, instead of the whole file first. In a test, a 160 MB scanned book appeared in 10 seconds instead of 100. On hosts that mishandle partial downloads, the viewer switches back to a full download by itself.
+* Changed: a redesigned single PDF page for themes that don't ship their own: a "Back to overview" link, the title, description and a book-details row (author, pages, size, publisher, year, edition) with the Download button beside them. Previous and Next moved below the book, as cards showing each PDF's title.
+* Fixed: on block themes, the theme's post date, author byline and its own Previous/Next links no longer appear on single PDF pages.
+* Fixed: on right-to-left documents, numbers and units in the book-details row keep their order.
 
 = 1.5.8 =
 * Fixed: Grid cards no longer spill out of their card in narrow grids (for example 4 columns) when the Read and Download counters are shown. The buttons tighten up, and Download moves under Read if they still don't fit.
@@ -403,6 +409,9 @@ No. Appsero only collects basic telemetry data after you give permission. It's 1
 * Initial release 🎉
 
 == Upgrade Notice ==
+
+= 1.5.9 =
+Large PDFs open far faster (only the pages being viewed are downloaded), plus a redesigned single PDF page.
 
 = 1.5.8 =
 Fixes Grid cards overflowing in 4-column layouts, and adds a full-cover Grid thumbnail with hover details, new button icons and shortened counters.

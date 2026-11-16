@@ -1,4 +1,19 @@
 
+// ============PDF loading: Range first, full download as a fallback===========
+// With HTTP Range requests pdf.js downloads only what the pages on screen
+// need, so a 100+ MB scanned book shows its first pages after a few MB
+// instead of after the whole file. 64 KB chunks: when pdf.js opens a
+// document it checks the last page, which on an unlinearized scan means
+// reading every page's dictionary, each one megabytes apart in the file —
+// with 512 KB chunks that check alone pulled tens of MB. Callers fall back to
+// `full` (one plain download, the pre-1.5.9 behaviour) when a host mangles
+// partial responses (the 1.5.3 "Bad end offset" case) and the open fails.
+window.pdfevPdfParams = function (url, full) {
+  return full
+    ? { url: url, disableRange: true, disableStream: true }
+    : { url: url, disableRange: false, disableAutoFetch: true, disableStream: true, rangeChunkSize: 65536 };
+};
+
 // ============custom data tabs===========
 // Scoped per .archive-newsletter-style block so several newsletter archives
 // (e.g. one per category) can sit on the same page independently.
@@ -300,7 +315,13 @@ jQuery(document).ready(function ($) {
           else $reader.find('.pdfev-scroll-loading').text(pdfevFronend.load_error_text || 'This PDF could not be loaded. Please reload the page.');
         });
       } else {
-        open({ url: $reader.data('pdfev-url') });
+        // Range first; one plain full download if the host breaks partial responses.
+        var readerUrl = $reader.data('pdfev-url');
+        pdfjsLib.getDocument(window.pdfevPdfParams(readerUrl)).promise.then(function (pdf) {
+          buildScrollReader($reader, pdf);
+        }).catch(function () {
+          open(window.pdfevPdfParams(readerUrl, true));
+        });
       }
     });
   }
@@ -459,7 +480,7 @@ jQuery(document).ready(function ($) {
         return $.isEmptyObject(controls) ? undefined : controls;
       }
 
-      function startFlipbook(resolvedUrl, pdfBytes, openOptions) {
+      function startFlipbook(resolvedUrl, pdfBytes, openOptions, onOpenError) {
         // Pro flipbook options — free/unlicensed installs never receive
         // pdfevFronend.flipbookOptions at all, so proOptions stays {} below,
         // leaving today's defaults untouched.
@@ -547,10 +568,13 @@ jQuery(document).ready(function ($) {
           // single plain full-file fetch sidesteps that whole class of
           // host/CDN Range bugs at the cost of not lazily streaming very
           // large PDFs.
-          options.pdfOpenOptions = { disableRange: true, disableStream: true };
+          options.pdfOpenOptions = window.pdfevPdfParams(resolvedUrl, true);
+        }
+        if (onOpenError) {
+          options.error = onOpenError;
         }
 
-        $viewer.FlipBook(options);
+        return $viewer.FlipBook(options);
       }
 
       var pdfSize = parseInt($viewer.attr('data-pdfev-size'), 10) || 0;
@@ -590,7 +614,15 @@ jQuery(document).ready(function ($) {
           }
         });
       } else {
-        startFlipbook(pdfURL);
+        // Range first (pdfevPdfParams()). If pdf.js can't open the file that
+        // way (a host that mangles partial responses), start the book again
+        // with one plain full download.
+        var rangeBook = startFlipbook(pdfURL, null, window.pdfevPdfParams(pdfURL), function (e) {
+          if (window.console) console.warn('[pdfev] Range loading failed, retrying with a full download.', e);
+          try { if (rangeBook && rangeBook.dispose) rangeBook.dispose(); } catch (err) {}
+          $viewer.empty();
+          startFlipbook(pdfURL);
+        });
       }
     });
   }

@@ -460,47 +460,48 @@ class Template{
     }
 
     //===================== single view ==================
+    /**
+     * Single PDF page header: a small "Back to overview" link, the title,
+     * description and a meta row (author, pages, size, publisher, year,
+     * edition — whatever Book Details switches on), with the Download button
+     * beside them. Previous/Next live below the book, in the footer.
+     * Keeps the old .header / .action / .pdfev-single-title classes so
+     * existing site CSS still finds them.
+     */
     public function template_single_header(){
-        // For an RTL document, "forward" reads right-to-left — Previous
-        // should point the way the pages turn backward (right) and Next the
-        // way they turn forward (left), the mirror of the LTR default. The
-        // arrow's side of its label flips right along with it (a left arrow
-        // always sits left of its text, a right arrow always sits right of
-        // its text) — not fixed by Previous/Next role, which used to leave a
-        // right-pointing arrow stranded on the left of "Previous" once RTL
-        // swapped only the glyph and not its position.
-        $rtl = get_post_meta(get_the_ID(), 'pdfev_meta_rtl', true) === 'yes';
-        if ($rtl) {
-            $prev_label = __('Previous','pdf-embed-viewer').' &rarr;';
-            $next_label = '&larr; '.__('Next','pdf-embed-viewer');
-        } else {
-            $prev_label = '&larr; '.__('Previous','pdf-embed-viewer');
-            $next_label = __('Next','pdf-embed-viewer').' &rarr;';
-        }
-        ?>
-        <?php
+        $post_id     = get_the_ID();
         // Settings → General → "Show Description" covers single views too.
         $description = get_option('pdfev_show_description') === 'yes'
-            ? get_post_meta(get_the_ID(), 'pdfev_meta_description', true)
+            ? get_post_meta($post_id, 'pdfev_meta_description', true)
             : '';
+        $meta = [];
+        foreach (\PDFEV_Functions::meta_fields() as $key => $field) {
+            $meta[] = 'pages' === $key
+                ? esc_html(sprintf(_n('%s page', '%s pages', (int) $field['value'], 'pdf-embed-viewer'), number_format_i18n((int) $field['value'])))
+                : $field['value']; // already escaped by meta_fields()
+        }
         ?>
-        <div class="header">
-            <div class="pdfev-single-title">
-                <h1><?php the_title();?></h1>
-                <?php if ( ! empty( $description ) ) : ?>
-                    <div class="pdfev-single-description"><?php echo wp_kses_post( wpautop( $description ) ); ?></div>
-                <?php endif; ?>
+        <header class="header pdfev-single-head"<?php echo \PDFEV_Functions::item_lang_attrs($post_id); // phpcs:ignore WordPress.Security.EscapeOutput -- built with esc_attr() ?>>
+            <a class="pdfev-single-back" href="<?php echo esc_url(\PDFEV_Functions::back_to_archive_url()); ?>"><span aria-hidden="true">&larr;</span> <?php esc_html_e('Back to overview', 'pdf-embed-viewer'); ?></a>
+            <div class="pdfev-single-row">
+                <div class="pdfev-single-title">
+                    <h1><?php the_title(); ?></h1>
+                    <?php if ( ! empty( $description ) ) : ?>
+                        <div class="pdfev-single-description"><?php echo wp_kses_post( wpautop( $description ) ); ?></div>
+                    <?php endif; ?>
+                    <?php if ( $meta ) : ?>
+                        <ul class="pdfev-single-meta">
+                            <?php foreach ( $meta as $item ) : ?>
+                                <li><span><?php echo $item; // phpcs:ignore WordPress.Security.EscapeOutput -- escaped above ?></span></li>
+                            <?php endforeach; ?>
+                        </ul>
+                    <?php endif; ?>
+                </div>
+                <div class="action pdfev-single-actions">
+                    <?php \PDFEV_Functions::download_button_single_page_view($post_id); ?>
+                </div>
             </div>
-            <div class="action">
-                <?php \PDFEV_Functions::back_to_archive();?>
-                <?php \PDFEV_Functions::download_button_single_page_view(get_the_ID()); ?>
-            </div>
-        </div>
-
-        <div class="navigation">
-            <?php previous_post_link('%link',$prev_label); ?>
-            <?php next_post_link('%link',$next_label); ?>
-        </div>
+        </header>
         <?php
     }
     public function template_single_book_reader(){
@@ -533,22 +534,44 @@ class Template{
     <?php
     }
 
+    /**
+     * Previous / Next below the book, as two cards showing the other PDFs'
+     * titles. For an RTL document, "forward" reads right-to-left — Previous
+     * points the way the pages turn backward (right) and Next the way they
+     * turn forward (left), the mirror of the LTR default, and each arrow sits
+     * on its own side of the label.
+     */
     public function template_single_footer(){
-        // See template_single_header() — same reasoning, kept as its own
-        // copy rather than shared since this hooks a separate action.
+        $prev = get_previous_post();
+        $next = get_next_post();
+        if ( ! $prev && ! $next ) {
+            return;
+        }
         $rtl = get_post_meta(get_the_ID(), 'pdfev_meta_rtl', true) === 'yes';
         if ($rtl) {
-            $prev_label = __('Previous','pdf-embed-viewer').' &rarr;';
-            $next_label = '&larr; '.__('Next','pdf-embed-viewer');
+            $prev_label = esc_html__('Previous','pdf-embed-viewer').' <span aria-hidden="true">&rarr;</span>';
+            $next_label = '<span aria-hidden="true">&larr;</span> '.esc_html__('Next','pdf-embed-viewer');
         } else {
-            $prev_label = '&larr; '.__('Previous','pdf-embed-viewer');
-            $next_label = __('Next','pdf-embed-viewer').' &rarr;';
+            $prev_label = '<span aria-hidden="true">&larr;</span> '.esc_html__('Previous','pdf-embed-viewer');
+            $next_label = esc_html__('Next','pdf-embed-viewer').' <span aria-hidden="true">&rarr;</span>';
         }
     ?>
-        <div class="navigation">
-            <?php previous_post_link('%link',$prev_label); ?>
-            <?php next_post_link('%link',$next_label); ?>
-        </div>
+        <nav class="navigation pdfev-single-pager" aria-label="<?php esc_attr_e('More PDFs', 'pdf-embed-viewer'); ?>">
+            <?php if ( $prev ) : ?>
+                <a class="pdfev-pager-link pdfev-pager-prev" href="<?php echo esc_url( get_permalink( $prev ) ); ?>">
+                    <span class="pdfev-pager-label"><?php echo $prev_label; // phpcs:ignore WordPress.Security.EscapeOutput -- escaped above ?></span>
+                    <span class="pdfev-pager-title"><?php echo esc_html( get_the_title( $prev ) ); ?></span>
+                </a>
+            <?php else : ?>
+                <span></span>
+            <?php endif; ?>
+            <?php if ( $next ) : ?>
+                <a class="pdfev-pager-link pdfev-pager-next" href="<?php echo esc_url( get_permalink( $next ) ); ?>">
+                    <span class="pdfev-pager-label"><?php echo $next_label; // phpcs:ignore WordPress.Security.EscapeOutput -- escaped above ?></span>
+                    <span class="pdfev-pager-title"><?php echo esc_html( get_the_title( $next ) ); ?></span>
+                </a>
+            <?php endif; ?>
+        </nav>
     <?php
     }
 }

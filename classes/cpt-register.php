@@ -48,6 +48,12 @@ class CPT{
         // views, so this was just a second, redundant large image at the top
         // of the single page.
         add_filter( 'render_block_core/post-featured-image', array($this,'suppress_singular_block'), 10, 2 ) ;
+        // A block theme's date / author byline and its own Previous/Next
+        // links: a PDF page has no meaningful post date or WordPress author,
+        // and the plugin's footer already links the neighbouring PDFs.
+        foreach ( array( 'post-date', 'post-author', 'post-author-name', 'post-author-biography', 'post-navigation-link' ) as $pdfev_block ) {
+            add_filter( 'render_block_core/' . $pdfev_block, array($this,'suppress_singular_block'), 10, 2 ) ;
+        }
         // Best-effort: many block themes ship a "byline"/"post navigation"/
         // "more posts" pattern on their single template (rendered as a
         // core/pattern block), which for this CPT either shows blank (no

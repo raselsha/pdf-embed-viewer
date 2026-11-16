@@ -750,10 +750,14 @@ if( ! class_exists('PDFEV_Functions') ){
         }
 
         
+        /** Where "Back to overview" goes: the page set in Settings, else the PDF archive. */
+        public static function back_to_archive_url(){
+            $shortcode_page_url = get_option('pdfev_shortcode_page_url');
+            return $shortcode_page_url == '' ? get_post_type_archive_link(PDFEV_Functions::get_cpt_name()) : home_url( '/' . $shortcode_page_url );
+        }
+
         public static function back_to_archive(){
-            $shortcode_page_url  = get_option('pdfev_shortcode_page_url');
-            $archive_link = get_post_type_archive_link(PDFEV_Functions::get_cpt_name());
-            $back_link = $shortcode_page_url=='' ? $archive_link : home_url( '/' . $shortcode_page_url );
+            $back_link = self::back_to_archive_url();
             ?>
                 
                 <a href="<?php echo esc_attr($back_link); ?>" class="back-button"><i class="fas fa-reply"></i> <?php _e('Back to overview','pdf-embed-viewer') ?></a>

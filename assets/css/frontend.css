@@ -5,24 +5,47 @@
   margin: 0 auto;
   padding: 10px;
 }
-.pdfev-embed-viewer .header {
-  display: flex;
-  justify-content: space-between;
-  align-items: start;
-  flex-direction: column;
+/* Single PDF page header: back link, title, description, meta row, and the
+   Download button beside them (template_single_header()). */
+.pdfev-embed-viewer .pdfev-single-head {
+  display: block;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--pdfev-light);
 }
-@media (min-width: 768px) {
-  .pdfev-embed-viewer .header {
-    justify-content: space-between;
-    flex-direction: row;
-    align-items: center;
-  }
+.pdfev-embed-viewer .pdfev-single-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--pdfev-secondary);
+}
+.pdfev-embed-viewer .pdfev-single-back:hover {
+  color: var(--pdfev-primary);
+}
+.pdfev-embed-viewer .pdfev-single-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 24px;
+  margin-top: 10px;
 }
 .pdfev-embed-viewer .pdfev-single-title {
+  flex: 1 1 360px;
   min-width: 0;
 }
+.pdfev-embed-viewer .pdfev-single-head h1 {
+  margin: 0;
+  font-size: clamp(1.5rem, 2.6vw, 2.2rem);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
 .pdfev-embed-viewer .pdfev-single-description {
-  margin-top: 8px;
+  margin-top: 6px;
   max-width: 70ch;
   color: var(--pdfev-secondary);
   line-height: 1.6;
@@ -30,18 +53,92 @@
 .pdfev-embed-viewer .pdfev-single-description p {
   margin: 0 0 0.5em;
 }
-.pdfev-embed-viewer .header .action {
+.pdfev-embed-viewer .pdfev-single-meta {
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap;
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--pdfev-secondary);
+}
+.pdfev-embed-viewer .pdfev-single-meta li {
+  margin: 0;
+  white-space: nowrap;
+}
+/* Each value keeps its own direction ("595.48 KB" stays put inside an
+   Arabic/Hebrew/Urdu document's right-to-left row), while the <li> follows
+   the row, so the separator dot always lands between two items. */
+.pdfev-embed-viewer .pdfev-single-meta li > span {
+  unicode-bidi: plaintext;
+}
+.pdfev-embed-viewer .pdfev-single-meta li + li::before {
+  content: "\00B7";
+  margin: 0 8px;
+}
+.pdfev-embed-viewer .pdfev-single-head[lang] :is(h1, .pdfev-single-description, .pdfev-single-meta) {
+  direction: rtl;
+}
+.pdfev-embed-viewer .pdfev-single-actions {
+  flex: 0 0 auto;
+  display: flex;
   align-items: center;
   gap: 10px;
-  width: 100%;
 }
-@media (min-width: 768px) {
-  .pdfev-embed-viewer .header .action {
-    justify-content: end;
-    align-items: center;
-    width: auto;
+.pdfev-embed-viewer .pdfev-single-actions .download-btn {
+  min-height: 42px;
+  padding: 9px 16px;
+}
+/* Previous / Next under the book (template_single_footer()). */
+.pdfev-embed-viewer .navigation.pdfev-single-pager {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 28px;
+}
+.pdfev-embed-viewer .pdfev-pager-link {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 14px 16px;
+  border: 1px solid var(--pdfev-light);
+  border-radius: 10px;
+  background: #fff;
+  font-weight: 400;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.pdfev-embed-viewer .pdfev-pager-link:hover {
+  border-color: var(--pdfev-primary);
+  box-shadow: 0 6px 18px -10px rgba(17, 24, 39, 0.25);
+}
+.pdfev-embed-viewer .pdfev-pager-next {
+  grid-column: 2;
+  text-align: end;
+}
+.pdfev-embed-viewer .pdfev-pager-label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--pdfev-secondary);
+}
+.pdfev-embed-viewer .pdfev-pager-title {
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--pdfev-dark);
+}
+@media (max-width: 640px) {
+  .pdfev-embed-viewer .pdfev-single-actions,
+  .pdfev-embed-viewer .pdfev-single-actions .download-btn {
+    width: 100%;
+  }
+  .pdfev-embed-viewer .navigation.pdfev-single-pager {
+    grid-template-columns: 1fr;
+  }
+  .pdfev-embed-viewer .pdfev-pager-next {
+    grid-column: auto;
   }
 }
 .pdfev-embed-viewer a {
