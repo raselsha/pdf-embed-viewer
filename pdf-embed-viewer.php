@@ -1,9 +1,9 @@
 <?php
 /**
  * Plugin Name: Flipbook PDF Viewer & Embedder
- * Plugin URI: https://flipbook.lieusoft.com/
+ * Plugin URI: https://lieusoft.com/pdf-embed-viewer/
  * Description: Embed PDFs as an interactive 3D flipbook or a standard viewer — perfect for eBooks, catalogs, brochures, manuals, newsletters, and reports.
- * Version: 1.6.0
+ * Version: 1.6.1
  * Stable Tag: trunk
  * Requires at least: 3.0
  * Requires PHP:      7.0
@@ -43,7 +43,7 @@ if( ! class_exists( 'PDFEV_Embed_Viewer' ) ){
         public function define_contstants(){
             define( 'PDFEV_Const_Path', plugin_dir_path(__FILE__) );
             define( 'PDFEV_Const_URL', plugin_dir_url(__FILE__) );
-            define( 'PDFEV_Const_VERSION', '1.6.0' );
+            define( 'PDFEV_Const_VERSION', '1.6.1' );
 if ( ! defined( 'PDFEV_Pro_URL' ) ) {
     define( 'PDFEV_Pro_URL', 'https://lieusoft.com/pdf-embed-viewer/#pricing' );
 }

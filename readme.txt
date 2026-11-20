@@ -6,7 +6,7 @@ Tags:              pdf-viewer, pdf-embed, flipbook, 3d-flipbook, ebook
 Requires at least: 3.0
 Tested up to:      7.1
 Requires PHP:      7.0
-Stable tag:        1.6.0
+Stable tag:        1.6.1
 License:           GPLv2 or later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -185,6 +185,9 @@ No. Appsero only collects basic telemetry data after you give permission. It's 1
 12. Settings: display and behavior, archive page, book details and brand colors.
 
 == Changelog ==
+
+= 1.6.1 =
+* Changed: the plugin's homepage link now opens its page on lieusoft.com (features, Free vs Pro comparison, reviews and FAQ). The live demo stays linked from the description. No functional changes.
 
 = 1.6.0 =
 * Added: a "Pro" tab in the PDF editor that shows what the Pro add-on adds to that document (Lockdown, hidden file URL, per-PDF download button, premium toolbar). It only appears while Pro isn't installed.
